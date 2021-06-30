@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "kendo-ui-core@2014.1.416",
+      "destination": "wwwroot/kendo-ui-core/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@5.0.1",
+      "destination": "wwwroot/bootstrap/"
+    }
+  ]
+}
