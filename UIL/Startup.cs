@@ -23,7 +23,7 @@ namespace Erp_4S
             
             services.AddControllersWithViews();
             services.AddDbContext<DbContext4S>(options =>
-            options.UseOracle(Configuration.GetConnectionString("TestConn")));
+            options.UseSqlServer(Configuration.GetConnectionString("TestConn")));
             //services.AddScoped <IRepoWrapper ,RepoWrapper>();
         }
 
