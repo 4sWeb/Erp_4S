@@ -6,22 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Erp_4S.Models;
-using DAL.Entities;
+//using DAL.Entities;
 using BLL.Repo;
+using BLL.IRepo;
 
 namespace Erp_4S.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IRepoWrapper _repo;
+        public HomeController(ILogger<HomeController> logger,IRepoWrapper repo)
         {
             _logger = logger;
+            _repo = repo;
         }
 
         public IActionResult Index()
         {
+            var rr = _repo._Currencym.GetAll();
             TestQuery Test = new TestQuery();
             Test.Get();
 

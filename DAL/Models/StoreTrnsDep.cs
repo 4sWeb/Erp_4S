@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class StoreTrnsDep
     {
         public StoreTrnsDep()
         {
-          //StoreTrnsDepDetails = new HashSet<StoreTrnsDepDetails>();
+            StoreTrnsDepDetails = new HashSet<StoreTrnsDepDetail>();
         }
 
-        [Key]
-        public int StoreTrnsDepId { get; set; }
-        public int? Ctrnsrowid { get; set; }
+        public decimal StoreTrnsDepId { get; set; }
+        public decimal? Ctrnsrowid { get; set; }
         public decimal? Ptransrowid { get; set; }
-        public int? Groupid { get; set; }
+        public decimal? Groupid { get; set; }
         public decimal? Depslot { get; set; }
         public decimal? Depdetailsid { get; set; }
         public decimal? Deptrnspayback { get; set; }
         public decimal? Commited { get; set; }
 
-        [ForeignKey("Ctrnsrowid")]
         public virtual StoreTrnsM Ctrnsrow { get; set; }
-        [ForeignKey("Groupid")]
-        public virtual StoreDepSpecs Group { get; set; }
-       //public virtual ICollection<StoreTrnsDepDetails> StoreTrnsDepDetails { get; set; }
+        public virtual StoreDepSpec Group { get; set; }
+        public virtual StoreTrnsM Ptransrow { get; set; }
+        public virtual ICollection<StoreTrnsDepDetail> StoreTrnsDepDetails { get; set; }
     }
 }

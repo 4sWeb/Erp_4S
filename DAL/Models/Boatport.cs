@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class Boatport
     {
         public Boatport()
         {
-            //StoreTrnsMArrivalport = new HashSet<StoreTrnsM>();
-            //StoreTrnsMShipboat = new HashSet<StoreTrnsM>();
-            //StoreTrnsMShipport = new HashSet<StoreTrnsM>();
+            StoreTrnsMArrivalports = new HashSet<StoreTrnsM>();
+            StoreTrnsMShipboats = new HashSet<StoreTrnsM>();
+            StoreTrnsMShipports = new HashSet<StoreTrnsM>();
         }
 
-        [Key]
-        public int Id { get; set; }
+        public decimal Id { get; set; }
         public string Aname { get; set; }
         public string Ename { get; set; }
         public string Type { get; set; }
         public string Code { get; set; }
 
-        //public virtual ICollection<StoreTrnsM> StoreTrnsMArrivalport { get; set; }
-        //public virtual ICollection<StoreTrnsM> StoreTrnsMShipboat { get; set; }
-        //public virtual ICollection<StoreTrnsM> StoreTrnsMShipport { get; set; }
+        public virtual ICollection<StoreTrnsM> StoreTrnsMArrivalports { get; set; }
+        public virtual ICollection<StoreTrnsM> StoreTrnsMShipboats { get; set; }
+        public virtual ICollection<StoreTrnsM> StoreTrnsMShipports { get; set; }
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class Userperiod
     {
-        [Key]
-        public int Userid { get; set; }
-        public int Periodid { get; set; }
+        public decimal Userid { get; set; }
+        public decimal Periodid { get; set; }
 
-        [ForeignKey("Periodid")]
         public virtual Period Period { get; set; }
-        public virtual Users User { get; set; }
+        public virtual User User { get; set; }
     }
 }

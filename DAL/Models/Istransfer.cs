@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class Istransfer
     {
         public Istransfer()
         {
-            //Financespec = new HashSet<Financespec>();
+            Financespecs = new HashSet<Financespec>();
         }
 
         public string Aname { get; set; }
         public string Ename { get; set; }
-        public int Id { get; set; }
+        public decimal Id { get; set; }
 
-        //public virtual ICollection<Financespec> Financespec { get; set; }
+        public virtual ICollection<Financespec> Financespecs { get; set; }
     }
 }

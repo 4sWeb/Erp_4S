@@ -1,20 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-namespace ERPCOREDAL.Models
+
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class StoreTrnsM
     {
         public StoreTrnsM()
         {
-            //AcceptInTrns = new HashSet<AcceptInTrns>();
-            //StoreTrnsDep = new HashSet<StoreTrnsDep>();
-            //StoreTrnsO = new HashSet<StoreTrnsO>();
-            //Storemextras = new HashSet<Storemextras>();
+            AcceptInTrns = new HashSet<AcceptInTrn>();
+            EvaluaPricePromationDetails = new HashSet<EvaluaPricePromationDetail>();
+            EvaluationPricePromations = new HashSet<EvaluationPricePromation>();
+            Financeinvdists = new HashSet<Financeinvdist>();
+            Irrigationemps = new HashSet<Irrigationemp>();
+            Multydists = new HashSet<Multydist>();
+            Shippings = new HashSet<Shipping>();
+            StoreTrnsDepCtrnsrows = new HashSet<StoreTrnsDep>();
+            StoreTrnsDepPtransrows = new HashSet<StoreTrnsDep>();
+            StoreTrnsLcs = new HashSet<StoreTrnsLc>();
+            StoreTrnsOs = new HashSet<StoreTrnsO>();
+            StoreTrnsPrices = new HashSet<StoreTrnsPrice>();
+            Storemextras = new HashSet<Storemextra>();
+            Storeminttrades = new HashSet<Storeminttrade>();
+            StoretrnsmInstalmentos = new HashSet<StoretrnsmInstalmento>();
+            StoretrnsmInstalmentsms = new HashSet<StoretrnsmInstalmentsm>();
+            Storetrnsmattachments = new HashSet<Storetrnsmattachment>();
+            Storetrnsmcommittees = new HashSet<Storetrnsmcommittee>();
+            StoretrnsmextexpTrnsmcodeNavigations = new HashSet<Storetrnsmextexp>();
+            StoretrnsmextexpTrnsscodeNavigations = new HashSet<Storetrnsmextexp>();
+            Storetrnsmpayspecs = new HashSet<Storetrnsmpayspec>();
         }
 
-        public int TrnsCode { get; set; }
+        public decimal TrnsCode { get; set; }
         public decimal TrnsNo { get; set; }
         public DateTime TrnsDate { get; set; }
         public string Rem { get; set; }
@@ -26,14 +44,12 @@ namespace ERPCOREDAL.Models
         public decimal? CtaxRate { get; set; }
         public decimal? DepOnGroupno { get; set; }
         public decimal? Period { get; set; }
-        public int? FromStoreAllcodesId { get; set; }
-        public int? ToStoreAllcodesId { get; set; }
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StoreTrnsMId { get; set; }
+        public decimal? FromStoreAllcodesId { get; set; }
+        public decimal? ToStoreAllcodesId { get; set; }
+        public decimal StoreTrnsMId { get; set; }
         public decimal? Total { get; set; }
         public decimal? Currencyid { get; set; }
-        public int? BranchId { get; set; }
+        public decimal? BranchId { get; set; }
         public decimal? Storedocnum { get; set; }
         public decimal? Salesrep { get; set; }
         public decimal? Currencyrate { get; set; }
@@ -50,7 +66,7 @@ namespace ERPCOREDAL.Models
         public decimal? MainCostcenterid { get; set; }
         public decimal? MainAccountid { get; set; }
         public decimal? TransferCost { get; set; }
-        public int? Discountlistid { get; set; }
+        public decimal? Discountlistid { get; set; }
         public decimal? Commited { get; set; }
         public decimal? Instprogramid { get; set; }
         public decimal? Tax41rate { get; set; }
@@ -81,7 +97,7 @@ namespace ERPCOREDAL.Models
         public string Batchno { get; set; }
         public string Numbervalue { get; set; }
         public string Stringvalue { get; set; }
-        public int? Productionstageid { get; set; }
+        public decimal? Productionstageid { get; set; }
         public string Createitems { get; set; }
         public string Remark7 { get; set; }
         public string Remark7e { get; set; }
@@ -100,8 +116,8 @@ namespace ERPCOREDAL.Models
         public DateTime? Cargoactually { get; set; }
         public DateTime? Portarrival { get; set; }
         public bool? Cargopaper { get; set; }
-        public int? Typeid { get; set; }
-        public int? Agridataid { get; set; }
+        public decimal? Typeid { get; set; }
+        public decimal? Agridataid { get; set; }
         public string Managername { get; set; }
         public decimal? Employeeno { get; set; }
         public string Irrigatemachine { get; set; }
@@ -112,50 +128,52 @@ namespace ERPCOREDAL.Models
         public decimal? ExpensesCurr { get; set; }
         public decimal? ExpensesRate { get; set; }
         public bool? ExpensesNet { get; set; }
-        public int? Shipcoid { get; set; }
-        public int? Shiptrnsid { get; set; }
-        public int? Clearancecoid { get; set; }
-        public int? Shipportid { get; set; }
-        public int? Arrivalportid { get; set; }
-        public int? Shipboatid { get; set; }
+        public decimal? Shipcoid { get; set; }
+        public decimal? Shiptrnsid { get; set; }
+        public decimal? Clearancecoid { get; set; }
+        public decimal? Shipportid { get; set; }
+        public decimal? Arrivalportid { get; set; }
+        public decimal? Shipboatid { get; set; }
         public string Shippolino { get; set; }
         public string Shipweekno { get; set; }
         public string Shiplotno { get; set; }
         public string Customdocno { get; set; }
         public string Patchno { get; set; }
 
-
-        [ForeignKey("Agridataid")]
-        public virtual Agridata Agridata { get; set; }
-        [ForeignKey("Arrivalportid")]
+        public virtual Agridatum Agridata { get; set; }
         public virtual Boatport Arrivalport { get; set; }
-        [ForeignKey("BranchId")]
-        public virtual StoreAllsubcodes Branch { get; set; }
-        [ForeignKey("Clearancecoid")]
-        public virtual Shippingcotypes Clearanceco { get; set; }
-        [ForeignKey("Discountlistid")]
+        public virtual StoreAllsubcode Branch { get; set; }
+        public virtual Shippingcotype Clearanceco { get; set; }
         public virtual DiscountItemM Discountlist { get; set; }
-        [ForeignKey("FromStoreAllcodesId")]
-        public virtual StoreAllcodes FromStoreAllcodes { get; set; }
-        [ForeignKey("Productionstageid")]
-        public virtual Productstages Productionstage { get; set; }
-        [ForeignKey("Shipboatid")]
+        public virtual StoreAllcode FromStoreAllcodes { get; set; }
+        public virtual Productstage Productionstage { get; set; }
         public virtual Boatport Shipboat { get; set; }
-        [ForeignKey("Shipcoid")]
-        public virtual Shippingcotypes Shipco { get; set; }
-        [ForeignKey("Shipportid")]
+        public virtual Shippingcotype Shipco { get; set; }
         public virtual Boatport Shipport { get; set; }
-        [ForeignKey("Shiptrnsid")]
-        public virtual Shippingcotypes Shiptrns { get; set; }
-        [ForeignKey("ToStoreAllcodesId")]
-        public virtual StoreAllcodes ToStoreAllcodes { get; set; }
-        [ForeignKey("TrnsCode")]
-        public virtual StoreTrns TrnsCodeNavigation { get; set; }
-        [ForeignKey("Typeid")]
-        public virtual StoreAllcodes Type { get; set; }
-        //public virtual ICollection<AcceptInTrns> AcceptInTrns { get; set; }
-        //public virtual ICollection<StoreTrnsDep> StoreTrnsDep { get; set; }
-        //public virtual ICollection<StoreTrnsO> StoreTrnsO { get; set; }
-        //public virtual ICollection<Storemextras> Storemextras { get; set; }
+        public virtual Shippingcotype Shiptrns { get; set; }
+        public virtual StoreAllcode ToStoreAllcodes { get; set; }
+        public virtual StoreTrn TrnsCodeNavigation { get; set; }
+        public virtual StoreAllcode Type { get; set; }
+        public virtual ICollection<AcceptInTrn> AcceptInTrns { get; set; }
+        public virtual ICollection<EvaluaPricePromationDetail> EvaluaPricePromationDetails { get; set; }
+        public virtual ICollection<EvaluationPricePromation> EvaluationPricePromations { get; set; }
+        public virtual ICollection<Financeinvdist> Financeinvdists { get; set; }
+        public virtual ICollection<Irrigationemp> Irrigationemps { get; set; }
+        public virtual ICollection<Multydist> Multydists { get; set; }
+        public virtual ICollection<Shipping> Shippings { get; set; }
+        public virtual ICollection<StoreTrnsDep> StoreTrnsDepCtrnsrows { get; set; }
+        public virtual ICollection<StoreTrnsDep> StoreTrnsDepPtransrows { get; set; }
+        public virtual ICollection<StoreTrnsLc> StoreTrnsLcs { get; set; }
+        public virtual ICollection<StoreTrnsO> StoreTrnsOs { get; set; }
+        public virtual ICollection<StoreTrnsPrice> StoreTrnsPrices { get; set; }
+        public virtual ICollection<Storemextra> Storemextras { get; set; }
+        public virtual ICollection<Storeminttrade> Storeminttrades { get; set; }
+        public virtual ICollection<StoretrnsmInstalmento> StoretrnsmInstalmentos { get; set; }
+        public virtual ICollection<StoretrnsmInstalmentsm> StoretrnsmInstalmentsms { get; set; }
+        public virtual ICollection<Storetrnsmattachment> Storetrnsmattachments { get; set; }
+        public virtual ICollection<Storetrnsmcommittee> Storetrnsmcommittees { get; set; }
+        public virtual ICollection<Storetrnsmextexp> StoretrnsmextexpTrnsmcodeNavigations { get; set; }
+        public virtual ICollection<Storetrnsmextexp> StoretrnsmextexpTrnsscodeNavigations { get; set; }
+        public virtual ICollection<Storetrnsmpayspec> Storetrnsmpayspecs { get; set; }
     }
 }

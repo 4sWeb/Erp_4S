@@ -1,23 +1,27 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class StoreTrnsAccept
     {
         public StoreTrnsAccept()
         {
-            //AcceptInTrns = new HashSet<AcceptInTrns>();
+            AcceptInTrns = new HashSet<AcceptInTrn>();
+            AcceptInTrnsTemps = new HashSet<AcceptInTrnsTemp>();
+            TrnsUserAccepts = new HashSet<TrnsUserAccept>();
         }
-        [Key]
-        public int AcceptId { get; set; }
+
+        public decimal AcceptId { get; set; }
         public decimal AcceptSerial { get; set; }
         public string AcceptName { get; set; }
-        public int TrnsCode { get; set; }
+        public decimal TrnsCode { get; set; }
 
-        [ForeignKey("TrnsCode")]
-        public virtual StoreTrns TrnsCodeNavigation { get; set; }
-        //public virtual ICollection<AcceptInTrns> AcceptInTrns { get; set; }
+        public virtual StoreTrn TrnsCodeNavigation { get; set; }
+        public virtual ICollection<AcceptInTrn> AcceptInTrns { get; set; }
+        public virtual ICollection<AcceptInTrnsTemp> AcceptInTrnsTemps { get; set; }
+        public virtual ICollection<TrnsUserAccept> TrnsUserAccepts { get; set; }
     }
 }

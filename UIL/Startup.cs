@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using DAL.Entities;
+using DAL.Models;
+using BLL.IRepo;
+using BLL.Repo;
 
 namespace Erp_4S
 {
@@ -22,9 +24,9 @@ namespace Erp_4S
         {
             
             services.AddControllersWithViews();
-            services.AddDbContext<DbContext4S>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("TestConn")));
-            //services.AddScoped <IRepoWrapper ,RepoWrapper>();
+            services.AddDbContext<ModelContext>(options =>
+            options.UseOracle(Configuration.GetConnectionString("TestConn")));
+            services.AddScoped <IRepoWrapper ,RepoWrapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

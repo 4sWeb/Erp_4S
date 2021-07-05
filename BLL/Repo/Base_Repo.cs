@@ -5,21 +5,22 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.IRepo;
-using DAL.Entities;
+using DAL.ConnectToData;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 //using System.Data;
 namespace BLL.Repo
 {
     public abstract  class Base_Repo<T> : IBaseRepo<T> where T : class
     {
-        protected  DbContext4S _Context { set; get; }
+        protected ModelContext _Context { set; get; }
         
         private DbSet<T>  table = null;
         protected DbSet<T> DbSet
         {
             get => table  ?? (table  = _Context.Set<T>());
         }
-        public Base_Repo(DbContext4S   context)
+        public Base_Repo(ModelContext context)
         {
             _Context = context;
             table = context.Set<T>();
@@ -36,19 +37,20 @@ namespace BLL.Repo
             
         }
 
-        public List<T> GetAll()
+        public async  Task<List<T>> GetAll()
         {
-            return table.ToList();
+            //CustomQueryBuilder<T>.GetList(table );
+            return await  table.ToListAsync();
         }
 
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
-           return  table.Where(expression);
+            return   table.Where(expression);
         }
 
-        public T GetByID(int Id)
+        public async  Task<T> GetByID(int Id)
         {
-            return table.Find(Id);
+            return await  table.FindAsync(Id);
         }
 
         public void Update(T Entity)

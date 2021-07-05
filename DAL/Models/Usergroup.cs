@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class Usergroup
     {
         public Usergroup()
         {
-            //Users = new HashSet<Users>();
+            Progprivileges = new HashSet<Progprivilege>();
+            Users = new HashSet<User>();
         }
-        [Key]
-        public int UsergroupId { get; set; }
+
+        public decimal UsergroupId { get; set; }
         public string Groupcode { get; set; }
         public string Groupname { get; set; }
         public string Note { get; set; }
@@ -20,6 +22,7 @@ namespace ERPCOREDAL.Models
         public string Groupename { get; set; }
         public decimal? Active { get; set; }
 
-       //public virtual ICollection<Users> Users { get; set; }
+        public virtual ICollection<Progprivilege> Progprivileges { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

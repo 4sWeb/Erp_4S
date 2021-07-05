@@ -8,8 +8,8 @@ namespace BLL.IRepo
 {
     public interface IBaseRepo<T>
     {
-        List<T>GetAll();
-        T GetByID(int Id);
+       Task<List<T>>GetAll();
+        Task<T> GetByID(int Id);
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
         void  Create(T Entity);
         void  Update(T Entity);

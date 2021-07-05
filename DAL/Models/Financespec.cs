@@ -1,32 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class Financespec
     {
         public Financespec()
         {
-           // StoreTrns = new HashSet<StoreTrns>();
+            FinanceTrnsAccepts = new HashSet<FinanceTrnsAccept>();
+            Financedepspecdetails = new HashSet<Financedepspecdetail>();
+            Financedepspecs = new HashSet<Financedepspec>();
+            Financedisttypes = new HashSet<Financedisttype>();
+            Financeinvspecs = new HashSet<Financeinvspec>();
+            Financems = new HashSet<Financem>();
+            Financespecdetails = new HashSet<Financespecdetail>();
+            Financespecprotections = new HashSet<Financespecprotection>();
+            Hafzams = new HashSet<Hafzam>();
+            LgDescriptionsMs = new HashSet<LgDescriptionsM>();
+            LgDescriptionsOs = new HashSet<LgDescriptionsO>();
+            StoreTrns = new HashSet<StoreTrn>();
         }
 
-        [Key]
-        public int Trnscode { get; set; }
+        public decimal Trnscode { get; set; }
         public string Aname { get; set; }
         public string Ename { get; set; }
-        public int? Defpurpose { get; set; }
+        public decimal? Defpurpose { get; set; }
         public string Iscash { get; set; }
-        public int? Istransfer { get; set; }
+        public decimal? Istransfer { get; set; }
         public string Usefdistcode { get; set; }
-        public int? Fdistid { get; set; }
+        public decimal? Fdistid { get; set; }
         public string Usetdistcode { get; set; }
-        public int? Tdistid { get; set; }
+        public decimal? Tdistid { get; set; }
         public string Userepcode { get; set; }
-        public int? Repid { get; set; }
+        public decimal? Repid { get; set; }
         public string Useanalysiscode { get; set; }
-        public int? Analysisid { get; set; }
+        public decimal? Analysisid { get; set; }
         public string Usecommtax { get; set; }
         public decimal? Commtaxrate { get; set; }
         public string Usecommdtax { get; set; }
@@ -45,7 +55,7 @@ namespace ERPCOREDAL.Models
         public string Gl { get; set; }
         public string Mustchoosefdist { get; set; }
         public string Mustchoosetdist { get; set; }
-        public int? CD { get; set; }
+        public decimal? CD { get; set; }
         public decimal? Usefastinsertchecks { get; set; }
         public string Saleformdistribution { get; set; }
         public decimal? Printafterconfirme { get; set; }
@@ -66,20 +76,24 @@ namespace ERPCOREDAL.Models
         public bool? Showdeliverydata { get; set; }
         public string Isodata { get; set; }
 
-        [ForeignKey("Analysisid")]
-        public virtual StoreAllcodes Analysis { get; set; }
-        [ForeignKey("CD")]
+        public virtual StoreAllcode Analysis { get; set; }
         public virtual Financetype CDNavigation { get; set; }
-        [ForeignKey("Defpurpose")]
-        public virtual Financepuposes DefpurposeNavigation { get; set; }
-        [ForeignKey("Fdistid")]
-        public virtual StoreAllcodes Fdist { get; set; }
-        [ForeignKey("Istransfer")]
+        public virtual Financepupose DefpurposeNavigation { get; set; }
+        public virtual StoreAllcode Fdist { get; set; }
         public virtual Istransfer IstransferNavigation { get; set; }
-        [ForeignKey("Repid")]
-        public virtual StoreAllcodes Rep { get; set; }
-        [ForeignKey("Tdistid")]
-        public virtual StoreAllcodes Tdist { get; set; }
-        //public virtual ICollection<StoreTrns> StoreTrns { get; set; }
+        public virtual StoreAllcode Rep { get; set; }
+        public virtual StoreAllcode Tdist { get; set; }
+        public virtual ICollection<FinanceTrnsAccept> FinanceTrnsAccepts { get; set; }
+        public virtual ICollection<Financedepspecdetail> Financedepspecdetails { get; set; }
+        public virtual ICollection<Financedepspec> Financedepspecs { get; set; }
+        public virtual ICollection<Financedisttype> Financedisttypes { get; set; }
+        public virtual ICollection<Financeinvspec> Financeinvspecs { get; set; }
+        public virtual ICollection<Financem> Financems { get; set; }
+        public virtual ICollection<Financespecdetail> Financespecdetails { get; set; }
+        public virtual ICollection<Financespecprotection> Financespecprotections { get; set; }
+        public virtual ICollection<Hafzam> Hafzams { get; set; }
+        public virtual ICollection<LgDescriptionsM> LgDescriptionsMs { get; set; }
+        public virtual ICollection<LgDescriptionsO> LgDescriptionsOs { get; set; }
+        public virtual ICollection<StoreTrn> StoreTrns { get; set; }
     }
 }

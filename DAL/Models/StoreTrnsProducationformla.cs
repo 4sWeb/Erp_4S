@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class StoreTrnsProducationformla
     {
-        public int Id { get; set; }
-        public int? StoreTrnsoId { get; set; }
-        public int? StoreItemsId { get; set; }
+        public decimal Id { get; set; }
+        public decimal? StoreTrnsoId { get; set; }
+        public decimal? StoreItemsId { get; set; }
         public decimal? Qty { get; set; }
         public decimal? Unitid { get; set; }
 
-        [ForeignKey("StoreItemsId")]
-        public virtual StoreItems StoreItems { get; set; }
-        [ForeignKey("StoreTrnsoId")]
+        public virtual StoreItem StoreItems { get; set; }
         public virtual StoreTrnsO StoreTrnso { get; set; }
     }
 }

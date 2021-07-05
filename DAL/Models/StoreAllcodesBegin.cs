@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ERPCOREDAL.Models
+#nullable disable
+
+namespace DAL.Models
 {
     public partial class StoreAllcodesBegin
     {
-        public int Id { get; set; }
-        public int? Allcodesid { get; set; }
-        public int? Period { get; set; }
+        public decimal Id { get; set; }
+        public decimal? Allcodesid { get; set; }
+        public decimal? Period { get; set; }
         public decimal? CashBeginDebit { get; set; }
         public decimal? CashBeginCredit { get; set; }
         public decimal? CheckBeginDebit { get; set; }
         public decimal? CheckBeginCredit { get; set; }
-        public int? Currencyid { get; set; }
+        public decimal? Currencyid { get; set; }
         public decimal? Currrate { get; set; }
 
-        [ForeignKey("Allcodesid")]
-        public virtual StoreAllcodes Allcodes { get; set; }
-        [ForeignKey("Currencyid")]
+        public virtual StoreAllcode Allcodes { get; set; }
         public virtual Currencym Currency { get; set; }
-        [ForeignKey("Period")]
         public virtual Period PeriodNavigation { get; set; }
     }
 }
