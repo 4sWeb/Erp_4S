@@ -26,6 +26,7 @@ namespace BLL.IRepo
          IFinancetype  _Financetype { get; }
          IGroupBasicData  _GroupBasicData { get; }
          IGroupf _Groupf { get; }
+         IInstprograms _Instprograms { get; }
         void Save();
     }
 }

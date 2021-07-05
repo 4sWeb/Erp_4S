@@ -28,6 +28,7 @@ namespace BLL.Repo
         private IFinancetype  financetype;
         private IGroupBasicData  groupBasicData;
         private IGroupf groupf;
+        private IInstprograms instprograms;
         public RepoWrapper(ModelContext context)
         {
             _contex = context;
@@ -60,6 +61,7 @@ namespace BLL.Repo
         public IFinancetype _Financetype { get { if (financetype== null) financetype = new FinancetypeRepo (_contex); return financetype; } }
         public IGroupBasicData  _GroupBasicData { get { if (groupBasicData == null) groupBasicData = new GroupBasicDataRepo(_contex); return groupBasicData; } }
         public IGroupf  _Groupf { get { if (groupf == null) groupf = new GroupfRepo(_contex); return groupf; } }
+        public IInstprograms _Instprograms { get { if (instprograms == null) instprograms = new InstprogramsRepo(_contex); return instprograms; } }
         public void Save()
         {
             _contex.SaveChanges();
