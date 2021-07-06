@@ -27,6 +27,40 @@ namespace BLL.IRepo
          IGroupBasicData  _GroupBasicData { get; }
          IGroupf _Groupf { get; }
          IInstprograms _Instprograms { get; }
+         IIstransfer _Istransfer { get; }
+         IMainTypes  _MainTypes { get; }
+         IPeriod _Period  { get; }
+         IPreferences _Preferences { get; }
+         IProducationformla _Producationformla { get; }
+         IProductformladetails _Productformladetails { get; }
+         IProductstages _Productstages { get; }
+         IShippingcotypes _Shippingcotypes { get; }
+         IStaff _Staff { get; }
+         IStages _Stages { get; }
+         IStoreAllcodes _StoreAllcodes { get; }
+         IStoreAllcodesBegin  _StoreAllcodesBegin { get; }
+         IStoreAllsubcodes  _StoreAllsubcodes { get; }
+         IStoreDepSpecs _StoreDepSpecs { get; }
+         IStoreDepSpecsDetails _StoreDepSpecsDetails { get; }
+         IStoredsttypes _Storedsttypes { get; }
+         IStoreItemformsSpecs _StoreItemformsSpecs { get; }
+         IStoreItems _StoreItems { get; }
+         IStoreItemUnits _StoreItemUnits { get; }
+         IStoreSubCodeSpec  _StoreSubCodeSpec { get; }
+         IStoreTrns _StoreTrns { get; }
+         IStoreTrnsAccept  _StoreTrnsAccept { get; }
+         IStoreTrnsDep  _StoreTrnsDep  { get; }
+         IStoreTrnsDepDetails   _StoreTrnsDepDetails { get; }
+         IStoreTrnsM  _StoreTrnsM  { get; }
+         IStoreTrnsO  _StoreTrnsO { get; }
+         IStoreTrnsoDimensionsdetails _StoreTrnsoDimensionsdetails { get; }
+         IStoreTrnsProducationformla  _StoreTrnsProducationformla  { get; }
+         IStoreUnits  _StoreUnits { get; }
+         IUserapps  _Userapps { get; }
+         IUsergroup  _Usergroup  { get; }
+         IUserperiod  _Userperiod  { get; }
+         IUsers _Users { get; }
+         IUserstrans  _Userstrans  { get; }
         void Save();
     }
 }
