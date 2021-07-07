@@ -20,7 +20,7 @@ namespace Angular_API.Controllers
         [HttpGet ]
        public   JsonResult TransActionsList() 
         {
-            return   Json(repo._StoreTrns.GetAll(), new System.Text.Json.JsonSerializerOptions());
+            return   Json(repo._StoreTrns.GetByCondition(c=>c.TrnsType==2).ToList(), new System.Text.Json.JsonSerializerOptions());
             
         }
     }
