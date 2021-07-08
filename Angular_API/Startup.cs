@@ -34,6 +34,7 @@ namespace Angular_API
             services.AddControllers();
             services.AddDbContext<ModelContext>(options =>
             options.UseOracle(Configuration.GetConnectionString("TestConn")));
+
             services.AddScoped<IRepoWrapper,RepoWrapper>();
             services.AddSwaggerGen(c =>
             {

@@ -46,14 +46,13 @@ namespace BLL.Repo
             return await  table.ToListAsync();
         }
 
-        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
+        public async Task<List<T>> GetByCondition(Expression<Func<T, bool>> expression)
         {
-            return   table.Where(expression);
+            var result = await table.Where(expression).ToListAsync();
+            
+            return result;
         }
-        public virtual IEnumerable<T> Get(
-            Expression<Func<T, bool>> filter = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeProperties = "")
+        public virtual IEnumerable<T> Get( Expression<Func<T, bool>> filter = null,Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
             IQueryable<T> query = DbSet;
 
@@ -87,24 +86,6 @@ namespace BLL.Repo
             table.Update(Entity);
         }
 
-       
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    _Context.Dispose();
-                }
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+        
     }
 }
