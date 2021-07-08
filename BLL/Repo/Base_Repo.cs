@@ -16,6 +16,8 @@ namespace BLL.Repo
         protected ModelContext _Context { set; get; }
         
         private DbSet<T>  table = null;
+        private bool disposedValue;
+
         protected DbSet<T> DbSet
         {
             get => table  ?? (table  = _Context.Set<T>());
@@ -40,6 +42,7 @@ namespace BLL.Repo
         public async  Task<List<T>> GetAll()
         {
             //CustomQueryBuilder<T>.GetList(table );
+            
             return await  table.ToListAsync();
         }
 
@@ -47,7 +50,33 @@ namespace BLL.Repo
         {
             return   table.Where(expression);
         }
+        public virtual IEnumerable<T> Get(
+            Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<T> query = DbSet;
 
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
+        }
         public async  Task<T> GetByID(int Id)
         {
             return await  table.FindAsync(Id);
@@ -56,6 +85,26 @@ namespace BLL.Repo
         public void Update(T Entity)
         {
             table.Update(Entity);
+        }
+
+       
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _Context.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
