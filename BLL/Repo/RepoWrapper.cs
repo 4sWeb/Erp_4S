@@ -63,6 +63,8 @@ namespace BLL.Repo
         private IUserperiod  userperiod;
         private IUsers users;
         private IUserstrans  userstrans;
+        private IStorespecapp storepecsapp;
+
         public RepoWrapper(ModelContext context)
         {
             _contex = context;
@@ -75,9 +77,7 @@ namespace BLL.Repo
            }
         }
         public IAccountstree _AccountsTree { get { if (accountstree == null) accountstree = new AccountstreeRepo(_contex);return accountstree; } }
-
         public IAgriage _Agriage { get { if (agriage == null) agriage = new AgriageRepo(_contex); return agriage; } }
-
         public IAgridata _Agridata { get { if (agridata == null) agridata = new AgridataRepo(_contex); return agridata; } }
         public IAgrifarm _Agrifarm { get { if (agrifarm == null) agrifarm = new AgrifarmRepo(_contex); return agrifarm; } }
         public IAgriprocess _Agriprocess { get { if (agriprocess == null) agriprocess = new AgriprocessRepo(_contex); return agriprocess; } }
@@ -130,6 +130,8 @@ namespace BLL.Repo
         public IUserperiod  _Userperiod  { get { if (userperiod == null) userperiod = new UserperiodRepo(_contex); return userperiod; } }
         public IUsers _Users { get { if (users == null) users = new UsersRepo (_contex); return users; } }
         public IUserstrans  _Userstrans { get { if (userstrans == null) userstrans = new UserstransRepo(_contex); return userstrans; } }
+       
+        public IStorespecapp _Storepecsapp { get { if (storepecsapp == null) storepecsapp = new StorespecappRepo(_contex); return storepecsapp; } }
         public void Save()
         {
             _contex.SaveChanges();

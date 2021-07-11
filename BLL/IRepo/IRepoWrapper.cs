@@ -61,6 +61,7 @@ namespace BLL.IRepo
          IUserperiod  _Userperiod  { get; }
          IUsers _Users { get; }
          IUserstrans  _Userstrans  { get; }
+         IStorespecapp _Storepecsapp { get; }
         void Save();
     }
 }
