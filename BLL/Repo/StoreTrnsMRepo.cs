@@ -12,5 +12,10 @@ namespace BLL.Repo
         {
 
         }
+
+        public int GetCountFromStoreTrnsM(decimal TrnsCode)
+        {
+           return GetByCondition(c => c.TrnsCode == TrnsCode).Result.Count;
+        }
     }
 }

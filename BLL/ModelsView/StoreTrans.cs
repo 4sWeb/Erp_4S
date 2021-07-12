@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Angular_API.ModelsView
+namespace BLL.ModelsView
 {
     public class StoreTrans
     {

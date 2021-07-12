@@ -7,5 +7,6 @@ namespace BLL.IRepo
 {
     public interface IStoreTrnsM:IBaseRepo<StoreTrnsM>
     {
+        int GetCountFromStoreTrnsM(decimal TrnsCode);
     }
 }

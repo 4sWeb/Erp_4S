@@ -9,5 +9,6 @@ namespace BLL.IRepo
 {
     public interface IStorespecapp:IBaseRepo<Storespecapp>
     {
+        Task<List<Storespecapp>> GetAllByAppID(int AppId);
     }
 }
