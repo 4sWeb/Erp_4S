@@ -19,13 +19,10 @@ namespace Angular_API.Controllers
             repo = _repo;
         }
 
-        [HttpGet ]
-       public  JsonResult TransActionsList() 
-       {
+        [HttpGet]
+        public JsonResult TransActionsList(int UserID = 1, int AppID = 2, int periodID = 2)
+        {
             List<StoreTrans> storetrnslst = new List<StoreTrans>();
-
-            var UserID = 1;
-            var AppID = 2;
 
             var ListUserApp = repo._Userstrans.GetByUserID(UserID).Result;
             var ListStoreSpecsApp = repo._Storepecsapp.GetAllByAppID(AppID).Result;
@@ -39,18 +36,7 @@ namespace Angular_API.Controllers
                 }
             }
             storetrnslst = repo._StoreTrns.AllTransactionInModul(ListStoreSpecsApp);
-
             return Json(storetrnslst, new System.Text.Json.JsonSerializerOptions());
-
-
-            //var list = repo._StoreTrns.GetAll().Result.ToList().Select(s => new { s.TrnsCode, s.Aname, s.Ename }).OrderBy(c=>c.TrnsCode).ToList();
-            //foreach(var item in list) 
-            //{
-            //    var _orderscount = repo._StoreTrnsM.GetByCondition(c => c.TrnsCode == item.TrnsCode).Result.Count ;
-            //    storetrnslst.Add(new StoreTrans { trid = item.TrnsCode, AName = item.Aname, EName = item.Ename,Count= _orderscount });
-            //}
-           // return Json(storetrnslst , new System.Text.Json.JsonSerializerOptions());
-           // return Json(repo._StoreTrnsM.Get(c => c.TrnsCode  == 2, c => c.OrderBy(c => c.TrnsCode), "StoreTrn").ToList(), new System.Text.Json.JsonSerializerOptions());
         }
     }
 }
