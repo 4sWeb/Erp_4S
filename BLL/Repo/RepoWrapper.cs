@@ -64,6 +64,16 @@ namespace BLL.Repo
         private IUsers users;
         private IUserstrans  userstrans;
         private IStorespecapp storepecsapp;
+        private IBranch branch;
+        private IPaymenttype paymenttype;
+        private IInstprogram instprogram;
+        private IStoretrnsmpayspec storetrnsmpayspec;
+        private IStoretrnsextra storetrnsextra;
+        private IExtra extra;
+        private IStoremextra storemextra;
+        private ICommittee committee;
+        private ICommitteedetail committeedetail;
+
 
         public RepoWrapper(ModelContext context)
         {
@@ -130,8 +140,18 @@ namespace BLL.Repo
         public IUserperiod  _Userperiod  { get { if (userperiod == null) userperiod = new UserperiodRepo(_contex); return userperiod; } }
         public IUsers _Users { get { if (users == null) users = new UsersRepo (_contex); return users; } }
         public IUserstrans  _Userstrans { get { if (userstrans == null) userstrans = new UserstransRepo(_contex); return userstrans; } }
-       
         public IStorespecapp _Storepecsapp { get { if (storepecsapp == null) storepecsapp = new StorespecappRepo(_contex); return storepecsapp; } }
+        public IBranch _branch { get { if (branch == null) branch = new BranchRepo(_contex); return branch; } }
+        public IPaymenttype _Paymenttype { get { if (paymenttype == null) paymenttype = new PaymenttypeRepo(_contex); return paymenttype; } }
+        public IInstprogram _Instprogram { get { if (instprogram == null) instprogram = new InstprogramRepo(_contex); return instprogram; } }
+        public IStoretrnsmpayspec _Storetrnsmpayspec { get { if (storetrnsmpayspec == null) storetrnsmpayspec = new StoretrnsmpayspecRepo(_contex); return storetrnsmpayspec; } }
+        public IStoretrnsextra _Storetrnsextra { get { if (storetrnsextra == null) storetrnsextra = new StoretrnsextraRepo(_contex); return storetrnsextra; } }
+        public IExtra _Extra { get { if (extra == null) extra = new ExtraRepo(_contex); return extra; } }
+        public IStoremextra _Storemextra { get { if (storemextra == null) storemextra = new StoremextraRepo(_contex); return storemextra; } }
+        public ICommittee _Committee { get { if (committee == null) committee = new CommitteeRepo(_contex); return committee; } }
+        public ICommitteedetail _Committeedetail { get { if (committeedetail == null) committeedetail = new CommitteedetailRepo(_contex); return committeedetail; } }
+
+
         public void Save()
         {
             _contex.SaveChanges();

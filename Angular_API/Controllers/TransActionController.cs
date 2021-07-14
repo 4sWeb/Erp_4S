@@ -28,22 +28,18 @@ namespace Angular_API.Controllers
             var AppID = 2;
 
             var ListUserApp = repo._Userstrans.GetByUserID(UserID).Result;
-            if(ListUserApp.Count == 0)
+            var ListStoreSpecsApp = repo._Storepecsapp.GetAllByAppID(AppID).Result;
+            if (ListUserApp.Count > 0)
             {
-                var ListStoreSpecsApp = repo._Storepecsapp.GetAllByAppID(AppID).Result;
-                storetrnslst = repo._StoreTrns.AllTransactionInModul(ListStoreSpecsApp);
-            }
-            else
-            {
-                var ListStoreSpecsApp = repo._Storepecsapp.GetAllByAppID(AppID).Result;
                 foreach (var item in ListStoreSpecsApp.ToList())
                 {
                     var Checked = ListUserApp.FirstOrDefault(u => u.Transcode == item.Storespecid.ToString());
                     if (Checked == null)
                         ListStoreSpecsApp.Remove(item);
                 }
-                storetrnslst = repo._StoreTrns.AllTransactionInModul(ListStoreSpecsApp);
             }
+            storetrnslst = repo._StoreTrns.AllTransactionInModul(ListStoreSpecsApp);
+
             return Json(storetrnslst, new System.Text.Json.JsonSerializerOptions());
 
 
