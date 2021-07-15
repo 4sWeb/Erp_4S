@@ -39,7 +39,7 @@ namespace BLL.Repo
         public StoreTrn GetTransactionSpecsById(decimal id)
         {
             if (id != default)
-                return GetByCondition(s => s.TrnsCode == 1).Result.FirstOrDefault();
+                return GetByCondition(s => s.TrnsCode == id).Result.FirstOrDefault();
             return null;
         }
     }

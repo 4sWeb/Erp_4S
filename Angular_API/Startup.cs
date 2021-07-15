@@ -53,7 +53,7 @@ namespace Angular_API
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Angular_API v1");
-                    c.RoutePrefix = string.Empty;
+                    c.RoutePrefix = string.Empty;      //UnComment in production
             });
                 
             }
