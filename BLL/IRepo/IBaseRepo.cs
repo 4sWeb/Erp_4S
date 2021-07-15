@@ -9,7 +9,7 @@ namespace BLL.IRepo
     public interface IBaseRepo<T>
     {
         Task<List<T>>GetAll();
-        Task<T> GetByID(int Id);
+        Task<T> GetByID(decimal Id);
         Task<List<T>> GetByCondition(Expression<Func<T, bool>> expression);
         IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> order = null, string includeproperties = "");
         void  Create(T Entity);

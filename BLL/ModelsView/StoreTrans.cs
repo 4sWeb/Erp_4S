@@ -7,7 +7,7 @@ namespace BLL.ModelsView
 {
     public class StoreTrans
     {
-        public decimal   trid { get; set; }
+        public decimal TransId { get; set; }
         public  string AName { get; set; }
         public string EName { get; set; }
         public int Count { get; set; }

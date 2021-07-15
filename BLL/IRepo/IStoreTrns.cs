@@ -9,5 +9,6 @@ namespace BLL.IRepo
     public interface IStoreTrns:IBaseRepo<StoreTrn>
     {
         List<StoreTrans> AllTransactionInModul(List<Storespecapp> ListStoreSpecsApp);
+        StoreTrn GetTransactionSpecsById(decimal id);
     } 
 }

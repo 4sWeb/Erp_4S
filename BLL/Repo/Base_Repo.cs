@@ -76,7 +76,7 @@ namespace BLL.Repo
                 return query.ToList();
             }
         }
-        public async  Task<T> GetByID(int Id)
+        public async  Task<T> GetByID(decimal Id)
         {
             return await  table.FindAsync(Id);
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Angular_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Transaction")]
     public class TransActionController : Controller
     {
         private readonly IRepoWrapper repo;
@@ -20,7 +20,7 @@ namespace Angular_API.Controllers
         }
 
         [HttpGet]
-        public JsonResult TransActionsList(int UserID = 1, int AppID = 2, int periodID = 2)
+        public JsonResult TransActionsList(int UserID = 1, int AppID = 2, int PeriodID = 2)
         {
             List<StoreTrans> storetrnslst = new List<StoreTrans>();
 
@@ -37,6 +37,22 @@ namespace Angular_API.Controllers
             }
             storetrnslst = repo._StoreTrns.AllTransactionInModul(ListStoreSpecsApp);
             return Json(storetrnslst, new System.Text.Json.JsonSerializerOptions());
+        }
+
+        [HttpGet]
+        [Route("DisplayAllTransaction")]
+        public JsonResult DisplayAllTransactionById(decimal id , int PeriodID)
+        {
+            var ListTransactions = repo._StoreTrnsM.AllTransactionByIdAndPeriodId(id, PeriodID);
+            return Json(ListTransactions , new System.Text.Json.JsonSerializerOptions());
+        }
+
+        [HttpGet]
+        [Route("TransactionSpec")]
+        public JsonResult TransactionSpecByID(decimal id)
+        {
+            var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(id);
+            return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
     }
 }
