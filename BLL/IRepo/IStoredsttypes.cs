@@ -7,5 +7,6 @@ namespace BLL.IRepo
 {
     public interface IStoredsttypes:IBaseRepo<Storedsttype>
     {
+        List<Storedsttype> ListStoreDstTypeByTransID(decimal id, string type);
     }
 }

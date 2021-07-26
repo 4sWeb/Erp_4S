@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +42,19 @@ namespace Angular_API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Angular_API", Version = "v1" });
                // c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
+
+            //added by alzahraa (try to solve CORS problem) 26-7-2021
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(
+            //      "CorsPolicy",
+            //      builder => builder.WithOrigins("http://localhost:4200")
+            //      .AllowAnyMethod()
+            //      .AllowAnyHeader()
+            //      .AllowCredentials());
+            //});
+            services.AddCors(c => c.AddPolicy("AllowOrigia", option => option.AllowAnyOrigin()));
+            //services.AddAuthentication(IISDefaults.AuthenticationScheme);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +69,11 @@ namespace Angular_API
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Angular_API v1");
                     c.RoutePrefix = string.Empty;      //UnComment in production
             });
-                
+
+                //added by alzahraa (try to solve CORS problem) 26-7-2021
+                app.UseCors(option=>option.AllowAnyOrigin());
+               // app.UsePreflightRequestHandler();
+
             }
            
 

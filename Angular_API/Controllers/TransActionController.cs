@@ -1,5 +1,6 @@
 ﻿using BLL.IRepo;
 using BLL.ModelsView;
+using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -35,7 +36,7 @@ namespace Angular_API.Controllers
                         ListStoreSpecsApp.Remove(item);
                 }
             }
-            storetrnslst = repo._StoreTrns.AllTransactionInModul(ListStoreSpecsApp);
+            storetrnslst = repo._StoreTrns.AllTransactionInModul(ListStoreSpecsApp, PeriodID);
             return Json(storetrnslst, new System.Text.Json.JsonSerializerOptions());
         }
 
@@ -54,5 +55,13 @@ namespace Angular_API.Controllers
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(id);
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
+
+        //[HttpGet]
+        //[Route("DisplayItems")]
+        //public JsonResult DisplayItemsFromSelectedTransactions()
+        //{
+        //    // To Get All Items From Selected Transactions
+        //    return Json(null);
+        //}
     }
 }

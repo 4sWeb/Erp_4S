@@ -2,6 +2,7 @@
 using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BLL.Repo
@@ -12,5 +13,13 @@ namespace BLL.Repo
         {
 
         }
+
+        public StoreAllcode GetStoreAllCodeById(decimal? id)
+        {
+            if (id != null && id != default)
+                return GetByCondition(s => s.StoreAllcodesId == id).Result.FirstOrDefault();
+            return null;
+        }
+
     }
 }

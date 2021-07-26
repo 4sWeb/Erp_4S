@@ -7,5 +7,6 @@ namespace BLL.IRepo
 {
     public interface IStoreAllsubcodes:IBaseRepo<StoreAllsubcode>
     {
+        StoreAllsubcode GetStoreAllSubCodeByID(decimal? Id);
     }
 }
