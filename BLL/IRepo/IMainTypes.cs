@@ -8,7 +8,6 @@ namespace BLL.IRepo
     public interface IMainTypes:IBaseRepo<MainType>
     {
         MainType GetMainTypeById(decimal? id);
-        List<MainType> ListMainTypeById(List<decimal?> ids);
 
         string GetNameFromMAinType(decimal? id);
     }

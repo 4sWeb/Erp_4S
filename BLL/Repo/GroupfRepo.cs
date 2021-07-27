@@ -1,6 +1,7 @@
 ﻿using BLL.IRepo;
 using BLL.ModelsView;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,12 @@ namespace BLL.Repo
 {
     public class GroupfRepo:Base_Repo<Groupf>,IGroupf
     {
-        private StoredsttypesRepo storedsttypesRepo;
-        private MainTypesRepo mainTypesRepo;
+        private ModelContext _dbContext4S;
+        private RepoWrapper repo;
+
         public GroupfRepo(ModelContext dbContext4S):base(dbContext4S)
         {
-            storedsttypesRepo = new StoredsttypesRepo(dbContext4S);
-            mainTypesRepo = new MainTypesRepo(dbContext4S);
+            _dbContext4S = dbContext4S;
         }
 
         public Groupf GetGroupFById(decimal? id)
@@ -25,24 +26,19 @@ namespace BLL.Repo
             return null;
         }
 
-        public List<Groupf> ListGroupFByCodeType(List<decimal> ids)
+        public object GetAllTypes(decimal Id , string type)
         {
-            if (ids.Count > 0)
-                return GetByCondition(G => ids.Contains(G.Codetype.Value)).Result;
-            return null;
-        }
+            repo = new RepoWrapper(_dbContext4S);
 
-        //public List<GroupF_VM> GetTypes(decimal id, string type)
-        //{
-        //    if(id != default && !string.IsNullOrEmpty(type))
-        //    {
-        //        var DstTypeList = storedsttypesRepo.ListStoreDstTypeByTransID(id, type)?.Select(s => s.Dsttype).ToList();
-        //        if (DstTypeList.Count > 0)
-        //        {
-        //            var MainTypesIds = mainTypesRepo.ListMainTypeById(DstTypeList)?.Select(M => M.Id);
-        //        }
-        //    }
-        //}
+            string query = @"select GF.GROUPF_ID as Type_ID , GF.ANAME as Type_Name
+                            from STOREDSTTYPEs dst
+                            inner
+                            join Main_TYPES MType on DST.DSTTYPE = MTYPE.ID
+                            inner Join GroupF gf on GF.CODETYPE = MTYPE.ID
+                            where DST.FT in '" + type + "' and DST.TRNSCODE = " + Id + " ";
+            var ResQuery = repo.CallQuery(query, null, 0).Result;
+            return ResQuery;
+        }
 
     }
 }

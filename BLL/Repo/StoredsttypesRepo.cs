@@ -14,11 +14,5 @@ namespace BLL.Repo
 
         }
 
-        public List<Storedsttype> ListStoreDstTypeByTransID(decimal id, string type)
-        {
-            if (id != default)
-                return GetByCondition(s => s.Trnscode == id && s.Ft == type).Result;
-            return null;
-        }
     }
 }

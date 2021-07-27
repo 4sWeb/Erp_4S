@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BLL.IRepo
 {
@@ -71,6 +72,7 @@ namespace BLL.IRepo
         IStoremextra _Storemextra { get; }
         ICommittee _Committee { get; }
         ICommitteedetail _Committeedetail { get; }
+        Task<object> CallQuery(string query, Dictionary<string, object> para = null, int type = 0);
         void Save();
     }
 }

@@ -11,17 +11,19 @@ namespace BLL.Repo
 {
     public class StoreTrnsRepo : Base_Repo<StoreTrn>, IStoreTrns
     {
-        StoreTrnsMRepo storeTrnsMRepo;
-        StoreDepSpecsRepo storeDepSpecsRepo;
+        private StoreTrnsMRepo storeTrnsMRepo;
+        private StoreDepSpecsRepo storeDepSpecsRepo;
+        private ModelContext _dbContext4S;
 
         public StoreTrnsRepo(ModelContext dbContext4S) : base(dbContext4S)
         {
-            storeTrnsMRepo = new StoreTrnsMRepo(dbContext4S);
-            storeDepSpecsRepo = new StoreDepSpecsRepo(dbContext4S);
+            _dbContext4S = dbContext4S;
         }
 
         public List<StoreTrans> AllTransactionInModul(List<Storespecapp> ListStoreSpecsApp, int PeriodID)
         {
+            storeTrnsMRepo = new StoreTrnsMRepo(_dbContext4S);
+
             List<StoreTrans> storetrnslst = new List<StoreTrans>();
             var ListStoreTrns = GetAll().Result.Select(s => new { s.TrnsCode, s.Aname, s.Ename }).ToList().OrderBy(c => c.TrnsCode).ToList();
 
@@ -43,6 +45,8 @@ namespace BLL.Repo
         {
             if (id != default)
             {
+                storeDepSpecsRepo = new StoreDepSpecsRepo(_dbContext4S);
+
                 AutoMapperGeneric<StoreTrn, TransactionSpecs_VM> autoMapperGeneric = new AutoMapperGeneric<StoreTrn, TransactionSpecs_VM>();
                 var TrnsObj = GetByCondition(s => s.TrnsCode == id).Result.FirstOrDefault();
                 if (TrnsObj != null)

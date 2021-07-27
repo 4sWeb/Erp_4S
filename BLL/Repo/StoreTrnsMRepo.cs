@@ -13,13 +13,11 @@ namespace BLL.Repo
         private StoreAllsubcodesRepo storeAllsubcodesRepo;
         private StoreAllcodesRepo storeAllcodesRepo;
         private MainTypesRepo mainTypesRepo;
+        private ModelContext _dbContext4S;
 
         public StoreTrnsMRepo(ModelContext dbContext4S) : base(dbContext4S)
         {
-            storeAllsubcodesRepo = new StoreAllsubcodesRepo(dbContext4S);
-            storeAllcodesRepo = new StoreAllcodesRepo(dbContext4S);
-            mainTypesRepo = new MainTypesRepo(dbContext4S);
-
+            _dbContext4S = dbContext4S;
         }
 
         public int GetCountFromStoreTrnsM(decimal TrnsCode, int PeriodID)
@@ -31,6 +29,10 @@ namespace BLL.Repo
         {
             if (id != default)
             {
+                storeAllsubcodesRepo = new StoreAllsubcodesRepo(_dbContext4S);
+                storeAllcodesRepo = new StoreAllcodesRepo(_dbContext4S);
+                mainTypesRepo = new MainTypesRepo(_dbContext4S);
+
                 return GetByCondition(s => s.TrnsCode == id && s.Period == PeriodId && s.Commited == 1).Result.Select(s => new Transaction_VM
                 {
                     TrnsCode = s.TrnsCode,

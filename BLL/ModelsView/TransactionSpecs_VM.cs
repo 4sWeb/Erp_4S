@@ -16,6 +16,8 @@ namespace BLL.ModelsView
         public decimal TrnsCode { get; set; }
         public string Aname { get; set; }
         public string Ename { get; set; }
+        public object From_Type { get; set; }  // ( Altaraf From )
+        public object To_Type { get; set; }    // ( Altaraf TO )
         public byte TrnsType { get; set; }
         public byte TrnsNature { get; set; }
         public bool? SalesRep { get; set; }

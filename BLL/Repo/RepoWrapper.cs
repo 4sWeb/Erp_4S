@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using BLL.IRepo;
 using DAL.Models;
 namespace BLL.Repo
@@ -150,7 +151,13 @@ namespace BLL.Repo
         public IStoremextra _Storemextra { get { if (storemextra == null) storemextra = new StoremextraRepo(_contex); return storemextra; } }
         public ICommittee _Committee { get { if (committee == null) committee = new CommitteeRepo(_contex); return committee; } }
         public ICommitteedetail _Committeedetail { get { if (committeedetail == null) committeedetail = new CommitteedetailRepo(_contex); return committeedetail; } }
-
+       
+        public async Task<object> CallQuery(string query, Dictionary<string, object> para = null, int type = 0)
+        {
+            TestQuery queryengine = new TestQuery();
+            var result = await queryengine.Get(query, para, type);
+            return result;
+        }
 
         public void Save()
         {

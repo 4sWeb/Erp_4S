@@ -24,10 +24,6 @@ namespace Erp_4S.Controllers
 
         public IActionResult Index()
         {
-            var rr = _repo._Users.GetAll();
-            TestQuery Test = new TestQuery();
-            Test.Get();
-
             return View();
         }
 

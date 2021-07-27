@@ -21,6 +21,8 @@ namespace Angular_API
 {
     public class Startup
     {
+        //private string MyAllowSpecificOrigins = "AllowOrigia";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,21 +42,34 @@ namespace Angular_API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Angular_API", Version = "v1" });
-               // c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
             //added by alzahraa (try to solve CORS problem) 26-7-2021
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(
-            //      "CorsPolicy",
-            //      builder => builder.WithOrigins("http://localhost:4200")
-            //      .AllowAnyMethod()
-            //      .AllowAnyHeader()
-            //      .AllowCredentials());
-            //});
+                //services.AddCors(options =>
+                //{
+                //    options.AddPolicy(
+                //      "CorsPolicy",
+                //      builder => builder.WithOrigins("http://localhost:4200")
+                //      .AllowAnyMethod()
+                //      .AllowAnyHeader()
+                //      .AllowCredentials());
+                //});
+
+                //services.AddCors(options =>
+                //{
+                //    options.AddPolicy(MyAllowSpecificOrigins,
+                //    builder =>
+                //    {
+                //        builder.AllowAnyOrigin();
+                //        builder.AllowAnyMethod();
+                //        builder.AllowAnyHeader();
+                //    });
+
+                //});
+            //
+
             services.AddCors(c => c.AddPolicy("AllowOrigia", option => option.AllowAnyOrigin()));
-            //services.AddAuthentication(IISDefaults.AuthenticationScheme);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,11 +82,12 @@ namespace Angular_API
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Angular_API v1");
-                    c.RoutePrefix = string.Empty;      //UnComment in production
-            });
+                    //c.RoutePrefix = string.Empty;      //UnComment in production
+                });
 
                 //added by alzahraa (try to solve CORS problem) 26-7-2021
-                app.UseCors(option=>option.AllowAnyOrigin());
+                // app.UseCors(MyAllowSpecificOrigins);
+                
                // app.UsePreflightRequestHandler();
 
             }
@@ -80,7 +96,7 @@ namespace Angular_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(option => option.AllowAnyOrigin());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

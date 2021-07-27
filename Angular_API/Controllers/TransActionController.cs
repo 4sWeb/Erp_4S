@@ -1,9 +1,12 @@
 ﻿using BLL.IRepo;
 using BLL.ModelsView;
+using BLL.Repo;
 using DAL.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +15,7 @@ namespace Angular_API.Controllers
 {
     [ApiController]
     [Route("Transaction")]
+    [EnableCors("AllowOrigia")]
     public class TransActionController : Controller
     {
         private readonly IRepoWrapper repo;
@@ -53,6 +57,8 @@ namespace Angular_API.Controllers
         public JsonResult TransactionSpecByID(decimal id)
         {
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(id);
+            TransactionSpec.From_Type = repo._Groupf.GetAllTypes(id, "F"); // Altaraf From
+            TransactionSpec.To_Type = repo._Groupf.GetAllTypes(id, "T");   // Altaraf TO
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
 
@@ -63,5 +69,6 @@ namespace Angular_API.Controllers
         //    // To Get All Items From Selected Transactions
         //    return Json(null);
         //}
+
     }
 }

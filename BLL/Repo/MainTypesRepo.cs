@@ -11,11 +11,11 @@ namespace BLL.Repo
     {
         private StoreAllcodesRepo storeAllcodesRepo;
         private GroupfRepo groupfRepo;
+        private ModelContext _dbContext4S;
 
         public MainTypesRepo(ModelContext dbContext4S):base(dbContext4S)
         {
-            storeAllcodesRepo = new StoreAllcodesRepo(dbContext4S);
-            groupfRepo = new GroupfRepo(dbContext4S);
+            _dbContext4S = dbContext4S;
         }
 
         public MainType GetMainTypeById(decimal? id)
@@ -29,6 +29,9 @@ namespace BLL.Repo
         {
             if(id != null && id != default)
             {
+                storeAllcodesRepo = new StoreAllcodesRepo(_dbContext4S);
+                groupfRepo = new GroupfRepo(_dbContext4S);
+
                 var GroupfId = storeAllcodesRepo.GetStoreAllCodeById(id) != null ? storeAllcodesRepo.GetStoreAllCodeById(id).GroupfId : null;
                 if (GroupfId != null)
                 {
@@ -39,12 +42,6 @@ namespace BLL.Repo
             }
             return null;
         }
-
-        public List<MainType> ListMainTypeById(List<decimal?> ids)
-        {
-            if (ids.Count > 0 && ids != null)
-                return GetByCondition(M => ids.Contains(M.Id)).Result;
-            return null;
-        }
+       
     }
 }

@@ -9,8 +9,7 @@ namespace BLL.IRepo
     public interface IGroupf:IBaseRepo<Groupf>
     {
         Groupf GetGroupFById(decimal? id);
-        List<Groupf> ListGroupFByCodeType(List<decimal> ids);
+        object GetAllTypes(decimal Id, string type);
 
-        //List<GroupF_VM> GetTypes(decimal id, string type);
     }
 }
