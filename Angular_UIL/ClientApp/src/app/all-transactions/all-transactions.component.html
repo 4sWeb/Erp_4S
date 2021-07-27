@@ -1,0 +1,92 @@
+<p>all-transactions works!</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+
+</head>
+<body>
+  <div class="container pt-5">
+    <div class="mb-3" style="text-align:right">
+      <a [routerLinkActive]="['link-active']" [routerLink]="['/create-transaction']" class="btn btn-success" style="text-align:right">اضافة حركة جديدة</a>
+    </div>
+    <div class="main">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
+        <thead>
+          <tr style="text-align:right">
+            <th></th>
+            <th>تاريخ</th>
+            <!--<th>قيمة</th>
+            <th>كمية</th>-->
+            <th>طرف الى</th>
+            <th> طرف من</th>
+            <th>كود</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align:right" *ngFor="let trans of alltransactions">
+            <td><a class="btn btn-info">عرض</a></td>
+            <td>{{trans.TrnsDate}}</td>
+            <!--<td>61</td>
+            <td>2011/04/25</td>-->
+            <td>{{trans.From_TypeName}}</td>
+            <td>{{trans.TO_TypeName}}</td>
+            <td>{{trans.TrnsCode}}</td>
+          </tr>
+          <!--<tr>
+            <td><a class="btn btn-info">عرض</a></td>
+            <td>Tokyo</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>63</td>
+            <td>2011/07/25</td>
+          </tr>
+          <tr>
+
+            <td><a class="btn btn-info">عرض</a></td>
+            <td>Edinburgh</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>66</td>
+            <td>2009/01/12</td>
+          </tr>
+          <tr>
+            <td><a class="btn btn-info">عرض</a></td>
+            <td>Edinburgh</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>22</td>
+            <td>2012/03/29</td>
+          </tr>
+          <tr>
+            <td><a class="btn btn-info">عرض</a></td>
+            <td>Tokyo</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>33</td>
+            <td>2008/11/28</td>
+          </tr>-->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+
+
+
+
+  <router-outlet></router-outlet>
+</body>
+</html>
+
+
