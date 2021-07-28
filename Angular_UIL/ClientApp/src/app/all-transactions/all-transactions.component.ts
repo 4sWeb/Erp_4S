@@ -34,7 +34,7 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
     this.TransactionsService.displayAllTransactions(id, 2).subscribe(
       (response) => {
         console.log(id);
-        console.log(response);
+        console.log("response",response);
         this.alltransactions = response;
         this.dtTrigger.next();
       },

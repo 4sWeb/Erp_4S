@@ -13,7 +13,7 @@
 <body>
   <div class="container pt-5">
     <div class="mb-3" style="text-align:right">
-      <a [routerLinkActive]="['link-active']" [routerLink]="['/create-transaction']" class="btn btn-success" style="text-align:right">اضافة حركة جديدة</a>
+      <a [routerLinkActive]="['link-active']" [routerLink]="['/transaction-specific']" class="btn btn-success" style="text-align:right">اضافة حركة جديدة</a>
     </div>
     <div class="main">
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
@@ -21,10 +21,22 @@
           <tr style="text-align:right">
             <th></th>
             <th>تاريخ</th>
-            <!--<th>قيمة</th>
-            <th>كمية</th>-->
-            <th>طرف الى</th>
-            <th> طرف من</th>
+            <th style="text-align:center">
+              <span>الى</span>
+              <div class="row">
+                <div class="col-6">الاسم</div>
+                <div class="col-6">النوع</div>
+              </div>
+            </th>
+            <th style="text-align:center">
+            <span>من</span>
+            <br/>
+            <div class="row">
+              <div class="col-6">الاسم</div>
+              <div class="col-6">النوع</div>
+            </div>
+            </th>
+            <th>الفرع</th>
             <th>كود</th>
           </tr>
         </thead>
@@ -32,11 +44,20 @@
           <tr style="text-align:right" *ngFor="let trans of alltransactions">
             <td><a class="btn btn-info">عرض</a></td>
             <td>{{trans.TrnsDate}}</td>
-            <!--<td>61</td>
-            <td>2011/04/25</td>-->
-            <td>{{trans.From_TypeName}}</td>
-            <td>{{trans.TO_TypeName}}</td>
-            <td>{{trans.TrnsCode}}</td>
+            <td>
+              <div class="row">
+                <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
+                <div class="col-6">{{trans.TO_TypeName}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
+                <div class="col-6">{{trans.From_TypeName}}</div>
+              </div>
+            </td>
+            <td>{{trans.branch}}</td>
+            <td>{{trans.TrnsNo}}</td>
           </tr>
           <!--<tr>
             <td><a class="btn btn-info">عرض</a></td>

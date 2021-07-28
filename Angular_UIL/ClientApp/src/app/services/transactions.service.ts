@@ -5,11 +5,12 @@ import { map, catchError } from 'rxjs/operators'
 import { Observable} from 'rxjs';
 import { Transactions } from '../models/transactions';
 import { AllTransactions } from '../models/all-transactions';
+import { environment } from '../../environments/environment.prod';
 
 
 
 
-const API_Transaction = 'http://10.8.2.153:9064/transaction';
+//const API_Transaction = 'http://10.8.2.153:9064/transaction';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class TransactionsService {
   
 //get list of transaction
   getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<Transactions[]> {
-    console.log(UserID,AppID);
-    return this.http.get<Transactions[]>(`${API_Transaction}?UserID=${UserID}&AppID=${AppID}&PeriodID=${periodID}`)
+    console.log(UserID, AppID);
+    return this.http.get<Transactions[]>(`${environment.Api_Url}?UserID=${UserID}&AppID=${AppID}&PeriodID=${periodID}`)
   }
 
 
@@ -32,7 +33,7 @@ export class TransactionsService {
   displayAllTransactions(id: number, PeriodID: number): Observable<AllTransactions[]> {
     console.log(id);
     console.log(PeriodID);
-    return this.http.get<AllTransactions[]>(`${API_Transaction}/DisplayAllTransaction?UserID=${id}&PeriodID=${PeriodID}`)
+    return this.http.get<AllTransactions[]>(`${environment.Api_Url}/DisplayAllTransaction?id=${id}&PeriodID=${PeriodID}`)
   }
 
 
