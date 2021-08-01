@@ -59,8 +59,12 @@ namespace Angular_API.Controllers
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(id);
             TransactionSpec.From_Type = repo._Groupf.GetAllTypes(id, "F"); // Altaraf From
             TransactionSpec.To_Type = repo._Groupf.GetAllTypes(id, "T");   // Altaraf TO
+
+            TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(id);
+
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
+
 
         //[HttpGet]
         //[Route("DisplayItems")]

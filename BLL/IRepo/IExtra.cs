@@ -9,5 +9,6 @@ namespace BLL.IRepo
 {
     public interface IExtra:IBaseRepo<Extra>
     {
+        object GetExtraByTrnsID(decimal id);
     }
 }

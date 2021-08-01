@@ -18,6 +18,7 @@ namespace BLL.ModelsView
         public string Ename { get; set; }
         public object From_Type { get; set; }  // ( Altaraf From )
         public object To_Type { get; set; }    // ( Altaraf TO )
+        public object ExtraFields { get; set; } 
         public byte TrnsType { get; set; }
         public byte TrnsNature { get; set; }
         public bool? SalesRep { get; set; }

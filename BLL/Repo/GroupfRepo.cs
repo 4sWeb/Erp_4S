@@ -26,6 +26,7 @@ namespace BLL.Repo
             return null;
         }
 
+
         public object GetAllTypes(decimal Id , string type)
         {
             repo = new RepoWrapper(_dbContext4S);
