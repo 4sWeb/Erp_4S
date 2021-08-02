@@ -34,7 +34,7 @@ import { TransactionSpecificComponent } from './transaction-specific/transaction
       { path: 'all-transactions/:id', component: AllTransactionsComponent },
       { path: 'create-transaction', component: CreateTransactionComponent },
       { path: 'transaction-list', component: TransactionsListComponent },
-      { path: 'transaction-specific', component: TransactionSpecificComponent },
+      { path: 'transaction-specific/:id', component: TransactionSpecificComponent },
     ])
   ],
   providers: [TransactionsService],

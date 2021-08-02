@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-transaction',
@@ -14,9 +17,12 @@ export class CreateTransactionComponent implements OnInit {
   public dateValue: Date = new Date();
   
 
-  constructor() { }
+  constructor(public ar: ActivatedRoute) { }
+/*  filter$: Observable<string>;*/
 
   ngOnInit() {
+    //this.filter$ = this.ar.queryParamMap.pipe(
+    //  map((params: ParamMap) => params.get('filter')));
   }
 
 }

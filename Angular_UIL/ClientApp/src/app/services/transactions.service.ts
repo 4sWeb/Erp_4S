@@ -6,6 +6,7 @@ import { Observable} from 'rxjs';
 import { Transactions } from '../models/transactions';
 import { AllTransactions } from '../models/all-transactions';
 import { environment } from '../../environments/environment.prod';
+import { TransactionSpecific } from '../models/transaction-specific';
 
 
 
@@ -35,6 +36,15 @@ export class TransactionsService {
     console.log(PeriodID);
     return this.http.get<AllTransactions[]>(`${environment.Api_Url}/DisplayAllTransaction?id=${id}&PeriodID=${PeriodID}`)
   }
+
+
+  //get all feildes neaded to create specific transaction
+  displayAllFieldesSpecificTransaction(id: number): Observable<TransactionSpecific> {
+    console.log(id);
+    return this.http.get<TransactionSpecific>(`${environment.Api_Url}/TransactionSpec?id=${id}`)
+  }
+
+
 
 
 
