@@ -59,7 +59,7 @@ namespace BLL.Repo
                             TransactionsNames_VM transactionsNames_VM = new TransactionsNames_VM()
                             {
                                 StoreDepSpec_Id = item.StoreDepSpecsId,
-                                Transaction_Id = item.Trnscode,
+                                Transaction_Id = item.Groupno,
                                 Transaction_Name = item.Aname
                             };
                             TransSpecVM_List.TransactionsNames.Add(transactionsNames_VM);

@@ -152,7 +152,7 @@ namespace BLL.Repo
         public ICommittee _Committee { get { if (committee == null) committee = new CommitteeRepo(_contex); return committee; } }
         public ICommitteedetail _Committeedetail { get { if (committeedetail == null) committeedetail = new CommitteedetailRepo(_contex); return committeedetail; } }
        
-        public async Task<object> CallQuery(string query, Dictionary<string, object> para = null, int type = 0)
+        public async Task<List<object>> CallQuery(string query, Dictionary<string, object> para = null, int type = 0)
         {
             TestQuery queryengine = new TestQuery();
             var result = await queryengine.Get(query, para, type);

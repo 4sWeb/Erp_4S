@@ -62,6 +62,24 @@ namespace Angular_API.Controllers
 
             TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(id);
 
+            /////////////////////////
+            Dictionary<string, object> par = new Dictionary<string, object>();
+            par.Add("@DepDetID", null );
+            par.Add("@TRANSCODE", TransactionSpec.TransactionsNames.FirstOrDefault().Transaction_Id);
+
+            var TransList = repo.CallQuery("GetdepremaningqtyAllTrans2", par, 1);
+
+            List<Transaction_VM> Items = new List<Transaction_VM>();
+            foreach (var item in TransList.Result.ToList())
+            {
+                Dictionary<string, object> Current = (Dictionary<string, object>)item;
+                var NewItem = repo._StoreTrnsM.GetByCondition(c => c.StoreTrnsMId == decimal.Parse(Current.GetValueOrDefault("MID").ToString())).Result.Select(s => new { s.TrnsCode, s.TrnsDate, s.TrnsNo, s.StoreTrnsMId });
+                Items.Add(new Transaction_VM { StoreTrnsMId = NewItem.FirstOrDefault().StoreTrnsMId, TrnsCode = NewItem.FirstOrDefault().TrnsCode, TrnsDate = NewItem.FirstOrDefault().TrnsDate, TrnsNo = NewItem.FirstOrDefault().TrnsNo });
+            }
+
+            TransactionSpec.TrnsList = Items;
+            /////////////////////
+
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
 

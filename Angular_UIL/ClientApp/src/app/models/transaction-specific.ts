@@ -1,3 +1,4 @@
+import { AllTransactions } from "./all-transactions";
 import { ExtraField } from "./extra-field";
 import { FromType } from "./from-type";
 import { ToType } from "./to-type";
@@ -181,7 +182,8 @@ export class TransactionSpecific {
     public TransactionsNames?: TransactionsName[],
     public ExtraFields?: ExtraField[],
     public From_Type?: FromType[],
-    public To_Type?: ToType[]
+    public To_Type?: ToType[],
+    public TrnsList?: AllTransactions[]
   ) { }
 }
 

@@ -190,6 +190,7 @@ namespace BLL.ModelsView
         public bool? Patchno { get; set; }
         public bool? Lotasdocno { get; set; }
         public bool? Hasattachments { get; set; }
+        public object TrnsList { get; set; }
 
         public List<TransactionsNames_VM> TransactionsNames { get; set; }
     }

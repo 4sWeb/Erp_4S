@@ -30,7 +30,9 @@ namespace BLL.Repo
 
         //}
 
-        public async Task<object> Get(string squery, Dictionary<string, object> para = null, int type = 0)
+       
+
+        public async Task<List<object>> Get(string squery, Dictionary<string, object> para = null, int type = 0)
         {
             string connectionString = @"Data Source=10.8.2.154/DOTNET.lehaa.local;User ID=AGROTEST;Password=AGROTEST;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
             string command = squery;
@@ -52,25 +54,15 @@ namespace BLL.Repo
                             orapar.Add(param);
                         }
                         cmd.Parameters.AddRange(orapar.ToArray());
-                        cmd.Parameters.Add("result", OracleDbType.RefCursor, ParameterDirection.Output);
+                        cmd.Parameters.Add("CURSORPARAM", OracleDbType.RefCursor, ParameterDirection.Output);
                     }
                     OracleDataReader Reader = null;
                     DataTable Data = new DataTable();
                     if (conn.State == ConnectionState.Closed) conn.Open();
+                    Reader = cmd.ExecuteReader();
 
-                    if (type == 1)
+                    if (Reader.HasRows)
                     {
-                        var value = cmd.ExecuteScalar();
-                        Data.Columns.Add("ID");
-                        Data.Columns.Add("Quntity");
-                        var row = Data.NewRow();
-                        row["ID"] = cmd.Parameters[1].Value;
-                        row["Quntity"] = value;
-                        Data.Rows.Add(row);
-                    }
-                    else
-                    {
-                        Reader = cmd.ExecuteReader();
                         Data.Load(Reader);
                     }
                     return FromDataTableToJson(Data);
@@ -78,9 +70,9 @@ namespace BLL.Repo
             }
         }
 
-        public object FromDataTableToJson(DataTable dt)
+        public List<object> FromDataTableToJson(DataTable dt)
         {
-            var list = new List<Dictionary<string, object>>();
+            var list = new List< object>();
             foreach (DataRow row in dt.Rows)
             {
                 var dic = new Dictionary<string, object>();
