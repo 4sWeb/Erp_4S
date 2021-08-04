@@ -10,5 +10,6 @@ namespace BLL.IRepo
     {
         int GetCountFromStoreTrnsM(decimal TrnsCode, int PeriodID);
         List<Transaction_VM> AllTransactionByIdAndPeriodId(decimal id , decimal PeriodId);
+        List<Transaction_VM> AllTransByDepID(decimal DepID);
     }
 }

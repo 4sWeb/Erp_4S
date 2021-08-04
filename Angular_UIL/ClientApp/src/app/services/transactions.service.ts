@@ -7,6 +7,7 @@ import { Transactions } from '../models/transactions';
 import { AllTransactions } from '../models/all-transactions';
 import { environment } from '../../environments/environment.prod';
 import { TransactionSpecific } from '../models/transaction-specific';
+import { TransactionsDetails } from '../models/transactions-details';
 
 
 
@@ -42,6 +43,12 @@ export class TransactionsService {
   displayAllFieldesSpecificTransaction(id: number): Observable<TransactionSpecific> {
     console.log(id);
     return this.http.get<TransactionSpecific>(`${environment.Api_Url}/TransactionSpec?id=${id}`)
+  }
+
+  //get all feildes neaded to create specific transaction
+  getTransactionsByDepID(id: number): Observable<TransactionsDetails[]> {
+    console.log(id);
+    return this.http.get<TransactionsDetails[]>(`${environment.Api_Url}/GetTransactionsByDepID?DepTransID=${id}`)
   }
 
 

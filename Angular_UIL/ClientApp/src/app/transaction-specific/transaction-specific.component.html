@@ -63,7 +63,8 @@
           </div>
         </div>
 
-        <div class="row col-12"  *ngIf="TransactionSpecific.From_Type?.length > 0||TransactionSpecific.To_Type?.length > 0">
+        <!--div contain من , الي-->
+        <div class="row col-12" *ngIf="TransactionSpecific.From_Type?.length > 0||TransactionSpecific.To_Type?.length > 0">
           <div class="form-group row col-6" *ngIf="TransactionSpecific.From_Type?.length > 0">
             <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">من</label>
             <div class="col-sm-8">
@@ -74,8 +75,8 @@
           </div>
 
 
-          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.To_Type?.length > 0">
-            <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">الى</label>
+          <div class="form-group row col-6 " *ngIf="TransactionSpecific.To_Type?.length > 0" [ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
+            <label for="inputPassword" class=" col-form-label" style="text-align:right" [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">الى</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
                 <option *ngFor="let item of TransactionSpecific.From_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
@@ -83,384 +84,446 @@
             </div>
           </div>
         </div>
+        <!--End of div contain من , الي-->
 
-
-        <!--<div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
-          <div class="col-sm-9">
-            <input class="form-control" id="inputPassword" placeholder="Password">
-          </div>
-        </div>-->
-
-        <hr />
-        <br />
-        <h5 style="text-align:right">تفاصيل المحصول</h5>
-        <br />
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Typeid==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">نوع المحصول</label>
-          <div class="col-sm-9">
-            <div class="row">
-              <div class="col">
-                <select id="inputState" class="form-control" style="text-align:right">
-                  <option selected></option>
-                  <option>...</option>
-                </select>
-              </div>
-              <div class="col">
-                <select id="inputState" class="form-control" style="text-align:right">
-                  <option selected></option>
-                  <option>...</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="TransactionSpecific.Irrigationneed==true" style="text-align:right">
-          هل التسميد يستوجب الري
-          <div class="form-check" style="margin-right:25%">
-            نعم
-            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="نعم">
-          </div>
-
-          <div class="form-check" style="margin-right:25%">
-            لا
-            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="لا" style="margin-right:1.7%">
-          </div>
-        </div>
-
-
-
-        <div class="row col-12" *ngIf="TransactionSpecific.Weathercond==true||TransactionSpecific.Agridataid==true">
-          <div class="form-group row col-6" *ngIf="TransactionSpecific.Weathercond==true">
-            <label class="col-sm-3 col-form-label" style="text-align:right">حالة الطقس</label>
-            <div class="col-sm-8">
-              <select id="inputState" class="form-control" style="text-align:right">
-                <option selected></option>
-                <option>...</option>
-              </select>
-            </div>
-          </div>
-
-
-          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.Agridataid==true">
-            <label class="col-sm-4 col-form-label" style="text-align:right">اسم الزرعه</label>
-            <div class="col-sm-8">
-              <select id="inputState" class="form-control" style="text-align:right">
-                <option selected></option>
-                <option>...</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div class="row col-12" *ngIf="TransactionSpecific.Managername==true||TransactionSpecific.Employeeno==true">
-          <div class="form-group row col-6" *ngIf="TransactionSpecific.Managername==true">
-            <label class="col-sm-3 col-form-label" style="text-align:right">اسم المسئول</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text">
-            </div>
-          </div>
-
-          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.Employeeno==true">
-            <label class="col-sm-4 col-form-label" style="text-align:right">عدد العمال</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text">
-            </div>
-          </div>
-        </div>
-
-
-        <div class="row col-12">
-          <div class="form-group row col-6" *ngIf="TransactionSpecific.Irrigatemachine==true">
-            <label class="col-sm-3 col-form-label" style="text-align:right">ماكينة الري</label>
-            <div class="col-sm-8">
-              <input class="form-control" type="text">
-            </div>
-          </div>
-
-
-          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.Soilcond==true">
-            <label class="col-sm-4 col-form-label" style="text-align:right">حالة التربة</label>
-            <div class="col-sm-8">
-              <select id="inputState" class="form-control" style="text-align:right">
-                <option selected></option>
-                <option>...</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <hr />
-
-
-
-
-        <h5 style="text-align:right">تفاصيل الاستلام</h5>
-        <br />
-
-
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Receivedate==true">
-          <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">تاريخ الاستلام</label>
-          <div class="col-sm-9">
-            <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
-          </div>
-        </div>
-
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Paymenttype==true">
-          <label for="inputState" class="col-sm-3 col-form-label" style="text-align:right">طريقة السداد</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected>ad</option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
-
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Deliveryplace==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">مكان التسليم</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="text">
-          </div>
-        </div>
-        <hr />
-        <h5 style="text-align:right">تفاصيل وصول الشجنة</h5>
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Cargoexpected==true">
-          <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">تاريخ وصول أوراق الشحنة</label>
-          <div class="col-sm-9">
-            <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
-          </div>
-        </div>
-
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Cargoactually==true">
-          <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ الفعلي لوصول أوراق الشحنه</label>
-          <div class="col-sm-9">
-            <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
-          </div>
-        </div>
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Portarrival==true">
-          <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">تاريخ وصول الميناء</label>
-          <div class="col-sm-9">
-            <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
-          </div>
-        </div>
-
-
-
-        <div *ngIf="TransactionSpecific.Cargopaper==true" style="text-align:right">
-          حالة وصول أوراق الشحنة
-          <div class="form-check" style="margin-right:25%">
-            نعم
-            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="نعم">
-          </div>
-
-          <div class="form-check" style="margin-right:25%">
-            لا
-            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="لا" style="margin-right:1.7%">
-          </div>
-        </div>
-        <hr />
-
-
-
-        <h5 style="text-align:right"> الحساب</h5>
-        <br />
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.MainAccount==1">
-          <label class="col-sm-3 col-form-label" style="text-align:right">الحساب</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="text">
-          </div>
-        </div>
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.MainCostCenter==1">
-          <label class="col-sm-3 col-form-label" style="text-align:right">مركز التكلفة</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected></option>
-              <option>...</option>
-            </select>
+        <div class="form-group row">
+          <label for="exampleFormControlTextarea" class="col-sm-3 col-form-label" style="text-align:right">ملاحظات</label>
+          <div class="col-sm-8">
+            <textarea class="form-control" id="exampleFormControlTextarea"></textarea>
           </div>
         </div>
 
 
         <hr />
-        <h5 style="text-align:right">تفاصيل الشحن</h5>
         <br />
+        <!--<h5 style="text-align:right">تفاصيل المحصول</h5>
+  <br />
 
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Shippolino==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">رقم بوليصة الشحن</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="text">
-          </div>
+  <div class="form-group row" *ngIf="TransactionSpecific.Typeid==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">نوع المحصول</label>
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col">
+          <select id="inputState" class="form-control" style="text-align:right">
+            <option selected></option>
+            <option>...</option>
+          </select>
         </div>
-
-
-        <div class="form-group row" *ngIf="TransactionSpecific.Shipweekno==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">رقم الاسبوع	</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="text">
-          </div>
+        <div class="col">
+          <select id="inputState" class="form-control" style="text-align:right">
+            <option selected></option>
+            <option>...</option>
+          </select>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="TransactionSpecific.Irrigationneed==true" style="text-align:right">
+    هل التسميد يستوجب الري
+    <div class="form-check" style="margin-right:25%">
+      نعم
+      <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="نعم">
+    </div>
+
+    <div class="form-check" style="margin-right:25%">
+      لا
+      <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="لا" style="margin-right:1.7%">
+    </div>
+  </div>
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.Patchno==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">رقم التشغيله	</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="text">
-          </div>
-        </div>
+
+  <div class="row col-12" *ngIf="TransactionSpecific.Weathercond==true||TransactionSpecific.Agridataid==true">
+    <div class="form-group row col-6" *ngIf="TransactionSpecific.Weathercond==true">
+      <label class="col-sm-3 col-form-label" style="text-align:right">حالة الطقس</label>
+      <div class="col-sm-8">
+        <select id="inputState" class="form-control" style="text-align:right">
+          <option selected></option>
+          <option>...</option>
+        </select>
+      </div>
+    </div>
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.Shiplotno==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">رقم اللوط	</label>
-          <div class="col-sm-9">
-            <input class="form-control" type="text">
-          </div>
-        </div>
+    <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.Agridataid==true">
+      <label class="col-sm-4 col-form-label" style="text-align:right">اسم الزرعه</label>
+      <div class="col-sm-8">
+        <select id="inputState" class="form-control" style="text-align:right">
+          <option selected></option>
+          <option>...</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.SHIPCO==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">شركة الشحن</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected></option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
+
+  <div class="row col-12" *ngIf="TransactionSpecific.Managername==true||TransactionSpecific.Employeeno==true">
+    <div class="form-group row col-6" *ngIf="TransactionSpecific.Managername==true">
+      <label class="col-sm-3 col-form-label" style="text-align:right">اسم المسئول</label>
+      <div class="col-sm-8">
+        <input class="form-control" type="text">
+      </div>
+    </div>
+
+    <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.Employeeno==true">
+      <label class="col-sm-4 col-form-label" style="text-align:right">عدد العمال</label>
+      <div class="col-sm-8">
+        <input class="form-control" type="text">
+      </div>
+    </div>
+  </div>
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.Shiptrns==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">شركة النقل</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected></option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
+  <div class="row col-12">
+    <div class="form-group row col-6" *ngIf="TransactionSpecific.Irrigatemachine==true">
+      <label class="col-sm-3 col-form-label" style="text-align:right">ماكينة الري</label>
+      <div class="col-sm-8">
+        <input class="form-control" type="text">
+      </div>
+    </div>
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.Clearanceco==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">شركة تخليص</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected></option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
+    <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.Soilcond==true">
+      <label class="col-sm-4 col-form-label" style="text-align:right">حالة التربة</label>
+      <div class="col-sm-8">
+        <select id="inputState" class="form-control" style="text-align:right">
+          <option selected></option>
+          <option>...</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <hr />
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.Shipport==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">ميناء الشحن</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected></option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.Arrivalport==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">ميناء الوصول</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected></option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
+  <h5 style="text-align:right">تفاصيل الاستلام</h5>
+  <br />
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.Shipboat==true">
-          <label class="col-sm-3 col-form-label" style="text-align:right">اسم مركب الشحن</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
-              <option selected></option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Receivedate==true">
+    <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">تاريخ الاستلام</label>
+    <div class="col-sm-9">
+      <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Paymenttype==true">
+    <label for="inputState" class="col-sm-3 col-form-label" style="text-align:right">طريقة السداد</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected>ad</option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Deliveryplace==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">مكان التسليم</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text">
+    </div>
+  </div>
+  <hr />
+  <h5 style="text-align:right">تفاصيل وصول الشجنة</h5>
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Cargoexpected==true">
+    <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">تاريخ وصول أوراق الشحنة</label>
+    <div class="col-sm-9">
+      <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Cargoactually==true">
+    <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ الفعلي لوصول أوراق الشحنه</label>
+    <div class="col-sm-9">
+      <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Portarrival==true">
+    <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">تاريخ وصول الميناء</label>
+    <div class="col-sm-9">
+      <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:90%"></ejs-datetimepicker>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="TransactionSpecific.Cargopaper==true" style="text-align:right">
+    حالة وصول أوراق الشحنة
+    <div class="form-check" style="margin-right:25%">
+      نعم
+      <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="نعم">
+    </div>
+
+    <div class="form-check" style="margin-right:25%">
+      لا
+      <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="لا" style="margin-right:1.7%">
+    </div>
+  </div>
+  <hr />
+
+
+
+  <h5 style="text-align:right"> الحساب</h5>
+  <br />
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.MainAccount==1">
+    <label class="col-sm-3 col-form-label" style="text-align:right">الحساب</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text">
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.MainCostCenter==1">
+    <label class="col-sm-3 col-form-label" style="text-align:right">مركز التكلفة</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+
+
+  <hr />
+  <h5 style="text-align:right">تفاصيل الشحن</h5>
+  <br />
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Shippolino==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">رقم بوليصة الشحن</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text">
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Shipweekno==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">رقم الاسبوع	</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text">
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Patchno==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">رقم التشغيله	</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text">
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Shiplotno==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">رقم اللوط	</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text">
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.SHIPCO==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">شركة الشحن</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Shiptrns==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">شركة النقل</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Clearanceco==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">شركة تخليص</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Shipport==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">ميناء الشحن</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Arrivalport==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">ميناء الوصول</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf="TransactionSpecific.Shipboat==true">
+    <label class="col-sm-3 col-form-label" style="text-align:right">اسم مركب الشحن</label>
+    <div class="col-sm-9">
+      <select id="inputState" class="form-control" style="text-align:right">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>-->
 
 
 
         <div class="form-group row" *ngIf="TransactionSpecific.TransactionsNames?.length > 0">
           <label class="col-sm-3 col-form-label" style="text-align:right">يعتمد على</label>
-          <div class="col-sm-9">
-            <select id="inputState" class="form-control" style="text-align:right">
+          <div class="col-sm-8">
+            <select id="inputState" class="form-control" style="text-align:right" (change)="selectChangeHandler($event)">
               <option *ngFor="let item of TransactionSpecific.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
             </select>
           </div>
         </div>
+        <!--</form>-->
+        <br />
+        <br />
+
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="AllTransactions?.length > 0&&TransactionSpecific.TransactionsNames?.length > 0 &&selectedTransaction==null">
+          <table id="first-table" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
+            <thead>
+              <tr style="text-align:right">
+                <th>تاريخ</th>
+                <th style="text-align:center">
+                  <span>الى</span>
+                  <div class="row">
+                    <div class="col-6">الاسم</div>
+                    <div class="col-6">النوع</div>
+                  </div>
+                </th>
+                <th style="text-align:center">
+                  <span>من</span>
+                  <br />
+                  <div class="row">
+                    <div class="col-6">الاسم</div>
+                    <div class="col-6">النوع</div>
+                  </div>
+                </th>
+                <th>الفرع</th>
+                <th>كود</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="text-align:right" *ngFor="let trans of AllTransactions">
+                <td>{{trans.TrnsDate}}</td>
+                <td>
+                  <div class="row">
+                    <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.TO_TypeName}}</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="row">
+                    <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.From_TypeName}}</div>
+                  </div>
+                </td>
+                <td>{{trans.branch}}</td>
+                <td>{{trans.TrnsNo}}</td>
+                <td>
+                  <div class="form-check" style="margin-right:25%">
+                    <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="نعم">
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+
+        <!--test another datatabel-->
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null">
+          <table  id="second-table" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
+            <thead>
+              <tr style="text-align:right">
+                <th>تاريخ</th>
+                <th style="text-align:center">
+                  <span>الى</span>
+                  <div class="row">
+                    <div class="col-6">الاسم</div>
+                    <div class="col-6">النوع</div>
+                  </div>
+                </th>
+                <th style="text-align:center">
+                  <span>من</span>
+                  <br />
+                  <div class="row">
+                    <div class="col-6">الاسم</div>
+                    <div class="col-6">النوع</div>
+                  </div>
+                </th>
+                <th>الفرع</th>
+                <th>كود</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="text-align:right" *ngFor="let trans of TransactionsDetails">
+                <td>{{trans.TrnsDate}}</td>
+                <td>
+                  <div class="row">
+                    <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.TO_TypeName}}</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="row">
+                    <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.From_TypeName}}</div>
+                  </div>
+                </td>
+                <td>{{trans.branch}}</td>
+                <td>{{trans.TrnsNo}}</td>
+                <td>
+                  <div class="form-check" style="margin-right:25%">
+                    <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="نعم">
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </form>
-
-      <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="AllTransactions?.length > 0">
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
-          <thead>
-            <tr style="text-align:right">
-              <th></th>
-              <th>تاريخ</th>
-              <th style="text-align:center">
-                <span>الى</span>
-                <div class="row">
-                  <div class="col-6">الاسم</div>
-                  <div class="col-6">النوع</div>
-                </div>
-              </th>
-              <th style="text-align:center">
-                <span>من</span>
-                <br />
-                <div class="row">
-                  <div class="col-6">الاسم</div>
-                  <div class="col-6">النوع</div>
-                </div>
-              </th>
-              <th>الفرع</th>
-              <th>كود</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="text-align:right" *ngFor="let trans of AllTransactions">
-              <td><a class="btn btn-info">عرض</a></td>
-              <td>{{trans.TrnsDate}}</td>
-              <td>
-                <div class="row">
-                  <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
-                  <div class="col-6">{{trans.TO_TypeName}}</div>
-                </div>
-              </td>
-              <td>
-                <div class="row">
-                  <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
-                  <div class="col-6">{{trans.From_TypeName}}</div>
-                </div>
-              </td>
-              <td>{{trans.branch}}</td>
-              <td>{{trans.TrnsNo}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
     </div>
   </div>
 

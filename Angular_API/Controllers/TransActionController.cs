@@ -61,28 +61,27 @@ namespace Angular_API.Controllers
             TransactionSpec.To_Type = repo._Groupf.GetAllTypes(id, "T");   // Altaraf TO
 
             TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(id);
-
-            /////////////////////////
-            Dictionary<string, object> par = new Dictionary<string, object>();
-            par.Add("@DepDetID", null );
-            par.Add("@TRANSCODE", TransactionSpec.TransactionsNames.FirstOrDefault().Transaction_Id);
-
-            var TransList = repo.CallQuery("GetdepremaningqtyAllTrans2", par, 1);
-
             List<Transaction_VM> Items = new List<Transaction_VM>();
-            foreach (var item in TransList.Result.ToList())
-            {
-                Dictionary<string, object> Current = (Dictionary<string, object>)item;
-                var NewItem = repo._StoreTrnsM.GetByCondition(c => c.StoreTrnsMId == decimal.Parse(Current.GetValueOrDefault("MID").ToString())).Result.Select(s => new { s.TrnsCode, s.TrnsDate, s.TrnsNo, s.StoreTrnsMId });
-                Items.Add(new Transaction_VM { StoreTrnsMId = NewItem.FirstOrDefault().StoreTrnsMId, TrnsCode = NewItem.FirstOrDefault().TrnsCode, TrnsDate = NewItem.FirstOrDefault().TrnsDate, TrnsNo = NewItem.FirstOrDefault().TrnsNo });
-            }
-
+            Items = repo._StoreTrnsM.AllTransByDepID(TransactionSpec.TransactionsNames.FirstOrDefault().Transaction_Id);
             TransactionSpec.TrnsList = Items;
-            /////////////////////
-
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
-
+        [HttpGet]
+        [Route("GetTransactionsByDepID")]
+        public JsonResult GetTransactionsByDepID(decimal DepTransID)
+        {
+            List<Transaction_VM> Items = new List<Transaction_VM>();
+            Items = repo._StoreTrnsM.AllTransByDepID(DepTransID);
+            return Json(Items, new System.Text.Json.JsonSerializerOptions());
+        }
+        [HttpPost]
+        [Route("DisplayItems")]
+        public JsonResult DisplayItems(List<decimal> Items)
+        {
+            //List<decimal> Items = new List<decimal>() { 2872, 2878 };
+            List<TransactionsDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);
+            return Json(Results, new System.Text.Json.JsonSerializerOptions());
+        }
 
         //[HttpGet]
         //[Route("DisplayItems")]
