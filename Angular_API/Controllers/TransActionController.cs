@@ -59,6 +59,14 @@ namespace Angular_API.Controllers
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(id);
             TransactionSpec.From_Type = repo._Groupf.GetAllTypes(id, "F"); // Altaraf From
             TransactionSpec.To_Type = repo._Groupf.GetAllTypes(id, "T");   // Altaraf TO
+            var listOfToType = repo._Groupf.GetAllToTypes(id);
+            foreach (var item in listOfToType.Result.ToList())
+            {
+                Dictionary<string, object> current = (Dictionary<string, object>)item;
+                var result = current.FirstOrDefault().Value;
+               TransactionSpec.To_Type2=repo._StoreAllcodes.GetByCondition(c=>c.GroupfId==decimal.Parse(result.ToString() )).Result.Select(n=>new { n.Code,n.Aname});
+
+            }
 
             TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(id);
             List<Transaction_VM> Items = new List<Transaction_VM>();

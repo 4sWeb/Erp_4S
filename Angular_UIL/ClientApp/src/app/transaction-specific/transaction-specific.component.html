@@ -418,7 +418,7 @@
         <br />
 
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="AllTransactions?.length > 0&&TransactionSpecific.TransactionsNames?.length > 0 &&selectedTransaction==null">
-          <table id="first-table" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
+          <table id="first-table" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger1" class="table  table-bordered hover" style="width:100%">
             <thead>
               <tr style="text-align:right">
                 <th>تاريخ</th>
@@ -473,7 +473,7 @@
 
         <!--test another datatabel-->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null">
-          <table  id="second-table" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
+          <table  id="second-table" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger2" class="table  table-bordered hover" style="width:100%">
             <thead>
               <tr style="text-align:right">
                 <th>تاريخ</th>

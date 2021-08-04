@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BLL.Repo
 {
@@ -38,6 +39,23 @@ namespace BLL.Repo
                             inner Join GroupF gf on GF.CODETYPE = MTYPE.ID
                             where DST.FT in '" + type + "' and DST.TRNSCODE = " + Id + " ";
             var ResQuery = repo.CallQuery(query, null, 0).Result;
+            return ResQuery;
+        }
+
+
+        //alzahraa 4/8/2021 trying to retrive list of To Type
+        //getAllToType
+        public Task<List<object>> GetAllToTypes(decimal Id)
+        {
+            repo = new RepoWrapper(_dbContext4S);
+
+            string query = @"select GF.GROUPF_ID as Type_ID , GF.ANAME as Type_Name
+                            from STOREDSTTYPEs dst
+                            inner
+                            join Main_TYPES MType on DST.DSTTYPE = MTYPE.ID
+                            inner Join GroupF gf on GF.CODETYPE = MTYPE.ID
+                            where DST.FT in 'T' and DST.TRNSCODE = " + Id + " ";
+            var ResQuery = repo.CallQuery(query, null, 0);
             return ResQuery;
         }
 

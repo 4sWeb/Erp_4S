@@ -35,11 +35,15 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
       this.dtOptions[0] = {
         pagingType: 'full_numbers',
-        pageLength: 5
+        pageLength: 5,
+        destroy: true,
+        deferRender: true,
       },
         this.dtOptions[1] = {
           pagingType: 'full_numbers',
-          pageLength: 5
+        pageLength: 5,
+        destroy: true,
+        deferRender: true,
         }
 
 
@@ -86,17 +90,21 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   //event handler for the select element's change event
   selectChangeHandler(event: any) {
     //update the ui
+    $("#second-table").DataTable().clear().draw();
+    
     this.selectedTransaction = event.target.value;
     console.log(this.selectedTransaction);
     this.TransactionsService.getTransactionsByDepID(this.selectedTransaction).subscribe(
       (response) => {
         console.log("selected id transaction", this.selectedTransaction);
         this.TransactionsDetails = response;
+        this.rerender();
         console.log("selected id transaction", response)
-        //this.dtTrigger.next();
+        this.dtTrigger2.next();
       });
+    this.rerender();
     this.dtTrigger2.next();
-    //this.rerender();
+   // this.rerender();
   }
 
 
@@ -110,7 +118,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
           console.log("selected id transaction",this.selectedTransaction);
           this.TransactionsDetails = response;
           console.log("selected id transaction",response)
-          //this.dtTrigger.next();
+          this.dtTrigger2.next();
         });
       this.dtTrigger2.next();
     });
