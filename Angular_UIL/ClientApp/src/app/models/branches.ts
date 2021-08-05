@@ -1,6 +1,5 @@
-export class Branches {
-  constructor( public BRANCH_ID: number,
-    public BRANCH_NAME: string) {
+import { Result } from "./Result";
 
-  }
+export class Branches {
+  constructor(public Result?: Result[]) { }
 }

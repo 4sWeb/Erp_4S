@@ -30,7 +30,7 @@
             <label for="inputState" class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific?.Branches" value="{{item.BRANCH_ID}}">{{item.BRANCH_NAME}}</option>
+                <option *ngFor="let item of TransactionSpecific?.Branches.Result" value="{{item.BRANCH_ID}}">{{item.BRANCH_NAME}}</option>
               </select>
             </div>
           </div>
