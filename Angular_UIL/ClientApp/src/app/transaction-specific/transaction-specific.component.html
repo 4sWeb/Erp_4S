@@ -39,7 +39,7 @@
           <div class="form-group row col-6 mr-4">
             <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="inputPassword" placeholder="Password">
+              <input class="form-control" id="inputPassword" placeholder="{{TransactionSpecific.StoreTransMax}}" >
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
           <div class="form-group row col-6">
             <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
             <div class="col-sm-8">
-              <input class="form-control" id="inputPassword" placeholder="Password">
+              <input class="form-control" id="inputPassword" placeholder="{{TransactionSpecific.StoreTransMax}}">
             </div>
           </div>
 
@@ -63,22 +63,39 @@
         </div>
 
         <!--div contain من , الي-->
-        <div class="row col-12" *ngIf="TransactionSpecific.From_Type?.length > 0||TransactionSpecific.To_Type?.length > 0">
+        <div class="row col-12" *ngIf="TransactionSpecific.To_Type?.length > 0||TransactionSpecific.ToTypeDetails?.length > 0">
           <div class="form-group row col-6" *ngIf="TransactionSpecific.From_Type?.length > 0">
             <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">من</label>
+            <div class="col-sm-8">
+              <select class="form-control" style="text-align:right">
+                <option *ngFor="let item of TransactionSpecific.From_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row col-6">
+            <div class="col-sm-8">
+              <select class="form-control" style="text-align:right">
+                <option *ngFor="let item of TransactionSpecific.ToTypeDetails">{{item.Aname}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row col-12" *ngIf="TransactionSpecific.From_Type?.length > 0||TransactionSpecific.FromTypeDetails?.length > 0">
+          <div class="form-group row col-6 " *ngIf="TransactionSpecific.To_Type?.length > 0" [ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
+            <label for="inputPassword" class=" col-form-label" style="text-align:right" [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">الى</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
                 <option *ngFor="let item of TransactionSpecific.From_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
-
-
-          <div class="form-group row col-6 " *ngIf="TransactionSpecific.To_Type?.length > 0" [ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
-            <label for="inputPassword" class=" col-form-label" style="text-align:right" [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">الى</label>
-            <div class="col-sm-8">
+          <div class="form-group row col-6 " >
+            <div class="col-sm-8" *ngIf="TransactionSpecific.FromTypeDetails?.length > 0" [ngClass]="{'mr-4': TransactionSpecific.FromTypeDetails?.length > 0 }">
               <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.From_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
+                <option *ngFor="let item of TransactionSpecific.FromTypeDetails" value="{{item.Code}}">{{item.Aname}}</option>
               </select>
             </div>
           </div>
@@ -474,7 +491,7 @@
 
         <!--test another datatabel-->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null">
-          <table  id="second-table" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger2" class="table  table-bordered hover" style="width:100%">
+          <table id="second-table" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger2" class="table  table-bordered hover" style="width:100%">
             <thead>
               <tr style="text-align:right">
                 <th>تاريخ</th>

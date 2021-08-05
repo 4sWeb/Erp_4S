@@ -9,6 +9,7 @@ import { TransactionSpecific } from '../models/transaction-specific';
 import { TransactionsDetails } from '../models/transactions-details';
 import { TransactionsService } from '../services/transactions.service';
 import { DialogContentDatatabelComponent } from '../dialog-content-datatabel/dialog-content-datatabel.component';
+import { ToTypeDetails } from '../models/to-type-details';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
   TransactionsDetails?: TransactionsDetails[];
+  ToAllDetails?: ToTypeDetails[];
   dtOptions: DataTables.Settings[] = [];
   dtTrigger1: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
@@ -51,19 +53,23 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
 
     let id = 0;
+    let userId = 0;
     this.ar.params.subscribe(
       a => {
-        id = a['id'];
+        id = a['id'],
+          userId = a['userId']
       }
     )
 
 
-    this.TransactionsService.displayAllFieldesSpecificTransaction(id).subscribe(
+    this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
       (response) => {
         console.log(id);
         console.log("response", response);
         this.TransactionSpecific = response;
         this.AllTransactions = response.TrnsList;
+        this.ToAllDetails = response.ToTypeDetails;
+        console.log("toAllType", this.ToAllDetails);
         
       },
       (error) => { console.log(error); })
@@ -74,12 +80,14 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   ngAfterViewInit(): void {
 
     let id = 0;
+    let userId = 0;
     this.ar.params.subscribe(
       a => {
-        id = a['id'];
+        id = a['id'],
+          userId = a['userId']
       }
     )
-    this.TransactionsService.displayAllFieldesSpecificTransaction(id).subscribe(
+    this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
       (response) => {
         console.log(id);
         this.AllTransactions = response.TrnsList;

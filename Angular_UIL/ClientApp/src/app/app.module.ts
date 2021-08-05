@@ -40,7 +40,7 @@ import { DialogContentDatatabelComponent } from './dialog-content-datatabel/dial
       { path: 'all-transactions/:id', component: AllTransactionsComponent },
       { path: 'create-transaction', component: CreateTransactionComponent },
       { path: 'transaction-list', component: TransactionsListComponent },
-      { path: 'transaction-specific/:id', component: TransactionSpecificComponent },
+      { path: 'transaction-specific/:id/:userId', component: TransactionSpecificComponent },
     ]),
     BrowserAnimationsModule
   ],

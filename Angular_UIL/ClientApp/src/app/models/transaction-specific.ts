@@ -9,6 +9,7 @@ import { TransactionsName } from "./transactions-name";
 
 export class TransactionSpecific {
   constructor(public TrnsCode?: number,
+    public StoreTransMax?: number,
    public Aname?: string,
    public Ename?: string,
    public TrnsType?: number,
