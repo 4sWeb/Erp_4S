@@ -3,10 +3,13 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllTransactions } from '../models/all-transactions';
 import { TransactionSpecific } from '../models/transaction-specific';
 import { TransactionsDetails } from '../models/transactions-details';
 import { TransactionsService } from '../services/transactions.service';
+import { DialogContentDatatabelComponent } from '../dialog-content-datatabel/dialog-content-datatabel.component';
+
 
 @Component({
   selector: 'app-transaction-specific',
@@ -15,7 +18,7 @@ import { TransactionsService } from '../services/transactions.service';
 })
 export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewInit {
 
-  constructor(public TransactionsService: TransactionsService, public ar: ActivatedRoute) { }
+  constructor(public TransactionsService: TransactionsService, public ar: ActivatedRoute, public dialog: MatDialog) { }
    
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
@@ -93,6 +96,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
     $("#second-table").DataTable().clear().draw();
     
     this.selectedTransaction = event.target.value;
+
     console.log(this.selectedTransaction);
     this.TransactionsService.getTransactionsByDepID(this.selectedTransaction).subscribe(
       (response) => {
@@ -122,6 +126,27 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         });
       this.dtTrigger2.next();
     });
+  }
+
+
+
+  openDialog() {
+    //const dialogRef = this.dialog.open(DialogContentDatatabelComponent);
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      selectedTransaction: this.selectedTransaction,
+    };
+    console.log("from open dialog",this.selectedTransaction);
+
+    this.dialog.open(DialogContentDatatabelComponent, dialogConfig);
+
+    //dialogRef.afterClosed().subscribe(result => {
+    //  console.log(`Dialog result: ${result}`);
+    //});
   }
 
   ngOnDestroy(): void {

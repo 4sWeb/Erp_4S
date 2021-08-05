@@ -30,8 +30,7 @@
             <label for="inputState" class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
-                <option selected>الفرع الرئيسي</option>
-                <option>...</option>
+                <option *ngFor="let item of TransactionSpecific?.Branches" value="{{item.BRANCH_ID}}">{{item.BRANCH_NAME}}</option>
               </select>
             </div>
           </div>
@@ -412,6 +411,8 @@
               <option *ngFor="let item of TransactionSpecific.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
             </select>
           </div>
+          <button mat-button (click)="openDialog()" class="btn btn-info">Open dialog</button>
+
         </div>
         <!--</form>-->
         <br />

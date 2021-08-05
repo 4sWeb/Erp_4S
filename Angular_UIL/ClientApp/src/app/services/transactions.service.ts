@@ -42,7 +42,7 @@ export class TransactionsService {
   //get all feildes neaded to create specific transaction
   displayAllFieldesSpecificTransaction(id: number): Observable<TransactionSpecific> {
     console.log(id);
-    return this.http.get<TransactionSpecific>(`${environment.Api_Url}/TransactionSpec?id=${id}`)
+    return this.http.get<TransactionSpecific>(`${environment.Api_Url}/TransactionSpec?id=${id}`);
   }
 
   //get all feildes neaded to create specific transaction

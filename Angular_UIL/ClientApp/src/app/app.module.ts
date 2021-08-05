@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -13,6 +14,8 @@ import { CreateTransactionComponent } from './create-transaction/create-transact
 import { TransactionsService } from './services/transactions.service';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
 import { TransactionSpecificComponent } from './transaction-specific/transaction-specific.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogContentDatatabelComponent } from './dialog-content-datatabel/dialog-content-datatabel.component';
 
 @NgModule({
   declarations: [
@@ -21,21 +24,25 @@ import { TransactionSpecificComponent } from './transaction-specific/transaction
     AllTransactionsComponent,
     CreateTransactionComponent,
     TransactionsListComponent,
-    TransactionSpecificComponent
+    TransactionSpecificComponent,
+    DialogContentDatatabelComponent,
   ],
+  entryComponents: [DialogContentDatatabelComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     DataTablesModule,
     DateTimePickerModule,
+    MatDialogModule,
     RouterModule.forRoot([
       { path: '', component: TransactionsListComponent, pathMatch: 'full' },
       { path: 'all-transactions/:id', component: AllTransactionsComponent },
       { path: 'create-transaction', component: CreateTransactionComponent },
       { path: 'transaction-list', component: TransactionsListComponent },
       { path: 'transaction-specific/:id', component: TransactionSpecificComponent },
-    ])
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [TransactionsService],
   bootstrap: [AppComponent]

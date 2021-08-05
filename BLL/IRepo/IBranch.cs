@@ -9,6 +9,7 @@ namespace BLL.IRepo
 {
     public interface IBranch :IBaseRepo<Branch1>
     {
+        Task<List<object>> GetAllBranches(decimal Id);
 
     }
 }

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<body>
+  <p>dialog-content-datatabel works!</p>
+  <h2 mat-dialog-title>Install Angular</h2>
+  <mat-dialog-content class="mat-typography">
+    <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" >
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
+        <thead>
+          <tr style="text-align:right">
+            <th>تاريخ</th>
+            <th style="text-align:center">
+              <span>الى</span>
+              <div class="row">
+                <div class="col-6">الاسم</div>
+                <div class="col-6">النوع</div>
+              </div>
+            </th>
+            <th style="text-align:center">
+              <span>من</span>
+              <br />
+              <div class="row">
+                <div class="col-6">الاسم</div>
+                <div class="col-6">النوع</div>
+              </div>
+            </th>
+            <th>الفرع</th>
+            <th>كود</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align:right" *ngFor="let trans of TransactionsDetails">
+            <td>{{trans.TrnsDate}}</td>
+            <td>
+              <div class="row">
+                <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
+                <div class="col-6">{{trans.TO_TypeName}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
+                <div class="col-6">{{trans.From_TypeName}}</div>
+              </div>
+            </td>
+            <td>{{trans.branch}}</td>
+            <td>{{trans.TrnsNo}}</td>
+            <td>
+              <div class="form-check" style="margin-right:25%">
+                <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="نعم">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="btn btn-success">Install</button>
+  </mat-dialog-actions>
+</body>
+</html>
