@@ -56,22 +56,22 @@ namespace Angular_API
             //      .AllowCredentials());
             //});
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(MyAllowSpecificOrigins,
-            //    builder =>
-            //    {
-            //        builder.AllowAnyOrigin();
-            //        builder.AllowAnyMethod();
-            //        builder.AllowAnyHeader();
-            //    });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name:"MyAllowSpecificOrigins",
+                builder =>
+                {
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
+                });
 
-            //});
+            });
             //
 
-            services.AddCors(c => c.AddPolicy("AllowOrigia", option => option.AllowAnyOrigin())) ;
-            services.AddCors(c => c.AddPolicy("AllowOrigia", builder => builder.AllowAnyMethod()));
-            services.AddCors(c => c.AddPolicy("AllowOrigia", builder => builder.AllowAnyHeader()));
+            //services.AddCors(c => c.AddPolicy("AllowOrigia", option => option.AllowAnyOrigin())) ;
+            //services.AddCors(c => c.AddPolicy("CorePolicy", builder => builder.AllowAnyMethod()));
+            //services.AddCors(c => c.AddPolicy("CorePolicy", builder => builder.AllowAnyHeader()));
 
 
 
@@ -101,7 +101,10 @@ namespace Angular_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(option => option.AllowAnyOrigin());
+            app.UseCors("MyAllowSpecificOrigins");
+            //app.UseCors(option => option.AllowAnyOrigin());
+            //app.UseCors(option => option.AllowAnyMethod());
+            //app.UseCors(option => option.AllowAnyHeader());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

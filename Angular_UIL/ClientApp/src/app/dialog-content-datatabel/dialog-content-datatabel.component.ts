@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { DependancyProduct } from '../models/dependancy-product';
 import { TransactionsDetails } from '../models/transactions-details';
 import { TransactionsService } from '../services/transactions.service';
+import { DialogData } from '../transaction-specific/transaction-specific.component';
 
 @Component({
   selector: 'app-dialog-content-datatabel',
@@ -18,16 +19,20 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
   selectedTransaction: number;
   TransactionsDetails?: TransactionsDetails[];
 
-  checkedTransactions: number[];
-  DependancyProduct: DependancyProduct[];
+  checkedTransactions?: number[];
+  DependancyProduct?: DependancyProduct[];
 
   constructor(public TransactionsService: TransactionsService,
     private dialogRef: MatDialogRef<DialogContentDatatabelComponent>,
-    @Inject(MAT_DIALOG_DATA) data) {
+    @Inject(MAT_DIALOG_DATA)public data:DialogData) {
 
     this.selectedTransaction = data.selectedTransaction;
-    console.log("from Dialoogggg component",this.selectedTransaction);
+    this.checkedTransactions = data.checkedTransactions;
+    console.log("from Dialoogggg component", this.selectedTransaction);
+    console.log("from Dialoogggg component2", this.checkedTransactions);
   }
+
+
 
   ngOnInit() {
 
@@ -56,7 +61,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
       console.log(id + "unchecked");
       this.checkedTransactions = this.checkedTransactions.filter(m => m != id);
     }
-    console.log(this.checkedTransactions);
+    console.log("checkedTransactions",this.checkedTransactions);
   }
 
   ShowProduct() {
@@ -68,6 +73,11 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
         
       });
   
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+    //console.log("checkedTransactions", this.checkedTransactions);
   }
 
   ngOnDestroy(): void {

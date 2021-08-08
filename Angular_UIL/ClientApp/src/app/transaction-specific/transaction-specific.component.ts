@@ -11,6 +11,10 @@ import { TransactionsService } from '../services/transactions.service';
 import { DialogContentDatatabelComponent } from '../dialog-content-datatabel/dialog-content-datatabel.component';
 import { ToTypeDetails } from '../models/to-type-details';
 
+export interface DialogData {
+  selectedTransaction?: number;
+  checkedTransactions?: number[];
+}
 
 @Component({
   selector: 'app-transaction-specific',
@@ -30,7 +34,8 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   dtTrigger2: Subject<any> = new Subject();
   selectedTransaction: number;
 
-  checkedTransactions: number[];
+  checkedTransactions?: number[];
+
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -143,23 +148,35 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
 
 
-  openDialog() {
-    //const dialogRef = this.dialog.open(DialogContentDatatabelComponent);
+  //openDialog() {
+  //  //const dialogRef = this.dialog.open(DialogContentDatatabelComponent);
 
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+  //  const dialogConfig = new MatDialogConfig();
+  //  dialogConfig.disableClose = true;
+  //  dialogConfig.autoFocus = true;
 
-    dialogConfig.data = {
-      selectedTransaction: this.selectedTransaction,
-    };
-    console.log("from open dialog",this.selectedTransaction);
+  //  dialogConfig.data = {
+  //    selectedTransaction: this.selectedTransaction,
+  //  };
+  //  console.log("from open dialog",this.selectedTransaction);
 
-    this.dialog.open(DialogContentDatatabelComponent, dialogConfig);
+  //  this.dialog.open(DialogContentDatatabelComponent, dialogConfig);
 
-    //dialogRef.afterClosed().subscribe(result => {
-    //  console.log(`Dialog result: ${result}`);
-    //});
+  //  //dialogRef.afterClosed().subscribe(result => {
+  //  //  console.log(`Dialog result: ${result}`);
+  //  //});
+  //}
+  openDialog(): Observable<any> {
+    const dialogRef = this.dialog.open(DialogContentDatatabelComponent, {
+      data: { selectedTransaction: this.selectedTransaction, checkedTransactions: this.checkedTransactions }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.checkedTransactions = result;
+      console.log("From main component checkedTransactions", this.checkedTransactions)
+    });
+    return dialogRef.afterClosed();
   }
 
 

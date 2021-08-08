@@ -15,6 +15,8 @@ import { TransactionsService } from './services/transactions.service';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
 import { TransactionSpecificComponent } from './transaction-specific/transaction-specific.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogContentDatatabelComponent } from './dialog-content-datatabel/dialog-content-datatabel.component';
 
 @NgModule({
@@ -35,6 +37,8 @@ import { DialogContentDatatabelComponent } from './dialog-content-datatabel/dial
     DataTablesModule,
     DateTimePickerModule,
     MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
     RouterModule.forRoot([
       { path: '', component: TransactionsListComponent, pathMatch: 'full' },
       { path: 'all-transactions/:id', component: AllTransactionsComponent },

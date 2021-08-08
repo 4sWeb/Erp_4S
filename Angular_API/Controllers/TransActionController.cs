@@ -15,7 +15,7 @@ namespace Angular_API.Controllers
 {
     [ApiController]
     [Route("Transaction")]
-    [EnableCors("AllowOrigia")]
+    [EnableCors("MyAllowSpecificOrigins")]
     public class TransActionController : Controller
     {
         private readonly IRepoWrapper repo;
@@ -110,6 +110,27 @@ namespace Angular_API.Controllers
             //List<decimal> Items = new List<decimal>() { 2872, 2878 };
             List<TransactionsDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);
             return Json(Results, new System.Text.Json.JsonSerializerOptions());
+        }
+
+        [HttpPost]
+        [Route("SaveOrder")]
+        public JsonResult SaveOrder([FromHeader] StoreTrnsM TrnsM, [FromBody] List<StoreTrnsO> TrnsO)
+        {
+            repo._StoreTrnsM.Create(TrnsM);
+            foreach (var row in TrnsO)
+            {
+                repo._StoreTrnsO.Create(row);
+            }
+            try
+            {
+                repo.Save();
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
+            }
+
+            return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
 
         //[HttpGet]
