@@ -105,7 +105,7 @@ namespace Angular_API.Controllers
         }
         [HttpPost]
         [Route("DisplayItems")]
-        public JsonResult DisplayItems(List<decimal> Items)
+        public JsonResult DisplayItems([FromBody]List<decimal> Items)
         {
             //List<decimal> Items = new List<decimal>() { 2872, 2878 };
             List<TransactionsDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);

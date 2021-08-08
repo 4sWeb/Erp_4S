@@ -8,6 +8,7 @@ import { AllTransactions } from '../models/all-transactions';
 import { environment } from '../../environments/environment.prod';
 import { TransactionSpecific } from '../models/transaction-specific';
 import { TransactionsDetails } from '../models/transactions-details';
+import { DependancyProduct } from '../models/dependancy-product';
 
 
 
@@ -49,6 +50,12 @@ export class TransactionsService {
   getTransactionsByDepID(id: number): Observable<TransactionsDetails[]> {
     console.log(id);
     return this.http.get<TransactionsDetails[]>(`${environment.Api_Url}/GetTransactionsByDepID?DepTransID=${id}`)
+  }
+
+  //get all product dependancies
+  getAllProductDetails(ids: number[]): Observable<DependancyProduct[]> {
+    console.log("idsFrom Services",ids)
+    return this.http.post<DependancyProduct[]>(`${environment.Api_Url}/DisplayItems`,ids);
   }
 
 

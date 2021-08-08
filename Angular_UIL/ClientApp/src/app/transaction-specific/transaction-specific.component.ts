@@ -30,6 +30,8 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   dtTrigger2: Subject<any> = new Subject();
   selectedTransaction: number;
 
+  checkedTransactions: number[];
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
 
@@ -37,6 +39,8 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
  
   ngOnInit() {
+
+    this.checkedTransactions = new Array<number>();
 
       this.dtOptions[0] = {
         pagingType: 'full_numbers',
@@ -59,6 +63,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         id = a['id'],
           userId = a['userId']
       }
+      
     )
 
 
@@ -155,6 +160,18 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
     //dialogRef.afterClosed().subscribe(result => {
     //  console.log(`Dialog result: ${result}`);
     //});
+  }
+
+
+  getAllCheckedTransId(e: any,id: number) {
+    if (e.target.checked) {
+      console.log(id + "checked");
+      this.checkedTransactions.push(id);
+    } else {
+      console.log(id + "unchecked");
+      this.checkedTransactions = this.checkedTransactions.filter(m => m != id);
+    }
+    console.log(this.checkedTransactions);
   }
 
   ngOnDestroy(): void {

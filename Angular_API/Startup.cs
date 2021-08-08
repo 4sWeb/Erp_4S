@@ -46,30 +46,35 @@ namespace Angular_API
             });
 
             //added by alzahraa (try to solve CORS problem) 26-7-2021
-                //services.AddCors(options =>
-                //{
-                //    options.AddPolicy(
-                //      "CorsPolicy",
-                //      builder => builder.WithOrigins("http://localhost:4200")
-                //      .AllowAnyMethod()
-                //      .AllowAnyHeader()
-                //      .AllowCredentials());
-                //});
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(
+            //      "CorsPolicy",
+            //      builder => builder.WithOrigins("http://localhost:4200")
+            //      .AllowAnyMethod()
+            //      .AllowAnyHeader()
+            //      .AllowCredentials());
+            //});
 
-                //services.AddCors(options =>
-                //{
-                //    options.AddPolicy(MyAllowSpecificOrigins,
-                //    builder =>
-                //    {
-                //        builder.AllowAnyOrigin();
-                //        builder.AllowAnyMethod();
-                //        builder.AllowAnyHeader();
-                //    });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(MyAllowSpecificOrigins,
+            //    builder =>
+            //    {
+            //        builder.AllowAnyOrigin();
+            //        builder.AllowAnyMethod();
+            //        builder.AllowAnyHeader();
+            //    });
 
-                //});
+            //});
             //
 
-            services.AddCors(c => c.AddPolicy("AllowOrigia", option => option.AllowAnyOrigin()));
+            services.AddCors(c => c.AddPolicy("AllowOrigia", option => option.AllowAnyOrigin())) ;
+            services.AddCors(c => c.AddPolicy("AllowOrigia", builder => builder.AllowAnyMethod()));
+            services.AddCors(c => c.AddPolicy("AllowOrigia", builder => builder.AllowAnyHeader()));
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,7 +87,7 @@ namespace Angular_API
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Angular_API v1");
-                    //c.RoutePrefix = string.Empty;      //UnComment in production
+                   // c.RoutePrefix = string.Empty;      //UnComment in production
                 });
 
                 //added by alzahraa (try to solve CORS problem) 26-7-2021
