@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <body>
-  <p>dialog-content-datatabel works!</p>
-  <h2 mat-dialog-title>Install Angular</h2>
+  <!--<p>dialog-content-datatabel works!</p>
+  <h2 mat-dialog-title>Install Angular</h2>-->
   <mat-dialog-content class="mat-typography">
     <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" >
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
+      <table id="tabel1" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
         <thead>
           <tr style="text-align:right">
             <th>تاريخ</th>
@@ -27,6 +27,7 @@
             </th>
             <th>الفرع</th>
             <th>كود</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -49,10 +50,13 @@
             <td>{{trans.TrnsNo}}</td>
             <td>
               <div class="form-check" style="margin-right:25%">
-                <!--<mat-form-field>
-                  <input matInput [(ngModel)]="data.checkedTransactions">
-                </mat-form-field>-->
                 <input class="form-check-input position-static" type="checkbox" value="{{trans.StoreTrnsMId}}" (change)="getAllCheckedTransId($event,trans.StoreTrnsMId)" aria-label="نعم">
+              </div>
+            </td>
+            <!-- test to set value of check box as trans -->
+            <td>
+              <div class="form-check" style="margin-right:25%">
+                <input class="form-check-input position-static" type="checkbox" value="{{trans}}" (change)="getAllCheckedTransaction($event,trans,trans.StoreTrnsMId)" aria-label="نعم">
               </div>
             </td>
           </tr>
@@ -62,8 +66,8 @@
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button  class="btn btn-danger" (click)="onNoClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="checkedTransactions" cdkFocusInitial class="btn btn-success"style="text-align:right">موافق</button>
+    <button mat-button  class="btn btn-danger" (click)="onNoClick()">اغلاق</button>
+    <button mat-button [mat-dialog-close]="checkedTransactionsMain" cdkFocusInitial class="btn btn-success mr-3"style="text-align:right">موافق</button>
   </mat-dialog-actions>
 </body>
 </html>

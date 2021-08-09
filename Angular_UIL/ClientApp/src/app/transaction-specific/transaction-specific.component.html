@@ -1,4 +1,4 @@
-<p>transaction-specific works!</p>
+
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -21,7 +21,7 @@
 <body>
   <div class="container">
 
-    <div class="mb-5"><h3 style="text-align:right"><span>{{TransactionSpecific.TrnsCode}}&nbsp;&nbsp;{{TransactionSpecific.Aname}}</span></h3></div>
+    <div class="mb-5" style="background-color:lightblue"><h3 style="text-align:center"><span>{{TransactionSpecific.TrnsCode}}&nbsp;&nbsp;{{TransactionSpecific.Aname}}</span></h3></div>
 
     <div>
       <form>
@@ -39,7 +39,7 @@
           <div class="form-group row col-6 mr-4">
             <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="inputPassword" placeholder="{{TransactionSpecific.StoreTransMax}}" >
+              <input class="form-control" id="inputPassword" placeholder="{{TransactionSpecific.StoreTransMax}}">
             </div>
           </div>
         </div>
@@ -73,8 +73,8 @@
             </div>
           </div>
 
-          <div class="form-group row col-6">
-            <div class="col-sm-8">
+          <div class="form-group row col-6" style="margin-right:4%">
+            <div class="col-sm-8"style="margin-right:27%">
               <select class="form-control" style="text-align:right">
                 <option *ngFor="let item of TransactionSpecific.FromTypeDetails">{{item.Aname}}</option>
               </select>
@@ -83,17 +83,20 @@
         </div>
 
 
+        <!--[ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
+        [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">-->
+
         <div class="row col-12" *ngIf="TransactionSpecific.To_Type?.length > 0||TransactionSpecific.ToTypeDetails?.length > 0">
-          <div class="form-group row col-6 " *ngIf="TransactionSpecific.To_Type?.length > 0" [ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
-            <label for="inputPassword" class=" col-form-label" style="text-align:right" [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">الى</label>
+          <div class="form-group row col-6 " *ngIf="TransactionSpecific.To_Type?.length > 0" >
+            <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right" >الى</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
                 <option *ngFor="let item of TransactionSpecific.To_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
-          <div class="form-group row col-6 " >
-            <div class="col-sm-8" *ngIf="TransactionSpecific.FromTypeDetails?.length > 0" [ngClass]="{'mr-4': TransactionSpecific.FromTypeDetails?.length > 0 }">
+          <div class="form-group row col-6 " style="margin-right:4%">
+            <div class="col-sm-8" style="margin-right:27%" *ngIf="TransactionSpecific.FromTypeDetails?.length > 0">
               <select id="inputState" class="form-control" style="text-align:right">
                 <option *ngFor="let item of TransactionSpecific.ToTypeDetails" value="{{item.Code}}">{{item.Aname}}</option>
               </select>
@@ -422,77 +425,77 @@
 
 
         <div class="form-group row" *ngIf="TransactionSpecific.TransactionsNames?.length > 0">
-          <label class="col-sm-3 col-form-label" style="text-align:right">يعتمد على</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
+          <div class="col-sm-7">
             <select id="inputState" class="form-control" style="text-align:right" (change)="selectChangeHandler($event)">
+
+              <option selected="selected"></option>
               <option *ngFor="let item of TransactionSpecific.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
             </select>
           </div>
+          <div class="col-sm-2">
+            <!-- open dialog button -->
+            <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-info">عرض الحركات</button>
 
-          <!-- open dialog button -->
-          <button mat-raised-button (click)="openDialog()" class="btn btn-info">Open dialog</button>
-
+          </div>
         </div>
         <!--</form>-->
         <br />
         <br />
 
-        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="AllTransactions?.length > 0&&TransactionSpecific.TransactionsNames?.length > 0 &&selectedTransaction==null">
-          <table id="first-table" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger1" class="table  table-bordered hover" style="width:100%">
-            <thead>
-              <tr style="text-align:right">
-                <th>تاريخ</th>
-                <th style="text-align:center">
-                  <span>الى</span>
-                  <div class="row">
-                    <div class="col-6">الاسم</div>
-                    <div class="col-6">النوع</div>
-                  </div>
-                </th>
-                <th style="text-align:center">
-                  <span>من</span>
-                  <br />
-                  <div class="row">
-                    <div class="col-6">الاسم</div>
-                    <div class="col-6">النوع</div>
-                  </div>
-                </th>
-                <th>الفرع</th>
-                <th>كود</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="text-align:right" *ngFor="let trans of AllTransactions">
-                <td>{{trans.TrnsDate}}</td>
-                <td>
-                  <div class="row">
-                    <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
-                    <div class="col-6">{{trans.TO_TypeName}}</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="row">
-                    <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
-                    <div class="col-6">{{trans.From_TypeName}}</div>
-                  </div>
-                </td>
-                <td>{{trans.branch}}</td>
-                <td>{{trans.TrnsNo}}</td>
-                <td>
-                  <div class="form-check" style="margin-right:25%">
-                    <input class="form-check-input position-static" type="checkbox" id="blankCheckbox"  value="{{trans.StoreTrnsMId}}" (change)="getAllCheckedTransId($event,trans.StoreTrnsMId)"  aria-label="نعم">
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-
-
+        <!--<div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="AllTransactions?.length > 0&&TransactionSpecific.TransactionsNames?.length > 0 &&selectedTransaction==null">
+    <table id="first-table" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger1" class="table  table-bordered hover" style="width:100%">
+      <thead>
+        <tr style="text-align:right">
+          <th>تاريخ</th>
+          <th style="text-align:center">
+            <span>الى</span>
+            <div class="row">
+              <div class="col-6">الاسم</div>
+              <div class="col-6">النوع</div>
+            </div>
+          </th>
+          <th style="text-align:center">
+            <span>من</span>
+            <br />
+            <div class="row">
+              <div class="col-6">الاسم</div>
+              <div class="col-6">النوع</div>
+            </div>
+          </th>
+          <th>الفرع</th>
+          <th>كود</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align:right" *ngFor="let trans of AllTransactions">
+          <td>{{trans.TrnsDate}}</td>
+          <td>
+            <div class="row">
+              <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
+              <div class="col-6">{{trans.TO_TypeName}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="row">
+              <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
+              <div class="col-6">{{trans.From_TypeName}}</div>
+            </div>
+          </td>
+          <td>{{trans.branch}}</td>
+          <td>{{trans.TrnsNo}}</td>
+          <td>
+            <div class="form-check" style="margin-right:25%">
+              <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="{{trans.StoreTrnsMId}}" (change)="getAllCheckedTransId($event,trans.StoreTrnsMId)" aria-label="نعم">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>-->
         <!--test another datatabel-->
-        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null">
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null&&productdetails?.length<0">
           <table id="second-table" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger2" class="table  table-bordered hover" style="width:100%">
             <thead>
               <tr style="text-align:right">
@@ -543,6 +546,83 @@
             </tbody>
           </table>
         </div>
+        <!-- tabel view item selected -->
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null&&productdetails?.length>0">
+          <table class="table  table-bordered hover" style="width:100%">
+            <thead>
+              <tr style="text-align:right">
+                <th>تاريخ</th>
+                <th style="text-align:center">
+                  <span>الى</span>
+                  <div class="row">
+                    <div class="col-6">الاسم</div>
+                    <div class="col-6">النوع</div>
+                  </div>
+                </th>
+                <th style="text-align:center">
+                  <span>من</span>
+                  <br />
+                  <div class="row">
+                    <div class="col-6">الاسم</div>
+                    <div class="col-6">النوع</div>
+                  </div>
+                </th>
+                <th>الفرع</th>
+                <th>كود</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="text-align:right" *ngFor="let trans of checkedTransactionsMain">
+                <td>{{trans.TrnsDate}}</td>
+                <td>
+                  <div class="row">
+                    <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.TO_TypeName}}</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="row">
+                    <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.From_TypeName}}</div>
+                  </div>
+                </td>
+                <td>{{trans.branch}}</td>
+                <td>{{trans.TrnsNo}}</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- tabel view product details -->
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null&&productdetails?.length>0">
+          <table class="table  table-bordered hover" style="width:100%">
+            <thead>
+              <tr style="text-align:right">
+                <th></th>
+                <th style="text-align:right">الوحدة</th>
+                <th style="text-align:right">السعر</th>
+                <th style="text-align:right">الكمية</th>
+                <th>الاسم</th>
+                <th>كود</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="text-align:right" *ngFor="let trans of productdetails">
+                <td><button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index)">حذف</button></td>
+                <td>{{trans.Unit_Name}}</td>
+                <td>{{trans.Price}}</td>
+                <td>{{trans.Quantity}}</td>
+                <td>{{trans.Item_Name}}</td>
+                <td>{{trans.Item_ID}}</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+
+
       </form>
     </div>
   </div>

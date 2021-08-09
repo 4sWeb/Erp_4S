@@ -19,17 +19,23 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
   selectedTransaction: number;
   TransactionsDetails?: TransactionsDetails[];
 
+  checkedTransactionsMain?: TransactionsDetails[];
+
   checkedTransactions?: number[];
+  checkedTransactionsIds?: number[];
   DependancyProduct?: DependancyProduct[];
 
   constructor(public TransactionsService: TransactionsService,
     private dialogRef: MatDialogRef<DialogContentDatatabelComponent>,
     @Inject(MAT_DIALOG_DATA)public data:DialogData) {
 
+    dialogRef.disableClose = true;
     this.selectedTransaction = data.selectedTransaction;
-    this.checkedTransactions = data.checkedTransactions;
+    this.checkedTransactionsIds = data.checkedTransactionsIds;
+    this.checkedTransactionsMain = data.checkedTransactionsMain;
     console.log("from Dialoogggg component", this.selectedTransaction);
-    console.log("from Dialoogggg component2", this.checkedTransactions);
+    console.log("from Dialoogggg component2", this.checkedTransactionsIds);
+    console.log("from Dialoogggg component2", this.checkedTransactionsMain);
   }
 
 
@@ -37,6 +43,8 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.checkedTransactions = new Array<number>();
+    this.checkedTransactionsIds = new Array<number>();
+    this.checkedTransactionsMain = new Array<TransactionsDetails>();
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -56,11 +64,14 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
   getAllCheckedTransId(e: any, id: number) {
     if (e.target.checked) {
       console.log(id + "checked");
+      //var listofrows = $('#tabel1').DataTable().rows({ selected: true }).data().toArray();
       this.checkedTransactions.push(id);
     } else {
       console.log(id + "unchecked");
       this.checkedTransactions = this.checkedTransactions.filter(m => m != id);
     }
+    
+    //console.log("listOfRows", listofrows)
     console.log("checkedTransactions",this.checkedTransactions);
   }
 
@@ -73,6 +84,25 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
         
       });
   
+  }
+
+  getAllCheckedTransaction(e: any, trns: TransactionsDetails,id:number) {
+    if (e.target.checked) {
+      console.log(trns + "checked");
+      console.log(this.checkedTransactionsMain.push(trns));
+      this.checkedTransactionsIds.push(id);
+
+    } else {
+      console.log(trns + "unchecked");
+      this.checkedTransactionsMain = this.checkedTransactionsMain.filter(m => m != trns);
+      this.checkedTransactionsIds = this.checkedTransactionsIds.filter(m => m != id);
+      
+
+    }
+
+    console.log("checkedTransactionsItem", this.checkedTransactionsMain);
+  
+    console.log("checkedTransactionsIds", this.checkedTransactionsIds);
   }
 
   onNoClick(): void {

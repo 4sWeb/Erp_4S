@@ -1,36 +1,34 @@
 export class TransactionsDetails {
-  constructor(public Item_ID?: number,
-    public Item_Name?: string,
-    public Quantity?: number,
-    public Price?: number,
-    public Value?: number,
-    public Unit_ID?: number,
-    public Unit_Name?: string,
-    public Tax_Rate?: number,
-    public Tax_Value?: number,
-    public Disc_Rate?: number,
-    public Disc_Value?: number,
-    public Profit_Tax_Rate?: number,
-    public Profit_Tax_Value?: number,
-    public Net_Value?: number,
-    public Store_Trns_M_ID?: number,
-    public Note?: string,
-    public StoreTrnsOID?: number) { }
-  //public decimal? Item_ID { get; set; }
-  //      public string Item_Name { get; set; }
-  //      public decimal ? Quantity { get; set; }
-  //      public decimal ? Price { get; set; }
-  //      public decimal ? Value { get; set; }
-  //      public decimal ? Unit_ID { get; set; }
-  //      public string Unit_Name { get; set; }
-  //      public decimal ? Tax_Rate { get; set; }
-  //      public decimal ? Tax_Value { get; set; }
-  //      public decimal ? Disc_Rate { get; set; }
-  //      public decimal ? Disc_Value { get; set; }
-  //      public decimal ? Profit_Tax_Rate { get; set; }
-  //      public decimal ? Profit_Tax_Value { get; set; }
-  //      public decimal ? Net_Value { get; set; }
-  //      public decimal ? Store_Trns_M_ID { get; set; }
-  //      public string Note { get; set; }
-  //      public decimal ? StoreTrnsOID { get; set; }
+  constructor(
+    public StoreTrnsMId?: number,
+    public TrnsCode?: number,
+    public TrnsNo?: number,
+    public Storedocnum?: number,
+    public BranchId?: number,
+    public branch?: string,
+    public Period?: number,
+    public TrnsDate?: Date,
+    public From_StoreAllcodesId?: number,
+    public From_TypeName?: string,
+    public From_StoreAllcodesName?: string,
+    public To_StoreAllcodesId?: number,
+    public TO_TypeName?: string,
+    public To_StoreAllcodesName?: string) { }
+
+
+  //BranchId: 438
+  //From_StoreAllcodesId: null
+  //From_StoreAllcodesName: null
+  //From_TypeName: null
+  //Period: 1
+  //StoreTrnsMId: 7282
+  //Storedocnum: 7
+  //TO_TypeName: "مورد"
+  //To_StoreAllcodesId: 2445
+  //To_StoreAllcodesName: "مشتريات نقدية"
+  //TrnsCode: 5
+  //TrnsDate: "2020-09-05T12:08:47"
+  //TrnsNo: 7
+  //branch: "مزرعة ابو منقار"
+
 }

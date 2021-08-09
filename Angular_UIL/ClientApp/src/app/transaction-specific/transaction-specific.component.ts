@@ -10,10 +10,12 @@ import { TransactionsDetails } from '../models/transactions-details';
 import { TransactionsService } from '../services/transactions.service';
 import { DialogContentDatatabelComponent } from '../dialog-content-datatabel/dialog-content-datatabel.component';
 import { ToTypeDetails } from '../models/to-type-details';
+import { DependancyProduct } from '../models/dependancy-product';
 
 export interface DialogData {
   selectedTransaction?: number;
-  checkedTransactions?: number[];
+  checkedTransactionsIds?: number[];
+  checkedTransactionsMain?: TransactionsDetails[];
 }
 
 @Component({
@@ -34,7 +36,9 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   dtTrigger2: Subject<any> = new Subject();
   selectedTransaction: number;
 
-  checkedTransactions?: number[];
+  checkedTransactionsIds?: number[];
+  checkedTransactionsMain?: TransactionsDetails[];
+  productdetails?: DependancyProduct[];
 
 
   @ViewChild(DataTableDirective, { static: false })
@@ -45,7 +49,8 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
  
   ngOnInit() {
 
-    this.checkedTransactions = new Array<number>();
+    this.checkedTransactionsIds = new Array<number>();
+    this.checkedTransactionsMain = new Array<TransactionsDetails>();
 
       this.dtOptions[0] = {
         pagingType: 'full_numbers',
@@ -168,28 +173,42 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   //}
   openDialog(): Observable<any> {
     const dialogRef = this.dialog.open(DialogContentDatatabelComponent, {
-      data: { selectedTransaction: this.selectedTransaction, checkedTransactions: this.checkedTransactions }
+      data: { selectedTransaction: this.selectedTransaction, checkedTransactions: this.checkedTransactionsIds }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.checkedTransactions = result;
-      console.log("From main component checkedTransactions", this.checkedTransactions)
+      this.checkedTransactionsMain = result;
+      for (let i = 0; i < this.checkedTransactionsMain.length; i++) {
+        this.checkedTransactionsIds.push(this.checkedTransactionsMain[i].StoreTrnsMId); //use i instead of 0
+      }
+      console.log("From main component checkedTransactions",this.checkedTransactionsIds);
+      this.TransactionsService.getAllProductDetails(this.checkedTransactionsIds).subscribe(
+        (response) => {
+          console.log("LOLOLOLOLOLOL");
+          this.productdetails = response;
+          console.log("productDetails",this.productdetails);
+        });
     });
     return dialogRef.afterClosed();
   }
 
+  deleteProductRecord(i) {
+    this.productdetails.splice(i, 1);
 
-  getAllCheckedTransId(e: any,id: number) {
-    if (e.target.checked) {
-      console.log(id + "checked");
-      this.checkedTransactions.push(id);
-    } else {
-      console.log(id + "unchecked");
-      this.checkedTransactions = this.checkedTransactions.filter(m => m != id);
-    }
-    console.log(this.checkedTransactions);
   }
+
+  //getAllCheckedTransId(e: any,id: number) {
+  //  if (e.target.checked) {
+  //    console.log(id + "checked");
+  //    this.checkedTransactions.push(id);
+  //  } else {
+  //    console.log(id + "unchecked");
+  //    this.checkedTransactions = this.checkedTransactions.filter(m => m != id);
+  //  }
+  //  console.log(this.checkedTransactions);
+  //}
+  
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
