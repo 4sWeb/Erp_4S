@@ -73,8 +73,9 @@
             </div>
           </div>
 
-          <div class="form-group row col-6" style="margin-right:4%">
-            <div class="col-sm-8"style="margin-right:27%">
+          <div class="form-group row col-6 mr-4">
+            <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
+            <div class="col-sm-8">
               <select class="form-control" style="text-align:right">
                 <option *ngFor="let item of TransactionSpecific.FromTypeDetails">{{item.Aname}}</option>
               </select>
@@ -95,8 +96,9 @@
               </select>
             </div>
           </div>
-          <div class="form-group row col-6 " style="margin-right:4%">
-            <div class="col-sm-8" style="margin-right:27%" *ngIf="TransactionSpecific.FromTypeDetails?.length > 0">
+          <div class="form-group row col-6 mr-4">
+            <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
+            <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
                 <option *ngFor="let item of TransactionSpecific.ToTypeDetails" value="{{item.Code}}">{{item.Aname}}</option>
               </select>
@@ -106,8 +108,8 @@
         <!--End of div contain من , الي-->
 
         <div class="form-group row">
-          <label for="exampleFormControlTextarea" class="col-sm-3 col-form-label" style="text-align:right">ملاحظات</label>
-          <div class="col-sm-8">
+          <label for="exampleFormControlTextarea" class="col-sm-2 col-form-label" style="text-align:right">ملاحظات</label>
+          <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
             <textarea class="form-control" id="exampleFormControlTextarea"></textarea>
           </div>
         </div>
@@ -427,9 +429,9 @@
         <div class="form-group row" *ngIf="TransactionSpecific.TransactionsNames?.length > 0">
           <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
           <div class="col-sm-7">
-            <select id="inputState" class="form-control" style="text-align:right" (change)="selectChangeHandler($event)">
+            <select id="my_select" data-default-value="..." class="form-control" style="text-align:right" (change)="selectChangeHandler($event)">
 
-              <option selected="selected"></option>
+              <option selected="selected" value="..." >...</option>
               <option *ngFor="let item of TransactionSpecific.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
             </select>
           </div>
@@ -547,10 +549,11 @@
           </table>
         </div>
         <!-- tabel view item selected -->
-        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null&&productdetails?.length>0">
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="productdetails?.length>0">
           <table class="table  table-bordered hover" style="width:100%">
             <thead>
               <tr style="text-align:right">
+                <th></th>
                 <th>تاريخ</th>
                 <th style="text-align:center">
                   <span>الى</span>
@@ -573,6 +576,7 @@
             </thead>
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of checkedTransactionsMain">
+                <td><button class="btn btn-danger"  value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>
                 <td>{{trans.TrnsDate}}</td>
                 <td>
                   <div class="row">
@@ -588,7 +592,6 @@
                 </td>
                 <td>{{trans.branch}}</td>
                 <td>{{trans.TrnsNo}}</td>
-
               </tr>
             </tbody>
           </table>
@@ -600,18 +603,20 @@
               <tr style="text-align:right">
                 <th></th>
                 <th style="text-align:right">الوحدة</th>
-                <th style="text-align:right">السعر</th>
-                <th style="text-align:right">الكمية</th>
+                <th style="text-align:right">القيمة</th>
+                <!--<th style="text-align:right">السعر</th>
+                <th style="text-align:right">الكمية</th>-->
                 <th>الاسم</th>
                 <th>كود</th>
               </tr>
             </thead>
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of productdetails">
-                <td><button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index)">حذف</button></td>
+                <td><button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button></td>
                 <td>{{trans.Unit_Name}}</td>
-                <td>{{trans.Price}}</td>
-                <td>{{trans.Quantity}}</td>
+                <td><input type="text" id="value" placeholder="{{trans.Value}}" style="width:50%" /></td>
+                <!--<td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>
+                <td><input type="text" id="quantity" value="{{trans.Quantity}}" style="width:50%" (keyup)="onKeyQuantity($event)"/></td>-->
                 <td>{{trans.Item_Name}}</td>
                 <td>{{trans.Item_ID}}</td>
 

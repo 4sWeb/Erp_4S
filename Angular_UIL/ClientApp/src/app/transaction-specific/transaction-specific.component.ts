@@ -40,6 +40,9 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   checkedTransactionsMain?: TransactionsDetails[];
   productdetails?: DependancyProduct[];
 
+  Price: number;
+  Quantity: number;
+
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -131,6 +134,8 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
       });
     this.rerender();
     this.dtTrigger2.next();
+   // $("#my_select").data("default-value", $("#my_select").val());
+   // $('#my_select').val('...');
    // this.rerender();
   }
 
@@ -178,6 +183,14 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      //to make sure that ckecked transaction array is empty
+      this.checkedTransactionsIds = [];
+      //this.productdetails = [];
+
+      if (result == null) {
+        result=this.checkedTransactionsMain ;
+      }
+
       this.checkedTransactionsMain = result;
       for (let i = 0; i < this.checkedTransactionsMain.length; i++) {
         this.checkedTransactionsIds.push(this.checkedTransactionsMain[i].StoreTrnsMId); //use i instead of 0
@@ -187,15 +200,62 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         (response) => {
           console.log("LOLOLOLOLOLOL");
           this.productdetails = response;
-          console.log("productDetails",this.productdetails);
+          console.log("productDetails", this.productdetails);
+          //to make sure that ckecked transaction array is empty
+          this.checkedTransactionsIds = [];
         });
     });
     return dialogRef.afterClosed();
   }
 
-  deleteProductRecord(i) {
+  deleteProductRecord(i, id: number) {
+    console.log("product", i)
+    //to delete main product if all of child item is deleted
+    let count = 0;
+    for (let j = 0; j < this.productdetails.length; j++) {
+      if (this.productdetails[j].Store_Trns_M_ID == id) {
+        count++;
+        console.log("count", count);
+      }
+    }
+    if (count == 1) {
+      console.log("count", count);
+      this.checkedTransactionsMain.forEach((element, index) => {
+        if (element.StoreTrnsMId == id) this.checkedTransactionsMain.splice(index, 1);
+      });
+    }
     this.productdetails.splice(i, 1);
+    console.log("product after delete", this.productdetails)
 
+  
+
+  }
+
+  deleteMainRecord(i, id: number) {
+    console.log("mainRecordId", id);
+    this.checkedTransactionsMain.splice(i, 1);
+    console.log("this.checkedTransactionsMain", this.checkedTransactionsMain);
+
+    ////to delete the id of this transaction from checkedTransaction id array
+    //this.checkedTransactionsIds.forEach((element, index) => {
+    //  if (element == id) this.checkedTransactionsIds.splice(index, 1);
+    //});
+    //console.log("this.checkedTransactionsIds", this.checkedTransactionsIds);
+
+    //to delete productDetails related to mainTransaction
+    for (let j = 0; j < this.productdetails.length; j++) {
+      if (this.productdetails[j].Store_Trns_M_ID == id) {
+        this.productdetails.splice(j, 1);
+
+
+      }
+    }
+  }
+
+  //calculate the value
+  onKeyPrice(event: any) {
+    this.Price = event.target.value;
+    console.log("price", this.Price);
   }
 
   //getAllCheckedTransId(e: any,id: number) {
