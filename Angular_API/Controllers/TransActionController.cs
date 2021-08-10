@@ -116,6 +116,7 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromHeader] StoreTrnsM TrnsM, [FromBody] List<StoreTrnsO> TrnsO)
         {
+            
             repo._StoreTrnsM.Create(TrnsM);
             foreach (var row in TrnsO)
             {
@@ -132,6 +133,29 @@ namespace Angular_API.Controllers
 
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
+
+        //public JsonResult SaveOrders( [FromBody] StoreTransMain_VM StoreTransMain_VM)
+        //{
+        //    AutoMapperGeneric<StoreTrnsM, StoreTransMaster_VM> autoMapperGeneric = new AutoMapperGeneric<StoreTrnsM, StoreTransMaster_VM>();
+
+        //    var obj = StoreTransMain_VM.StoreTransMaster_VM;
+        //    TransactionSpecs_VM TransSpecVM_List = autoMapperGeneric.GetOneObject(obj);
+        //    repo._StoreTrnsM.Create(x);
+        //    foreach (var row in TrnsO)
+        //    {
+        //        repo._StoreTrnsO.Create(row);
+        //    }
+        //    try
+        //    {
+        //        repo.Save();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
+        //    }
+
+        //    return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
+        //}
 
         //[HttpGet]
         //[Route("DisplayItems")]

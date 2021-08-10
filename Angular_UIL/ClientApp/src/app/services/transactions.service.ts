@@ -54,7 +54,8 @@ export class TransactionsService {
 
   //get all product dependancies
   getAllProductDetails(ids: number[]): Observable<DependancyProduct[]> {
-    console.log("idsFrom Services",ids)
+    console.log("idsFrom Services", ids)
+    
     return this.http.post<DependancyProduct[]>(`${environment.Api_Url}/DisplayItems`,ids);
   }
 
