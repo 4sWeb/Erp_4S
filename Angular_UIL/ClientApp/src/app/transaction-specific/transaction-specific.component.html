@@ -602,10 +602,11 @@
             <thead>
               <tr style="text-align:right">
                 <th></th>
+                <th>ملاحظات</th>
                 <th style="text-align:right">الوحدة</th>
-                <th style="text-align:right">القيمة</th>
-                <!--<th style="text-align:right">السعر</th>
-                <th style="text-align:right">الكمية</th>-->
+                <!--<th style="text-align:right">القيمة</th>
+                <th style="text-align:right">السعر</th>-->
+                <th style="text-align:right">الكمية</th>
                 <th>الاسم</th>
                 <th>كود</th>
               </tr>
@@ -613,10 +614,11 @@
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of productdetails">
                 <td><button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button></td>
+                <td><input type="text" id="Note" value="{{trans.Note}}" style="width:100%" /></td>
                 <td>{{trans.Unit_Name}}</td>
-                <td><input type="text" id="value" placeholder="{{trans.Value}}" style="width:50%" /></td>
-                <!--<td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>
-                <td><input type="text" id="quantity" value="{{trans.Quantity}}" style="width:50%" (keyup)="onKeyQuantity($event)"/></td>-->
+                <!--<td><input type="text" id="value" placeholder="{{trans.Value}}" style="width:50%" /></td>
+                <td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>-->
+                <td><input type="text" id="quantity" value="{{trans.Quantity}}" style="width:50%" (keyup)="onKeyQuantity($event)"/></td>
                 <td>{{trans.Item_Name}}</td>
                 <td>{{trans.Item_ID}}</td>
 
