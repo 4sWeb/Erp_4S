@@ -49,7 +49,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   Quantity: number;
 
   //Save
-  storeTransMain?: StoreTransMain;
+  storeTransactionMain?: StoreTransMain;
   storeTransMaster?: StoreTransMaster;
   StoreTransDep?: StoreTransDep;
   StoreTransDepDetails?: StoreTransDepDetails[];
@@ -97,8 +97,9 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         console.log(id);
         console.log("response", response);
         //Save
-        this.storeTransMaster = response
-        console.log("this.storeTransMaster", this.storeTransMaster);
+        this.storeTransactionMain = response;
+        console.log("storeTransactionMain", this.storeTransactionMain);
+        
         //this.storeTransMaster.TrnsNo = response.StoreTransMax;
         //this.storeTransMaster.Storedocnum = response.StoreTransMax;
         ////this.storeTransMaster.FromStoreAllcodesId=
@@ -106,6 +107,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
         //view
         this.TransactionSpecific = response;
+        console.log("this.TransactionSpecific", this.TransactionSpecific);
         this.AllTransactions = response.TransactionDepSpec.TrnsList;
         this.ToAllDetails = response.TransactionMasterSpec.ToTypeDetails;
         console.log("toAllType", this.ToAllDetails);

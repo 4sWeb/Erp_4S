@@ -41,9 +41,9 @@ export class TransactionsService {
 
 
   //get all feildes neaded to create specific transaction
-  displayAllFieldesSpecificTransaction(id: number, userId: number): Observable<TransactionSpecific> {
+  displayAllFieldesSpecificTransaction(id: number, userId: number): Observable<TransactionSpecific|any> {
     console.log(id);
-    return this.http.get<TransactionSpecific>(`${environment.Api_Url}/TransactionSpec?id=${id}&userId=${userId}`);
+    return this.http.get<TransactionSpecific | any>(`${environment.Api_Url}/TransactionSpec?id=${id}&userId=${userId}`);
   }
 
   //get all feildes neaded to create specific transaction

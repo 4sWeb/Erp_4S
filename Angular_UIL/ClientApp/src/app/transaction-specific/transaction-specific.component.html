@@ -30,7 +30,7 @@
             <label for="inputState" class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific?.Branches.Result" value="{{item.BRANCH_ID}}">{{item.BRANCH_NAME}}</option>
+                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM.Branches.Result" value="{{item.BRANCH_ID}}">{{item.BRANCH_NAME}}</option>
               </select>
             </div>
           </div>
@@ -54,21 +54,21 @@
           </div>
 
 
-          <div class="form-group row col-6 mr-4">
+          <!--<div class="form-group row col-6 mr-4">
             <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ</label>
             <div class="col-sm-8 mr-4">
               <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:100%"></ejs-datetimepicker>
             </div>
-          </div>
+          </div>-->
         </div>
 
         <!--div contain من , الي-->
-        <div class="row col-12" *ngIf="TransactionSpecific.To_Type?.length > 0||TransactionSpecific.ToTypeDetails?.length > 0">
-          <div class="form-group row col-6" *ngIf="TransactionSpecific.From_Type?.length > 0">
+        <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
+          <div class="form-group row col-6" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.From_Type?.length > 0">
             <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">من</label>
             <div class="col-sm-8">
               <select class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.From_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
+                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM?.From_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
@@ -77,7 +77,7 @@
             <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
             <div class="col-sm-8">
               <select class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.FromTypeDetails">{{item.Aname}}</option>
+                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM.FromTypeDetails">{{item.Aname}}</option>
               </select>
             </div>
           </div>
@@ -87,12 +87,12 @@
         <!--[ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
         [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">-->
 
-        <div class="row col-12" *ngIf="TransactionSpecific.To_Type?.length > 0||TransactionSpecific.ToTypeDetails?.length > 0">
-          <div class="form-group row col-6 " *ngIf="TransactionSpecific.To_Type?.length > 0" >
+        <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
+          <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0" >
             <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right" >الى</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.To_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
+                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM.To_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
@@ -100,7 +100,7 @@
             <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
               <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.ToTypeDetails" value="{{item.Code}}">{{item.Aname}}</option>
+                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails" value="{{item.Code}}">{{item.Aname}}</option>
               </select>
             </div>
           </div>
@@ -426,13 +426,13 @@
 
 
 
-        <div class="form-group row" *ngIf="TransactionSpecific.TransactionsNames?.length > 0">
+        <div class="form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length > 0">
           <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
           <div class="col-sm-7">
             <select id="my_select" data-default-value="..." class="form-control" style="text-align:right" (change)="selectChangeHandler($event)">
 
               <option selected="selected" value="..." >...</option>
-              <option *ngFor="let item of TransactionSpecific.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
+              <option *ngFor="let item of TransactionSpecific.TransactionDepSpec_VM.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
             </select>
           </div>
           <div class="col-sm-2">

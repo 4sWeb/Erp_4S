@@ -103,6 +103,9 @@ namespace BLL.Repo
         //convert viewmodel to model and add it 
         public void convert_VMtoModel(StoreTransMaster_VM StM_VM)
         {
+            //var branches = StM_VM.Branches;
+            //Dictionary<string, object> currently = (Dictionary<string, object>)branches;
+            //StM_VM.BranchId = int.Parse(currently.FirstOrDefault().Value.ToString());
             StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StM_VM.TrnsCode, Rem = StM_VM.Rem, TrnsNo = StM_VM.TrnsNo, BranchId = StM_VM.BranchId, TrnsDate = StM_VM.TrnsDate, Storedocnum = StM_VM.Storedocnum, FromStoreAllcodesId = StM_VM.FromStoreAllcodesId, Period = StM_VM.Period, StoreTrnsMId = StM_VM.StoreTrnsMId };
             repo._StoreTrnsM.Create(StoreTrnsM);
         }
