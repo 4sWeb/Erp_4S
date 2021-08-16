@@ -18,6 +18,11 @@ namespace BLL.ModelsView
         public decimal? ToStoreAllcodesId { get; set; }
         public decimal? Period { get; set; }
         public decimal StoreTrnsMId { get; set; }
+        public object Branches { get; set; }
+        public object From_Type { get; set; }  // ( Altaraf From )
+        public object To_Type { get; set; }    // ( Altaraf TO )
+        public object FromTypeDetails { get; set; }  // ( Altaraf From )
+        public object ToTypeDetails { get; set; }    // ( Altaraf TO )
 
 
 
@@ -28,13 +33,13 @@ namespace BLL.ModelsView
         //public decimal? Ctax { get; set; }
         //public decimal? CtaxRate { get; set; }
         //public decimal? DepOnGroupno { get; set; }
-        
-       
-        
+
+
+
         //public decimal? Total { get; set; }
         //public decimal? Currencyid { get; set; }
-       
-        
+
+
         //public decimal? Salesrep { get; set; }
         //public decimal? Currencyrate { get; set; }
         //public decimal? Initcash { get; set; }
@@ -123,6 +128,6 @@ namespace BLL.ModelsView
         //public string Shiplotno { get; set; }
         //public string Customdocno { get; set; }
         //public string Patchno { get; set; }
-        
+
     }
 }

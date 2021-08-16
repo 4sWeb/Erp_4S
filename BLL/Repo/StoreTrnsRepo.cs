@@ -62,7 +62,7 @@ namespace BLL.Repo
                                 Transaction_Id = item.Groupno,
                                 Transaction_Name = item.Aname
                             };
-                            TransSpecVM_List.TransactionsNames.Add(transactionsNames_VM);
+                            TransSpecVM_List.TransactionDepSpec_VM.TransactionsNames.Add(transactionsNames_VM);
                         }
                     return TransSpecVM_List;
                 }

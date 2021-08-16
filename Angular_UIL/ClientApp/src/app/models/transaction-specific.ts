@@ -6,6 +6,8 @@ import { FromTypeDetails } from "./from-type-details";
 import { ToType } from "./to-type";
 import { ToTypeDetails } from "./to-type-details";
 import { TransactionsName } from "./transactions-name";
+import { TransactionDepSpec } from "./transaction-dep-spec";
+import { TransactionMasterSpec } from "./transaction-master-spec";
 
 export class TransactionSpecific {
   constructor(public TrnsCode?: number,
@@ -183,14 +185,16 @@ export class TransactionSpecific {
    public Patchno?: boolean,
    public Lotasdocno?: boolean,
     public Hasattachments?: boolean,
-    public TransactionsNames?: TransactionsName[],
+    //public TransactionsNames?: TransactionsName[],
     public ExtraFields?: ExtraField[],
-    public From_Type?: FromType[],
-    public To_Type?: ToType[],
-    public TrnsList?: AllTransactions[],
-    public Branches?: Result[],
-    public FromTypeDetails?: FromTypeDetails[],
-    public ToTypeDetails?: ToTypeDetails[]
+    //public From_Type?: FromType[],
+    //public To_Type?: ToType[],
+   // public TrnsList?: AllTransactions[],
+    //public Branches?: Result[],
+    //public FromTypeDetails?: FromTypeDetails[],
+    //public ToTypeDetails?: ToTypeDetails[],
+    public TransactionDepSpec?: TransactionDepSpec,
+    public TransactionMasterSpec?: TransactionMasterSpec,
   ) { }
 }
 

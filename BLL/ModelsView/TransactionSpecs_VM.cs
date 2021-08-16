@@ -10,19 +10,20 @@ namespace BLL.ModelsView
     {
         public TransactionSpecs_VM()
         {
-            TransactionsNames = new List<TransactionsNames_VM>();
+            TransactionDepSpec_VM = new TransactionDepSpec_VM();
+            TransactionMasterSpec_VM = new TransactionMasterSpec_VM();
         }
-       
-        public object Branches { get; set; }
+
+        //public object Branches { get; set; }
         public object StoreTransMax { get; set; }
 
         public decimal TrnsCode { get; set; }
         public string Aname { get; set; }
         public string Ename { get; set; }
-        public object From_Type { get; set; }  // ( Altaraf From )
-        public object To_Type { get; set; }    // ( Altaraf TO )
-        public object FromTypeDetails { get; set; }  // ( Altaraf From )
-        public object ToTypeDetails { get; set; }    // ( Altaraf TO )
+        //public object From_Type { get; set; }  // ( Altaraf From )
+        //public object To_Type { get; set; }    // ( Altaraf TO )
+        //public object FromTypeDetails { get; set; }  // ( Altaraf From )
+        //public object ToTypeDetails { get; set; }    // ( Altaraf TO )
         public object ExtraFields { get; set; } 
         public byte TrnsType { get; set; }
         public byte TrnsNature { get; set; }
@@ -195,8 +196,10 @@ namespace BLL.ModelsView
         public bool? Patchno { get; set; }
         public bool? Lotasdocno { get; set; }
         public bool? Hasattachments { get; set; }
-        public object TrnsList { get; set; }
+        //public object TrnsList { get; set; }
 
-        public List<TransactionsNames_VM> TransactionsNames { get; set; }
+        //public List<TransactionsNames_VM> TransactionsNames { get; set; }
+        public TransactionDepSpec_VM TransactionDepSpec_VM { get; set; }
+        public TransactionMasterSpec_VM TransactionMasterSpec_VM { get; set; }
     }
 }

@@ -11,6 +11,11 @@ import { TransactionsService } from '../services/transactions.service';
 import { DialogContentDatatabelComponent } from '../dialog-content-datatabel/dialog-content-datatabel.component';
 import { ToTypeDetails } from '../models/to-type-details';
 import { DependancyProduct } from '../models/dependancy-product';
+import { StoreTransMaster } from '../models/store-trans-master';
+import { StoreTransDep } from '../models/store-trans-dep';
+import { StoreTransDepDetails } from '../models/store-trans-dep-details';
+import { StoreTransDetails } from '../models/store-trans-details';
+import { StoreTransMain } from '../models/store-trans-main';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -42,6 +47,13 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
   Price: number;
   Quantity: number;
+
+  //Save
+  storeTransMain?: StoreTransMain;
+  storeTransMaster?: StoreTransMaster;
+  StoreTransDep?: StoreTransDep;
+  StoreTransDepDetails?: StoreTransDepDetails[];
+  StoreTransDetails?: StoreTransDetails[];
 
 
   @ViewChild(DataTableDirective, { static: false })
@@ -84,9 +96,18 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
       (response) => {
         console.log(id);
         console.log("response", response);
+        //Save
+        this.storeTransMaster = response
+        console.log("this.storeTransMaster", this.storeTransMaster);
+        //this.storeTransMaster.TrnsNo = response.StoreTransMax;
+        //this.storeTransMaster.Storedocnum = response.StoreTransMax;
+        ////this.storeTransMaster.FromStoreAllcodesId=
+
+
+        //view
         this.TransactionSpecific = response;
-        this.AllTransactions = response.TrnsList;
-        this.ToAllDetails = response.ToTypeDetails;
+        this.AllTransactions = response.TransactionDepSpec.TrnsList;
+        this.ToAllDetails = response.TransactionMasterSpec.ToTypeDetails;
         console.log("toAllType", this.ToAllDetails);
         
       },
@@ -108,7 +129,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
     this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
       (response) => {
         console.log(id);
-        this.AllTransactions = response.TrnsList;
+        this.AllTransactions = response.TransactionDepSpec.TrnsList;
         console.log(this.selectedTransaction);
         this.dtTrigger1.next();
     });

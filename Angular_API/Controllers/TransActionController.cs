@@ -58,15 +58,15 @@ namespace Angular_API.Controllers
         {
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(id);
             var listOfBranches = repo._branch.GetAllBranches(userId);
-            TransactionSpec.Branches = listOfBranches;
+            TransactionSpec.TransactionMasterSpec_VM.Branches = listOfBranches;
             
             var branches = listOfBranches.Result.FirstOrDefault();
             Dictionary<string, object> currently = (Dictionary<string, object>)branches;
             var brancheId = int.Parse(currently.FirstOrDefault().Value.ToString());
             TransactionSpec.StoreTransMax = repo._StoreTrnsM.GetMaxID(id, 2, brancheId);
 
-            TransactionSpec.From_Type = repo._Groupf.GetAllTypes(id, "F"); // Altaraf From
-            TransactionSpec.To_Type = repo._Groupf.GetAllTypes(id, "T");   // Altaraf TO
+            TransactionSpec.TransactionMasterSpec_VM.From_Type = repo._Groupf.GetAllTypes(id, "F"); // Altaraf From
+            TransactionSpec.TransactionMasterSpec_VM.To_Type = repo._Groupf.GetAllTypes(id, "T");   // Altaraf TO
 
 
             var listOfToType = repo._Groupf.GetAllToTypes(id);
@@ -74,7 +74,7 @@ namespace Angular_API.Controllers
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
                 var result = current.FirstOrDefault().Value;
-               TransactionSpec.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c=>c.GroupfId==decimal.Parse(result.ToString() )).Result.Select(n=>new { n.Code,n.Aname});
+               TransactionSpec.TransactionMasterSpec_VM.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c=>c.GroupfId==decimal.Parse(result.ToString() )).Result.Select(n=>new { n.Code,n.Aname});
 
             }
 
@@ -83,7 +83,7 @@ namespace Angular_API.Controllers
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
                 var result = current.FirstOrDefault().Value;
-                TransactionSpec.FromTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Code, n.Aname });
+                TransactionSpec.TransactionMasterSpec_VM.FromTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Code, n.Aname });
 
             }
 
@@ -91,8 +91,8 @@ namespace Angular_API.Controllers
 
             TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(id);
             List<Transaction_VM> Items = new List<Transaction_VM>();
-            Items = repo._StoreTrnsM.AllTransByDepID(TransactionSpec.TransactionsNames.FirstOrDefault().Transaction_Id);
-            TransactionSpec.TrnsList = Items;
+            Items = repo._StoreTrnsM.AllTransByDepID(TransactionSpec.TransactionDepSpec_VM.TransactionsNames.FirstOrDefault().Transaction_Id);
+            TransactionSpec.TransactionDepSpec_VM.TrnsList = Items;
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
         [HttpGet]
