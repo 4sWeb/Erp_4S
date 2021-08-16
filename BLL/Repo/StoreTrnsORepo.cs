@@ -10,6 +10,7 @@ namespace BLL.Repo
 {
     public class StoreTrnsORepo:Base_Repo<StoreTrnsO>, IStoreTrnsO
     {
+        private readonly IRepoWrapper repo;
         private StoreItemsRepo SItems;
         private StoreUnitsRepo SUnit;
         private ModelContext context;
@@ -48,6 +49,29 @@ namespace BLL.Repo
 
             }
             return ItemsList;
+        }
+
+        //convert viewmodel to model and add it 
+        public void convert_VMtoModel(List<StoreTransDetails_VM> STD_VM)
+        {
+
+            foreach (var item in STD_VM)
+            {
+                StoreTrnsO StoreTrnsO = new StoreTrnsO
+                {
+                    StoreTrnsOId = item.StoreTrnsOId,
+                    Qty = item.Qty,
+                    UnitId = item.UnitId,
+                    UnitPrice = item.UnitPrice,
+                    Notes = item.Notes,
+                    ItemId = item.ItemId,
+                    Itemapproved = item.Itemapproved,
+                    StoretrnsProformlaId = item.StoretrnsProformlaId
+                };
+                repo._StoreTrnsO.Create(StoreTrnsO);
+
+
+            }
         }
     }
 }

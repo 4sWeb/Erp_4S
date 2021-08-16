@@ -112,39 +112,16 @@ namespace Angular_API.Controllers
             return Json(Results, new System.Text.Json.JsonSerializerOptions());
         }
 
+
+
         [HttpPost]
         [Route("SaveOrder")]
-        public JsonResult SaveOrder( [FromBody] StoreTransMain_VM StoreTransMain_VM)
+        public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-            var StM_VM = StoreTransMain_VM.StoreTransMaster_VM;
-            var STD_VM = StoreTransMain_VM.StoreTransDetails_VM;
-            var StoreTransDep_VM = StoreTransMain_VM.StoreTransDep_VM;
-            var SDepDetail_VM = StoreTransMain_VM.StoreTransDepDetails_VM;
-
-            foreach (var item in STD_VM)
-            {
-                StoreTrnsO StoreTrnsO = new StoreTrnsO { StoreTrnsOId = item.StoreTrnsOId, Qty = item.Qty, UnitId = item.UnitId, UnitPrice = item.UnitPrice, Notes = item.Notes,ItemId=item.ItemId,
-                    Itemapproved=item.Itemapproved,StoretrnsProformlaId=item.StoretrnsProformlaId };
-                repo._StoreTrnsO.Create(StoreTrnsO);
-
-
-            }
-
-            StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode= StM_VM.TrnsCode,Rem= StM_VM.Rem,TrnsNo= StM_VM .TrnsNo,BranchId= StM_VM .BranchId,TrnsDate= StM_VM .TrnsDate,Storedocnum= StM_VM .Storedocnum,FromStoreAllcodesId= StM_VM .FromStoreAllcodesId,Period= StM_VM .Period,StoreTrnsMId= StM_VM .StoreTrnsMId};
-           
-            StoreTrnsDep storeTrnsDep = new StoreTrnsDep() { Ptransrowid = StoreTransDep_VM.Ptransrowid, Groupid = StoreTransDep_VM .Groupid};
-            foreach (var item in SDepDetail_VM)
-            {
-                StoreTrnsDepDetail STDepDetail = new StoreTrnsDepDetail() { Depdetailsid = item.Depdetailsid, Ctrnsorowid = item.Ctrnsorowid, Ptrnsorowid = item.Ptrnsorowid };
-                repo._StoreTrnsDepDetails.Create(STDepDetail);
-
-
-            }
-            
-
-            repo._StoreTrnsM.Create(StoreTrnsM);
-            repo._StoreTrnsDep.Create(storeTrnsDep);
-
+            repo._StoreTrnsO.convert_VMtoModel(StoreTransMain_VM.StoreTransDetails_VM);
+            repo._StoreTrnsDepDetails.convert_VMtoModel(StoreTransMain_VM.StoreTransDepDetails_VM);
+            repo._StoreTrnsDep.convert_VMtoModel(StoreTransMain_VM.StoreTransDep_VM);
+            repo._StoreTrnsM.convert_VMtoModel(StoreTransMain_VM.StoreTransMaster_VM);
 
             try
             {

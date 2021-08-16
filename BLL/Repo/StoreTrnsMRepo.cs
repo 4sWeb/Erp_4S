@@ -14,6 +14,7 @@ namespace BLL.Repo
         private StoreAllcodesRepo storeAllcodesRepo;
         private MainTypesRepo mainTypesRepo;
         private ModelContext _dbContext4S;
+        private readonly IRepoWrapper repo;
         private TestQuery test = new TestQuery();
 
         public StoreTrnsMRepo(ModelContext dbContext4S) : base(dbContext4S)
@@ -97,6 +98,13 @@ namespace BLL.Repo
         public object GetMaxID(decimal TransCode, decimal PeriodID, decimal BranchID)
         {
             return GetByCondition(c => c.BranchId == BranchID && c.TrnsCode == TransCode && c.Period == PeriodID).Result.LastOrDefault().TrnsNo + 1;
+        }
+
+        //convert viewmodel to model and add it 
+        public void convert_VMtoModel(StoreTransMaster_VM StM_VM)
+        {
+            StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StM_VM.TrnsCode, Rem = StM_VM.Rem, TrnsNo = StM_VM.TrnsNo, BranchId = StM_VM.BranchId, TrnsDate = StM_VM.TrnsDate, Storedocnum = StM_VM.Storedocnum, FromStoreAllcodesId = StM_VM.FromStoreAllcodesId, Period = StM_VM.Period, StoreTrnsMId = StM_VM.StoreTrnsMId };
+            repo._StoreTrnsM.Create(StoreTrnsM);
         }
     }
 }
