@@ -21,25 +21,25 @@
 <body>
   <div class="container">
 
-    <div class="mb-5" style="background-color:lightblue"><h3 style="text-align:center"><span>{{TransactionSpecific.TrnsCode}}&nbsp;&nbsp;{{TransactionSpecific.Aname}}</span></h3></div>
+    <div class="mb-5" style="background-color:lightblue"><h3 style="text-align:center"><span name="TrnsCode" [innerHTML]="StoreTransMain.TrnsCode"></span>&nbsp;&nbsp;<span name="Aname" [innerHTML]="StoreTransMain.Aname"></span></h3></div>
 
     <div>
       <form>
         <div class="row col-12">
           <div class="form-group row col-6">
-            <label for="inputState" class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
+            <label for="BRANCH_ID" class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
-              <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM.Branches.Result" value="{{item.BRANCH_ID}}">{{item.BRANCH_NAME}}</option>
+              <select id="BRANCH_ID" name="BRANCH_ID" [(ngModel)]="Branches.BRANCH_ID" class="form-control" style="text-align:right">
+                <option *ngFor="let item of Branches" value="item.BRANCH_ID">{{item.BRANCH_NAME}}</option>
               </select>
             </div>
           </div>
 
 
           <div class="form-group row col-6 mr-4">
-            <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
+            <label for="StoreTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="inputPassword" placeholder="{{TransactionSpecific.StoreTransMax}}">
+              <input class="form-control" id="StoreTransMax" name="StoreTransMax" [(ngModel)]="StoreTransMain.StoreTransMax">
             </div>
           </div>
         </div>
@@ -47,37 +47,37 @@
 
         <div class="row col-12">
           <div class="form-group row col-6">
-            <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
+            <label for="StoreTransMax" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
             <div class="col-sm-8">
-              <input class="form-control" id="inputPassword" placeholder="{{TransactionSpecific.StoreTransMax}}">
+              <input class="form-control" id="StoreTransMax" name="StoreTransMax" [(ngModel)]="StoreTransMain.StoreTransMax">
             </div>
           </div>
 
 
           <!--<div class="form-group row col-6 mr-4">
-            <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ</label>
-            <div class="col-sm-8 mr-4">
-              <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:100%"></ejs-datetimepicker>
-            </div>
-          </div>-->
+      <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ</label>
+      <div class="col-sm-8 mr-4">
+        <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:100%"></ejs-datetimepicker>
+      </div>
+    </div>-->
         </div>
 
         <!--div contain من , الي-->
         <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
           <div class="form-group row col-6" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.From_Type?.length > 0">
-            <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">من</label>
+            <label for="TYPE_ID" class="col-sm-3 col-form-label" style="text-align:right">من</label>
             <div class="col-sm-8">
-              <select class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM?.From_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
+              <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="FromType.TYPE_ID" class="form-control" style="text-align:right">
+                <option *ngFor="let item of FromType" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
 
           <div class="form-group row col-6 mr-4">
-            <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
+            <label for="Code" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
             <div class="col-sm-8">
-              <select class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM.FromTypeDetails">{{item.Aname}}</option>
+              <select id="Code" name="Code" [(ngModel)]="FromTypeDetails.Code" class="form-control" style="text-align:right">
+                <option *ngFor="let item of FromTypeDetails" value="item.Code">{{item.Aname}}</option>
               </select>
             </div>
           </div>
@@ -85,34 +85,33 @@
 
 
         <!--[ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
-        [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">-->
+  [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">-->
 
         <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
-          <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0" >
-            <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right" >الى</label>
+          <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0">
+            <label for="TYPE_ID" class="col-sm-3 col-form-label" style="text-align:right">الى</label>
             <div class="col-sm-8">
-              <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific?.TransactionMasterSpec_VM.To_Type" value="{{item.TYPE_ID}}">{{item.TYPE_NAME}}</option>
+              <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="ToType.TYPE_ID" class="form-control" style="text-align:right">
+                <option *ngFor="let item of ToType" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
           <div class="form-group row col-6 mr-4">
-            <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
+            <label for="Code" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
-              <select id="inputState" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails" value="{{item.Code}}">{{item.Aname}}</option>
+              <select id="Code" name="Code" [(ngModel)]="ToTypeDetails.Code" class="form-control" style="text-align:right">
+                <option *ngFor="let item of ToTypeDetails" value="item.Code">{{item.Aname}}</option>
               </select>
             </div>
           </div>
         </div>
         <!--End of div contain من , الي-->
-
-        <div class="form-group row">
-          <label for="exampleFormControlTextarea" class="col-sm-2 col-form-label" style="text-align:right">ملاحظات</label>
-          <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
-            <textarea class="form-control" id="exampleFormControlTextarea"></textarea>
-          </div>
-        </div>
+        <!--<div class="form-group row">
+    <label for="Rem" class="col-sm-2 col-form-label" style="text-align:right">ملاحظات</label>
+    <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
+      <textarea  class="form-control" [(ngModel)]="StoreTransMain.storeTransMaster.Rem" id="Rem" name="Rem"></textarea>
+    </div>
+  </div>-->
 
 
         <hr />
@@ -431,7 +430,7 @@
           <div class="col-sm-7">
             <select id="my_select" data-default-value="..." class="form-control" style="text-align:right" (change)="selectChangeHandler($event)">
 
-              <option selected="selected" value="..." >...</option>
+              <option selected="selected" value="...">...</option>
               <option *ngFor="let item of TransactionSpecific.TransactionDepSpec_VM.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
             </select>
           </div>
@@ -576,7 +575,7 @@
             </thead>
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of checkedTransactionsMain">
-                <td><button class="btn btn-danger"  value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>
+                <td><button class="btn btn-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>
                 <td>{{trans.TrnsDate}}</td>
                 <td>
                   <div class="row">
@@ -605,7 +604,7 @@
                 <th>ملاحظات</th>
                 <th style="text-align:right">الوحدة</th>
                 <!--<th style="text-align:right">القيمة</th>
-                <th style="text-align:right">السعر</th>-->
+          <th style="text-align:right">السعر</th>-->
                 <th style="text-align:right">الكمية</th>
                 <th>الاسم</th>
                 <th>كود</th>
@@ -617,8 +616,8 @@
                 <td><input type="text" id="Note" value="{{trans.Note}}" style="width:100%" /></td>
                 <td>{{trans.Unit_Name}}</td>
                 <!--<td><input type="text" id="value" placeholder="{{trans.Value}}" style="width:50%" /></td>
-                <td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>-->
-                <td><input type="text" id="quantity" value="{{trans.Quantity}}" style="width:50%" (keyup)="onKeyQuantity($event)"/></td>
+          <td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>-->
+                <td><input type="text" id="quantity" value="{{trans.Quantity}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
                 <td>{{trans.Item_Name}}</td>
                 <td>{{trans.Item_ID}}</td>
 

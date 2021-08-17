@@ -199,6 +199,7 @@ namespace BLL.ModelsView
         //public object TrnsList { get; set; }
 
         //public List<TransactionsNames_VM> TransactionsNames { get; set; }
+        public string Rem { get; set; }
         public TransactionDepSpec_VM TransactionDepSpec_VM { get; set; }
         public TransactionMasterSpec_VM TransactionMasterSpec_VM { get; set; }
     }

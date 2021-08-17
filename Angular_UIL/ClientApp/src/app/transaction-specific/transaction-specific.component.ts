@@ -16,6 +16,11 @@ import { StoreTransDep } from '../models/store-trans-dep';
 import { StoreTransDepDetails } from '../models/store-trans-dep-details';
 import { StoreTransDetails } from '../models/store-trans-details';
 import { StoreTransMain } from '../models/store-trans-main';
+import { Branches } from '../models/branches';
+import { FromType } from '../models/from-type';
+import { FromTypeDetails } from '../models/from-type-details';
+import { ToType } from '../models/to-type';
+import { Result } from '../models/Result';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -49,11 +54,16 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   Quantity: number;
 
   //Save
-  storeTransactionMain?: StoreTransMain;
+  StoreTransMain?: StoreTransMain;
   storeTransMaster?: StoreTransMaster;
   StoreTransDep?: StoreTransDep;
   StoreTransDepDetails?: StoreTransDepDetails[];
   StoreTransDetails?: StoreTransDetails[];
+  Branches: Result[];
+  FromType: FromType[];
+  FromTypeDetails: FromTypeDetails[];
+  ToType: ToType[];
+  ToTypeDetails: ToTypeDetails[];
 
 
   @ViewChild(DataTableDirective, { static: false })
@@ -97,8 +107,18 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         console.log(id);
         console.log("response", response);
         //Save
-        this.storeTransactionMain = response;
-        console.log("storeTransactionMain", this.storeTransactionMain);
+        this.StoreTransMain = response;
+        this.StoreTransMain.stroreTransMaster = response.TransactionMasterSpec_VM;
+        console.log("storeTransactionMain", this.StoreTransMain);
+        this.Branches = this.StoreTransMain.stroreTransMaster.Branches;
+        
+        this.FromType = response.TransactionMasterSpec_VM.From_Type;
+        this.FromTypeDetails = response.TransactionMasterSpec_VM.FromTypeDetails;
+        this.ToType = response.TransactionMasterSpec_VM.To_Type;
+        this.ToTypeDetails = response.TransactionMasterSpec_VM.ToTypeDetails;
+        console.log(this.Branches);
+        console.log(this.FromType);
+        console.log(this.FromTypeDetails);
         
         //this.storeTransMaster.TrnsNo = response.StoreTransMax;
         //this.storeTransMaster.Storedocnum = response.StoreTransMax;
@@ -119,7 +139,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
 
   ngAfterViewInit(): void {
-
+   
     let id = 0;
     let userId = 0;
     this.ar.params.subscribe(
@@ -291,7 +311,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   //  }
   //  console.log(this.checkedTransactions);
   //}
-  
+
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
