@@ -18,6 +18,7 @@ namespace BLL.ModelsView
         public decimal? Storedocnum { get; set; }
         public decimal? Period { get; set; }
         public decimal StoreTrnsMId { get; set; }
+
         //need to enhace (generic class for ado) 
         //public List<object> Branches { get; set; } 
         //public List<object> From_Type { get; set; }  // ( Altaraf From )

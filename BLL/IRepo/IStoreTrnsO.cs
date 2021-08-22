@@ -10,5 +10,6 @@ namespace BLL.IRepo
     {
         public List<TransactionsDetails_VM> GetTransactionsDetailsList(List<decimal> TransactionsList);
         public void convert_VMtoModel(List<StoreTransDetails_VM> StoreTransMain_VM);
+         List<StoreTransDetails_VM> RetriveDetailsTransactionById(decimal storeTransMId);
     }
 }

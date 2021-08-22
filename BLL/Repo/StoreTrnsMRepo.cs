@@ -118,5 +118,52 @@ namespace BLL.Repo
             StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StM_VM.TrnsCode, Rem = StM_VM.Rem, TrnsNo = StM_VM.TrnsNo, BranchId = StM_VM.BranchId, TrnsDate = StM_VM.TrnsDate, Storedocnum = StM_VM.Storedocnum, FromStoreAllcodesId = StM_VM.FromStoreAllcodesId, ToStoreAllcodesId = StM_VM.ToStoreAllcodesId, Period = StM_VM.Period, StoreTrnsMId = StM_VM.StoreTrnsMId };
             repo._StoreTrnsM.Create(StoreTrnsM);
         }
+
+
+        //Retrive Tranaction master by id
+        public StoreTransMaster_VM RetriveMasterTransactionById( decimal storeTransMId)
+        {
+            if (storeTransMId != default)
+            {
+                var result= GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new StoreTransMaster_VM
+                {
+                    TrnsDate = s.TrnsDate,
+                    Rem=s.Rem,
+                    ToStoreAllcodesId= (decimal)s.ToStoreAllcodesId,
+                    FromStoreAllcodesId= (decimal)s.FromStoreAllcodesId,
+                }
+                ).FirstOrDefault() ;
+                return (StoreTransMaster_VM)result;
+
+            }
+                return null;
+        }
+
+
+        //Retrive Tranaction Dep master by id
+        public List<StoreTransDep_VM> RetriveTransaDepById(List<decimal> PTransRowIds)
+        {
+           
+            List<StoreTransDep_VM> ListItem = new List<StoreTransDep_VM>();
+            if (PTransRowIds != null)
+            {
+                foreach(var item in PTransRowIds)
+                {
+                   var  oneItem= GetByCondition(c => c.StoreTrnsMId == item).Result.Select(s => new StoreTransDep_VM
+                    {
+                        TrnsDate= s.TrnsDate,
+                         Rem=s.Rem,
+                        ToStoreAllcodesId= (decimal)s.ToStoreAllcodesId,
+                        FromStoreAllcodesId= 0
+                    }
+                   ).FirstOrDefault();
+                    ListItem.Add(oneItem);
+                }
+               
+                return ListItem;
+            }
+            return null;
+        }
     }
+
 }

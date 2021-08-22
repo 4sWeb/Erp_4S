@@ -3,6 +3,7 @@ using BLL.ModelsView;
 using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BLL.Repo
@@ -19,6 +20,23 @@ namespace BLL.Repo
         {
             StoreTrnsDep storeTrnsDep = new StoreTrnsDep() { Ptransrowid = StoreTransDep_VM.Ptransrowid, Groupid = StoreTransDep_VM.Groupid };
             repo._StoreTrnsDep.Create(storeTrnsDep);
+        }
+
+        //Retrive List of previousTransactionIds by id
+        public List<decimal> RetriveListPrevTransIds(decimal storeTransMId)
+        {
+            List<decimal> ids = new List<decimal>();
+            if (storeTransMId != default)
+            {
+                var result =GetByCondition(c => c.Ctrnsrowid == storeTransMId).Result.Select(c=>c.Ptransrowid);
+                foreach (var item in result)
+                {
+                    ids.Add((decimal)item);
+                }
+                return ids;
+                  
+            }
+                return null;
         }
     }
 }

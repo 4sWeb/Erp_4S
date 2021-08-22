@@ -10,5 +10,10 @@ namespace BLL.ModelsView
     {
         public decimal? Ptransrowid { get; set; }
         public decimal? Groupid { get; set; }
+        public decimal BranchId { get; set; }
+        public decimal FromStoreAllcodesId { get; set; }
+        public decimal ToStoreAllcodesId { get; set; }
+        public string Rem { get; set; }
+        public DateTime TrnsDate { get; set; }
     }
 }

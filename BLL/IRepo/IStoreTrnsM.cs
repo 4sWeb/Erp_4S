@@ -13,6 +13,8 @@ namespace BLL.IRepo
         List<Transaction_VM> AllTransByDepID(decimal DepID);
         object GetMaxID(decimal TransCode, decimal PeriodID, decimal BranchID);
         public void convert_VMtoModel(StoreTransMaster_VM StM_VM) { }
+         StoreTransMaster_VM RetriveMasterTransactionById(decimal storeTransMId);
+        List<StoreTransDep_VM> RetriveTransaDepById(List<decimal> PTransRowIds);
     }
   
 }

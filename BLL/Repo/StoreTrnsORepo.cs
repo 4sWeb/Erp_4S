@@ -73,5 +73,25 @@ namespace BLL.Repo
 
             }
         }
+
+        //Retrive List of Tranaction  details by id
+        public List<StoreTransDetails_VM> RetriveDetailsTransactionById(decimal storeTransMId)
+        {
+            List<StoreTransDetails_VM> ItemsList = new List<StoreTransDetails_VM>();
+            
+            if (storeTransMId != default)
+            {
+
+                var list  = GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new { s.Qty }).ToList();
+                foreach (var item in list)
+                {
+                    ItemsList.Add(new StoreTransDetails_VM { Qty=item.Qty});
+                }
+                return ItemsList;
+            }
+            
+            
+                return null;
+        }
     }
 }

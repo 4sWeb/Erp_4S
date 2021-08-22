@@ -120,7 +120,7 @@ namespace Angular_API.Controllers
         {
             repo._StoreTrnsO.convert_VMtoModel(StoreTransMain_VM.StoreTransDetails_VM);
             repo._StoreTrnsDepDetails.convert_VMtoModel(StoreTransMain_VM.StoreTransDepDetails_VM);
-            repo._StoreTrnsDep.convert_VMtoModel(StoreTransMain_VM.StoreTransDep_VM);
+            repo._StoreTrnsDep.convert_VMtoModel(StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault());
             repo._StoreTrnsM.convert_VMtoModel(StoreTransMain_VM.StoreTransMaster_VM);
 
             try
@@ -135,7 +135,23 @@ namespace Angular_API.Controllers
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
 
-
+        [HttpGet]
+        [Route("Retrieve")]
+        public StoreTransMain_VM Retrive(decimal storeTransMId)
+        {
+            StoreTransMain_VM STM_VM = new StoreTransMain_VM();
+            if (storeTransMId !=default)
+            {
+                STM_VM.StoreTransMaster_VM = repo._StoreTrnsM.RetriveMasterTransactionById(storeTransMId);
+                STM_VM.StoreTransDetails_VM = repo._StoreTrnsO.RetriveDetailsTransactionById(storeTransMId);
+                var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
+                if (listOfPrevIds != null)
+                {
+                    STM_VM.StoreTransDep_VM = repo._StoreTrnsM.RetriveTransaDepById(listOfPrevIds);
+                }
+            }
+            return STM_VM;
+        }
 
         //public JsonResult SaveOrders([FromBody] StoreTransMain_VM StoreTransMain_VM)
         //{
