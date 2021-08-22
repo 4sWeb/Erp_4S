@@ -1,10 +1,10 @@
 import { Data } from "popper.js";
-import { Result } from "./Result";
-import { FromType } from "./from-type";
-import { ToType } from "./to-type";
-import { ToTypeDetails } from "./to-type-details";
-import { FromTypeDetails } from "./from-type-details";
+import { ToTypeDetails } from "../TransactionSpecification/to-type-details";
+import { FromTypeDetails } from "../TransactionSpecification/from-type-details";
 import { StoreTransDetails } from "./store-trans-details";
+import { Result } from "../TransactionSpecification/Result";
+import { FromType } from "../TransactionSpecification/from-type";
+import { ToType } from "../TransactionSpecification/to-type";
 
 export class StoreTransMaster {
   constructor(
@@ -20,11 +20,7 @@ export class StoreTransMaster {
     public FromStoreAllcodesId?: number,
     public ToStoreAllcodesId?: number,
     public StoreTrnsMId?: number,
-    public From_Type?: FromType[],
-    public To_Type?: ToType[],
-    public FromTypeDetails?: FromTypeDetails[],
-    public ToTypeDetails?: ToTypeDetails[],
-    public Branches?: Result[],
+  
 
 
     

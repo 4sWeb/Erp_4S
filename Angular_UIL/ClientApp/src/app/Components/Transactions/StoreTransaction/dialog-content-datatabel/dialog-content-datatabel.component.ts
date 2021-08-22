@@ -1,9 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject } from 'rxjs';
-import { DependancyProduct } from '../models/dependancy-product';
-import { TransactionsDetails } from '../models/transactions-details';
-import { TransactionsService } from '../services/transactions.service';
+import { DependancyProduct } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
+import { TransactionsDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-details';
+import { TransactionsService } from '../../../../services/StoreTransaction/transactions.service';
 import { DialogData } from '../transaction-specific/transaction-specific.component';
 
 @Component({

@@ -10,17 +10,20 @@ namespace BLL.ModelsView
     {
         public decimal TrnsCode { get; set; }
         public decimal TrnsNo { get; set; }
+        public decimal BranchId { get; set; }
+        public decimal FromStoreAllcodesId { get; set; }
+        public decimal ToStoreAllcodesId { get; set; }
         public string Rem { get; set; }
         public DateTime TrnsDate { get; set; }
         public decimal? Storedocnum { get; set; }
         public decimal? Period { get; set; }
         public decimal StoreTrnsMId { get; set; }
         //need to enhace (generic class for ado) 
-        public List<object> Branches { get; set; } 
-        public List<object> From_Type { get; set; }  // ( Altaraf From )
-        public List<object> To_Type { get; set; }    // ( Altaraf TO )
-        public List<object> FromTypeDetails { get; set; }  // ( Altaraf From )
-        public List<object> ToTypeDetails { get; set; }    // ( Altaraf TO )
+        //public List<object> Branches { get; set; } 
+        //public List<object> From_Type { get; set; }  // ( Altaraf From )
+        //public List<object> To_Type { get; set; }    // ( Altaraf TO )
+        //public List<object> FromTypeDetails { get; set; }  // ( Altaraf From )
+        //public List<object> ToTypeDetails { get; set; }    // ( Altaraf TO )
 
 
 

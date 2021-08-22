@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { AllTransactions } from '../models/all-transactions';
-import { TransactionsService } from '../services/transactions.service';
+import { AllTransactions } from '../../../../models/Transactions/StoreTransaction/AllStoreTransacion/all-transactions';
+import { TransactionsService } from '../../../../services/StoreTransaction/transactions.service';
 
 @Component({
   selector: 'app-all-transactions',

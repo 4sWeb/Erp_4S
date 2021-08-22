@@ -4,23 +4,22 @@ import { DataTableDirective } from 'angular-datatables';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AllTransactions } from '../models/all-transactions';
-import { TransactionSpecific } from '../models/transaction-specific';
-import { TransactionsDetails } from '../models/transactions-details';
-import { TransactionsService } from '../services/transactions.service';
+import { TransactionsService } from '../../../../services/StoreTransaction/transactions.service';
 import { DialogContentDatatabelComponent } from '../dialog-content-datatabel/dialog-content-datatabel.component';
-import { ToTypeDetails } from '../models/to-type-details';
-import { DependancyProduct } from '../models/dependancy-product';
-import { StoreTransMaster } from '../models/store-trans-master';
-import { StoreTransDep } from '../models/store-trans-dep';
-import { StoreTransDepDetails } from '../models/store-trans-dep-details';
-import { StoreTransDetails } from '../models/store-trans-details';
-import { StoreTransMain } from '../models/store-trans-main';
-import { Branches } from '../models/branches';
-import { FromType } from '../models/from-type';
-import { FromTypeDetails } from '../models/from-type-details';
-import { ToType } from '../models/to-type';
-import { Result } from '../models/Result';
+import { TransactionSpecific } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transaction-specific';
+import { AllTransactions } from '../../../../models/Transactions/StoreTransaction/AllStoreTransacion/all-transactions';
+import { TransactionsDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-details';
+import { ToTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type-details';
+import { DependancyProduct } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
+import { StoreTransMain } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-main';
+import { StoreTransMaster } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-master';
+import { StoreTransDep } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-dep';
+import { StoreTransDepDetails } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-dep-details';
+import { StoreTransDetails } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-details';
+import { Result } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Result';
+import { FromType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type';
+import { FromTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type-details';
+import { ToType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -110,7 +109,6 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         this.StoreTransMain = response;
         this.StoreTransMain.stroreTransMaster = response.TransactionMasterSpec_VM;
         console.log("storeTransactionMain", this.StoreTransMain);
-        this.Branches = this.StoreTransMain.stroreTransMaster.Branches;
         
         this.FromType = response.TransactionMasterSpec_VM.From_Type;
         this.FromTypeDetails = response.TransactionMasterSpec_VM.FromTypeDetails;

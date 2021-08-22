@@ -1,4 +1,4 @@
-import { AllTransactions } from "./all-transactions";
+
 import { Result } from "./Result";
 import { ExtraField } from "./extra-field";
 import { FromType } from "./from-type";

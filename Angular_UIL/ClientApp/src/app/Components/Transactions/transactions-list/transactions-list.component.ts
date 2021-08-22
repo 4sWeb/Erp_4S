@@ -1,8 +1,8 @@
 import { error } from '@angular/compiler/src/util';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Transactions } from '../models/transactions';
-import { TransactionsService } from '../services/transactions.service';
+import { Transactions } from '../../../models/Transactions/transactions';
+import { TransactionsService } from '../../../services/StoreTransaction/transactions.service';
 
 @Component({
   selector: 'app-transactions-list',

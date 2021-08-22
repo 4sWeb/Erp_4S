@@ -54,22 +54,22 @@ namespace Angular_API.Controllers
 
         [HttpGet]
         [Route("TransactionSpec")]
-        public JsonResult TransactionSpecByID(decimal id,decimal userId)
+        public JsonResult TransactionSpecByID(decimal transCode,decimal userId)
         {
-            var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(id);
+            var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(transCode);
             var listOfBranches = repo._branch.GetAllBranches(userId);
             TransactionSpec.TransactionMasterSpec_VM.Branches = listOfBranches;
             
             var branches = listOfBranches.Result.FirstOrDefault();
             Dictionary<string, object> currently = (Dictionary<string, object>)branches;
             var brancheId = int.Parse(currently.FirstOrDefault().Value.ToString());
-            TransactionSpec.StoreTransMax = repo._StoreTrnsM.GetMaxID(id, 2, brancheId);
+            TransactionSpec.StoreTransMax = repo._StoreTrnsM.GetMaxID(transCode, 2, brancheId);
 
-            TransactionSpec.TransactionMasterSpec_VM.From_Type = repo._Groupf.GetAllTypes(id, "F"); // Altaraf From
-            TransactionSpec.TransactionMasterSpec_VM.To_Type = repo._Groupf.GetAllTypes(id, "T");   // Altaraf TO
+            TransactionSpec.TransactionMasterSpec_VM.From_Type = repo._Groupf.GetAllTypes(transCode, "F"); // Altaraf From
+            TransactionSpec.TransactionMasterSpec_VM.To_Type = repo._Groupf.GetAllTypes(transCode, "T");   // Altaraf TO
 
 
-            var listOfToType = repo._Groupf.GetAllToTypes(id);
+            var listOfToType = repo._Groupf.GetAllToTypes(transCode);
             foreach (var item in listOfToType.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
@@ -78,7 +78,7 @@ namespace Angular_API.Controllers
 
             }
 
-            var listOfFromType = repo._Groupf.GetAllFromTypes(id);
+            var listOfFromType = repo._Groupf.GetAllFromTypes(transCode);
             foreach (var item in listOfFromType.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
@@ -89,7 +89,7 @@ namespace Angular_API.Controllers
 
 
 
-            TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(id);
+            TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(transCode);
             List<Transaction_VM> Items = new List<Transaction_VM>();
             Items = repo._StoreTrnsM.AllTransByDepID(TransactionSpec.TransactionDepSpec_VM.TransactionsNames.FirstOrDefault().Transaction_Id);
             TransactionSpec.TransactionDepSpec_VM.TrnsList = Items;

@@ -103,19 +103,19 @@ namespace BLL.Repo
         //convert viewmodel to model and add it 
         public void convert_VMtoModel(StoreTransMaster_VM StM_VM)
         {
-            var branch = StM_VM.Branches.FirstOrDefault();
-            var toCodeId = StM_VM.ToTypeDetails.FirstOrDefault();
-            var fromCodeId = StM_VM.From_Type.FirstOrDefault();
+            //var branch = StM_VM.Branches.FirstOrDefault();
+            //var toCodeId = StM_VM.ToTypeDetails.FirstOrDefault();
+            //var fromCodeId = StM_VM.From_Type.FirstOrDefault();
 
-            Dictionary<string, object> currently = (Dictionary<string, object>)branch;
-            branch = int.Parse(currently.FirstOrDefault().Value.ToString());
+            //Dictionary<string, object> currently = (Dictionary<string, object>)branch;
+            //branch = int.Parse(currently.FirstOrDefault().Value.ToString());
 
-            Dictionary<string, object> current = (Dictionary<string, object>)fromCodeId;
-            fromCodeId = int.Parse(current.FirstOrDefault().Value.ToString());
+            //Dictionary<string, object> current = (Dictionary<string, object>)fromCodeId;
+            //fromCodeId = int.Parse(current.FirstOrDefault().Value.ToString());
 
-            Dictionary<string, object> currentt = (Dictionary<string, object>)toCodeId;
-            toCodeId = int.Parse(currentt.FirstOrDefault().Value.ToString());
-            StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StM_VM.TrnsCode, Rem = StM_VM.Rem, TrnsNo = StM_VM.TrnsNo, BranchId = (decimal?)branch, TrnsDate = StM_VM.TrnsDate, Storedocnum = StM_VM.Storedocnum, FromStoreAllcodesId = (decimal?)fromCodeId, ToStoreAllcodesId = (decimal?)toCodeId, Period = StM_VM.Period, StoreTrnsMId = StM_VM.StoreTrnsMId };
+            //Dictionary<string, object> currentt = (Dictionary<string, object>)toCodeId;
+            //toCodeId = int.Parse(currentt.FirstOrDefault().Value.ToString());
+            StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StM_VM.TrnsCode, Rem = StM_VM.Rem, TrnsNo = StM_VM.TrnsNo, BranchId = StM_VM.BranchId, TrnsDate = StM_VM.TrnsDate, Storedocnum = StM_VM.Storedocnum, FromStoreAllcodesId = StM_VM.FromStoreAllcodesId, ToStoreAllcodesId = StM_VM.ToStoreAllcodesId, Period = StM_VM.Period, StoreTrnsMId = StM_VM.StoreTrnsMId };
             repo._StoreTrnsM.Create(StoreTrnsM);
         }
     }

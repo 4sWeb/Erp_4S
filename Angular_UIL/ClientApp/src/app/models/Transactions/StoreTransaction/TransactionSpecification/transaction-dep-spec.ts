@@ -1,4 +1,5 @@
-import { AllTransactions } from "./all-transactions";
+
+import { AllTransactions } from "../AllStoreTransacion/all-transactions";
 import { TransactionsName } from "./transactions-name";
 
 export class TransactionDepSpec {

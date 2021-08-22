@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators'
 
 import { Observable} from 'rxjs';
-import { Transactions } from '../models/transactions';
-import { AllTransactions } from '../models/all-transactions';
-import { environment } from '../../environments/environment.prod';
-import { TransactionSpecific } from '../models/transaction-specific';
-import { TransactionsDetails } from '../models/transactions-details';
-import { DependancyProduct } from '../models/dependancy-product';
+import { Transactions } from '../../models/Transactions/transactions';
+import { AllTransactions } from '../../models/Transactions/StoreTransaction/AllStoreTransacion/all-transactions';
+import { environment } from '../../../environments/environment';
+import { TransactionSpecific } from '../../models/Transactions/StoreTransaction/TransactionSpecification/transaction-specific';
+import { TransactionsDetails } from '../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-details';
+import { DependancyProduct } from '../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
 
 
 
@@ -43,7 +43,7 @@ export class TransactionsService {
   //get all feildes neaded to create specific transaction
   displayAllFieldesSpecificTransaction(id: number, userId: number): Observable<TransactionSpecific|any> {
     console.log(id);
-    return this.http.get<TransactionSpecific | any>(`${environment.Api_Url}/TransactionSpec?id=${id}&userId=${userId}`);
+    return this.http.get<TransactionSpecific | any>(`${environment.Api_Url}/TransactionSpec?transCode=${id}&userId=${userId}`);
   }
 
   //get all feildes neaded to create specific transaction
