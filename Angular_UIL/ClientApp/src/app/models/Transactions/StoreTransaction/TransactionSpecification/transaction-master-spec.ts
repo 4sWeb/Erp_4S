@@ -11,9 +11,7 @@ export class TransactionMasterSpec {
     public FromTypeDetails?: FromTypeDetails[],
     public ToTypeDetails?: ToTypeDetails[],
     public Branches?: Result[],
-    public TrnsCode?: number,
-    public TrnsNo?: number,
-    public Rem?: string
+  
   ) {
 
   }

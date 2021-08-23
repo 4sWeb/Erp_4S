@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 /////////////////////////*********************Services**************//////////////////////////////////////
 import { TransactionsService } from './services/StoreTransaction/transactions.service';
+import { SharingDataService } from './services/SharingData/sharing-data.service';
 
 //////////////////////////******************Components**************/////////////////////////////////////
 import { NavMenuComponent } from './Components/nav-menu/nav-menu.component';
@@ -20,6 +21,7 @@ import { CreateTransactionComponent } from './Components/Transactions/StoreTrans
 import { TransactionsListComponent } from './Components/Transactions/transactions-list/transactions-list.component';
 import { TransactionSpecificComponent } from './Components/Transactions/StoreTransaction/transaction-specific/transaction-specific.component';
 import { DialogContentDatatabelComponent } from './Components/Transactions/StoreTransaction/dialog-content-datatabel/dialog-content-datatabel.component';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +52,7 @@ import { DialogContentDatatabelComponent } from './Components/Transactions/Store
     ]),
     BrowserAnimationsModule
   ],
-  providers: [TransactionsService],
+  providers: [TransactionsService, SharingDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

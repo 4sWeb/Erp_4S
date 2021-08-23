@@ -21,16 +21,16 @@
 <body>
   <div class="container">
 
-    <div class="mb-5" style="background-color:lightblue"><h3 style="text-align:center"><span name="TrnsCode" [innerHTML]="StoreTransMain.TrnsCode"></span>&nbsp;&nbsp;<span name="Aname" [innerHTML]="StoreTransMain.Aname"></span></h3></div>
+    <div class="mb-5" style="background-color:lightblue"><h3 style="text-align:center"><span name="TrnsCode" [innerHTML]="TransactionSpecific.TrnsCode"></span>&nbsp;&nbsp;<span name="Aname" [innerHTML]="TransactionSpecific.Aname">{{TransactionSpecific.Aname}}</span></h3></div>
 
     <div>
-      <form>
+      <form (ngSubmit)="addStoreTransaction()">
         <div class="row col-12">
           <div class="form-group row col-6">
             <label for="BRANCH_ID" class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
-              <select id="BRANCH_ID" name="BRANCH_ID" [(ngModel)]="Branches.BRANCH_ID" class="form-control" style="text-align:right">
-                <option *ngFor="let item of Branches" value="item.BRANCH_ID">{{item.BRANCH_NAME}}</option>
+              <select id="BRANCH_ID" name="BRANCH_ID" [(ngModel)]="branchId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.Branches.Result" value="item.BRANCH_ID">{{item.BRANCH_NAME}}</option>
               </select>
             </div>
           </div>
@@ -39,7 +39,7 @@
           <div class="form-group row col-6 mr-4">
             <label for="StoreTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="StoreTransMax" name="StoreTransMax" [(ngModel)]="StoreTransMain.StoreTransMax">
+              <input class="form-control" id="StoreTransMax" name="StoreTransMax" [(ngModel)]="TransactionSpecific.StoreTransMax">
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
           <div class="form-group row col-6">
             <label for="StoreTransMax" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
             <div class="col-sm-8">
-              <input class="form-control" id="StoreTransMax" name="StoreTransMax" [(ngModel)]="StoreTransMain.StoreTransMax">
+              <input class="form-control" id="StoreTransMax" name="StoreTransMax" [(ngModel)]="TransactionSpecific.StoreTransMax">
             </div>
           </div>
 
@@ -67,8 +67,8 @@
           <div class="form-group row col-6" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.From_Type?.length > 0">
             <label for="TYPE_ID" class="col-sm-3 col-form-label" style="text-align:right">من</label>
             <div class="col-sm-8">
-              <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="FromType.TYPE_ID" class="form-control" style="text-align:right">
-                <option *ngFor="let item of FromType" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
+              <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="FromTypeId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.From_Type" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
@@ -76,8 +76,8 @@
           <div class="form-group row col-6 mr-4">
             <label for="Code" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
             <div class="col-sm-8">
-              <select id="Code" name="Code" [(ngModel)]="FromTypeDetails.Code" class="form-control" style="text-align:right">
-                <option *ngFor="let item of FromTypeDetails" value="item.Code">{{item.Aname}}</option>
+              <select id="Code" name="Code" [(ngModel)]="FromTypeDetailsId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails" value="item.Code">{{item.Aname}}</option>
               </select>
             </div>
           </div>
@@ -91,27 +91,27 @@
           <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0">
             <label for="TYPE_ID" class="col-sm-3 col-form-label" style="text-align:right">الى</label>
             <div class="col-sm-8">
-              <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="ToType.TYPE_ID" class="form-control" style="text-align:right">
-                <option *ngFor="let item of ToType" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
+              <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="ToTypeId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.To_Type" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
           <div class="form-group row col-6 mr-4">
             <label for="Code" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
-              <select id="Code" name="Code" [(ngModel)]="ToTypeDetails.Code" class="form-control" style="text-align:right">
-                <option *ngFor="let item of ToTypeDetails" value="item.Code">{{item.Aname}}</option>
+              <select id="Code" name="Code" [(ngModel)]="ToTypeDetailsId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails" value="item.Code">{{item.Aname}}</option>
               </select>
             </div>
           </div>
         </div>
         <!--End of div contain من , الي-->
-        <!--<div class="form-group row">
+        <div class="form-group row">
     <label for="Rem" class="col-sm-2 col-form-label" style="text-align:right">ملاحظات</label>
     <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
-      <textarea  class="form-control" [(ngModel)]="StoreTransMain.storeTransMaster.Rem" id="Rem" name="Rem"></textarea>
+      <textarea  class="form-control" [(ngModel)]="Rem" id="Rem" name="Rem"></textarea>
     </div>
-  </div>-->
+  </div>
 
 
         <hr />
@@ -628,7 +628,7 @@
 
 
 
-
+<button type="submit" class="btn btn-warning">حفظ</button>
       </form>
     </div>
   </div>

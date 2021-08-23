@@ -13,7 +13,8 @@
 <body>
   <div class="container pt-5">
     <div class="mb-3" style="text-align:right">
-      <a [routerLinkActive]="['link-active']" [routerLink]="['/transaction-specific',1,1]" class="btn btn-success" style="text-align:right">اضافة حركة جديدة</a>
+      <!-- [routerLink]="['/transaction-specific',10,1]" -->
+      <a [routerLinkActive]="['link-active']" [routerLink]="['/transaction-specific',10,1]" (click)="setAddOperation()" class="btn btn-success" style="text-align:right">اضافة حركة جديدة</a>
     </div>
     <div class="main">
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
@@ -42,7 +43,7 @@
         </thead>
         <tbody>
           <tr style="text-align:right" *ngFor="let trans of alltransactions">
-            <td><a class="btn btn-info">عرض</a></td>
+            <td><a class="btn btn-info" (click)="setViewOperation()">عرض</a></td>
             <td>{{trans.TrnsDate}}</td>
             <td>
               <div class="row">

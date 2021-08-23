@@ -8,6 +8,10 @@ namespace BLL.ModelsView
 {
     public class Transaction_VM
     {
+        public Transaction_VM()
+        {
+           
+        }
         public decimal StoreTrnsMId { get; set; }
         public decimal TrnsCode { get; set; }
         public decimal TrnsNo { get; set; }
@@ -22,5 +26,47 @@ namespace BLL.ModelsView
         public decimal? To_StoreAllcodesId { get; set; } // Altaraf TO (ID)
         public string TO_TypeName { get; set; }
         public string To_StoreAllcodesName { get; set; } // Altaraf TO (Name)
+        public StoreTransDep_VM StoreTransDep_VM { get; set; }
     }
+
+    //return data of transdep 
+    //public StoreTransDep_VM RetrieveTransactions(decimal storeTrnsMId)
+    //{
+    //    if (storeTrnsMId != default)
+    //    {
+    //        var oneItem = GetByCondition(c => c.Ctrnsrowid == storeTrnsMId).Result.Select(s => new StoreTransDep_VM
+    //        {
+    //            Ptransrowid = s.Ptransrowid,
+    //            Groupid = s.Groupid,
+    //        }
+    //            ).FirstOrDefault();
+    //        return oneItem;
+    //    }
+    //    return null;
+    //}
+
+
+    //return data of transdep 
+    //public List<StoreTransDep_VM> RetrieveTransactions(List<decimal> storeTrnsMIds)
+    //{
+    //    List<StoreTransDep_VM> ListItem = new List<StoreTransDep_VM>();
+    //    if (storeTrnsMIds != null)
+    //    {
+    //        foreach (var item in storeTrnsMIds)
+    //        {
+    //            var oneItem = GetByCondition(c => c.Ctrnsrowid == item).Result.Select(s => new StoreTransDep_VM
+    //            {
+    //                Ptransrowid = s.Ptransrowid,
+    //                Groupid = s.Groupid,
+
+    //            }
+    //            ).FirstOrDefault();
+    //            ListItem.Add(oneItem);
+    //        }
+
+    //        return ListItem;
+    //    }
+
+    //    return null;
+    //}
 }

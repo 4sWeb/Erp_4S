@@ -11,9 +11,25 @@ namespace BLL.Repo
     public class StoreTrnsDepRepo : Base_Repo<StoreTrnsDep>, IStoreTrnsDep
     {
         private readonly IRepoWrapper repo;
+        private TestQuery test = new TestQuery();
         public StoreTrnsDepRepo(ModelContext dbContext4S) : base(dbContext4S)
         {
 
+        }
+        // RetrieveTransactions
+        public StoreTransDep_VM RetrieveTransactions(decimal storeTrnsMId)
+        {
+            if (storeTrnsMId != default)
+            {
+                var oneItem = GetByCondition(c => c.Ctrnsrowid == storeTrnsMId).Result.Select(s => new StoreTransDep_VM
+                {
+                    Ptransrowid = s.Ptransrowid,
+                    Groupid = s.Groupid,
+                }
+                    ).FirstOrDefault();
+                return oneItem;
+            }
+            return null;
         }
         //convert viewmodel to model and add it 
         public void convert_VMtoModel(StoreTransDep_VM StoreTransDep_VM)

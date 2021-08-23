@@ -100,7 +100,14 @@ namespace Angular_API.Controllers
         public JsonResult GetTransactionsByDepID(decimal DepTransID)
         {
             List<Transaction_VM> Items = new List<Transaction_VM>();
+           
             Items = repo._StoreTrnsM.AllTransByDepID(DepTransID);
+            foreach (var item in Items)
+            {
+                var ii= repo._StoreTrnsDep.RetrieveTransactions(item.StoreTrnsMId);
+                item.StoreTransDep_VM = ii;
+            }
+           
             return Json(Items, new System.Text.Json.JsonSerializerOptions());
         }
         [HttpPost]

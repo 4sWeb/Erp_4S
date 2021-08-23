@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AllTransactions } from '../../../../models/Transactions/StoreTransaction/AllStoreTransacion/all-transactions';
+import { SharingDataService } from '../../../../services/SharingData/sharing-data.service';
 import { TransactionsService } from '../../../../services/StoreTransaction/transactions.service';
 
 @Component({
@@ -15,7 +16,10 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
   alltransactions: AllTransactions[];
 
   dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private TransactionsService: TransactionsService, public ar: ActivatedRoute) { }
+
+  operationType: any;
+
+  constructor(private TransactionsService: TransactionsService, private SharingDataService:SharingDataService, public ar: ActivatedRoute) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -39,6 +43,21 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
         this.dtTrigger.next();
       },
       (error) => { console.log(error); })
+  }
+
+
+  //SetType of operation=add
+  setAddOperation() {
+    this.operationType = "Add";
+    this.SharingDataService.setOperationType(this.operationType);
+    console.log("helloAdd", this.operationType);
+  }
+
+  //SetType of operation=View
+  setViewOperation() {
+    this.operationType = "View";
+    this.SharingDataService.setOperationType(this.operationType);
+    console.log("helloView", this.operationType);
   }
 
   ngOnDestroy(): void {

@@ -10,5 +10,6 @@ namespace BLL.IRepo
     {
         public void convert_VMtoModel(StoreTransDep_VM StoreTransDep_VM);
         List<decimal> RetriveListPrevTransIds(decimal storeTransMId);
+        StoreTransDep_VM RetrieveTransactions(decimal storeTrnsMId);
     }
 }

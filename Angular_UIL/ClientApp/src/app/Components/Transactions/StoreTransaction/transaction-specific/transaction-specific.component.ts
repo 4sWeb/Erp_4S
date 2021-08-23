@@ -20,6 +20,7 @@ import { Result } from '../../../../models/Transactions/StoreTransaction/Transac
 import { FromType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type';
 import { FromTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type-details';
 import { ToType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type';
+import { SharingDataService } from '../../../../services/SharingData/sharing-data.service';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -34,7 +35,7 @@ export interface DialogData {
 })
 export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewInit {
 
-  constructor(public TransactionsService: TransactionsService, public ar: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog) { }
    
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
@@ -52,18 +53,26 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   Price: number;
   Quantity: number;
 
+  //detremine type of operation
+  operationType: any;
+
   //Save
   StoreTransMain?: StoreTransMain;
   storeTransMaster?: StoreTransMaster;
   StoreTransDep?: StoreTransDep;
   StoreTransDepDetails?: StoreTransDepDetails[];
   StoreTransDetails?: StoreTransDetails[];
-  Branches: Result[];
-  FromType: FromType[];
-  FromTypeDetails: FromTypeDetails[];
-  ToType: ToType[];
-  ToTypeDetails: ToTypeDetails[];
-
+  //Branches: Result[];
+  //FromType: FromType[];
+  //FromTypeDetails: FromTypeDetails[];
+  //ToType: ToType[];
+  //ToTypeDetails: ToTypeDetails[];
+  branchId: number;
+  FromTypeDetailsId: number;
+  FromTypeId: number;
+  ToTypeDetailsId: number;
+  ToTypeId: number;
+  Rem: string;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -72,6 +81,8 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
  
   ngOnInit() {
+    this.operationType = this.SharingDataService.getOperationType();
+    console.log("this.operationType",this.operationType);
 
     this.checkedTransactionsIds = new Array<number>();
     this.checkedTransactionsMain = new Array<TransactionsDetails>();
@@ -105,31 +116,8 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
       (response) => {
         console.log(id);
         console.log("response", response);
-        //Save
-        this.StoreTransMain = response;
-        this.StoreTransMain.stroreTransMaster = response.TransactionMasterSpec_VM;
-        console.log("storeTransactionMain", this.StoreTransMain);
-        
-        this.FromType = response.TransactionMasterSpec_VM.From_Type;
-        this.FromTypeDetails = response.TransactionMasterSpec_VM.FromTypeDetails;
-        this.ToType = response.TransactionMasterSpec_VM.To_Type;
-        this.ToTypeDetails = response.TransactionMasterSpec_VM.ToTypeDetails;
-        console.log(this.Branches);
-        console.log(this.FromType);
-        console.log(this.FromTypeDetails);
-        
-        //this.storeTransMaster.TrnsNo = response.StoreTransMax;
-        //this.storeTransMaster.Storedocnum = response.StoreTransMax;
-        ////this.storeTransMaster.FromStoreAllcodesId=
-
-
-        //view
         this.TransactionSpecific = response;
         console.log("this.TransactionSpecific", this.TransactionSpecific);
-        this.AllTransactions = response.TransactionDepSpec.TrnsList;
-        this.ToAllDetails = response.TransactionMasterSpec.ToTypeDetails;
-        console.log("toAllType", this.ToAllDetails);
-        
       },
       (error) => { console.log(error); })
   }
@@ -266,29 +254,17 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
       });
     }
     this.productdetails.splice(i, 1);
-    console.log("product after delete", this.productdetails)
-
-  
-
+    console.log("product after delete", this.productdetails);
   }
 
   deleteMainRecord(i, id: number) {
     console.log("mainRecordId", id);
     this.checkedTransactionsMain.splice(i, 1);
     console.log("this.checkedTransactionsMain", this.checkedTransactionsMain);
-
-    ////to delete the id of this transaction from checkedTransaction id array
-    //this.checkedTransactionsIds.forEach((element, index) => {
-    //  if (element == id) this.checkedTransactionsIds.splice(index, 1);
-    //});
-    //console.log("this.checkedTransactionsIds", this.checkedTransactionsIds);
-
     //to delete productDetails related to mainTransaction
     for (let j = 0; j < this.productdetails.length; j++) {
       if (this.productdetails[j].Store_Trns_M_ID == id) {
         this.productdetails.splice(j, 1);
-
-
       }
     }
   }
@@ -310,6 +286,11 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   //  console.log(this.checkedTransactions);
   //}
 
+
+  //add Store Transaction
+  addStoreTransaction() {
+
+  }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
