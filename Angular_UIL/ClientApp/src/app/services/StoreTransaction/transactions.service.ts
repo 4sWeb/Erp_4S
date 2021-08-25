@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { TransactionSpecific } from '../../models/Transactions/StoreTransaction/TransactionSpecification/transaction-specific';
 import { TransactionsDetails } from '../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-details';
 import { DependancyProduct } from '../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
+import { StoreTransMain } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-main';
 
 
 
@@ -57,6 +58,13 @@ export class TransactionsService {
     console.log("idsFrom Services", ids)
     
     return this.http.post<DependancyProduct[]>(`${environment.Api_Url}/DisplayItems`,ids);
+  }
+
+  //Retrive all details about StoreTransaction by storeTransMId
+  getTransactionByStoreTrnsMId(storeTrnsMId: number): Observable<StoreTransMain> {
+    console.log("storetrnsMId From services",storeTrnsMId);
+    return this.http.get<StoreTransMain>(`${environment.Api_Url}/Retrieve?storeTransMId=${storeTrnsMId}`);
+
   }
 
 

@@ -1,6 +1,6 @@
 import { Data } from "@angular/router";
 
-export class StoreTransDetails {
+export class StoreTransDetails_VM {
   constructor(
         public  StoreTrnsOId ?:number,  
         public  Qty?:number,

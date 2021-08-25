@@ -129,8 +129,8 @@ namespace BLL.Repo
                 {
                     TrnsDate = s.TrnsDate,
                     Rem=s.Rem,
-                    ToStoreAllcodesId= (decimal)s.ToStoreAllcodesId,
-                    FromStoreAllcodesId= (decimal)s.FromStoreAllcodesId,
+                    ToStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
+                    FromStoreAllcodesId =string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.FromStoreAllcodesId,
                 }
                 ).FirstOrDefault() ;
                 return (StoreTransMaster_VM)result;

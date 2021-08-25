@@ -43,7 +43,7 @@
         </thead>
         <tbody>
           <tr style="text-align:right" *ngFor="let trans of alltransactions">
-            <td><a class="btn btn-info" (click)="setViewOperation()">عرض</a></td>
+            <td><a class="btn btn-info" [routerLink]="['/transaction-specific',10,1]"  (click)="setViewOperation(trans.StoreTrnsMId)">عرض</a></td>
             <td>{{trans.TrnsDate}}</td>
             <td>
               <div class="row">

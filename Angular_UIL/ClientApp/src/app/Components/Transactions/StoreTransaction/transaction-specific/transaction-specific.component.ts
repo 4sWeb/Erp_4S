@@ -12,10 +12,10 @@ import { TransactionsDetails } from '../../../../models/Transactions/StoreTransa
 import { ToTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type-details';
 import { DependancyProduct } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
 import { StoreTransMain } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-main';
-import { StoreTransMaster } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-master';
-import { StoreTransDep } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-dep';
-import { StoreTransDepDetails } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-dep-details';
-import { StoreTransDetails } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-details';
+import { storeTransMaster_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransMaster_VM';
+import { storeTransDep_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDep_VM';
+import { storeTransDepDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDepDetails_VM';
+import { StoreTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 import { Result } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Result';
 import { FromType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type';
 import { FromTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type-details';
@@ -58,17 +58,19 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
   //Save
   StoreTransMain?: StoreTransMain;
-  storeTransMaster?: StoreTransMaster;
-  StoreTransDep?: StoreTransDep;
-  StoreTransDepDetails?: StoreTransDepDetails[];
-  StoreTransDetails?: StoreTransDetails[];
+  storeTransMaster_VM?: storeTransMaster_VM;
+  storeTransDep_VM?: storeTransDep_VM;
+  storeTransDepDetails_VM?:storeTransDepDetails_VM[];
+  StoreTransDetails_VM?: StoreTransDetails_VM[];
   //Branches: Result[];
   //FromType: FromType[];
   //FromTypeDetails: FromTypeDetails[];
   //ToType: ToType[];
   //ToTypeDetails: ToTypeDetails[];
+
+  StoreTransMId: number;
   branchId: number;
-  FromTypeDetailsId: number;
+  fromStoreAllcodesId: number;
   FromTypeId: number;
   ToTypeDetailsId: number;
   ToTypeId: number;
@@ -82,7 +84,10 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
  
   ngOnInit() {
     this.operationType = this.SharingDataService.getOperationType();
-    console.log("this.operationType",this.operationType);
+    console.log("this.operationType", this.operationType);
+
+    this.StoreTransMId = this.SharingDataService.getStoreTransMId();
+    console.log("this.StoreTransMid", this.StoreTransMId);
 
     this.checkedTransactionsIds = new Array<number>();
     this.checkedTransactionsMain = new Array<TransactionsDetails>();
@@ -119,13 +124,43 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         this.TransactionSpecific = response;
         console.log("this.TransactionSpecific", this.TransactionSpecific);
       },
-      (error) => { console.log(error); })
+      (error) => { console.log(error); });
+
+
+
+
+      if (this.operationType == "View") {
+      this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
+        (data) => {
+          console.log("response2", data);
+          this.StoreTransMain = data;
+          console.log(this.StoreTransMain);
+          this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
+          console.log(this.fromStoreAllcodesId);
+        }
+      )
+
+    }
   }
 
 
 
   ngAfterViewInit(): void {
-   
+    if (this.operationType == "View") {
+      this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
+        (data) => {
+          console.log("response2", data);
+          this.StoreTransMain = data;
+          console.log(this.StoreTransMain);
+          this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
+          console.log(this.fromStoreAllcodesId);
+        }
+      )
+
+    }
+
+
+
     let id = 0;
     let userId = 0;
     this.ar.params.subscribe(
@@ -289,6 +324,12 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
 
   //add Store Transaction
   addStoreTransaction() {
+
+  }
+
+
+  selectFromDetailsChange(FromDetailsValue: number) {
+    this.fromStoreAllcodesId = FromDetailsValue;
 
   }
 

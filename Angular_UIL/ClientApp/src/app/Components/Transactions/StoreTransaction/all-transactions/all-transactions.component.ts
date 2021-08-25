@@ -18,6 +18,7 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
 
   operationType: any;
+  StoreTransMId: number;
 
   constructor(private TransactionsService: TransactionsService, private SharingDataService:SharingDataService, public ar: ActivatedRoute) { }
 
@@ -54,10 +55,14 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
   }
 
   //SetType of operation=View
-  setViewOperation() {
+  setViewOperation(StoreTransMId) {
+    this.StoreTransMId = StoreTransMId;
+    console.log("StoreTransMId",StoreTransMId);
     this.operationType = "View";
     this.SharingDataService.setOperationType(this.operationType);
+    this.SharingDataService.setStoreTransMId(this.StoreTransMId);
     console.log("helloView", this.operationType);
+    console.log("StoreTransMId", this.StoreTransMId);
   }
 
   ngOnDestroy(): void {

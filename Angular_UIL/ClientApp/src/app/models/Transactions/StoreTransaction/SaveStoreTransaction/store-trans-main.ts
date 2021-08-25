@@ -1,14 +1,14 @@
-import { StoreTransDetails } from "./store-trans-details";
-import { StoreTransMaster } from "./store-trans-master";
-import { StoreTransDep } from "./store-trans-dep";
-import { StoreTransDepDetails } from "./store-trans-dep-details";
+import { StoreTransDetails_VM } from "./storeTransDetails_VM";
+import { storeTransMaster_VM } from "./storeTransMaster_vm";
+import { storeTransDep_VM } from "./storeTransDep_VM";
+import { storeTransDepDetails_VM } from "./storeTransDepDetails_VM";
 
 export class StoreTransMain {
   constructor(
-    public stroreTransMaster?: StoreTransMaster,
-    public StoreTransDep?: StoreTransDep[],
-    public StoreTransDepDetails?: StoreTransDepDetails[],
-    public StoreTransDetails?: StoreTransDetails[]
+    public storeTransMaster_VM?: storeTransMaster_VM,
+    public storeTransDep_VM?: storeTransDep_VM[],
+    public storeTransDepDetails_VM?: storeTransDepDetails_VM[],
+    public StoreTransDetails_VM?: StoreTransDetails_VM[]
   ) { }
 
 }
