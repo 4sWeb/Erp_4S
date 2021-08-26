@@ -26,14 +26,14 @@
     <div>
       <form (ngSubmit)="addStoreTransaction()">
         <div class="row col-12">
-          <!--<div class="form-group row col-6">
+          <div class="form-group row col-6">
             <label  class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
               <select  name="branchId" [(ngModel)]="branchId" class="form-control" style="text-align:right">
                 <option *ngFor="let item of Branches.Result" [value]="item.BRANCH_ID">{{item.BRANCH_NAME}}</option>
               </select>
             </div>
-          </div>-->
+          </div>
 
 
           <div class="form-group row col-6 mr-4">
@@ -54,12 +54,12 @@
           </div>
 
 
-          <!--<div class="form-group row col-6 mr-4">
+          <div class="form-group row col-6 mr-4">
       <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ</label>
       <div class="col-sm-8 mr-4">
-        <ejs-datetimepicker id='datetimepicker' placeholder='Select a date' [value]='dateValue' [min]='minDate' [max]='maxDate' style="width:100%"></ejs-datetimepicker>
+        <ejs-datetimepicker name="Datevalue" id='datetimepicker' placeholder='Select a date' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' style="width:100%"></ejs-datetimepicker>
       </div>
-    </div>-->
+    </div>
         </div>
 
         <!--div contain من , الي-->
