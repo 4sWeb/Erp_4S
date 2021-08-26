@@ -129,11 +129,12 @@ namespace BLL.Repo
                 {
                     TrnsDate = s.TrnsDate,
                     Rem=s.Rem,
-                    ToStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
+                    ToStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.ToStoreAllcodesId,
                     FromStoreAllcodesId =string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.FromStoreAllcodesId,
+                    BranchId= (decimal)s.BranchId,
                 }
                 ).FirstOrDefault() ;
-                return (StoreTransMaster_VM)result;
+                return result;
 
             }
                 return null;
@@ -152,9 +153,12 @@ namespace BLL.Repo
                    var  oneItem= GetByCondition(c => c.StoreTrnsMId == item).Result.Select(s => new StoreTransDep_VM
                     {
                         TrnsDate= s.TrnsDate,
-                         Rem=s.Rem,
-                        ToStoreAllcodesId= (decimal)s.ToStoreAllcodesId,
-                        FromStoreAllcodesId= 0
+                        Rem=s.Rem,
+                        ToStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
+                        FromStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.FromStoreAllcodesId,
+                        TrnsCode=s.TrnsCode,
+                        BranchId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.BranchId,
+                        
                     }
                    ).FirstOrDefault();
                     ListItem.Add(oneItem);

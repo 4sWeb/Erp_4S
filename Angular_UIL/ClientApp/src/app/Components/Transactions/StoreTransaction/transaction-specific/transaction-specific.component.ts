@@ -21,6 +21,9 @@ import { FromType } from '../../../../models/Transactions/StoreTransaction/Trans
 import { FromTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type-details';
 import { ToType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type';
 import { SharingDataService } from '../../../../services/SharingData/sharing-data.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { TransactionsName } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-name';
+import { Data } from 'popper.js';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -62,19 +65,24 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   storeTransDep_VM?: storeTransDep_VM;
   storeTransDepDetails_VM?:storeTransDepDetails_VM[];
   StoreTransDetails_VM?: StoreTransDetails_VM[];
-  //Branches: Result[];
-  //FromType: FromType[];
-  //FromTypeDetails: FromTypeDetails[];
+  Branches: Result[];
+  FromType: FromType[];
+  FromTypeDetails: FromTypeDetails[];
   //ToType: ToType[];
-  //ToTypeDetails: ToTypeDetails[];
+  ToTypeDetails: ToTypeDetails[];
+  DepTransactionNames: TransactionsName[];
 
+
+  //for binding
   StoreTransMId: number;
   branchId: number;
   fromStoreAllcodesId: number;
   FromTypeId: number;
   ToTypeDetailsId: number;
   ToTypeId: number;
+  TransCode: number;
   Rem: string;
+  Datevalue:Date;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -123,6 +131,12 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         console.log("response", response);
         this.TransactionSpecific = response;
         console.log("this.TransactionSpecific", this.TransactionSpecific);
+        this.FromTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails;
+        this.FromType = this.TransactionSpecific.TransactionMasterSpec_VM.From_Type;
+        this.ToTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails;
+        this.Branches = this.TransactionSpecific.TransactionMasterSpec_VM.Branches;
+        this.DepTransactionNames = this.TransactionSpecific.TransactionDepSpec_VM.TransactionsNames
+        
       },
       (error) => { console.log(error); });
 
@@ -137,6 +151,14 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
           console.log(this.StoreTransMain);
           this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
           console.log(this.fromStoreAllcodesId);
+          this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+          this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
+          console.log("branchId", this.branchId);
+          this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
+          console.log(this.Datevalue,"this.DateValue");
+          //need to enhance as storetransDep array so transcode maybe array
+          this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+          console.log("Transcode", this.TransCode);
         }
       )
 
@@ -152,8 +174,11 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
           console.log("response2", data);
           this.StoreTransMain = data;
           console.log(this.StoreTransMain);
+          this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
+          console.log("branchId",this.branchId);
           this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
           console.log(this.fromStoreAllcodesId);
+         
         }
       )
 

@@ -1,5 +1,6 @@
 export class storeTransDep_VM {
   constructor(
-    public Ptransrowid?: number,
-    public Groupid?: number,) { }
+    public ptransrowid?: number,
+    public groupid?: number,
+    public trnsCode?: number,) { }
 }

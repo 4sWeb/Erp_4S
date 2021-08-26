@@ -15,5 +15,6 @@ namespace BLL.ModelsView
         public decimal ToStoreAllcodesId { get; set; }
         public string Rem { get; set; }
         public DateTime TrnsDate { get; set; }
+        public decimal TrnsCode { get; set; }
     }
 }

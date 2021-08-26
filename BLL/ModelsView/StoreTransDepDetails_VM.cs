@@ -11,5 +11,11 @@ namespace BLL.ModelsView
         public decimal Depdetailsid { get; set; }
         public decimal? Ctrnsorowid { get; set; }
         public decimal? Ptrnsorowid { get; set; }
+        public decimal Item_ID { get; set; }
+        public string Item_Name { get; set; }
+        public string Unit_Name { get; set; }
+        public string Note { get; set; }
+        public decimal Unitprice { get; set; }
+        public decimal Quantity { get; set; }
     }
 }

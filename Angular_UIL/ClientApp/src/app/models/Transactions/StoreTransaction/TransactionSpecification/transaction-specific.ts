@@ -6,8 +6,8 @@ import { FromTypeDetails } from "./from-type-details";
 import { ToType } from "./to-type";
 import { ToTypeDetails } from "./to-type-details";
 import { TransactionsName } from "./transactions-name";
-import { TransactionDepSpec } from "./transaction-dep-spec";
-import { TransactionMasterSpec } from "./transaction-master-spec";
+import { TransactionDepSpec_VM } from "./transaction-dep-spec";
+import { TransactionMasterSpec_VM } from "./transaction-master-spec";
 
 export class TransactionSpecific {
   constructor(public TrnsCode?: number,
@@ -193,8 +193,8 @@ export class TransactionSpecific {
     //public Branches?: Result[],
     //public FromTypeDetails?: FromTypeDetails[],
     //public ToTypeDetails?: ToTypeDetails[],
-    public TransactionDepSpec?: TransactionDepSpec,
-    public TransactionMasterSpec?: TransactionMasterSpec,
+    public TransactionDepSpec_VM?: TransactionDepSpec_VM,
+    public TransactionMasterSpec_VM?: TransactionMasterSpec_VM,
   ) { }
 }
 

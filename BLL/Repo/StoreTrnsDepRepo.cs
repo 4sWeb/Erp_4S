@@ -54,5 +54,21 @@ namespace BLL.Repo
             }
                 return null;
         }
+
+        //Retrive list of StoreTransDepId by previouslist ids
+        public List<decimal> RetriveListTransDepIds(decimal previousId)
+        {
+            List<decimal> ids = new List<decimal>();
+            if (previousId!=default)
+            {
+                  var result = GetByCondition(c => c.Ptransrowid == previousId).Result.Select(c => c.StoreTrnsDepId);
+                    foreach (var item in result)
+                    {
+                        ids.Add(item);
+                    }
+                    return ids;
+            }
+            return null;
+        }
     }
 }

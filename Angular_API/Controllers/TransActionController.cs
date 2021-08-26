@@ -74,7 +74,7 @@ namespace Angular_API.Controllers
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
                 var result = current.FirstOrDefault().Value;
-               TransactionSpec.TransactionMasterSpec_VM.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c=>c.GroupfId==decimal.Parse(result.ToString() )).Result.Select(n=>new { n.Code,n.Aname});
+               TransactionSpec.TransactionMasterSpec_VM.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c=>c.GroupfId==decimal.Parse(result.ToString() )).Result.Select(n=>new { n.Code,n.Aname,n.StoreAllcodesId});
 
             }
 
@@ -83,7 +83,7 @@ namespace Angular_API.Controllers
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
                 var result = current.FirstOrDefault().Value;
-                TransactionSpec.TransactionMasterSpec_VM.FromTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Code, n.Aname });
+                TransactionSpec.TransactionMasterSpec_VM.FromTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Code, n.Aname,n.StoreAllcodesId });
 
             }
 
@@ -155,6 +155,16 @@ namespace Angular_API.Controllers
                 if (listOfPrevIds != null)
                 {
                     STM_VM.StoreTransDep_VM = repo._StoreTrnsM.RetriveTransaDepById(listOfPrevIds);
+                    //foreach (var id in listOfPrevIds)
+                    //{
+                    //    var listOfStoreTransDepIds = repo._StoreTrnsDep.RetriveListTransDepIds(id);
+                    //    var listOfStoreTransDepDetails = repo._StoreTrnsDepDetails.RetiveDepTransDetails(listOfStoreTransDepIds);
+                    //    foreach (var item in listOfStoreTransDepDetails)
+                    //    {
+                    //        STM_VM.StoreTransDepDetails_VM.Add(item);
+                    //    }
+                    //}
+
                 }
             }
             return STM_VM;

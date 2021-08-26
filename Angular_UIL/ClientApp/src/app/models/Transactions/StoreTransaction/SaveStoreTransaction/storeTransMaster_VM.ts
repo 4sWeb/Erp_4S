@@ -9,16 +9,16 @@ export class storeTransMaster_VM {
   constructor(
 
 
-    public TrnsCode?: number,
-    public TrnsNo?: number,         
-    public TrnsDate?: Date, 
-    public Rem?: string,
-    public BranchId?: number,
-    public Storedocnum?: number,
-    public Period?: number,
+    public trnsCode?: number,
+    public trnsNo?: number,         
+    public trnsDate?: Date, 
+    public rem?: string,
+    public branchId?: number,
+    public storedocnum?: number,
+    public period?: number,
     public fromStoreAllcodesId?: number,
     public toStoreAllcodesId?: number,
-    public StoreTrnsMId?: number,
+    public storeTrnsMId?: number,
   
 
 

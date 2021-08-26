@@ -26,14 +26,14 @@
     <div>
       <form (ngSubmit)="addStoreTransaction()">
         <div class="row col-12">
-          <div class="form-group row col-6">
-            <label for="BRANCH_ID" class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
+          <!--<div class="form-group row col-6">
+            <label  class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
-              <select id="BRANCH_ID" name="BRANCH_ID" [(ngModel)]="branchId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.Branches.Result" value="item.BRANCH_ID">{{item.BRANCH_NAME}}</option>
+              <select  name="branchId" [(ngModel)]="branchId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of Branches.Result" [value]="item.BRANCH_ID">{{item.BRANCH_NAME}}</option>
               </select>
             </div>
-          </div>
+          </div>-->
 
 
           <div class="form-group row col-6 mr-4">
@@ -68,7 +68,7 @@
             <label for="TYPE_ID" class="col-sm-3 col-form-label" style="text-align:right">من</label>
             <div class="col-sm-8">
               <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="FromTypeId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.From_Type" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
+                <option *ngFor="let item of FromType" [value]="item.TYPE_ID">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
@@ -77,11 +77,10 @@
             <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
             <div class="col-sm-8">
               <select name="fromStoreAllcodesId" (ngModelChange)="selectFromDetailsChange($event)" [(ngModel)]="fromStoreAllcodesId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails" [value]="item.Code">{{item.Aname}}</option>
+                <option *ngFor="let item of FromTypeDetails" [value]="item.StoreAllcodesId">{{item.Aname}}</option>
               </select>
             </div>
           </div>
-          SelectedValue is:{{fromStoreAllcodesId}}
         </div>
 
 
@@ -93,15 +92,15 @@
             <label for="TYPE_ID" class="col-sm-3 col-form-label" style="text-align:right">الى</label>
             <div class="col-sm-8">
               <select id="TYPE_ID" name="TYPE_ID" [(ngModel)]="ToTypeId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.To_Type" value="item.TYPE_ID">{{item.TYPE_NAME}}</option>
+                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.To_Type" [value]="item.TYPE_ID">{{item.TYPE_NAME}}</option>
               </select>
             </div>
           </div>
           <div class="form-group row col-6 mr-4">
-            <label for="Code" class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
+            <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
-              <select id="Code" name="Code" [(ngModel)]="ToTypeDetailsId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails" value="item.Code">{{item.Aname}}</option>
+              <select name="ToTypeDetailsId" [(ngModel)]="ToTypeDetailsId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of ToTypeDetails" [value]="item.StoreAllcodesId">{{item.Aname}}</option>
               </select>
             </div>
           </div>
@@ -429,10 +428,11 @@
         <div class="form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length > 0">
           <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
           <div class="col-sm-7">
-            <select id="my_select" data-default-value="..." class="form-control" style="text-align:right" (change)="selectChangeHandler($event)">
+            <!-- data-default-value="..." -->
+            <select id="my_select"  name="TransCode" class="form-control" style="text-align:right" [(ngModel)]="TransCode" (change)="selectChangeHandler($event)">
 
-              <option selected="selected" value="...">...</option>
-              <option *ngFor="let item of TransactionSpecific.TransactionDepSpec_VM.TransactionsNames" value="{{item.Transaction_Id}}">{{item.Transaction_Name}}</option>
+              <!--<option selected="selected" value="...">...</option>-->
+              <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
             </select>
           </div>
           <div class="col-sm-2">

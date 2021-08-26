@@ -16,6 +16,7 @@ namespace BLL.ModelsView
         public bool? Itemapproved { get; set; }
         public decimal? ItemId { get; set; }
         public decimal? StoretrnsProformlaId { get; set; }
+        public string Item_Name { get; internal set; }
 
 
 
@@ -25,7 +26,7 @@ namespace BLL.ModelsView
         //public decimal? ItemCost { get; set; }
         //public decimal? TrnsPriceForcost { get; set; }
         //public decimal? StoreTrnsMId { get; set; }
-        
+
         //public decimal? ItemKind { get; set; }
         //public decimal? Trnsods { get; set; }
         //public decimal? Unit2ndprice { get; set; }
@@ -42,10 +43,10 @@ namespace BLL.ModelsView
         //public string Numbervalue { get; set; }
         //public string Stringvalue { get; set; }
         //public decimal? Productionstageid { get; set; }
-        
+
         //public decimal? ProdformlaId { get; set; }
-        
-        
+
+
         //public decimal? Weekno { get; set; }
         //public DateTime? Fromdate { get; set; }
         //public DateTime? Todate { get; set; }
