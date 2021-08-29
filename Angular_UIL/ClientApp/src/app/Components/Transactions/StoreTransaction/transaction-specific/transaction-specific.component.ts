@@ -15,7 +15,7 @@ import { StoreTransMain } from '../../../../models/Transactions/StoreTransaction
 import { storeTransMaster_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransMaster_VM';
 import { storeTransDep_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDep_VM';
 import { storeTransDepDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDepDetails_VM';
-import { StoreTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
+import { storeTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 import { Result } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Result';
 import { FromType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type';
 import { FromTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type-details';
@@ -24,12 +24,20 @@ import { SharingDataService } from '../../../../services/SharingData/sharing-dat
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { TransactionsName } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-name';
 import { Data } from 'popper.js';
+import { DialogEditProductComponent } from '../dialog-edit-product/dialog-edit-product.component';
 
 export interface DialogData {
   selectedTransaction?: number;
   checkedTransactionsIds?: number[];
   checkedTransactionsMain?: TransactionsDetails[];
 }
+
+//Dialog Edit interface
+export interface DialogEdit {
+  editProduct: DependancyProduct;
+}
+
+
 
 @Component({
   selector: 'app-transaction-specific',
@@ -38,7 +46,7 @@ export interface DialogData {
 })
 export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewInit {
 
-  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog) { }
    
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
@@ -62,16 +70,15 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   //Save
   StoreTransMain?: StoreTransMain;
   storeTransMaster_VM?: storeTransMaster_VM;
-  storeTransDep_VM?: storeTransDep_VM;
+  storeTransDep_VM?: storeTransDep_VM[];
   storeTransDepDetails_VM?:storeTransDepDetails_VM[];
-  StoreTransDetails_VM?: StoreTransDetails_VM[];
+  storeTransDetails_VM?: storeTransDetails_VM[];
   Branches: Result[];
   FromType: FromType[];
   FromTypeDetails: FromTypeDetails[];
-  //ToType: ToType[];
+  ToType: ToType[];
   ToTypeDetails: ToTypeDetails[];
   DepTransactionNames: TransactionsName[];
-
 
   //for binding
   StoreTransMId: number;
@@ -82,7 +89,11 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   ToTypeId: number;
   TransCode: number;
   Rem: string;
-  Datevalue:Date;
+  Datevalue: Date;
+  storeTransMax: number;
+  storedocnum: number;
+  //For Edit
+  editProduct: DependancyProduct;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -135,7 +146,12 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
         this.FromType = this.TransactionSpecific.TransactionMasterSpec_VM.From_Type;
         this.ToTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails;
         this.Branches = this.TransactionSpecific.TransactionMasterSpec_VM.Branches;
-        this.DepTransactionNames = this.TransactionSpecific.TransactionDepSpec_VM.TransactionsNames
+        this.DepTransactionNames = this.TransactionSpecific.TransactionDepSpec_VM.TransactionsNames;
+        this.ToType = this.TransactionSpecific.TransactionMasterSpec_VM.To_Type;
+        this.storeTransMax = this.TransactionSpecific.StoreTransMax;
+        //need to correct
+        this.storedocnum = this.TransactionSpecific.StoreTransMax;
+        
         
       },
       (error) => { console.log(error); });
@@ -150,15 +166,18 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
           this.StoreTransMain = data;
           console.log(this.StoreTransMain);
           this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
-          console.log(this.fromStoreAllcodesId);
           this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
           this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
-          console.log("branchId", this.branchId);
           this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
-          console.log(this.Datevalue,"this.DateValue");
           //need to enhance as storetransDep array so transcode maybe array
           this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
-          console.log("Transcode", this.TransCode);
+          this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+          this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+          this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
+          this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
+          console.log("storeDocNum", this.storedocnum);
+          this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
+          this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
         }
       )
 
@@ -174,10 +193,19 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
           console.log("response2", data);
           this.StoreTransMain = data;
           console.log(this.StoreTransMain);
-          this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
-          console.log("branchId",this.branchId);
           this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
-          console.log(this.fromStoreAllcodesId);
+          this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+          this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
+          this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
+          //need to enhance as storetransDep array so transcode maybe array
+          this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+          this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+          this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+          this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
+          this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
+          console.log("storeDocNum", this.storedocnum);
+          this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
+          this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
          
         }
       )
@@ -357,6 +385,31 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
     this.fromStoreAllcodesId = FromDetailsValue;
 
   }
+
+  //open EditDialog
+  EditProduct(EditPro): void {
+    this.editProduct = EditPro;
+    console.log(this.editProduct);
+    const dialogReff = this.dialogEdit.open(DialogEditProductComponent, {
+      
+      width: '350px',
+      data: { editProduct: this.editProduct }
+    });
+    dialogReff.afterClosed().subscribe(result => {
+      console.log('From spec compenent The Edit dialog was closed', result);
+      
+
+      if (result == null) {
+        result = this.editProduct;
+      }
+
+      return dialogReff.afterClosed();
+    });
+    
+    
+    };
+   
+
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

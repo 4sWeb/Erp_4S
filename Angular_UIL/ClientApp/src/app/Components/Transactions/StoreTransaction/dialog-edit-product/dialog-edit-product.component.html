@@ -1,0 +1,23 @@
+<p>dialog-edit-product works!</p>
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<body>
+
+  <h1 mat-dialog-title></h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput id="Quantity" name="Quantity" [value]="editProduct.Quantity" [(ngModel)]="Quantity">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput  id="Note" name="Note" [value]="editProduct.Note" [(ngModel)]="Note">
+    </mat-form-field>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button class="btn btn-danger" (click)="onNoClick()">اغلاق</button>
+    <button mat-button [mat-dialog-close]="editProduct" cdkFocusInitial class="btn btn-success mr-3" style="text-align:right">موافق</button>
+  </mat-dialog-actions>
+
+</body>
+</html>
+

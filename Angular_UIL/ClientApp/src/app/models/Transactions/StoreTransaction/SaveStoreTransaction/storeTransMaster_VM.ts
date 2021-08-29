@@ -19,6 +19,9 @@ export class storeTransMaster_VM {
     public fromStoreAllcodesId?: number,
     public toStoreAllcodesId?: number,
     public storeTrnsMId?: number,
+    public from_Type?: FromType,
+    public to_Type?: ToType,
+    public storeTransMax?: number,
   
 
 

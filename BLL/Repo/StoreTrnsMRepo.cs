@@ -132,6 +132,8 @@ namespace BLL.Repo
                     ToStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.ToStoreAllcodesId,
                     FromStoreAllcodesId =string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.FromStoreAllcodesId,
                     BranchId= (decimal)s.BranchId,
+                    TrnsCode=s.TrnsCode,
+                    Storedocnum=s.Storedocnum,
                 }
                 ).FirstOrDefault() ;
                 return result;
@@ -144,7 +146,9 @@ namespace BLL.Repo
         //Retrive Tranaction Dep master by id
         public List<StoreTransDep_VM> RetriveTransaDepById(List<decimal> PTransRowIds)
         {
-           
+            storeAllsubcodesRepo = new StoreAllsubcodesRepo(_dbContext4S);
+            mainTypesRepo = new MainTypesRepo(_dbContext4S);
+            storeAllcodesRepo = new StoreAllcodesRepo(_dbContext4S);
             List<StoreTransDep_VM> ListItem = new List<StoreTransDep_VM>();
             if (PTransRowIds != null)
             {
@@ -154,12 +158,16 @@ namespace BLL.Repo
                     {
                         TrnsDate= s.TrnsDate,
                         Rem=s.Rem,
-                        ToStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
+                        ToStoreAllcodesId= string.IsNullOrEmpty(s.ToStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
                         FromStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.FromStoreAllcodesId,
                         TrnsCode=s.TrnsCode,
                         BranchId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.BranchId,
-                        
-                    }
+                        BranchName = storeAllsubcodesRepo.GetStoreAllSubCodeByID(s.BranchId) != null ? storeAllsubcodesRepo.GetStoreAllSubCodeByID(s.BranchId).Aname : null,
+                        From_TypeName = mainTypesRepo.GetNameFromMAinType(s.FromStoreAllcodesId) != null ? mainTypesRepo.GetNameFromMAinType(s.FromStoreAllcodesId):null,
+                        TO_TypeName= mainTypesRepo.GetNameFromMAinType(s.ToStoreAllcodesId) != null ? mainTypesRepo.GetNameFromMAinType(s.ToStoreAllcodesId) : null,
+                        From_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(s.FromStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(s.FromStoreAllcodesId).Aname : null,
+                        To_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(s.ToStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(s.ToStoreAllcodesId).Aname : null,
+                   }
                    ).FirstOrDefault();
                     ListItem.Add(oneItem);
                 }

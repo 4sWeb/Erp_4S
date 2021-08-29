@@ -11,12 +11,14 @@ namespace BLL.ModelsView
         public decimal StoreTrnsOId { get; set; }
         public decimal? Qty { get; set; }
         public decimal? UnitId { get; set; }
+        public string ? Unit_Name { get; set; }
         public decimal? UnitPrice { get; set; }
         public string Notes { get; set; }
         public bool? Itemapproved { get; set; }
         public decimal? ItemId { get; set; }
         public decimal? StoretrnsProformlaId { get; set; }
         public string Item_Name { get; internal set; }
+        public decimal StoreTrnsMId { get; set; }
 
 
 

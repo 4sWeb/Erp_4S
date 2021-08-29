@@ -1,18 +1,20 @@
 import { Data } from "@angular/router";
 
-export class StoreTransDetails_VM {
+export class storeTransDetails_VM {
   constructor(
-        public  StoreTrnsOId ?:number,  
-        public  Qty?:number,
-        public  UnitId?:number,
-        public  UnitPrice?:number,
+    public storeTrnsOId ?:number,  
+    public qty?:number,
+    public unitId?: number,
+    public unit_Name?: string,
+    public unitPrice?:number,
         public  DiscRate?:number,
         public  DiscVal?:number,
         public  StaxVal?:number,
         public  ItemCost?:number,
         public  TrnsPriceForcost?:number,
         public  StoreTrnsMId?: number,
-        public  ItemId?:number,
+    public itemId?: number,
+    public item_Name?: string,
         public  ItemKind?: number,
         public  Trnsods?: number,
         public  Unit2ndprice?: number,
@@ -29,10 +31,10 @@ export class StoreTransDetails_VM {
         public  Numbervalue?:string,   
         public  Stringvalue?:string,   
         public  Productionstageid?:number,  
-        public  StoretrnsProformlaId?: number,
+    public storetrnsProformlaId?: number,
         public  ProdformlaId?: number,
-        public  Itemapproved?: boolean,            
-        public  Notes?: string,
+    public itemapproved?: boolean,            
+    public notes?: string,
         public  Weekno?: number,
         public  Fromdate?: Data,    
         public  Todate?:Date,     
@@ -71,3 +73,15 @@ export class StoreTransDetails_VM {
         public  UnitOldprice?: number,
         public  Execperc?: number) { }
 }
+
+
+//storeTrnsOId": 0,
+//"qty": 10,
+//  "unitId": 41,
+//    "unit_Name": "كيلو جرام",
+//      "unitPrice": null,
+//        "notes": null,
+//          "itemapproved": null,
+//            "itemId": null,
+//              "storetrnsProformlaId": null,
+//                "item_Name": "ارجوس - تقاوى بطاطس"

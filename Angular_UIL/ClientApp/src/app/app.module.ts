@@ -21,6 +21,7 @@ import { CreateTransactionComponent } from './Components/Transactions/StoreTrans
 import { TransactionsListComponent } from './Components/Transactions/transactions-list/transactions-list.component';
 import { TransactionSpecificComponent } from './Components/Transactions/StoreTransaction/transaction-specific/transaction-specific.component';
 import { DialogContentDatatabelComponent } from './Components/Transactions/StoreTransaction/dialog-content-datatabel/dialog-content-datatabel.component';
+import { DialogEditProductComponent } from './Components/Transactions/StoreTransaction/dialog-edit-product/dialog-edit-product.component';
 
 
 @NgModule({
@@ -32,8 +33,9 @@ import { DialogContentDatatabelComponent } from './Components/Transactions/Store
     TransactionsListComponent,
     TransactionSpecificComponent,
     DialogContentDatatabelComponent,
+    DialogEditProductComponent,
   ],
-  entryComponents: [DialogContentDatatabelComponent],
+  entryComponents: [DialogContentDatatabelComponent, DialogEditProductComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,

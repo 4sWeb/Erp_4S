@@ -77,15 +77,23 @@ namespace BLL.Repo
         //Retrive List of Tranaction  details by id
         public List<StoreTransDetails_VM> RetriveDetailsTransactionById(decimal storeTransMId)
         {
+            SItems = new StoreItemsRepo(context);
+            SUnit = new StoreUnitsRepo(context);
             List<StoreTransDetails_VM> ItemsList = new List<StoreTransDetails_VM>();
             
             if (storeTransMId != default)
             {
 
-                var list  = GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new { s.Qty }).ToList();
+                var list  = GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new { s.Qty,s.ItemId,s.UnitId,s.StoreTrnsMId,s.Notes}).ToList();
                 foreach (var item in list)
                 {
-                    ItemsList.Add(new StoreTransDetails_VM { Qty=item.Qty});
+                    ItemsList.Add(new StoreTransDetails_VM { 
+                        Qty=item.Qty,
+                        UnitId = item.UnitId,
+                        StoreTrnsMId= (decimal)item.StoreTrnsMId,
+                        Unit_Name = SUnit.GetByCondition(c => c.Unitid == item.UnitId).Result.FirstOrDefault().Aname,
+                        Item_Name = SItems.GetByCondition(c => c.StoreItemsId == item.ItemId).Result.FirstOrDefault().Aname,
+                    });
                 }
                 return ItemsList;
             }

@@ -150,6 +150,9 @@ namespace Angular_API.Controllers
             if (storeTransMId !=default)
             {
                 STM_VM.StoreTransMaster_VM = repo._StoreTrnsM.RetriveMasterTransactionById(storeTransMId);
+                STM_VM.StoreTransMaster_VM.From_Type= repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "F");
+                STM_VM.StoreTransMaster_VM.To_Type = repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "T");
+                STM_VM.StoreTransMaster_VM.StoreTransMax= repo._StoreTrnsM.GetMaxID(STM_VM.StoreTransMaster_VM.TrnsCode, 2, STM_VM.StoreTransMaster_VM.BranchId);
                 STM_VM.StoreTransDetails_VM = repo._StoreTrnsO.RetriveDetailsTransactionById(storeTransMId);
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
                 if (listOfPrevIds != null)

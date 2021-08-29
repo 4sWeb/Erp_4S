@@ -16,5 +16,11 @@ namespace BLL.ModelsView
         public string Rem { get; set; }
         public DateTime TrnsDate { get; set; }
         public decimal TrnsCode { get; set; }
+
+        public string BranchName { get; set; }
+        public string From_TypeName { get; set; }
+        public string TO_TypeName { get; set; }
+        public string From_StoreAllcodesName { get; set; }
+        public string To_StoreAllcodesName { get; set; }
     }
 }
