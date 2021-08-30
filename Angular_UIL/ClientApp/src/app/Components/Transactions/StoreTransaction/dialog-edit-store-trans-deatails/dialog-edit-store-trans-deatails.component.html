@@ -1,0 +1,46 @@
+<p>dialog-edit-store-trans-deatails works!</p>
+
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<body>
+
+  <h1 mat-dialog-title></h1>
+  <div class="form-group row col-12">
+    <label for="qty" class="col-sm-4 col-form-label" style="text-align:right">الكمية</label>
+    <div class="col-sm-8">
+      <input id="qty" class="form-control" (keyup)="onKeyQuantity($event)" name="qty" [(ngModel)]="qty">
+    </div>
+  </div>
+
+  <div class="form-group row col-12">
+    <label for="notes" class="col-sm-4 col-form-label" style="text-align:right">الملاحظات</label>
+    <div class="col-sm-8">
+      <input id="notes" class="form-control"  name="notes" [(ngModel)]="notes">
+    </div>
+  </div>
+
+  <div class="form-group row col-12">
+    <label for="unitPrice" class="col-sm-4 col-form-label" style="text-align:right">سعر الوحدة</label>
+    <div class="col-sm-8">
+      <input id="unitPrice" class="form-control" (keyup)="onKeyPrice($event)" name="unitPrice" [(ngModel)]="unitPrice" >
+    </div>
+  </div>
+
+  <div class="form-group row col-12">
+    <label for="totalo" class="col-sm-4 col-form-label" style="text-align:right">القيمة</label>
+    <div class="col-sm-8">
+      <input id="totalo" class="form-control" name="totalo" [(ngModel)]="totalo">
+    </div>
+  </div>
+
+
+  <mat-dialog-actions align="end">
+    <button mat-button class="btn btn-danger" (click)="onNoClick()">اغلاق</button>
+    <button mat-button [mat-dialog-close]="editStoreTransDetails" cdkFocusInitial class="btn btn-success mr-3" style="text-align:right" (click)="updateStoreTransDetails()">موافق</button>
+  </mat-dialog-actions>
+
+</body>
+</html>
+
+

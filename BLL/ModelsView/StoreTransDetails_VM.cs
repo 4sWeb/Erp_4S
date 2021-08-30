@@ -19,6 +19,7 @@ namespace BLL.ModelsView
         public decimal? StoretrnsProformlaId { get; set; }
         public string Item_Name { get; internal set; }
         public decimal StoreTrnsMId { get; set; }
+        public decimal Totalo { get; set; }
 
 
 

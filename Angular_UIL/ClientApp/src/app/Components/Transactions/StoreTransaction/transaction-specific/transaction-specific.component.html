@@ -605,11 +605,11 @@
           <table class="table  table-bordered hover" style="width:100%">
             <thead>
               <tr style="text-align:right">
-                <!--<th></th>-->
+                <th></th>
                 <th>ملاحظات</th>
                 <th style="text-align:right">الوحدة</th>
-                <!--<th style="text-align:right">القيمة</th>
-          <th style="text-align:right">السعر</th>-->
+                <th style="text-align:right">القيمة</th>
+                <th style="text-align:right">السعر</th>
                 <th style="text-align:right">الكمية</th>
                 <th>الاسم</th>
                 <th>كود</th>
@@ -617,11 +617,14 @@
             </thead>
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of storeTransDetails_VM">
-                <!--<td><button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button></td>-->
+                <td>
+                  <!--<button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button>-->
+                  <button class="btn btn-warning" *ngIf="operationType=='View'" [value]="trans" mat-raised-button (click)="EditDetails(trans)">تعديل</button>
+                </td>
                 <td><input type="text" id="Note" value="{{trans.notes}}" style="width:100%" /></td>
                 <td>{{trans.unit_Name}}</td>
-                <!--<td><input type="text" id="value" placeholder="{{trans.Value}}" style="width:50%" /></td>
-          <td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>-->
+                <td><input type="text" id="value" value="{{trans.totalo}}" style="width:50%" /></td>
+                <td><input type="text" id="price" value="{{trans.unitPrice}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>
                 <td><input type="text" id="quantity" value="{{trans.qty}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
                 <td>{{trans.item_Name}}</td>
                 <td>{{trans.storeTrnsMId}}</td>
@@ -695,8 +698,8 @@
                 <th></th>
                 <th>ملاحظات</th>
                 <th style="text-align:right">الوحدة</th>
-                <!--<th style="text-align:right">القيمة</th>
-          <th style="text-align:right">السعر</th>-->
+                <th style="text-align:right">القيمة</th>
+                <th style="text-align:right">السعر</th>
                 <th style="text-align:right">الكمية</th>
                 <th>الاسم</th>
                 <th>كود</th>
@@ -705,12 +708,12 @@
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of productdetails">
                 <td><button class="btn btn-danger mr-1" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button>
-                <button class="btn btn-warning" [value]="trans" mat-raised-button (click)="EditProduct(trans)">تعديل</button></td>
+                <button class="btn btn-warning"  [value]="trans" mat-raised-button (click)="EditProduct(trans)">تعديل</button></td>
                 <td><input type="text" id="Note" value="{{trans.Note}}" style="width:100%" /></td>
                 <td>{{trans.Unit_Name}}</td>
-                <!--<td><input type="text" id="value" placeholder="{{trans.Value}}" style="width:50%" /></td>
-  <td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>-->
-                <td><input type="text" id="quantity" value="{{trans.Quantity}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
+                <td><input type="text" id="value" value="{{trans.Value}}" style="width:50%" /></td>
+                <td><input type="text" id="price" value="{{trans.Price}}" style="width:50%" /></td>
+                <td><input type="text" id="quantity" value="{{trans.Quantity}}" style="width:50%" /></td>
                 <td>{{trans.Item_Name}}</td>
                 <td>{{trans.Item_ID}}</td>
 

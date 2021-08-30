@@ -25,6 +25,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { TransactionsName } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-name';
 import { Data } from 'popper.js';
 import { DialogEditProductComponent } from '../dialog-edit-product/dialog-edit-product.component';
+import { DialogEditStoreTransDeatailsComponent } from '../dialog-edit-store-trans-deatails/dialog-edit-store-trans-deatails.component';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -37,6 +38,10 @@ export interface DialogEdit {
   editProduct: DependancyProduct;
 }
 
+export interface DialogEditStoreTransDetails {
+  editStoreTransDetails: storeTransDetails_VM;
+}
+
 
 
 @Component({
@@ -46,7 +51,7 @@ export interface DialogEdit {
 })
 export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewInit {
 
-  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog) { }
+  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog, public dialogEditDetails: MatDialog) { }
    
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
@@ -92,8 +97,11 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   Datevalue: Date;
   storeTransMax: number;
   storedocnum: number;
-  //For Edit
+  //For Edit while creating
   editProduct: DependancyProduct;
+
+  //For Edit while Retrive(View)
+  editStoreTransDetails: storeTransDetails_VM;
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -357,11 +365,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
     }
   }
 
-  //calculate the value
-  onKeyPrice(event: any) {
-    this.Price = event.target.value;
-    console.log("price", this.Price);
-  }
+
 
   //getAllCheckedTransId(e: any,id: number) {
   //  if (e.target.checked) {
@@ -406,8 +410,30 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
       return dialogReff.afterClosed();
     });
     
-    
-    };
+  };
+
+  
+  // open EditStoreTransDetailsDialog While Retrieve(View)
+  EditDetails(EditDetail) {
+    this.editStoreTransDetails = EditDetail;
+    console.log(this.editStoreTransDetails);
+    const dialogReff = this.dialogEdit.open(DialogEditStoreTransDeatailsComponent, {
+
+      width: '350px',
+      data: { editStoreTransDetails: this.editStoreTransDetails }
+    });
+    dialogReff.afterClosed().subscribe(result => {
+      console.log('From spec compenent The EditStoreTransDetailsDialog was closed', result);
+
+
+      if (result == null) {
+        result = this.editStoreTransDetails;
+      }
+
+      return dialogReff.afterClosed();
+    });
+
+  }
    
 
 
