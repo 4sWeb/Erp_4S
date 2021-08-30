@@ -125,11 +125,43 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-            repo._StoreTrnsO.convert_VMtoModel(StoreTransMain_VM.StoreTransDetails_VM);
-            repo._StoreTrnsDepDetails.convert_VMtoModel(StoreTransMain_VM.StoreTransDepDetails_VM);
-            repo._StoreTrnsDep.convert_VMtoModel(StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault());
-            repo._StoreTrnsM.convert_VMtoModel(StoreTransMain_VM.StoreTransMaster_VM);
+            StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StoreTransMain_VM.StoreTransMaster_VM.TrnsCode, Rem = StoreTransMain_VM.StoreTransMaster_VM.Rem, TrnsNo = StoreTransMain_VM.StoreTransMaster_VM.TrnsNo, BranchId = StoreTransMain_VM.StoreTransMaster_VM.BranchId, TrnsDate = StoreTransMain_VM.StoreTransMaster_VM.TrnsDate, Storedocnum = StoreTransMain_VM.StoreTransMaster_VM.Storedocnum, FromStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.FromStoreAllcodesId, ToStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.ToStoreAllcodesId, Period = StoreTransMain_VM.StoreTransMaster_VM.Period, StoreTrnsMId = StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId };
 
+            repo._StoreTrnsM.Create(StoreTrnsM);
+
+
+            //Add StoreTransDetails
+            foreach (var item in StoreTransMain_VM.StoreTransDetails_VM)
+            {
+                StoreTrnsO StoreTrnsO = new StoreTrnsO
+                {
+                    StoreTrnsOId = item.StoreTrnsOId,
+                    Qty = item.Qty,
+                    UnitId = item.UnitId,
+                    UnitPrice = item.UnitPrice,
+                    Notes = item.Notes,
+                    ItemId = item.ItemId,
+                    Itemapproved = item.Itemapproved,
+                    StoretrnsProformlaId = item.StoretrnsProformlaId
+                };
+                if (StoreTrnsO != null)
+                {
+                    repo._StoreTrnsO.Create(StoreTrnsO);
+
+                }
+                
+            }
+            if (StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().BranchId!=0)
+            {
+
+                StoreTrnsDep storeTrnsDep = new StoreTrnsDep() { Ptransrowid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ptransrowid, Groupid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Groupid };
+                if (storeTrnsDep != null)
+                {
+                    repo._StoreTrnsDep.Create(storeTrnsDep);
+                }
+            }
+              
+                
             try
             {
                 repo.Save();
@@ -173,32 +205,39 @@ namespace Angular_API.Controllers
             return STM_VM;
         }
 
-        //public JsonResult SaveOrders([FromBody] StoreTransMain_VM StoreTransMain_VM)
-        //{
+        [HttpPost]
+        [Route("UpdateStoreTrans")]
+        public void UpdateStoreTransaction([FromBody] StoreTransMaster_VM StoreTransMain_VM)
+        {
+            repo._StoreTrnsM.UpdateStoreTransMaster(StoreTransMain_VM.StoreTrnsMId,StoreTransMain_VM);
+        }
 
-        //    foreach (var row in TrnsO)
-        //    {
-        //        repo._StoreTrnsO.Create(row);
-        //    }
-        //    try
-        //    {
-        //        repo.Save();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
-        //    }
+            //public JsonResult SaveOrders([FromBody] StoreTransMain_VM StoreTransMain_VM)
+            //{
 
-        //return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
-        //}
+            //    foreach (var row in TrnsO)
+            //    {
+            //        repo._StoreTrnsO.Create(row);
+            //    }
+            //    try
+            //    {
+            //        repo.Save();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
+            //    }
 
-        //[HttpGet]
-        //[Route("DisplayItems")]
-        //public JsonResult DisplayItemsFromSelectedTransactions()
-        //{
-        //    // To Get All Items From Selected Transactions
-        //    return Json(null);
-        //}
+            //return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
+            //}
 
-    }
+            //[HttpGet]
+            //[Route("DisplayItems")]
+            //public JsonResult DisplayItemsFromSelectedTransactions()
+            //{
+            //    // To Get All Items From Selected Transactions
+            //    return Json(null);
+            //}
+
+        }
 }

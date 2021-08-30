@@ -84,7 +84,7 @@ namespace BLL.Repo
             if (storeTransMId != default)
             {
 
-                var list  = GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new { s.Qty,s.ItemId,s.UnitId,s.StoreTrnsMId,s.Notes,s.Totalo}).ToList();
+                var list  = GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new { s.Qty,s.ItemId,s.UnitId,s.StoreTrnsMId,s.Notes,s.Totalo,s.StoreTrnsOId}).ToList();
                 foreach (var item in list)
                 {
                     ItemsList.Add(new StoreTransDetails_VM { 
@@ -92,6 +92,7 @@ namespace BLL.Repo
                         UnitId = item.UnitId,
                         Totalo= (decimal)item.Totalo,
                         StoreTrnsMId = (decimal)item.StoreTrnsMId,
+                        StoreTrnsOId=item.StoreTrnsOId,
                         Unit_Name = SUnit.GetByCondition(c => c.Unitid == item.UnitId).Result.FirstOrDefault().Aname,
                         Item_Name = SItems.GetByCondition(c => c.StoreItemsId == item.ItemId).Result.FirstOrDefault().Aname,
                     });

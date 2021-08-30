@@ -14,7 +14,7 @@ namespace BLL.Repo
         private StoreAllcodesRepo storeAllcodesRepo;
         private MainTypesRepo mainTypesRepo;
         private ModelContext _dbContext4S;
-        private readonly IRepoWrapper repo;
+        //private readonly IRepoWrapper repo;
         private TestQuery test = new TestQuery();
 
         public StoreTrnsMRepo(ModelContext dbContext4S) : base(dbContext4S)
@@ -115,8 +115,9 @@ namespace BLL.Repo
 
             //Dictionary<string, object> currentt = (Dictionary<string, object>)toCodeId;
             //toCodeId = int.Parse(currentt.FirstOrDefault().Value.ToString());
-            StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StM_VM.TrnsCode, Rem = StM_VM.Rem, TrnsNo = StM_VM.TrnsNo, BranchId = StM_VM.BranchId, TrnsDate = StM_VM.TrnsDate, Storedocnum = StM_VM.Storedocnum, FromStoreAllcodesId = StM_VM.FromStoreAllcodesId, ToStoreAllcodesId = StM_VM.ToStoreAllcodesId, Period = StM_VM.Period, StoreTrnsMId = StM_VM.StoreTrnsMId };
-            repo._StoreTrnsM.Create(StoreTrnsM);
+            //StoreTrnsM StoreTrnsM = new StoreTrnsM() { TrnsCode = StM_VM.TrnsCode, Rem = StM_VM.Rem, TrnsNo = StM_VM.TrnsNo, BranchId = StM_VM.BranchId, TrnsDate = StM_VM.TrnsDate, Storedocnum = StM_VM.Storedocnum, FromStoreAllcodesId = StM_VM.FromStoreAllcodesId, ToStoreAllcodesId = StM_VM.ToStoreAllcodesId, Period = StM_VM.Period, StoreTrnsMId = StM_VM.StoreTrnsMId };
+            
+            //repo._StoreTrnsM.Create(StoreTrnsM);
         }
 
 
@@ -175,6 +176,18 @@ namespace BLL.Repo
                 return ListItem;
             }
             return null;
+        }
+
+        //Update StoreTrans(part StoreTransM)
+        public void UpdateStoreTransMaster(decimal storeTransMId, StoreTransMaster_VM newItem)
+        {
+            
+            if (storeTransMId != default&& newItem != null)
+            {
+                StoreTrnsM StoreTrnsM = new StoreTrnsM() { Rem = newItem.Rem, BranchId = newItem.BranchId, TrnsDate = newItem.TrnsDate, Storedocnum = newItem.Storedocnum, FromStoreAllcodesId = newItem.FromStoreAllcodesId, ToStoreAllcodesId = newItem.ToStoreAllcodesId,StoreTrnsMId=newItem.StoreTrnsMId };
+                //repo._StoreTrnsM.Update(StoreTrnsM);
+            }
+
         }
     }
 

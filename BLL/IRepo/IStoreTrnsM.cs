@@ -15,6 +15,7 @@ namespace BLL.IRepo
         public void convert_VMtoModel(StoreTransMaster_VM StM_VM) { }
          StoreTransMaster_VM RetriveMasterTransactionById(decimal storeTransMId);
         List<StoreTransDep_VM> RetriveTransaDepById(List<decimal> PTransRowIds);
+        public void UpdateStoreTransMaster(decimal storeTransMId, StoreTransMaster_VM newItem);
     }
   
 }
