@@ -17,5 +17,9 @@ namespace BLL.ModelsView
         public string Note { get; set; }
         public decimal Unitprice { get; set; }
         public decimal Quantity { get; set; }
+        public decimal? Commited { get; set; }
+        public decimal? ProwId { get; set; }
+        public decimal? Itemid { get; set; }
+        public decimal? Unitid { get; set; }
     }
 }

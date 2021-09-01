@@ -21,7 +21,7 @@ export class TransactionsListComponent implements OnDestroy,OnInit {
   }
 
   ngOnInit() {
-
+    $("#states").width;
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10

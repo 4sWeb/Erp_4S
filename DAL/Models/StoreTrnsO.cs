@@ -101,5 +101,19 @@ namespace DAL.Models
         public virtual ICollection<StoreTrnsExp> StoreTrnsExps { get; set; }
         public virtual ICollection<StoreTrnsProducationformla> StoreTrnsProducationformlas { get; set; }
         public virtual ICollection<StoreTrnsoDimensionsdetail> StoreTrnsoDimensionsdetails { get; set; }
+
+
+        //public decimal ITEMAPPROVED  { get; set; }
+        //public decimal ITEMPL { get; set; }
+        //public decimal ITEMPLCHOOSEFLAG { get; set; }
+       
+        //public decimal ItemFormId { get; set; }
+
+        //public decimal ORIGNALQTY { get; set; }
+        //public decimal OldPrice { get; set; }
+        //public decimal PLDEALPRICE  { get; set; }
+        //public decimal PLMAINPRICE { get; set; }
+        //public string RELEASETYPE { get; set; }
+        //public decimal RowIndex { get; set; }
     }
 }

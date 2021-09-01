@@ -2,25 +2,34 @@ import { Data } from "@angular/router";
 
 export class storeTransDetails_VM {
   constructor(
+    //need to save 
     public storeTrnsOId ?:number,  
     public qty?:number,
     public unitId?: number,
     public unit_Name?: string,
     public unitPrice?: number,
-        public  DiscRate?:number,
-        public  DiscVal?:number,
-        public  StaxVal?:number,
-        public  ItemCost?:number,
-        public  TrnsPriceForcost?:number,
-        public  StoreTrnsMId?: number,
+    public storetrnsProformlaId?: number,
+    public item2nddiscVal?: number,
+    public agriqty?: number,
+    public discVal?: number,
+    public itemapproved?: boolean,
+    public notes?: string,
+    public itemCost?: number,
+    public itemKind?: number,
     public itemId?: number,
+    public unitOldprice?: number,
+    public staxVal?: number,
+    public todate?: Date, 
+    public storeTrnsMId?: number,
+    public weekno?: number,
+    public totalo?: number,
+    //End of  need to save
     public item_Name?: string,
-        public  ItemKind?: number,
+    
         public  Trnsods?: number,
         public  Unit2ndprice?: number,
-        public  Item2nddiscRate?: number,
-        public  Item2nddiscVal?: number, 
-    public totalo?: number, 
+   
+    
         public  DetailCostcenterid?:number ,
         public  DetailAccountid ?:number ,
         public  Dstid?:number ,
@@ -31,13 +40,13 @@ export class storeTransDetails_VM {
         public  Numbervalue?:string,   
         public  Stringvalue?:string,   
         public  Productionstageid?:number,  
-    public storetrnsProformlaId?: number,
+    
         public  ProdformlaId?: number,
-    public itemapproved?: boolean,            
-    public notes?: string,
-        public  Weekno?: number,
+               
+    
+    
         public  Fromdate?: Data,    
-        public  Todate?:Date,     
+        
         public  Begintime?:Date,     
         public  Endtime?:Date,     
         public  Safeperiod?:number,      
@@ -60,7 +69,7 @@ export class storeTransDetails_VM {
         public  Requiredprocedure?: string,    
         public  Injpercentage?: string,   
         public  Fertunitid?:number,
-        public  Agriqty?:number,
+    
         public  Fromtime?:Date,
         public  Totime?:Date,
         public  Enginepressure?:string,    
@@ -70,18 +79,11 @@ export class storeTransDetails_VM {
         public  Agrifarmid?:number, 
         public  Agricontainerno?:string,    
         public  Freeitem?:number,
-        public  UnitOldprice?: number,
-        public  Execperc?: number) { }
+    
+    public Execperc?: number,
+    public TrnsPriceForcost?: number,
+    public Item2nddiscRate?: number,
+    public DiscRate?: number,
+  ) { }
 }
 
-
-//storeTrnsOId": 0,
-//"qty": 10,
-//  "unitId": 41,
-//    "unit_Name": "كيلو جرام",
-//      "unitPrice": null,
-//        "notes": null,
-//          "itemapproved": null,
-//            "itemId": null,
-//              "storetrnsProformlaId": null,
-//                "item_Name": "ارجوس - تقاوى بطاطس"

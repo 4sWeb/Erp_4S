@@ -21,6 +21,35 @@ namespace BLL.ModelsView
         public object From_Type { get; set; } 
         public object To_Type { get; set; }
         public object StoreTransMax { get; set; }
+
+        public decimal? Disc { get; set; }
+        public decimal? DiscRate { get; set; }
+        public decimal? Stax { get; set; }
+        public decimal? StaxRate { get; set; }
+        public decimal? Ctax { get; set; }
+        public decimal? CtaxRate { get; set; }
+        public decimal? DepOnGroupno { get; set; }
+        public decimal? CtaxDisc { get; set; }
+        public decimal? CtaxDiscRate { get; set; }
+        public decimal? Total { get; set; }
+        public decimal? Currencyid { get; set; }
+        public decimal? Currencyrate { get; set; }
+        public decimal? Pricelistid { get; set; }
+        public int? PeriodLimit { get; set; }
+        public decimal? Disc2 { get; set; }
+        public decimal? Disc2Rate { get; set; }
+        public decimal? Addition1 { get; set; }
+        public decimal? Addition1Rate { get; set; }
+        public decimal? Addition2 { get; set; }
+        public decimal? Addition2Rate { get; set; }
+        public decimal? Addition3 { get; set; }
+        public decimal? Addition3Rate { get; set; }
+        public decimal? Trnsusersid { get; set; }
+        public decimal? Employeeno { get; set; }
+        public decimal? MainCostcenterid { get; set; }
+        public decimal? MainAccountid { get; set; }
+
+
         //need to enhace (generic class for ado) 
         //public List<object> Branches { get; set; } 
         //public List<object> From_Type { get; set; }  // ( Altaraf From )
@@ -30,34 +59,24 @@ namespace BLL.ModelsView
 
 
 
-        //public decimal? Disc { get; set; }
-        //public decimal? DiscRate { get; set; }
-        //public decimal? Stax { get; set; }
-        //public decimal? StaxRate { get; set; }
-        //public decimal? Ctax { get; set; }
-        //public decimal? CtaxRate { get; set; }
-        //public decimal? DepOnGroupno { get; set; }
 
 
 
-        //public decimal? Total { get; set; }
-        //public decimal? Currencyid { get; set; }
+
 
 
         //public decimal? Salesrep { get; set; }
-        //public decimal? Currencyrate { get; set; }
+
         //public decimal? Initcash { get; set; }
-        //public decimal? CtaxDisc { get; set; }
-        //public decimal? CtaxDiscRate { get; set; }
+
         //public decimal? ExpensesAdd { get; set; }
         //public decimal? ExpensesDisc { get; set; }
         //public decimal? ExpensesNoeffect { get; set; }
-        //public decimal? Pricelistid { get; set; }
+
         //public DateTime? StartDate { get; set; }
         //public DateTime? EndDate { get; set; }
-        //public int? PeriodLimit { get; set; }
-        //public decimal? MainCostcenterid { get; set; }
-        //public decimal? MainAccountid { get; set; }
+
+
         //public decimal? TransferCost { get; set; }
         //public decimal? Discountlistid { get; set; }
         //public decimal? Commited { get; set; }
@@ -66,15 +85,8 @@ namespace BLL.ModelsView
         //public decimal? Tax41value { get; set; }
         //public decimal? Netvalue { get; set; }
         //public string Tax41trnsnatural { get; set; }
-        //public decimal? Trnsusersid { get; set; }
-        //public decimal? Disc2 { get; set; }
-        //public decimal? Disc2Rate { get; set; }
-        //public decimal? Addition1 { get; set; }
-        //public decimal? Addition1Rate { get; set; }
-        //public decimal? Addition2 { get; set; }
-        //public decimal? Addition2Rate { get; set; }
-        //public decimal? Addition3 { get; set; }
-        //public decimal? Addition3Rate { get; set; }
+
+
         //public string Remark1 { get; set; }
         //public string Remark1e { get; set; }
         //public string Remark2 { get; set; }
@@ -112,7 +124,7 @@ namespace BLL.ModelsView
         //public decimal? Typeid { get; set; }
         //public decimal? Agridataid { get; set; }
         //public string Managername { get; set; }
-        //public decimal? Employeeno { get; set; }
+
         //public string Irrigatemachine { get; set; }
         //public string Weathercond { get; set; }
         //public string Soilcond { get; set; }

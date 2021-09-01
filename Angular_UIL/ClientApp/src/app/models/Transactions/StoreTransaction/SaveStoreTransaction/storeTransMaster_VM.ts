@@ -22,9 +22,33 @@ export class storeTransMaster_VM {
     public from_Type?: FromType,
     public to_Type?: ToType,
     public storeTransMax?: number,
-  
+    public disc?: number,
+    public discRate?: number,
+    public stax?: number,
+    public staxRate?: number,
+    public ctax?: number,
+    public ctaxRate?: number,
+    public depOnGroupno?: number,
+    public ctaxDisc?: number,
+    public ctaxDiscRate?: number,
+    public total?: number,
+    public currencyid?: number,
+    public currencyrate?: number,
+    public pricelistid?: number,
+    public periodLimit?: number,
+    public disc2?: number,
+    public disc2Rate?: number,
+    public addition1?: number,
+    public addition1Rate?: number,
+    public addition2?: number,
+    public addition2Rate?: number,
+    public addition3?: number,
+    public addition3Rate?: number,
+    public trnsusersid?: number,
+    public employeeno?: number,
+    public mainCostcenterid?: number,
+    public mainAccountid?: number,
 
 
-    
   ) {}        
 }

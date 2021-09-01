@@ -11,31 +11,30 @@ namespace BLL.ModelsView
         public decimal StoreTrnsOId { get; set; }
         public decimal? Qty { get; set; }
         public decimal? UnitId { get; set; }
-        public string ? Unit_Name { get; set; }
+        public string  Unit_Name { get; set; }
         public decimal? UnitPrice { get; set; }
+        public decimal Totalo { get; set; }
+        public decimal? Weekno { get; set; }
+        public decimal StoreTrnsMId { get; set; }
+        public DateTime? Todate { get; set; }
+        public decimal? StaxVal { get; set; }
+        public decimal? UnitOldprice { get; set; }
+        public decimal? ItemId { get; set; }
+        public decimal? ItemKind { get; set; }
+        public decimal? ItemCost { get; set; }
         public string Notes { get; set; }
         public bool? Itemapproved { get; set; }
-        public decimal? ItemId { get; set; }
-        public decimal? StoretrnsProformlaId { get; set; }
         public string Item_Name { get; internal set; }
-        public decimal StoreTrnsMId { get; set; }
-        public decimal Totalo { get; set; }
+        public decimal? DiscVal { get; set; }
+        public decimal? Agriqty { get; set; }
+        public decimal? Item2nddiscVal { get; set; }
+        public decimal? StoretrnsProformlaId { get; set; }
+       
 
-
-
-        //public decimal? DiscRate { get; set; }
-        //public decimal? DiscVal { get; set; }
-        //public decimal? StaxVal { get; set; }
-        //public decimal? ItemCost { get; set; }
         //public decimal? TrnsPriceForcost { get; set; }
-        //public decimal? StoreTrnsMId { get; set; }
-
-        //public decimal? ItemKind { get; set; }
         //public decimal? Trnsods { get; set; }
         //public decimal? Unit2ndprice { get; set; }
         //public decimal? Item2nddiscRate { get; set; }
-        //public decimal? Item2nddiscVal { get; set; }
-        //public decimal? Totalo { get; set; }
         //public decimal? DetailCostcenterid { get; set; }
         //public decimal? DetailAccountid { get; set; }
         //public decimal? Dstid { get; set; }
@@ -46,13 +45,9 @@ namespace BLL.ModelsView
         //public string Numbervalue { get; set; }
         //public string Stringvalue { get; set; }
         //public decimal? Productionstageid { get; set; }
-
-        //public decimal? ProdformlaId { get; set; }
-
-
-        //public decimal? Weekno { get; set; }
+      
+        
         //public DateTime? Fromdate { get; set; }
-        //public DateTime? Todate { get; set; }
         //public DateTime? Begintime { get; set; }
         //public DateTime? Endtime { get; set; }
         //public decimal? Safeperiod { get; set; }
@@ -75,18 +70,15 @@ namespace BLL.ModelsView
         //public string Requiredprocedure { get; set; }
         //public string Injpercentage { get; set; }
         //public decimal? Fertunitid { get; set; }
-        //public decimal? Agriqty { get; set; }
-        //public DateTime? Fromtime { get; set; }
-        //public DateTime? Totime { get; set; }
-        //public string Enginepressure { get; set; }
         //public decimal? Itemnetperc { get; set; }
         //public decimal? Itemtotalperc { get; set; }
         //public decimal? Distexpcost { get; set; }
         //public decimal? Agrifarmid { get; set; }
         //public string Agricontainerno { get; set; }
         //public decimal? Freeitem { get; set; }
-        //public decimal? UnitOldprice { get; set; }
         //public decimal? Execperc { get; set; }
+
+
 
     }
 }
