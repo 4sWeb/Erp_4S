@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
@@ -10,6 +10,13 @@ import { DataTablesModule } from 'angular-datatables';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { MatSelectModule } from '@angular/material'
+import { MatAutocompleteModule } from '@angular/material'
+import { Ng2SearchPipeModule } from 'ng2-search-filter'
+import { DropdownModule } from 'primeng/dropdown';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 /////////////////////////*********************Services**************//////////////////////////////////////
 import { TransactionsService } from './services/StoreTransaction/transactions.service';
 import { SharingDataService } from './services/SharingData/sharing-data.service';
@@ -47,6 +54,14 @@ import { DialogEditStoreTransDeatailsComponent } from './Components/Transactions
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
+    AutocompleteLibModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
+    DropdownModule,
+    NgSelectModule,
+   
     RouterModule.forRoot([
       { path: '', component: TransactionsListComponent, pathMatch: 'full' },
       { path: 'all-transactions/:id', component: AllTransactionsComponent },
@@ -57,6 +72,8 @@ import { DialogEditStoreTransDeatailsComponent } from './Components/Transactions
     BrowserAnimationsModule
   ],
   providers: [TransactionsService, SharingDataService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:
+    [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

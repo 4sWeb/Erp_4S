@@ -29,9 +29,18 @@
           <div class="form-group row col-6">
             <label class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
-              <select name="branchId" [(ngModel)]="branchId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of Branches.Result" [value]="item.BRANCH_ID">{{item.BRANCH_NAME}}</option>
-              </select>
+              <ng-select bindLabel="BRANCH_NAME"
+                         name="branchId"
+                         placeholder="...اختر"
+                         appendTo="body"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="branchId">
+                <ng-option [value]="item.BRANCH_ID" [disabled]="item.disabled" *ngFor="let item of Branches.Result">
+
+                  {{item.BRANCH_NAME}}
+                </ng-option>
+              </ng-select>
             </div>
           </div>
 
@@ -64,24 +73,43 @@
 
         <!--div contain من , الي-->
         <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
-          <div class="form-group row col-6" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.From_Type?.length > 0">
+          <div class="form-group row col-6" *ngIf="FromType.length > 0">
             <label for="FromTypeId" class="col-sm-3 col-form-label" style="text-align:right">من</label>
             <div class="col-sm-8">
-              <select id="FromTypeId" name="FromTypeId" [(ngModel)]="FromTypeId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of FromType" [value]="item.TYPE_ID">{{item.TYPE_NAME}}</option>
-              </select>
+              <ng-select bindLabel="TYPE_NAME"
+                         name="FromTypeId"
+                         placeholder="...اختر"
+                         appendTo="body"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="FromTypeId">
+                <ng-option [value]="item.TYPE_ID" [disabled]="item.disabled" *ngFor="let item of FromType">
+
+                  {{item.TYPE_NAME}}
+                </ng-option>
+              </ng-select>
             </div>
           </div>
 
           <div class="form-group row col-6 mr-4">
-            <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
-            <div class="col-sm-8">
-              <select name="fromStoreAllcodesId" (ngModelChange)="selectFromDetailsChange($event)" [(ngModel)]="fromStoreAllcodesId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of FromTypeDetails" [value]="item.StoreAllcodesId">{{item.Aname}}</option>
-              </select>
-            </div>
-          </div>
+    <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
+    <div class="col-sm-8">
+      <ng-select bindLabel="Aname"
+                 name="fromStoreAllcodesId"
+                 placeholder="...اختر"
+                 appendTo="body"
+                 [searchable]="true"
+                 [clearable]="true"
+                 [(ngModel)]="fromStoreAllcodesId">
+        <ng-option [value]="item.StoreAllcodesId" [disabled]="item.disabled" *ngFor="let item of FromTypeDetails">
+
+          {{item.Aname}}
+        </ng-option>
+      </ng-select>
+    </div>
+  </div>
         </div>
+        
 
 
         <!--[ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
@@ -91,26 +119,44 @@
           <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0">
             <label for="ToTypeId" class="col-sm-3 col-form-label" style="text-align:right">الى</label>
             <div class="col-sm-8">
-              <select id="ToTypeId" name="ToTypeId" [(ngModel)]="ToTypeId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of ToType" [value]="item.TYPE_ID">{{item.TYPE_NAME}}</option>
-              </select>
+              <ng-select bindLabel="TYPE_NAME"
+                         name="ToTypeId"
+                         placeholder="...اختر"
+                         appendTo="body"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="ToTypeId">
+                <ng-option [value]="item.TYPE_ID" [disabled]="item.disabled" *ngFor="let item of ToType">
+                  {{item.TYPE_NAME}}
+                </ng-option>
+              </ng-select>
             </div>
           </div>
           <div class="form-group row col-6 mr-4">
             <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
-              <select name="ToTypeDetailsId" [(ngModel)]="ToTypeDetailsId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of ToTypeDetails" [value]="item.StoreAllcodesId">{{item.Aname}}</option>
-              </select>
+              <ng-select bindLabel="Aname"
+                         name="ToTypeDetailsId"
+                         placeholder="...اختر"
+                         appendTo="body"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="ToTypeDetailsId">
+                <ng-option [value]="item.StoreAllcodesId" [disabled]="item.disabled" *ngFor="let item of ToTypeDetails">
+
+                  {{item.Aname}}
+                </ng-option>
+              </ng-select>
+
             </div>
           </div>
         </div>
         <!--End of div contain من , الي-->
         <div class="form-group row">
           <label for="Rem" class="col-sm-2 col-form-label" style="text-align:right">ملاحظات</label>
-          <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
-            <textarea class="form-control" [(ngModel)]="Rem" id="Rem" name="Rem"></textarea>
-          </div>
+  <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
+    <textarea class="form-control" [(ngModel)]="Rem" id="Rem" name="Rem"></textarea>
+  </div>
         </div>
 
 
@@ -428,12 +474,23 @@
         <div class="form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length > 0">
           <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
           <div class="col-sm-7">
-            <!-- data-default-value="..." -->
-            <select id="my_select" name="TransCode" class="form-control" style="text-align:right" [(ngModel)]="TransCode" (change)="selectChangeHandler($event)">
-
-              <!--<option selected="selected" value="...">...</option>-->
+            <!--<select id="my_select" name="TransCode" class="form-control" style="text-align:right" [(ngModel)]="TransCode" (change)="selectChangeHandler()">
               <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
-            </select>
+            </select>-->
+
+            <ng-select bindLabel="Transaction_Name"
+                       name="TransCode"
+                       placeholder="Select item"
+                       appendTo="body"
+                       [searchable]="true"
+                       [clearable]="false"
+                       [(ngModel)]="TransCode"
+                       (change)="selectChangeHandler()">
+              <ng-option [value]="item.Transaction_Id" [disabled]="item.disabled" *ngFor="let item of DepTransactionNames">
+
+                {{item.Transaction_Name}}
+              </ng-option>
+            </ng-select>
           </div>
           <div class="col-sm-2">
             <!-- open dialog button -->

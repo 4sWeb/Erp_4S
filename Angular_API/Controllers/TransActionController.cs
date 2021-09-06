@@ -46,20 +46,20 @@ namespace Angular_API.Controllers
 
         [HttpGet]
         [Route("DisplayAllTransaction")]
-        public JsonResult DisplayAllTransactionById(decimal id , int PeriodID)
+        public JsonResult DisplayAllTransactionById(decimal id, int PeriodID)
         {
             var ListTransactions = repo._StoreTrnsM.AllTransactionByIdAndPeriodId(id, PeriodID);
-            return Json(ListTransactions , new System.Text.Json.JsonSerializerOptions());
+            return Json(ListTransactions, new System.Text.Json.JsonSerializerOptions());
         }
 
         [HttpGet]
         [Route("TransactionSpec")]
-        public JsonResult TransactionSpecByID(decimal transCode,decimal userId)
+        public JsonResult TransactionSpecByID(decimal transCode, decimal userId)
         {
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(transCode);
             var listOfBranches = repo._branch.GetAllBranches(userId);
             TransactionSpec.TransactionMasterSpec_VM.Branches = listOfBranches;
-            
+
             var branches = listOfBranches.Result.FirstOrDefault();
             Dictionary<string, object> currently = (Dictionary<string, object>)branches;
             var brancheId = int.Parse(currently.FirstOrDefault().Value.ToString());
@@ -74,7 +74,7 @@ namespace Angular_API.Controllers
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
                 var result = current.FirstOrDefault().Value;
-               TransactionSpec.TransactionMasterSpec_VM.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c=>c.GroupfId==decimal.Parse(result.ToString() )).Result.Select(n=>new { n.Code,n.Aname,n.StoreAllcodesId});
+                TransactionSpec.TransactionMasterSpec_VM.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Aname, n.StoreAllcodesId });
 
             }
 
@@ -83,7 +83,7 @@ namespace Angular_API.Controllers
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
                 var result = current.FirstOrDefault().Value;
-                TransactionSpec.TransactionMasterSpec_VM.FromTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Code, n.Aname,n.StoreAllcodesId });
+                TransactionSpec.TransactionMasterSpec_VM.FromTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Code, n.Aname, n.StoreAllcodesId });
 
             }
 
@@ -100,19 +100,19 @@ namespace Angular_API.Controllers
         public JsonResult GetTransactionsByDepID(decimal DepTransID)
         {
             List<Transaction_VM> Items = new List<Transaction_VM>();
-           
+
             Items = repo._StoreTrnsM.AllTransByDepID(DepTransID);
             foreach (var item in Items)
             {
-                var ii= repo._StoreTrnsDep.RetrieveTransactions(item.StoreTrnsMId);
+                var ii = repo._StoreTrnsDep.RetrieveTransactions(item.StoreTrnsMId);
                 item.StoreTransDep_VM = ii;
             }
-           
+
             return Json(Items, new System.Text.Json.JsonSerializerOptions());
         }
         [HttpPost]
         [Route("DisplayItems")]
-        public JsonResult DisplayItems([FromBody]List<decimal> Items)
+        public JsonResult DisplayItems([FromBody] List<decimal> Items)
         {
             //List<decimal> Items = new List<decimal>() { 2872, 2878 };
             List<TransactionsDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);
@@ -125,7 +125,8 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-            StoreTrnsM StoreTrnsM = new StoreTrnsM() { 
+            StoreTrnsM StoreTrnsM = new StoreTrnsM()
+            {
                 TrnsCode = StoreTransMain_VM.StoreTransMaster_VM.TrnsCode,
                 Rem = StoreTransMain_VM.StoreTransMaster_VM.Rem,
                 TrnsNo = StoreTransMain_VM.StoreTransMaster_VM.TrnsNo,
@@ -135,31 +136,31 @@ namespace Angular_API.Controllers
                 FromStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.FromStoreAllcodesId,
                 ToStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.ToStoreAllcodesId,
                 Period = StoreTransMain_VM.StoreTransMaster_VM.Period,
-                StoreTrnsMId = StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId ,
-                Disc= StoreTransMain_VM.StoreTransMaster_VM.Disc,
-                DiscRate= StoreTransMain_VM.StoreTransMaster_VM.DiscRate,
-                Stax= StoreTransMain_VM.StoreTransMaster_VM.Stax,
-                StaxRate= StoreTransMain_VM.StoreTransMaster_VM.StaxRate,
-                DepOnGroupno= StoreTransMain_VM.StoreTransMaster_VM.DepOnGroupno,
-                CtaxDisc= StoreTransMain_VM.StoreTransMaster_VM.CtaxDisc,
-                CtaxDiscRate= StoreTransMain_VM.StoreTransMaster_VM.CtaxDiscRate,
-                Total= StoreTransMain_VM.StoreTransMaster_VM.Total,
-                Currencyid= StoreTransMain_VM.StoreTransMaster_VM.Currencyid,
-                Currencyrate= StoreTransMain_VM.StoreTransMaster_VM.Currencyrate,
-                Pricelistid= StoreTransMain_VM.StoreTransMaster_VM.Pricelistid,
-                PeriodLimit= StoreTransMain_VM.StoreTransMaster_VM.PeriodLimit,
-                Disc2= StoreTransMain_VM.StoreTransMaster_VM.Disc2,
-                Disc2Rate= StoreTransMain_VM.StoreTransMaster_VM.Disc2Rate,
-                Addition1= StoreTransMain_VM.StoreTransMaster_VM.Addition1,
-                Addition1Rate= StoreTransMain_VM.StoreTransMaster_VM.Addition1Rate,
-                Addition2= StoreTransMain_VM.StoreTransMaster_VM.Addition2,
-                Addition2Rate= StoreTransMain_VM.StoreTransMaster_VM.Addition2Rate,
-                Addition3= StoreTransMain_VM.StoreTransMaster_VM.Addition3,
-                Addition3Rate= StoreTransMain_VM.StoreTransMaster_VM.Addition3Rate,
-                Trnsusersid= StoreTransMain_VM.StoreTransMaster_VM.Trnsusersid,
-                Employeeno= StoreTransMain_VM.StoreTransMaster_VM.Employeeno,
-                MainAccountid= StoreTransMain_VM.StoreTransMaster_VM.MainAccountid,
-                MainCostcenterid= StoreTransMain_VM.StoreTransMaster_VM.MainCostcenterid
+                StoreTrnsMId = StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId,
+                Disc = StoreTransMain_VM.StoreTransMaster_VM.Disc,
+                DiscRate = StoreTransMain_VM.StoreTransMaster_VM.DiscRate,
+                Stax = StoreTransMain_VM.StoreTransMaster_VM.Stax,
+                StaxRate = StoreTransMain_VM.StoreTransMaster_VM.StaxRate,
+                DepOnGroupno = StoreTransMain_VM.StoreTransMaster_VM.DepOnGroupno,
+                CtaxDisc = StoreTransMain_VM.StoreTransMaster_VM.CtaxDisc,
+                CtaxDiscRate = StoreTransMain_VM.StoreTransMaster_VM.CtaxDiscRate,
+                Total = StoreTransMain_VM.StoreTransMaster_VM.Total,
+                Currencyid = StoreTransMain_VM.StoreTransMaster_VM.Currencyid,
+                Currencyrate = StoreTransMain_VM.StoreTransMaster_VM.Currencyrate,
+                Pricelistid = StoreTransMain_VM.StoreTransMaster_VM.Pricelistid,
+                PeriodLimit = StoreTransMain_VM.StoreTransMaster_VM.PeriodLimit,
+                Disc2 = StoreTransMain_VM.StoreTransMaster_VM.Disc2,
+                Disc2Rate = StoreTransMain_VM.StoreTransMaster_VM.Disc2Rate,
+                Addition1 = StoreTransMain_VM.StoreTransMaster_VM.Addition1,
+                Addition1Rate = StoreTransMain_VM.StoreTransMaster_VM.Addition1Rate,
+                Addition2 = StoreTransMain_VM.StoreTransMaster_VM.Addition2,
+                Addition2Rate = StoreTransMain_VM.StoreTransMaster_VM.Addition2Rate,
+                Addition3 = StoreTransMain_VM.StoreTransMaster_VM.Addition3,
+                Addition3Rate = StoreTransMain_VM.StoreTransMaster_VM.Addition3Rate,
+                Trnsusersid = StoreTransMain_VM.StoreTransMaster_VM.Trnsusersid,
+                Employeeno = StoreTransMain_VM.StoreTransMaster_VM.Employeeno,
+                MainAccountid = StoreTransMain_VM.StoreTransMaster_VM.MainAccountid,
+                MainCostcenterid = StoreTransMain_VM.StoreTransMaster_VM.MainCostcenterid
             };
 
             repo._StoreTrnsM.Create(StoreTrnsM);
@@ -178,52 +179,53 @@ namespace Angular_API.Controllers
                     ItemId = item.ItemId,
                     Itemapproved = item.Itemapproved,
                     StoretrnsProformlaId = item.StoretrnsProformlaId,
-                    Totalo= item.Totalo,
-                    Weekno= item.Weekno,
-                    StoreTrnsMId=item.StoreTrnsMId,
-                    Todate= item.Todate,
-                    StaxVal= item.StaxVal,
-                    UnitOldprice= item.UnitOldprice,
-                    ItemKind=item.ItemKind,
-                    ItemCost=item.ItemCost,
-                    DiscVal=item.DiscVal,
-                    Agriqty=item.Agriqty,
-                    Item2nddiscVal=item.Item2nddiscVal,
+                    Totalo = item.Totalo,
+                    Weekno = item.Weekno,
+                    StoreTrnsMId = item.StoreTrnsMId,
+                    Todate = item.Todate,
+                    StaxVal = item.StaxVal,
+                    UnitOldprice = item.UnitOldprice,
+                    ItemKind = item.ItemKind,
+                    ItemCost = item.ItemCost,
+                    DiscVal = item.DiscVal,
+                    Agriqty = item.Agriqty,
+                    Item2nddiscVal = item.Item2nddiscVal,
                 };
                 if (StoreTrnsO != null)
                 {
                     repo._StoreTrnsO.Create(StoreTrnsO);
 
                 }
-                
+
             }
-           
 
-                StoreTrnsDep storeTrnsDep = new StoreTrnsDep() { 
-                    Ptransrowid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ptransrowid,
-                    Groupid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Groupid,
-                    Commited= StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Commited,
-                    Depslot= StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Depslot,
-                    Depdetailsid= StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Depdetailsid,
-                    StoreTrnsDepId= StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().StoreTrnsDepId,
-                    Ctrnsrowid= StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ctrnsrowid,
 
-                };
-                if (storeTrnsDep != null)
-                {
-                    repo._StoreTrnsDep.Create(storeTrnsDep);
-                }
+            StoreTrnsDep storeTrnsDep = new StoreTrnsDep()
+            {
+                Ptransrowid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ptransrowid,
+                Groupid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Groupid,
+                Commited = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Commited,
+                Depslot = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Depslot,
+                Depdetailsid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Depdetailsid,
+                StoreTrnsDepId = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().StoreTrnsDepId,
+                Ctrnsrowid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ctrnsrowid,
+
+            };
+            if (storeTrnsDep != null)
+            {
+                repo._StoreTrnsDep.Create(storeTrnsDep);
+            }
 
             foreach (var item in StoreTransMain_VM.StoreTransDepDetails_VM)
             {
                 StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
                 {
-                    Commited= item.Commited,
-                    Depdetailsid= item.Depdetailsid,
-                    Itemid= item.Itemid,
-                    ProwId= item.ProwId,
-                    Unitid= item.Unitid,
-                    Unitprice= item.Unitprice,
+                    Commited = item.Commited,
+                    Depdetailsid = item.Depdetailsid,
+                    Itemid = item.Itemid,
+                    ProwId = item.ProwId,
+                    Unitid = item.Unitid,
+                    Unitprice = item.Unitprice,
 
                 };
                 if (storeTransDepDetails != null)
@@ -233,7 +235,7 @@ namespace Angular_API.Controllers
                 }
 
             }
-                
+
             try
             {
                 repo.Save();
@@ -251,12 +253,12 @@ namespace Angular_API.Controllers
         public StoreTransMain_VM Retrive(decimal storeTransMId)
         {
             StoreTransMain_VM STM_VM = new StoreTransMain_VM();
-            if (storeTransMId !=default)
+            if (storeTransMId != default)
             {
                 STM_VM.StoreTransMaster_VM = repo._StoreTrnsM.RetriveMasterTransactionById(storeTransMId);
-                STM_VM.StoreTransMaster_VM.From_Type= repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "F");
+                STM_VM.StoreTransMaster_VM.From_Type = repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "F");
                 STM_VM.StoreTransMaster_VM.To_Type = repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "T");
-                STM_VM.StoreTransMaster_VM.StoreTransMax= repo._StoreTrnsM.GetMaxID(STM_VM.StoreTransMaster_VM.TrnsCode, 2, STM_VM.StoreTransMaster_VM.BranchId);
+                STM_VM.StoreTransMaster_VM.StoreTransMax = repo._StoreTrnsM.GetMaxID(STM_VM.StoreTransMaster_VM.TrnsCode, 2, STM_VM.StoreTransMaster_VM.BranchId);
                 STM_VM.StoreTransDetails_VM = repo._StoreTrnsO.RetriveDetailsTransactionById(storeTransMId);
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
                 if (listOfPrevIds != null)
@@ -283,14 +285,15 @@ namespace Angular_API.Controllers
         {
             if (StoreTransMain_VM != null)
             {
-                StoreTrnsM StoreTrnsM = new StoreTrnsM() { 
+                StoreTrnsM StoreTrnsM = new StoreTrnsM()
+                {
                     Rem = StoreTransMain_VM.StoreTransMaster_VM.Rem,
                     BranchId = StoreTransMain_VM.StoreTransMaster_VM.BranchId,
                     TrnsDate = StoreTransMain_VM.StoreTransMaster_VM.TrnsDate,
                     Storedocnum = StoreTransMain_VM.StoreTransMaster_VM.Storedocnum,
                     FromStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.FromStoreAllcodesId,
                     ToStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.ToStoreAllcodesId,
-                    StoreTrnsMId = StoreTransMain_VM. StoreTransMaster_VM.StoreTrnsMId 
+                    StoreTrnsMId = StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId
                 };
                 repo._StoreTrnsM.Update(StoreTrnsM);
             }
@@ -306,32 +309,32 @@ namespace Angular_API.Controllers
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
 
-            //public JsonResult SaveOrders([FromBody] StoreTransMain_VM StoreTransMain_VM)
-            //{
+        //public JsonResult SaveOrders([FromBody] StoreTransMain_VM StoreTransMain_VM)
+        //{
 
-            //    foreach (var row in TrnsO)
-            //    {
-            //        repo._StoreTrnsO.Create(row);
-            //    }
-            //    try
-            //    {
-            //        repo.Save();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
-            //    }
+        //    foreach (var row in TrnsO)
+        //    {
+        //        repo._StoreTrnsO.Create(row);
+        //    }
+        //    try
+        //    {
+        //        repo.Save();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
+        //    }
 
-            //return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
-            //}
+        //return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
+        //}
 
-            //[HttpGet]
-            //[Route("DisplayItems")]
-            //public JsonResult DisplayItemsFromSelectedTransactions()
-            //{
-            //    // To Get All Items From Selected Transactions
-            //    return Json(null);
-            //}
-
-        }
+        //[HttpGet]
+        //[Route("DisplayItems")]
+        //public JsonResult DisplayItemsFromSelectedTransactions()
+        //{
+        //    // To Get All Items From Selected Transactions
+        //    return Json(null);
+        //}
+       
+    }
 }

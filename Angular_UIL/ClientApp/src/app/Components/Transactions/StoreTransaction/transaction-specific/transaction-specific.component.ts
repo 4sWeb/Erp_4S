@@ -1,8 +1,11 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MenuItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
+import { SelectItemGroup } from 'primeng/api';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TransactionsService } from '../../../../services/StoreTransaction/transactions.service';
 import { DialogContentDatatabelComponent } from '../dialog-content-datatabel/dialog-content-datatabel.component';
@@ -49,10 +52,9 @@ export interface DialogEditStoreTransDetails {
   templateUrl: './transaction-specific.component.html',
   styleUrls: ['./transaction-specific.component.css']
 })
-export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewInit {
-
+export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog, public dialogEditDetails: MatDialog) { }
-   
+
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
   TransactionsDetails?: TransactionsDetails[];
@@ -240,18 +242,18 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
   }
 
 
-
   //event handler for the select element's change event
-  selectChangeHandler(event: any) {
+  selectChangeHandler() {
     //update the ui
     $("#second-table").DataTable().clear().draw();
-    
-    this.selectedTransaction = event.target.value;
+
+    this.selectedTransaction = this.TransCode;
 
     console.log(this.selectedTransaction);
-    this.TransactionsService.getTransactionsByDepID(this.selectedTransaction).subscribe(
+    console.log("TransCode", this.TransCode);
+    this.TransactionsService.getTransactionsByDepID(this.TransCode).subscribe(
       (response) => {
-        console.log("selected id transaction", this.selectedTransaction);
+        console.log("selected id transaction", this.TransCode);
         this.TransactionsDetails = response;
         this.rerender();
         console.log("selected id transaction", response)
@@ -434,7 +436,7 @@ export class TransactionSpecificComponent implements OnInit,OnDestroy,AfterViewI
     });
 
   }
-   
+
 
 
   ngOnDestroy(): void {
