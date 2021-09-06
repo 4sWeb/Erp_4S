@@ -29,18 +29,21 @@
           <div class="form-group row col-6">
             <label class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
-              <ng-select bindLabel="BRANCH_NAME"
+              <select name="branchId" [(ngModel)]="branchId" class="form-control" style="text-align:right">
+                <option *ngFor="let item of Branches.Result" [value]="item.BRANCH_ID">{{item.NAME}}</option>
+              </select>
+              <!--<ng-select bindLabel="NAME"
                          name="branchId"
                          placeholder="...اختر"
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
-                         [(ngModel)]="branchId">
+                         [(ngModel)]="branchId"
+                         (change)="getvalue()">
                 <ng-option [value]="item.BRANCH_ID" [disabled]="item.disabled" *ngFor="let item of Branches.Result">
-
-                  {{item.BRANCH_NAME}}
+                  {{item.NAME}}
                 </ng-option>
-              </ng-select>
+              </ng-select>-->
             </div>
           </div>
 

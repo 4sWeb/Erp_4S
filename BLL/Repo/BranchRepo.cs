@@ -19,7 +19,7 @@ namespace BLL.Repo
         public Task<List< object>> GetAllBranches(decimal Id) {
 
 
-            string query = @"select BRANCHES.BRANCHID as Branch_ID , STORE_ALLSUBCODES.ANAME as Branch_Name
+            string query = @"select BRANCHES.BRANCHID as Branch_ID , STORE_ALLSUBCODES.ANAME as Name
                             from BRANCHES 
                             inner
                             join STORE_ALLSUBCODES  on BRANCHES.BRANCHID = STORE_ALLSUBCODES.STORE_ALLSUBCODES_ID 
