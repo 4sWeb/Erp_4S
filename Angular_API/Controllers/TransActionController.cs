@@ -335,6 +335,32 @@ namespace Angular_API.Controllers
         //    // To Get All Items From Selected Transactions
         //    return Json(null);
         //}
-       
+
+        [HttpGet]
+        [Route("GetGroupFDetails")]
+        public JsonResult GetGroupsDetails()
+        {
+            List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
+            var GroupsList= repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
+            foreach (var item in GroupsList)
+            {
+                groupF_VMs.Add(new GroupF_VM {Aname= item.Aname,GroupF_Id= (int)item.GroupfId });
+            }
+            return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
+        }
+        [HttpGet]
+        [Route("GetItemsDetails")]
+        public JsonResult GetItemsDetails(decimal GroupF_Id)
+        {
+            var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
+
+            //foreach (var item in ItemList.Result.ToList())
+            //{
+            //    Dictionary<string, object> current = (Dictionary<string, object>)item;
+            //    var result = current.Values;
+            //}
+                return Json(ItemList, new System.Text.Json.JsonSerializerOptions());
+        }
+
     }
 }
