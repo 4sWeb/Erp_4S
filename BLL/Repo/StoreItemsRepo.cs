@@ -14,7 +14,7 @@ namespace BLL.Repo
         {
 
         }
-        //alzahraa 4/8/2021 trying to retrive list of To Items
+       
         //getItemsDetails
         public Task<List<object>>  GetItemsDetails(decimal Id)
         {

@@ -13,6 +13,8 @@ namespace BLL.Repo
         private readonly IRepoWrapper repo;
         private StoreItemsRepo SItems;
         private StoreUnitsRepo SUnit;
+        private StoreItemformsSpecsRepo storespecForm;
+        private GroupfRepo Groupf;
         private ModelContext context;
         public StoreTrnsORepo(ModelContext dbContext4S) : base(dbContext4S)
         {
@@ -79,6 +81,7 @@ namespace BLL.Repo
         {
             SItems = new StoreItemsRepo(context);
             SUnit = new StoreUnitsRepo(context);
+            storespecForm = new  StoreItemformsSpecsRepo(context);
             List<StoreTransDetails_VM> ItemsList = new List<StoreTransDetails_VM>();
             
             if (storeTransMId != default)
@@ -88,7 +91,10 @@ namespace BLL.Repo
                 foreach (var item in list)
                 {
                     ItemsList.Add(new StoreTransDetails_VM { 
-                        Qty=item.Qty,
+                        ItemId=item.ItemId,
+                        StoreItemfromsSpecsId = (decimal)SItems.GetByCondition(c => c.StoreItemsId == (decimal)item.ItemId).Result.Select(s => s.StoreItemfromsSpecsId).FirstOrDefault(),
+                        //GroupF_Id= storespecForm.GetByCondition(c=>c.StoreItemfromsSpecsId=item.st)
+                        Qty =item.Qty,
                         UnitId = item.UnitId,
                         Totalo= (decimal)item.Totalo,
                         StoreTrnsMId = (decimal)item.StoreTrnsMId,

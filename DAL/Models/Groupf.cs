@@ -7,7 +7,7 @@ namespace DAL.Models
 {
     public partial class Groupf
     {
-        public Groupf()
+        public Groupf(ModelContext context)
         {
             GroupBasicData = new HashSet<GroupBasicDatum>();
             GroupfDetails = new HashSet<GroupfDetail>();

@@ -9,6 +9,8 @@ namespace BLL.ModelsView
    public class StoreTransDetails_VM
     {
         public decimal StoreTrnsOId { get; set; }
+        public decimal StoreItemfromsSpecsId { get; set; }
+        public decimal GroupF_Id { get; set; }
         public decimal? Qty { get; set; }
         public decimal? UnitId { get; set; }
         public string  Unit_Name { get; set; }

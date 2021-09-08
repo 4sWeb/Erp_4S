@@ -7,7 +7,7 @@ namespace DAL.Models
 {
     public partial class StoreItemformsSpec
     {
-        public StoreItemformsSpec()
+        public StoreItemformsSpec(ModelContext context)
         {
             StoreItemformUnits = new HashSet<StoreItemformUnit>();
             StoreItems = new HashSet<StoreItem>();

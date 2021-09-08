@@ -10,6 +10,9 @@ import { TransactionSpecific } from '../../models/Transactions/StoreTransaction/
 import { TransactionsDetails } from '../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-details';
 import { DependancyProduct } from '../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
 import { StoreTransMain } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/store-trans-main';
+import { GroupF_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupF_VM';
+import { ItemDetails_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
+import { Unites_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
 
 
 
@@ -66,8 +69,22 @@ export class TransactionsService {
     return this.http.get<StoreTransMain>(`${environment.Api_Url}/Retrieve?storeTransMId=${storeTrnsMId}`);
 
   }
+  /////////////////////*********************Services Details************************//////////////////
 
+  //Retrieve all Groups of Details
+  getAllGroups(): Observable<GroupF_VM> {
+    return this.http.get<GroupF_VM>(`${environment.Api_Url}/GetGroupFDetails`);
+  }
 
+  //Get Items and unite and price when group dropdown changed
+  getItemsDetails(groupFId: number): Observable<ItemDetails_VM> {
+    return this.http.get<ItemDetails_VM>(`${environment.Api_Url}/GetItemsDetails?GroupF_Id=${groupFId}`);
+  }
+
+  //Get Unites when Item dropdown changed
+  getUnitesDetails(itemId: number): Observable<Unites_VM> {
+    return this.http.get<Unites_VM>(`${environment.Api_Url}/GetUnitesDetails?storeItemId=${itemId}`);
+  }
 
 
 

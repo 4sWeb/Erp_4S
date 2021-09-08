@@ -8,7 +8,6 @@ namespace BLL.ModelsView
 {
    public class TransactionsDetails_VM
     {
-
         public decimal? Item_ID { get; set; }
         public string Item_Name { get; set; }
         public decimal? Quantity { get; set; }
