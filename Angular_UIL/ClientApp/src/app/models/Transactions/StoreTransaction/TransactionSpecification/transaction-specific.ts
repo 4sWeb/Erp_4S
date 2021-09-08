@@ -1,5 +1,5 @@
 
-import { Result } from "./Result";
+import { Branches } from "./Branches";
 import { ExtraField } from "./extra-field";
 import { FromType } from "./from-type";
 import { FromTypeDetails } from "./from-type-details";

@@ -8,6 +8,6 @@ namespace BLL.IRepo
 {
     public interface IStoreItems:IBaseRepo<StoreItem>
     {
-        object GetItemsDetails(decimal Id);
+        Task<List<object>> GetItemsDetails(decimal Id);
     }
 }

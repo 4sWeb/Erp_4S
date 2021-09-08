@@ -1,7 +1,7 @@
 import { Data } from "popper.js";
 import { ToTypeDetails } from "../TransactionSpecification/to-type-details";
 import { FromTypeDetails } from "../TransactionSpecification/from-type-details";
-import { Result } from "../TransactionSpecification/Result";
+import { Branches } from "../TransactionSpecification/Branches";
 import { FromType } from "../TransactionSpecification/from-type";
 import { ToType } from "../TransactionSpecification/to-type";
 

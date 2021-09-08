@@ -19,7 +19,7 @@ import { storeTransMaster_VM } from '../../../../models/Transactions/StoreTransa
 import { storeTransDep_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDep_VM';
 import { storeTransDepDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDepDetails_VM';
 import { storeTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
-import { Result } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Result';
+import { Branches } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Branches';
 import { FromType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type';
 import { FromTypeDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type-details';
 import { ToType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type';
@@ -80,7 +80,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
   storeTransDep_VM?: storeTransDep_VM[];
   storeTransDepDetails_VM?:storeTransDepDetails_VM[];
   storeTransDetails_VM?: storeTransDetails_VM[];
-  Branches: Result[];
+  Branches: Branches[];
   FromType: FromType[];
   FromTypeDetails: FromTypeDetails[];
   ToType: ToType[];

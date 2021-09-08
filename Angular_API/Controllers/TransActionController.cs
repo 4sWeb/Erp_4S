@@ -58,7 +58,13 @@ namespace Angular_API.Controllers
         {
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(transCode);
             var listOfBranches = repo._branch.GetAllBranches(userId);
-            TransactionSpec.TransactionMasterSpec_VM.Branches = listOfBranches;
+            List<Branches_VM> branches_VMs = new List<Branches_VM>();
+            foreach(var item in listOfBranches.Result.ToList())
+            {
+                Dictionary<string, object> current = (Dictionary<string, object>)item;
+                branches_VMs.Add(new Branches_VM { BRANCH_ID = int.Parse(current.Values.First().ToString()),NAME = current.Values.Last().ToString() });
+            }
+            TransactionSpec.TransactionMasterSpec_VM.Branches = branches_VMs;
 
             var branches = listOfBranches.Result.FirstOrDefault();
             Dictionary<string, object> currently = (Dictionary<string, object>)branches;
@@ -353,14 +359,40 @@ namespace Angular_API.Controllers
         public JsonResult GetItemsDetails(decimal GroupF_Id)
         {
             var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
+            ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
+            foreach (var item in ItemList.Result.ToList())
+            {
+                Dictionary<string, object> current = (Dictionary<string, object>)item;
+                ItemDetails_VM.Items_VMs.Add(new Items_VM { Name = (string)current.Values.Last(), ItemId = int.Parse(current.Values.First().ToString()) });
+            }
 
-            //foreach (var item in ItemList.Result.ToList())
-            //{
-            //    Dictionary<string, object> current = (Dictionary<string, object>)item;
-            //    var result = current.Values;
-            //}
-                return Json(ItemList, new System.Text.Json.JsonSerializerOptions());
+    
+            var UniteList= repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId);
+            foreach (var item in UniteList.Result.ToList())
+            {
+                Dictionary<string, object> current = (Dictionary<string, object>)item;
+                ItemDetails_VM.Unites_VMs.Add(new Unites_VM { Name = (string)current.Values.Last(), UniteId = int.Parse(current.Values.First().ToString()) });
+            }
+            //int price;
+
+            //int.TryParse(repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice }).FirstOrDefault().BranchPrice.ToString(), out price);
+
+           //var Price=repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice}).FirstOrDefault().BranchPrice.ToString();
+            return Json(ItemDetails_VM, new System.Text.Json.JsonSerializerOptions());
+        }
+        [HttpGet]
+        [Route("GetUnitesDetails")]
+        public JsonResult GetUnitesDetails(decimal storeItemId)
+        {
+            List<Unites_VM> Unites_VMs = new List<Unites_VM> ();
+            var UniteList = repo._StoreUnits.GetUnitesDetails(storeItemId);
+            foreach (var item in UniteList.Result.ToList())
+            {
+                Dictionary<string, object> current = (Dictionary<string, object>)item;
+                Unites_VMs .Add(new Unites_VM { Name = (string)current.Values.Last(), UniteId = int.Parse(current.Values.First().ToString()) });
+            }
+            return Json(Unites_VMs, new System.Text.Json.JsonSerializerOptions());
         }
 
-    }
+      }
 }

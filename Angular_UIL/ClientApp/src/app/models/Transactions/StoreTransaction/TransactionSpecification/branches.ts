@@ -1,5 +1,5 @@
-import { Result } from "./Result";
 
 export class Branches {
-  constructor(public Result?: Result[]) { }
+  constructor(public BRANCH_ID: number,
+    public NAME: string) { }
 }

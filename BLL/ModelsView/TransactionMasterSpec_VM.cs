@@ -8,8 +8,12 @@ namespace BLL.ModelsView
 {
    public class TransactionMasterSpec_VM
     {
+        public TransactionMasterSpec_VM()
+        {
+            Branches = new List<Branches_VM>();
+        }
        
-        public object Branches { get; set; }
+        public List<Branches_VM> Branches { get; set; }
         public object From_Type { get; set; }  // ( Altaraf From )
         public object To_Type { get; set; }    // ( Altaraf TO )
         public object FromTypeDetails { get; set; }  // ( Altaraf From )

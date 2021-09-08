@@ -16,10 +16,10 @@ namespace BLL.Repo
         }
         //alzahraa 4/8/2021 trying to retrive list of To Items
         //getItemsDetails
-        public object GetItemsDetails(decimal Id)
+        public Task<List<object>>  GetItemsDetails(decimal Id)
         {
 
-            string query = @"select STORE_ITEMS.ITEM_CODE as ItemId , STORE_ITEMS.ANAME as ItemName
+            string query = @"select STORE_ITEMS.STORE_ITEMS_ID as ItemId , STORE_ITEMS.ANAME as ItemName
                             from STORE_ITEMS 
                             inner Join STORE_ITEMFORMS_SPECS  on STORE_ITEMS.STORE_ITEMFROMS_SPECS_ID = STORE_ITEMFORMS_SPECS.STORE_ITEMFROMS_SPECS_ID
                             where STORE_ITEMFORMS_SPECS.GROUPF_ID = " + Id + " ";
