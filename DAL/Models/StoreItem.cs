@@ -34,6 +34,7 @@ namespace DAL.Models
             StoreTrnsPrices = new HashSet<StoreTrnsPrice>();
             StoreTrnsProducationformlas = new HashSet<StoreTrnsProducationformla>();
             Storeitemsallcodes = new HashSet<Storeitemsallcode>();
+            //StoreItemfromsSpecs = new HashSet<StoreItemformsSpec>();
         }
 
         public string ItemCode { get; set; }
@@ -55,7 +56,7 @@ namespace DAL.Models
         public string Notese { get; set; }
         public string Itembarcode { get; set; }
 
-        public virtual StoreItemformsSpec StoreItemfromsSpecs { get; set; }
+        public virtual  StoreItemformsSpec StoreItemfromsSpecs { get; set; }
         public virtual ICollection<Agridatum> AgridatumItems { get; set; }
         public virtual ICollection<Agridatum> AgridatumPreviousitems { get; set; }
         public virtual ICollection<Codeslinkitemdetail> Codeslinkitemdetails { get; set; }

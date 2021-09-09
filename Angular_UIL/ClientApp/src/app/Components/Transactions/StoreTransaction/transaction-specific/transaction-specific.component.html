@@ -638,7 +638,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="text-align:right" *ngFor="let trans of storeTransDep_VM">
+              <tr style="text-align:right" *ngFor="let trans of storeTransDep_VM ; let i = index">
                 <!--<td><button class="btn btn-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>-->
                 <td>{{trans.trnsDate}}</td>
                 <td>
@@ -660,6 +660,8 @@
           </table>
         </div>
         <!-- End of tabel view StoreTrans Dep -->
+
+
         <!-- tabel view StoreTrans details -->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction==null&&storeTransDetails_VM?.length>0">
           <table class="table  table-bordered hover" style="width:100%">
@@ -672,22 +674,66 @@
                 <th style="text-align:right">السعر</th>
                 <th style="text-align:right">الكمية</th>
                 <th>الاسم</th>
-                <th>كود</th>
+                <th>الصنف</th>
               </tr>
             </thead>
             <tbody>
-              <tr style="text-align:right" *ngFor="let trans of storeTransDetails_VM">
+              <tr style="text-align:right" *ngFor="let trans of storeTransDetails_VM ; let i = index">
                 <td>
                   <!--<button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button>-->
                   <button class="btn btn-warning" *ngIf="operationType=='View'" [value]="trans" mat-raised-button (click)="EditDetails(trans)">تعديل</button>
                 </td>
                 <td><input type="text" id="Note" value="{{trans.notes}}" style="width:100%" /></td>
-                <td>{{trans.unit_Name}}</td>
+                <td>
+                  {{trans.unitId}}
+                  <ng-select bindLabel="name"
+                             name="unite"
+                             placeholder="Select item"
+                             [searchable]="true"
+                             [clearable]="true"
+                             [(ngModel)]="storeTransDetails_VM[i].unitId">
+                    <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.unites_VMs">
+
+                      {{item.name}}
+                    </ng-option>
+                  </ng-select>
+                </td>
                 <td><input type="text" id="value" value="{{trans.totalo}}" style="width:50%" /></td>
                 <td><input type="text" id="price" value="{{trans.unitPrice}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>
                 <td><input type="text" id="quantity" value="{{trans.qty}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
                 <td>{{trans.item_Name}}</td>
-                <td>{{trans.storeTrnsMId}}</td>
+                <td>
+                  <div class="form-group row">
+                    <div class="col-12">
+                      {{trans.groupF_Id}}
+                      <ng-select bindLabel="Aname"
+                                 name="TransCode"
+                                 placeholder="Select item"
+                                 [searchable]="true"
+                                 [clearable]="true"
+                                 [(ngModel)]="storeTransDetails_VM[i].groupF_Id">
+                        <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
+
+                          {{item.Aname}}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                    <div class="col-12">
+                   {{trans.itemId}}
+                       <ng-select bindLabel="name"
+                                  name="ITEM"
+                                  placeholder="Select item"
+                                  [searchable]="true"
+                                  [clearable]="true"
+                                  [(ngModel)]="storeTransDetails_VM[i].itemId">
+                         <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.items_VMs">
+
+                           {{item.name}}
+                         </ng-option>
+                       </ng-select>
+                     </div>
+                  </div>
+            </td>
               </tr>
             </tbody>
           </table>

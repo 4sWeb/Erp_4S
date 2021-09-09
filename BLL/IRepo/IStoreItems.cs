@@ -9,5 +9,6 @@ namespace BLL.IRepo
     public interface IStoreItems:IBaseRepo<StoreItem>
     {
         Task<List<object>> GetItemsDetails(decimal Id);
+        Task<List<object>> GetGroupFIDForItem(decimal Id);
     }
 }

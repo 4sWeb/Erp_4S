@@ -266,6 +266,32 @@ namespace Angular_API.Controllers
                 STM_VM.StoreTransMaster_VM.To_Type = repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "T");
                 STM_VM.StoreTransMaster_VM.StoreTransMax = repo._StoreTrnsM.GetMaxID(STM_VM.StoreTransMaster_VM.TrnsCode, 2, STM_VM.StoreTransMaster_VM.BranchId);
                 STM_VM.StoreTransDetails_VM = repo._StoreTrnsO.RetriveDetailsTransactionById(storeTransMId);
+
+               
+                foreach (var item in STM_VM.StoreTransDetails_VM)
+                {
+                    int GroupF_Id;
+                    var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.ItemId);
+                    Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
+                        GroupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
+                        item.GroupF_Id = GroupF_Id;
+                    var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
+                    ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
+                    foreach (var itemDetail in ItemList.Result.ToList())
+                    {
+                        Dictionary<string, object> currentItem = (Dictionary<string, object>)itemDetail;
+                        ItemDetails_VM.Items_VMs.Add(new Items_VM { Name = (string)currentItem.Values.Last(), ItemId = int.Parse(currentItem.Values.First().ToString()) });
+                    }
+
+
+                    var UniteList = repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId);
+                    foreach (var itemUnite in UniteList.Result.ToList())
+                    {
+                        Dictionary<string, object> currentUnite = (Dictionary<string, object>)itemUnite;
+                        ItemDetails_VM.Unites_VMs.Add(new Unites_VM { Name = (string)currentUnite.Values.Last(), UniteId = int.Parse(currentUnite.Values.First().ToString()) });
+                    }
+                    item.ItemDetails_VM = ItemDetails_VM;
+                }
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
                 if (listOfPrevIds != null)
                 {

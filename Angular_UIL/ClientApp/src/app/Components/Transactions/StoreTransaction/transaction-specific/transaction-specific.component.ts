@@ -29,6 +29,11 @@ import { TransactionsName } from '../../../../models/Transactions/StoreTransacti
 import { Data } from 'popper.js';
 import { DialogEditProductComponent } from '../dialog-edit-product/dialog-edit-product.component';
 import { DialogEditStoreTransDeatailsComponent } from '../dialog-edit-store-trans-deatails/dialog-edit-store-trans-deatails.component';
+import { data } from 'jquery';
+import { GroupF_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupF_VM';
+import { Items_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Items_VM';
+import { Unites_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
+import { ItemDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -105,6 +110,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
   //For Edit while Retrive(View)
   editStoreTransDetails: storeTransDetails_VM;
 
+  //For View Details
+  GroupF: GroupF_VM[];
+  items_VMs: Items_VM[];
+  unites_VMs: Unites_VM[];
+  itemDetails_VM: ItemDetails_VM;
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
 
@@ -169,27 +180,44 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
 
 
 
-      if (this.operationType == "View") {
-      this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
-        (data) => {
-          console.log("response2", data);
-          this.StoreTransMain = data;
-          console.log(this.StoreTransMain);
-          this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
-          this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
-          this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
-          this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
-          //need to enhance as storetransDep array so transcode maybe array
-          this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
-          this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
-          this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
-          this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
-          this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
-          console.log("storeDocNum", this.storedocnum);
-          this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
-          this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
-        }
-      )
+    if (this.operationType == "View") {
+        this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
+          (data) => {
+            console.log("response2", data);
+            this.StoreTransMain = data;
+            console.log(this.StoreTransMain);
+            this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
+            this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+            this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
+            this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
+            //need to enhance as storetransDep array so transcode maybe array
+            this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+            this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+            this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+            this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
+            this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
+            console.log("storeDocNum", this.storedocnum);
+            this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
+            this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
+            this.itemDetails_VM = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM;
+            console.log("ItemDetails", this.itemDetails_VM);
+            // this.items_VMs = this.itemDetails_VM.Items_VM;
+            for (var i = 0; i < this.itemDetails_VM.Items_VM.length; i++) {
+              this.items_VMs[i].ItemId = this.itemDetails_VM.Items_VM[i].ItemId;
+              this.items_VMs[i].Name = this.itemDetails_VM.Items_VM[i].Name;
+
+            }
+            console.log("Itemssssss", this.items_VMs);
+            this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM[0].unites_VMs;
+
+          }
+        );
+        this.TransactionsService.getAllGroups().subscribe(
+          (data) => {
+            console.log("GroupF", data);
+            this.GroupF = data;
+          }
+        );
 
     }
   }
@@ -216,9 +244,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
           console.log("storeDocNum", this.storedocnum);
           this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
           this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
-         
+
         }
-      )
+      );
+      this.TransactionsService.getAllGroups().subscribe(
+        (data) => {
+          console.log("GroupF", data);
+          this.GroupF = data;
+        }
+      );
 
     }
 

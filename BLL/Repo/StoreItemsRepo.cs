@@ -26,5 +26,17 @@ namespace BLL.Repo
             var ResQuery = testQuery.Get(query, null, 0);
             return ResQuery;
         }
+
+        //Get GroupF_Id For item
+        public Task<List<object>> GetGroupFIDForItem(decimal Id)
+        {
+
+            string query = @"select STORE_ITEMFORMS_SPECS.GROUPF_ID as GROUPF_ID
+                            from STORE_ITEMS 
+                            inner Join STORE_ITEMFORMS_SPECS  on STORE_ITEMFORMS_SPECS.STORE_ITEMFROMS_SPECS_ID = STORE_ITEMS.STORE_ITEMFROMS_SPECS_ID
+                            where  STORE_ITEMS.STORE_ITEMS_ID = " + Id + " ";
+            var ResQuery = testQuery.Get(query, null, 0);
+            return ResQuery;
+        }
     }
 }

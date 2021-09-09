@@ -1,10 +1,12 @@
 import { Data } from "@angular/router";
+import { ItemDetails_VM } from "./StoreTransDetails/ItemDetails_VM";
 
 export class storeTransDetails_VM {
   constructor(
     //need to save 
     public storeTrnsOId ?:number,  
-    public qty?:number,
+    public qty?: number,
+    public groupF_Id?: number,
     public unitId?: number,
     public unit_Name?: string,
     public unitPrice?: number,
@@ -24,6 +26,7 @@ export class storeTransDetails_VM {
     public weekno?: number,
     public totalo?: number,
     //End of  need to save
+    public itemDetails_VM?:ItemDetails_VM,
     public item_Name?: string,
     
         public  Trnsods?: number,

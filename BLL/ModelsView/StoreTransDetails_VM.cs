@@ -9,8 +9,7 @@ namespace BLL.ModelsView
    public class StoreTransDetails_VM
     {
         public decimal StoreTrnsOId { get; set; }
-        public decimal StoreItemfromsSpecsId { get; set; }
-        public decimal GroupF_Id { get; set; }
+        public int GroupF_Id { get; set; }
         public decimal? Qty { get; set; }
         public decimal? UnitId { get; set; }
         public string  Unit_Name { get; set; }
@@ -31,7 +30,8 @@ namespace BLL.ModelsView
         public decimal? Agriqty { get; set; }
         public decimal? Item2nddiscVal { get; set; }
         public decimal? StoretrnsProformlaId { get; set; }
-       
+        public ItemDetails_VM ItemDetails_VM { get; set; }
+
 
         //public decimal? TrnsPriceForcost { get; set; }
         //public decimal? Trnsods { get; set; }
@@ -47,8 +47,8 @@ namespace BLL.ModelsView
         //public string Numbervalue { get; set; }
         //public string Stringvalue { get; set; }
         //public decimal? Productionstageid { get; set; }
-      
-        
+
+
         //public DateTime? Fromdate { get; set; }
         //public DateTime? Begintime { get; set; }
         //public DateTime? Endtime { get; set; }

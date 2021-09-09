@@ -72,8 +72,8 @@ export class TransactionsService {
   /////////////////////*********************Services Details************************//////////////////
 
   //Retrieve all Groups of Details
-  getAllGroups(): Observable<GroupF_VM> {
-    return this.http.get<GroupF_VM>(`${environment.Api_Url}/GetGroupFDetails`);
+  getAllGroups(): Observable<GroupF_VM[]> {
+    return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/GetGroupFDetails`);
   }
 
   //Get Items and unite and price when group dropdown changed

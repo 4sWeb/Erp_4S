@@ -16,6 +16,7 @@ namespace BLL.Repo
         private StoreItemformsSpecsRepo storespecForm;
         private GroupfRepo Groupf;
         private ModelContext context;
+
         public StoreTrnsORepo(ModelContext dbContext4S) : base(dbContext4S)
         {
             context = dbContext4S;
@@ -92,7 +93,7 @@ namespace BLL.Repo
                 {
                     ItemsList.Add(new StoreTransDetails_VM { 
                         ItemId=item.ItemId,
-                        StoreItemfromsSpecsId = (decimal)SItems.GetByCondition(c => c.StoreItemsId == (decimal)item.ItemId).Result.Select(s => s.StoreItemfromsSpecsId).FirstOrDefault(),
+                        //GroupF_Id = (decimal)SItems.GetByCondition(c => c.StoreItemsId == (decimal)item.ItemId).Result.Select(s => s.StoreItemfromsSpecs.Select(c=>c.GroupfId).FirstOrDefault()).FirstOrDefault(),
                         //GroupF_Id= storespecForm.GetByCondition(c=>c.StoreItemfromsSpecsId=item.st)
                         Qty =item.Qty,
                         UnitId = item.UnitId,
@@ -105,9 +106,9 @@ namespace BLL.Repo
                 }
                 return ItemsList;
             }
-            
-            
                 return null;
         }
+
+     
     }
 }
