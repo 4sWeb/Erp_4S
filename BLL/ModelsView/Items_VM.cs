@@ -8,7 +8,7 @@ namespace BLL.ModelsView
 {
    public class Items_VM
     {
-        public int ItemId { get; set; }
-        public string Name { get; set; }
+        public int itemId { get; set; }
+        public string name { get; set; }
     }
 }

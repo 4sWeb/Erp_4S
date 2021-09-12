@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
-import { Observable, Subject } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MenuItem } from 'primeng/api';
 import { SelectItem } from 'primeng/api';
@@ -31,8 +31,8 @@ import { DialogEditProductComponent } from '../dialog-edit-product/dialog-edit-p
 import { DialogEditStoreTransDeatailsComponent } from '../dialog-edit-store-trans-deatails/dialog-edit-store-trans-deatails.component';
 import { data } from 'jquery';
 import { GroupF_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupF_VM';
-import { Items_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Items_VM';
 import { Unites_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
+import { Items_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Items_VM';
 import { ItemDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
 
 export interface DialogData {
@@ -57,8 +57,11 @@ export interface DialogEditStoreTransDetails {
   templateUrl: './transaction-specific.component.html',
   styleUrls: ['./transaction-specific.component.css']
 })
-export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TransactionSpecificComponent implements OnInit, OnDestroy,OnChanges {
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog, public dialogEditDetails: MatDialog) { }
+    ngOnChanges(changes: SimpleChanges): void {
+        throw new Error('Method not implemented.');
+    }
 
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
@@ -112,9 +115,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
 
   //For View Details
   GroupF: GroupF_VM[];
-  items_VMs: Items_VM[];
+  Items_VMs: Items_VM[];
   unites_VMs: Unites_VM[];
   itemDetails_VM: ItemDetails_VM;
+
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -192,6 +196,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
             this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
             //need to enhance as storetransDep array so transcode maybe array
             this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+            console.log("transDepCode", this.TransCode);
+
             this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
             this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
             this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
@@ -200,15 +206,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
             this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
             this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
             this.itemDetails_VM = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM;
-            console.log("ItemDetails", this.itemDetails_VM);
+            this.Items_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.Items_VMs;
             // this.items_VMs = this.itemDetails_VM.Items_VM;
-            for (var i = 0; i < this.itemDetails_VM.Items_VM.length; i++) {
-              this.items_VMs[i].ItemId = this.itemDetails_VM.Items_VM[i].ItemId;
-              this.items_VMs[i].Name = this.itemDetails_VM.Items_VM[i].Name;
+            //for (var i = 0; i < this.itemDetails_VM.Items_VM.length; i++) {
+            //  this.items_VMs[i].ItemId = this.itemDetails_VM.Items_VM[i].ItemId;
+            //  this.items_VMs[i].Name = this.itemDetails_VM.Items_VM[i].Name;
 
-            }
-            console.log("Itemssssss", this.items_VMs);
-            this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM[0].unites_VMs;
+            //}
+            //console.log("Itemssssss", this.items_VMs);
+            //this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM[0].unites_VMs;
 
           }
         );
@@ -224,56 +230,57 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
 
 
 
-  ngAfterViewInit(): void {
-    if (this.operationType == "View") {
-      this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
-        (data) => {
-          console.log("response2", data);
-          this.StoreTransMain = data;
-          console.log(this.StoreTransMain);
-          this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
-          this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
-          this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
-          this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
-          //need to enhance as storetransDep array so transcode maybe array
-          this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
-          this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
-          this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
-          this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
-          this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
-          console.log("storeDocNum", this.storedocnum);
-          this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
-          this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
+  //ngAfterViewInit(): void {
+  //  if (this.operationType == "View") {
+  //    this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
+  //      (data) => {
+  //        console.log("response2", data);
+  //        this.StoreTransMain = data;
+  //        console.log(this.StoreTransMain);
+  //        this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
+  //        this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+  //        this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
+  //        this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
+  //        //need to enhance as storetransDep array so transcode maybe array
+  //        this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+  //        console.log("storeTransDepId", this.TransCode);
+  //        this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+  //        this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+  //        this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
+  //        this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
+  //        console.log("storeDocNum", this.storedocnum);
+  //        this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
+  //        this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
 
-        }
-      );
-      this.TransactionsService.getAllGroups().subscribe(
-        (data) => {
-          console.log("GroupF", data);
-          this.GroupF = data;
-        }
-      );
+  //      }
+  //    );
+  //    this.TransactionsService.getAllGroups().subscribe(
+  //      (data) => {
+  //        console.log("GroupF", data);
+  //        this.GroupF = data;
+  //      }
+  //    );
 
-    }
+  //  }
 
 
 
-    let id = 0;
-    let userId = 0;
-    this.ar.params.subscribe(
-      a => {
-        id = a['id'],
-          userId = a['userId']
-      }
-    )
-    this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
-      (response) => {
-        console.log(id);
-        this.AllTransactions = response.TransactionDepSpec.TrnsList;
-        console.log(this.selectedTransaction);
-        this.dtTrigger1.next();
-    });
-  }
+  //  let id = 0;
+  //  let userId = 0;
+  //  this.ar.params.subscribe(
+  //    a => {
+  //      id = a['id'],
+  //        userId = a['userId']
+  //    }
+  //  )
+  //  this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
+  //    (response) => {
+  //      console.log(id);
+  //      this.AllTransactions = response.TransactionDepSpec.TrnsList;
+  //      console.log(this.selectedTransaction);
+  //      this.dtTrigger1.next();
+  //  });
+  //}
 
 
   //event handler for the select element's change event
@@ -471,7 +478,28 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, AfterVie
 
   }
 
+  GroupfChange(id: number, i: number) {
 
+    this.TransactionsService.getItemsDetails(id).subscribe(
+      (data) => {
+        console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii", i);
+        this.itemDetails_VM = data;
+        this.Items_VMs = this.itemDetails_VM.Items_VMs;
+        this.unites_VMs = this.itemDetails_VM.Unites_VMs;
+        this.storeTransDetails_VM[0].itemId = this.itemDetails_VM.Items_VMs[0].ItemId;
+        console.log("this.itemDetails_VM.Items_VMs[0].ItemId", this.itemDetails_VM.Items_VMs[i].ItemId);
+      }
+    );
+  }
+
+  ItemsChange(id: number) {
+    this.TransactionsService.getUnitesDetails(id).subscribe(
+      (data) => {
+        this.unites_VMs = data;
+      }
+    )
+
+  }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

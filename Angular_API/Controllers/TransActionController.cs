@@ -280,15 +280,15 @@ namespace Angular_API.Controllers
                     foreach (var itemDetail in ItemList.Result.ToList())
                     {
                         Dictionary<string, object> currentItem = (Dictionary<string, object>)itemDetail;
-                        ItemDetails_VM.Items_VMs.Add(new Items_VM { Name = (string)currentItem.Values.Last(), ItemId = int.Parse(currentItem.Values.First().ToString()) });
+                        ItemDetails_VM.Items_VMs.Add(new Items_VM { name = (string)currentItem.Values.Last(), itemId = int.Parse(currentItem.Values.First().ToString()) });
                     }
 
 
-                    var UniteList = repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId);
+                    var UniteList = repo._StoreUnits.GetUnitesDetails((decimal)STM_VM.StoreTransDetails_VM.FirstOrDefault().ItemId);
                     foreach (var itemUnite in UniteList.Result.ToList())
                     {
                         Dictionary<string, object> currentUnite = (Dictionary<string, object>)itemUnite;
-                        ItemDetails_VM.Unites_VMs.Add(new Unites_VM { Name = (string)currentUnite.Values.Last(), UniteId = int.Parse(currentUnite.Values.First().ToString()) });
+                        ItemDetails_VM.Unites_VMs.Add(new Unites_VM { name = (string)currentUnite.Values.Last(), uniteId = int.Parse(currentUnite.Values.First().ToString()) });
                     }
                     item.ItemDetails_VM = ItemDetails_VM;
                 }
@@ -389,15 +389,15 @@ namespace Angular_API.Controllers
             foreach (var item in ItemList.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
-                ItemDetails_VM.Items_VMs.Add(new Items_VM { Name = (string)current.Values.Last(), ItemId = int.Parse(current.Values.First().ToString()) });
+                ItemDetails_VM.Items_VMs.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()) });
             }
 
     
-            var UniteList= repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId);
+            var UniteList= repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.Items_VMs.FirstOrDefault().itemId);
             foreach (var item in UniteList.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
-                ItemDetails_VM.Unites_VMs.Add(new Unites_VM { Name = (string)current.Values.Last(), UniteId = int.Parse(current.Values.First().ToString()) });
+                ItemDetails_VM.Unites_VMs.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
             }
             //int price;
 
@@ -415,7 +415,7 @@ namespace Angular_API.Controllers
             foreach (var item in UniteList.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
-                Unites_VMs .Add(new Unites_VM { Name = (string)current.Values.Last(), UniteId = int.Parse(current.Values.First().ToString()) });
+                Unites_VMs .Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
             }
             return Json(Unites_VMs, new System.Text.Json.JsonSerializerOptions());
         }

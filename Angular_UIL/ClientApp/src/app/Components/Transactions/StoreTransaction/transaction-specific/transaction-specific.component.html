@@ -673,8 +673,7 @@
                 <th style="text-align:right">القيمة</th>
                 <th style="text-align:right">السعر</th>
                 <th style="text-align:right">الكمية</th>
-                <th>الاسم</th>
-                <th>الصنف</th>
+                <th colspan="2">الصنف</th>
               </tr>
             </thead>
             <tbody>
@@ -692,7 +691,7 @@
                              [searchable]="true"
                              [clearable]="true"
                              [(ngModel)]="storeTransDetails_VM[i].unitId">
-                    <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.unites_VMs">
+                    <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.unites_VMs||unites_VMs">
 
                       {{item.name}}
                     </ng-option>
@@ -701,17 +700,18 @@
                 <td><input type="text" id="value" value="{{trans.totalo}}" style="width:50%" /></td>
                 <td><input type="text" id="price" value="{{trans.unitPrice}}" style="width:50%" (keyup)="onKeyPrice($event)"/></td>
                 <td><input type="text" id="quantity" value="{{trans.qty}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
-                <td>{{trans.item_Name}}</td>
-                <td>
+               
+                <td colspan="2">
                   <div class="form-group row">
                     <div class="col-12">
                       {{trans.groupF_Id}}
                       <ng-select bindLabel="Aname"
-                                 name="TransCode"
+                                 name="GroupFName"
                                  placeholder="Select item"
                                  [searchable]="true"
                                  [clearable]="true"
-                                 [(ngModel)]="storeTransDetails_VM[i].groupF_Id">
+                                 [(ngModel)]="storeTransDetails_VM[i].groupF_Id"
+                                 (change)="GroupfChange($event)">
                         <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
 
                           {{item.Aname}}
@@ -725,8 +725,9 @@
                                   placeholder="Select item"
                                   [searchable]="true"
                                   [clearable]="true"
-                                  [(ngModel)]="storeTransDetails_VM[i].itemId">
-                         <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.items_VMs">
+                                  [(ngModel)]="storeTransDetails_VM[i].itemId"
+                                  (change)="ItemsChange($event,i)">
+                         <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.items_VMs||Items_VMs">
 
                            {{item.name}}
                          </ng-option>

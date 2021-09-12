@@ -82,8 +82,8 @@ export class TransactionsService {
   }
 
   //Get Unites when Item dropdown changed
-  getUnitesDetails(itemId: number): Observable<Unites_VM> {
-    return this.http.get<Unites_VM>(`${environment.Api_Url}/GetUnitesDetails?storeItemId=${itemId}`);
+  getUnitesDetails(itemId: number): Observable<Unites_VM[]> {
+    return this.http.get<Unites_VM[]>(`${environment.Api_Url}/GetUnitesDetails?storeItemId=${itemId}`);
   }
 
 

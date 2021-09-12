@@ -8,7 +8,7 @@ namespace BLL.ModelsView
 {
    public class Unites_VM
     {
-        public int UniteId { get; set; }
-        public string Name { get; set; }
+        public int uniteId { get; set; }
+        public string name { get; set; }
     }
 }
