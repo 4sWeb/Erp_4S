@@ -484,7 +484,6 @@
             <ng-select bindLabel="Transaction_Name"
                        name="TransCode"
                        placeholder="Select item"
-                       appendTo="body"
                        [searchable]="true"
                        [clearable]="false"
                        [(ngModel)]="TransCode"
@@ -498,7 +497,10 @@
           <div class="col-sm-2">
             <!-- open dialog button -->
             <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-info">عرض الحركات</button>
-
+          </div>
+          <br />
+          <div>
+            <button mat-raised-button (click)="openCategoryDialog()" class="btn btn-info">الأصناف</button>
           </div>
         </div>
         <!--</form>-->
@@ -691,7 +693,7 @@
                              [searchable]="true"
                              [clearable]="true"
                              [(ngModel)]="storeTransDetails_VM[i].unitId">
-                    <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.unites_VMs||unites_VMs">
+                    <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
 
                       {{item.name}}
                     </ng-option>
@@ -719,20 +721,21 @@
                       </ng-select>
                     </div>
                     <div class="col-12">
-                   {{trans.itemId}}
-                       <ng-select bindLabel="name"
-                                  name="ITEM"
-                                  placeholder="Select item"
-                                  [searchable]="true"
-                                  [clearable]="true"
-                                  [(ngModel)]="storeTransDetails_VM[i].itemId"
-                                  (change)="ItemsChange($event,i)">
-                         <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of  itemDetails_VM.items_VMs||Items_VMs">
-
-                           {{item.name}}
-                         </ng-option>
-                       </ng-select>
-                     </div>
+                      {{trans.itemId}}
+                      <ng-select bindLabel="name"
+             name="ITEM"
+             placeholder="Select item"
+             [searchable]="true"
+             [(ngModel)]="storeTransDetails_VM[i].itemId"
+             (change)="ItemsChange($event,i)">
+    <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of Items_VMs">
+      {{item.name}}
+    </ng-option>
+  </ng-select>
+                      <!--<select id="my_select" name="ITEM" class="form-control" style="text-align:right" [(ngModel)]="storeTransDetails_VM[i].itemId" (change)="ItemsChange($event,i)">
+                        <option *ngFor="let item of Items_VMs" [value]="item.itemId">{{item.name}}</option>
+                       </select>-->
+                    </div>
                   </div>
             </td>
               </tr>

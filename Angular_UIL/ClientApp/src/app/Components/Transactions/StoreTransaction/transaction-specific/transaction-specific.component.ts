@@ -29,6 +29,7 @@ import { TransactionsName } from '../../../../models/Transactions/StoreTransacti
 import { Data } from 'popper.js';
 import { DialogEditProductComponent } from '../dialog-edit-product/dialog-edit-product.component';
 import { DialogEditStoreTransDeatailsComponent } from '../dialog-edit-store-trans-deatails/dialog-edit-store-trans-deatails.component';
+import { DialogForCategoryComponent } from'../dialog-for-category/dialog-for-category.component'
 import { data } from 'jquery';
 import { GroupF_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupF_VM';
 import { Unites_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
@@ -57,11 +58,11 @@ export interface DialogEditStoreTransDetails {
   templateUrl: './transaction-specific.component.html',
   styleUrls: ['./transaction-specific.component.css']
 })
-export class TransactionSpecificComponent implements OnInit, OnDestroy,OnChanges {
-  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService, public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog, public dialogEditDetails: MatDialog) { }
-    ngOnChanges(changes: SimpleChanges): void {
-        throw new Error('Method not implemented.');
-    }
+export class TransactionSpecificComponent implements OnInit, OnDestroy{
+  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService,
+    public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
+    , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) { }
+    
 
   TransactionSpecific: TransactionSpecific;
   AllTransactions?: AllTransactions[];
@@ -206,16 +207,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,OnChanges
             this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
             this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
             this.itemDetails_VM = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM;
-            this.Items_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.Items_VMs;
-            // this.items_VMs = this.itemDetails_VM.Items_VM;
-            //for (var i = 0; i < this.itemDetails_VM.Items_VM.length; i++) {
-            //  this.items_VMs[i].ItemId = this.itemDetails_VM.Items_VM[i].ItemId;
-            //  this.items_VMs[i].Name = this.itemDetails_VM.Items_VM[i].Name;
-
-            //}
-            //console.log("Itemssssss", this.items_VMs);
-            //this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM[0].unites_VMs;
-
+            this.Items_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.items_VM;
+            this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.unites_VM;
           }
         );
         this.TransactionsService.getAllGroups().subscribe(
@@ -476,7 +469,26 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,OnChanges
       return dialogReff.afterClosed();
     });
 
-  }
+  };
+
+  //open CategoryDialog
+  openCategoryDialog(): void {
+    const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
+
+      //data: { editProduct: this.editProduct }
+    });
+    dialogReff.afterClosed().subscribe(result => {
+      console.log('From spec compenent The Edit dialog was closed', result);
+
+
+      if (result == null) {
+        //result = this.editProduct;
+      }
+
+      return dialogReff.afterClosed();
+    });
+
+  };
 
   GroupfChange(id: number, i: number) {
 
@@ -484,10 +496,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,OnChanges
       (data) => {
         console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii", i);
         this.itemDetails_VM = data;
-        this.Items_VMs = this.itemDetails_VM.Items_VMs;
-        this.unites_VMs = this.itemDetails_VM.Unites_VMs;
-        this.storeTransDetails_VM[0].itemId = this.itemDetails_VM.Items_VMs[0].ItemId;
-        console.log("this.itemDetails_VM.Items_VMs[0].ItemId", this.itemDetails_VM.Items_VMs[i].ItemId);
+        this.Items_VMs = this.itemDetails_VM.items_VM;
+        this.unites_VMs = this.itemDetails_VM.unites_VM;
+        this.storeTransDetails_VM[0].itemId = this.itemDetails_VM.items_VM[0].itemId;
+        this.storeTransDetails_VM[0].unitId = this.itemDetails_VM.unites_VM[0].uniteId;
       }
     );
   }
@@ -495,7 +507,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,OnChanges
   ItemsChange(id: number) {
     this.TransactionsService.getUnitesDetails(id).subscribe(
       (data) => {
+        console.log("unites",data);
         this.unites_VMs = data;
+        this.storeTransDetails_VM[0].unitId = this.unites_VMs[0].uniteId;
       }
     )
 

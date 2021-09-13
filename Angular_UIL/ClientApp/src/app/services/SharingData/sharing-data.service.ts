@@ -20,7 +20,7 @@ export class SharingDataService {
   }
 
   setStoreTransMId(data:any) {
-    this.storeTransMId = data;
+    this.storeTransMId =data;
   }
   getStoreTransMId(): any {
     return this.storeTransMId;

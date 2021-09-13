@@ -1,0 +1,34 @@
+<p>dialog-for-category works!</p>
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<body>
+  <table class="table  table-bordered hover" style="width:100%">
+    <thead>
+      <tr style="text-align:right">
+        <th style="text-align:center">
+        الصنف
+        </th>
+      </tr>
+      </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="form-group">
+              <ng-select bindLabel="Aname"
+                         name="GroupFName"
+                         placeholder="Select item"
+                         [searchable]="true"
+                         [clearable]="true"
+                         (change)="GroupfChange($event)">
+                <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
+
+                  {{item.Aname}}
+                </ng-option>
+              </ng-select>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+</body>
+</html>

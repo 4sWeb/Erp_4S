@@ -280,7 +280,7 @@ namespace Angular_API.Controllers
                     foreach (var itemDetail in ItemList.Result.ToList())
                     {
                         Dictionary<string, object> currentItem = (Dictionary<string, object>)itemDetail;
-                        ItemDetails_VM.Items_VMs.Add(new Items_VM { name = (string)currentItem.Values.Last(), itemId = int.Parse(currentItem.Values.First().ToString()) });
+                        ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)currentItem.Values.Last(), itemId = int.Parse(currentItem.Values.First().ToString()) });
                     }
 
 
@@ -288,7 +288,7 @@ namespace Angular_API.Controllers
                     foreach (var itemUnite in UniteList.Result.ToList())
                     {
                         Dictionary<string, object> currentUnite = (Dictionary<string, object>)itemUnite;
-                        ItemDetails_VM.Unites_VMs.Add(new Unites_VM { name = (string)currentUnite.Values.Last(), uniteId = int.Parse(currentUnite.Values.First().ToString()) });
+                        ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)currentUnite.Values.Last(), uniteId = int.Parse(currentUnite.Values.First().ToString()) });
                     }
                     item.ItemDetails_VM = ItemDetails_VM;
                 }
@@ -389,15 +389,15 @@ namespace Angular_API.Controllers
             foreach (var item in ItemList.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
-                ItemDetails_VM.Items_VMs.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()) });
+                ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()) });
             }
 
     
-            var UniteList= repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.Items_VMs.FirstOrDefault().itemId);
+            var UniteList= repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.items_VM.FirstOrDefault().itemId);
             foreach (var item in UniteList.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
-                ItemDetails_VM.Unites_VMs.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
+                ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
             }
             //int price;
 

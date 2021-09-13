@@ -10,13 +10,13 @@ namespace BLL.ModelsView
     {
         public ItemDetails_VM()
         {
-            Items_VMs = new List<Items_VM>();
-            Unites_VMs = new List<Unites_VM>();
+            items_VM = new List<Items_VM>();
+            unites_VM = new List<Unites_VM>();
 
 
         }
-        public List<Items_VM> Items_VMs { get; set; }
-        public List<Unites_VM> Unites_VMs { get; set; }
+        public List<Items_VM> items_VM { get; set; }
+        public List<Unites_VM> unites_VM { get; set; }
         public int Price { get; set; }
     }
 }
