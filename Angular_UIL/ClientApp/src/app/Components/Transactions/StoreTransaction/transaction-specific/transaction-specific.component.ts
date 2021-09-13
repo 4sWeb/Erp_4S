@@ -478,7 +478,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
       //data: { editProduct: this.editProduct }
     });
     dialogReff.afterClosed().subscribe(result => {
-      console.log('From spec compenent The Edit dialog was closed', result);
+      console.log('From spec compenent The Category Dialog was closed', result);
 
 
       if (result == null) {
