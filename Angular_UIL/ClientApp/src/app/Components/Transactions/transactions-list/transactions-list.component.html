@@ -27,7 +27,7 @@
         </thead>
         <tbody>
           <tr style="text-align:right" *ngFor="let trans of alltransactions">
-            <td [routerLinkActive]="['link-active']"><a class="btn btn-info" [routerLink]="['/all-transactions',trans.TransId]">عرض</a></td>
+            <td [routerLinkActive]="['link-active']"><a class="btn btn-outline-info" [routerLink]="['/all-transactions',trans.TransId]">عرض</a></td>
             <td>{{trans.Count}}</td>
             <td>{{trans.EName}}</td>
             <td>{{trans.AName}}</td>

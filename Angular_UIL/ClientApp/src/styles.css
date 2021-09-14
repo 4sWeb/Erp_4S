@@ -1,1 +1,19 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+@font-face {
+  font-family: amiri;
+  src: local("amiri"),url(assets/fonts/amiri-v17-latin_arabic-700.ttf) format("truetype");
+}
+
+*{
+  font-family: amiri,Arial
+}
+
+
+table.dataTable th {
+  background-color: #75a1b1;
+  color: white;
+  text-align: center;
+}
+

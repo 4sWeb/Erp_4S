@@ -102,6 +102,20 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
   ToTypeDetails: ToTypeDetails[];
   DepTransactionNames: TransactionsName[];
 
+
+         //datePicker
+  public today: Date = new Date();
+  public currentYear: number = this.today.getFullYear();
+  public currentMonth: number = this.today.getMonth();
+  public currentDay: number = this.today.getDate();
+  public currentHour: number = this.today.getHours();
+  public currentMinute: number = this.today.getMinutes();
+  public currentSecond: number = this.today.getSeconds();
+  public Datevalue: Date = new Date(new Date().setDate(14));
+            ///
+
+
+
   //for binding
   StoreTransMId: number;
   branchId: number;
@@ -111,7 +125,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
   ToTypeId: number;
   TransCode: number;
   Rem: string;
-  Datevalue: Date;
+  //Datevalue: Date;
   storeTransMax: number;
   storedocnum: number;
   //For Edit while creating

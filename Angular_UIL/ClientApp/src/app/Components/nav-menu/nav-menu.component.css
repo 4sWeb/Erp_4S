@@ -16,3 +16,16 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+
+.nvBrand {
+  color: #eadb1f;
+}
+  .nvBrand:hover ,.nvBrand:visited {
+    color: #eadb1f;
+  }
+
+.ChooseTans,.ChooseTans:hover,.ChooseTans:visited{
+    color:white;
+    text-decoration:none;
+}
