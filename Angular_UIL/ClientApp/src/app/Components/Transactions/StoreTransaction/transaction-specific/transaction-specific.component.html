@@ -21,17 +21,21 @@
 <body>
   <div class="container">
 
-    <div class="mb-5" style="background-color:lightblue"><h3 style="text-align:center"><span name="TrnsCode" [innerHTML]="TransactionSpecific.TrnsCode"></span>&nbsp;&nbsp;<span name="Aname" [innerHTML]="TransactionSpecific.Aname">{{TransactionSpecific.Aname}}</span></h3></div>
+    <div class="alert alert-info">
+    <h3  style="text-align:center"><span name="TrnsCode"
+     [innerHTML]="TransactionSpecific.TrnsCode"></span>&nbsp;&nbsp;<span name="Aname" [innerHTML]="TransactionSpecific.Aname">
+      {{TransactionSpecific.Aname}}</span></h3>
+    </div>
 
-    <div>
-      <form (ngSubmit)="addStoreTransaction()">
+    <div class="modal-content p-3 mb-4" style="font-size:14px">
+      <form (ngSubmit)="addStoreTransaction()" #transForm="ngForm">
         <div class="row col-12">
           <div class="form-group row col-6">
             <label class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
               <!--<select name="branchId" [(ngModel)]="branchId" class="form-control" style="text-align:right">
-                <option *ngFor="let item of Branches" [value]="item.BRANCH_ID">{{item.NAME}}</option>
-              </select>-->
+    <option *ngFor="let item of Branches" [value]="item.BRANCH_ID">{{item.NAME}}</option>
+  </select>-->
               <ng-select bindLabel="NAME"
                          name="branchId"
                          placeholder="...اختر"
@@ -39,19 +43,22 @@
                          [searchable]="true"
                          [clearable]="true"
                          [(ngModel)]="branchId"
-                         (change)="getvalue()">
+                         (change)="getvalue()" #brnchid="ngModel" required>
                 <ng-option [value]="item.BRANCH_ID" [disabled]="item.disabled" *ngFor="let item of Branches">
                   {{item.NAME}}
                 </ng-option>
               </ng-select>
+              
             </div>
+            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
+                   [hidden]="brnchid.untouched ||brnchid.valid"> *يجب اختيار الفرع</small>
           </div>
 
 
           <div class="form-group row col-6 mr-4">
             <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax">
+              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax" readonly>
             </div>
           </div>
         </div>
@@ -61,7 +68,8 @@
           <div class="form-group row col-6">
             <label for="storedocnum" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
             <div class="col-sm-8">
-              <input class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum" [(ngModel)]="storedocnum">
+              <input #storedocno="ngModel" class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum"
+                     [(ngModel)]="storedocnum" type="number" required min="0">
             </div>
           </div>
 
@@ -69,8 +77,12 @@
           <div class="form-group row col-6 mr-4">
             <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ</label>
             <div class="col-sm-8 mr-4">
-              <ejs-datetimepicker name="Datevalue" id='datetimepicker' placeholder='Select a date' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' style="width:100%"></ejs-datetimepicker>
+              <ejs-datetimepicker name="Datevalue" id='datetimepicker'
+                                  placeholder='التاريـــــخ' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' style="width:100%" required>
+              </ejs-datetimepicker>
             </div>
+            
+
           </div>
         </div>
 
@@ -85,32 +97,37 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
-                         [(ngModel)]="FromTypeId">
+                         [(ngModel)]="FromTypeId" #From="ngModel" required>
                 <ng-option [value]="item.TYPE_ID" [disabled]="item.disabled" *ngFor="let item of FromType">
 
                   {{item.TYPE_NAME}}
                 </ng-option>
               </ng-select>
+
             </div>
+            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
+                   [hidden]="From.untouched ||From.valid"> *يجب اختيار </small>
           </div>
 
           <div class="form-group row col-6 mr-4">
-    <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
-    <div class="col-sm-8">
-      <ng-select bindLabel="Aname"
-                 name="fromStoreAllcodesId"
-                 placeholder="...اختر"
-                 appendTo="body"
-                 [searchable]="true"
-                 [clearable]="true"
-                 [(ngModel)]="fromStoreAllcodesId">
-        <ng-option [value]="item.StoreAllcodesId" [disabled]="item.disabled" *ngFor="let item of FromTypeDetails">
+            <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
+            <div class="col-sm-8">
+              <ng-select bindLabel="Aname"
+                         name="fromStoreAllcodesId"
+                         placeholder="...اختر"
+                         appendTo="body"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="fromStoreAllcodesId" #FromDetails="ngModel" required>
+                <ng-option [value]="item.StoreAllcodesId" [disabled]="item.disabled" *ngFor="let item of FromTypeDetails">
 
-          {{item.Aname}}
-        </ng-option>
-      </ng-select>
-    </div>
-  </div>
+                  {{item.Aname}}
+                </ng-option>
+              </ng-select>
+            </div>
+            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
+                   [hidden]="FromDetails.untouched ||FromDetails.valid"> *يجب اختيار </small>
+          </div>
         </div>
         
 
@@ -128,13 +145,16 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
-                         [(ngModel)]="ToTypeId">
+                         [(ngModel)]="ToTypeId" #to="ngModel" required>
                 <ng-option [value]="item.TYPE_ID" [disabled]="item.disabled" *ngFor="let item of ToType">
                   {{item.TYPE_NAME}}
                 </ng-option>
               </ng-select>
             </div>
+            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
+                   [hidden]="to.untouched ||to.valid"> *يجب اختيار </small>
           </div>
+
           <div class="form-group row col-6 mr-4">
             <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
@@ -144,16 +164,19 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
-                         [(ngModel)]="ToTypeDetailsId">
+                         [(ngModel)]="ToTypeDetailsId" #toDetails="ngModel" required>
                 <ng-option [value]="item.StoreAllcodesId" [disabled]="item.disabled" *ngFor="let item of ToTypeDetails">
 
                   {{item.Aname}}
                 </ng-option>
               </ng-select>
-
             </div>
+            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
+                   [hidden]="toDetails.untouched ||toDetails.valid"> *يجب اختيار </small>
           </div>
         </div>
+
+
         <!--End of div contain من , الي-->
         <div class="form-group row">
           <label for="Rem" class="col-sm-2 col-form-label" style="text-align:right">ملاحظات</label>
@@ -478,29 +501,32 @@
           <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
           <div class="col-sm-7">
             <!--<select id="my_select" name="TransCode" class="form-control" style="text-align:right" [(ngModel)]="TransCode" (change)="selectChangeHandler()">
-              <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
-            </select>-->
+    <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
+  </select>-->
 
             <ng-select bindLabel="Transaction_Name"
                        name="TransCode"
-                       placeholder="Select item"
+                       placeholder="...اختر"
                        [searchable]="true"
                        [clearable]="false"
                        [(ngModel)]="TransCode"
-                       (change)="selectChangeHandler()">
+                       (change)="selectChangeHandler()" #depOn="ngModel" required>
               <ng-option [value]="item.Transaction_Id" [disabled]="item.disabled" *ngFor="let item of DepTransactionNames">
 
                 {{item.Transaction_Name}}
               </ng-option>
             </ng-select>
+
+            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
+                   [hidden]="depOn.untouched ||depOn.valid"> *يجب الاختيار </small>
           </div>
           <div class="col-sm-2">
             <!-- open dialog button -->
-            <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-info">عرض الحركات</button>
+            <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-outline-primary">عرض الحركات</button>
           </div>
           <br />
           <div>
-            <button mat-raised-button (click)="openCategoryDialog()" class="btn btn-info">الأصناف</button>
+            <button mat-raised-button (click)="openCategoryDialog()" class="btn btn-outline-info">الأصناف</button>
           </div>
         </div>
         <!--</form>-->
@@ -612,7 +638,7 @@
         </div>
 
 
-        <!-- ******************************************in View Part********************************************* -->
+        <!-- ******************************************in View Part  عرض الحركات********************************************* -->
         <!-- Tabel view StoreTrans Dep -->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction==null&&storeTransDep_VM?.length>0">
           <table class="table  table-bordered hover" style="width:100%">
@@ -662,6 +688,8 @@
           </table>
         </div>
         <!-- End of tabel view StoreTrans Dep -->
+
+
 
 
         <!-- tabel view StoreTrans details -->
@@ -752,7 +780,7 @@
         <!-- tabel view item selected -->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="productdetails?.length>0">
           <table class="table  table-bordered hover" style="width:100%">
-            <thead>
+            <thead class="bg-info">
               <tr style="text-align:right">
                 <th></th>
                 <th>تاريخ</th>
@@ -777,7 +805,7 @@
             </thead>
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of checkedTransactionsMain">
-                <td><button class="btn btn-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>
+                <td><button class="btn btn-outline-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>
                 <td>{{trans.TrnsDate}}</td>
                 <td>
                   <div class="row">
@@ -834,7 +862,7 @@
 
 
 
-        <button type="submit" class="btn btn-warning">حفظ</button>
+        <button type="submit" class="btn btn-success" [disabled]="transForm.invalid" >حفظ</button>
       </form>
     </div>
   </div>

@@ -1,0 +1,12 @@
+table.dataTable th {
+    background-color:#75a1b1;
+    color:white;
+    text-align:center;
+}
+
+
+table.dataTable td {
+  text-align: center;
+}
+
+
