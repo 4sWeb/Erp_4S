@@ -8,29 +8,47 @@ namespace BLL.ModelsView
 {
    public class StoreTransDetails_VM
     {
-        public decimal StoreTrnsOId { get; set; }
-        public int GroupF_Id { get; set; }
-        public decimal? Qty { get; set; }
-        public decimal? UnitId { get; set; }
-        public string  Unit_Name { get; set; }
-        public decimal? UnitPrice { get; set; }
-        public decimal Totalo { get; set; }
-        public decimal? Weekno { get; set; }
-        public decimal StoreTrnsMId { get; set; }
-        public DateTime? Todate { get; set; }
-        public decimal? StaxVal { get; set; }
-        public decimal? UnitOldprice { get; set; }
-        public decimal? ItemId { get; set; }
-        public decimal? ItemKind { get; set; }
-        public decimal? ItemCost { get; set; }
-        public string Notes { get; set; }
-        public bool? Itemapproved { get; set; }
-        public string Item_Name { get; internal set; }
-        public decimal? DiscVal { get; set; }
-        public decimal? Agriqty { get; set; }
-        public decimal? Item2nddiscVal { get; set; }
-        public decimal? StoretrnsProformlaId { get; set; }
-        public ItemDetails_VM ItemDetails_VM { get; set; }
+        public decimal storeTrnsOId { get; set; }
+        public int groupF_Id { get; set; }
+        public decimal? qty { get; set; }
+        public decimal? unitId { get; set; }
+        public string  unit_Name { get; set; }
+        public decimal? unitPrice { get; set; }
+        public decimal totalo { get; set; }
+        public decimal? weekno { get; set; }
+        public decimal storeTrnsMId { get; set; }
+        public DateTime? todate { get; set; }
+        public decimal? staxVal { get; set; }
+        public decimal? unitOldprice { get; set; }
+        public decimal? itemId { get; set; }
+        public decimal? itemKind { get; set; }
+        public decimal? itemCost { get; set; }
+        public string notes { get; set; }
+        public bool? itemapproved { get; set; }
+        public string item_Name { get; internal set; }
+        public decimal? discVal { get; set; }
+        public decimal? agriqty { get; set; }
+        public decimal? item2nddiscVal { get; set; }
+        public decimal? storetrnsProformlaId { get; set; }
+        public ItemDetails_VM itemDetails_VM { get; set; }
+
+        //last added to replace TransactionDetails_VM
+        public decimal? price { get; set; }
+        public decimal? disc_Rate { get; set; }
+        public decimal? disc_Value { get; set; }
+        public decimal? tax_Rate { get; set; }
+        public decimal? tax_Value { get; set; }
+        public decimal? profit_Tax_Rate { get; set; }
+        public decimal? profit_Tax_Value { get; set; }
+        public decimal net_Value { get; set; }
+        public decimal store_Trns_M_ID { get; set; }
+
+
+
+
+
+
+   
 
 
         //public decimal? TrnsPriceForcost { get; set; }

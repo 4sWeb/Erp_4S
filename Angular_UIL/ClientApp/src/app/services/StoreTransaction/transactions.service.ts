@@ -13,6 +13,7 @@ import { StoreTransMain } from '../../models/Transactions/StoreTransaction/SaveS
 import { GroupF_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupF_VM';
 import { ItemDetails_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
 import { Unites_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
+import { storeTransDetails_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 
 
 
@@ -57,10 +58,10 @@ export class TransactionsService {
   }
 
   //get all product dependancies
-  getAllProductDetails(ids: number[]): Observable<DependancyProduct[]> {
+  getAllProductDetails(ids: number[]): Observable<storeTransDetails_VM[]> {
     console.log("idsFrom Services", ids)
     
-    return this.http.post<DependancyProduct[]>(`${environment.Api_Url}/DisplayItems`,ids);
+    return this.http.post<storeTransDetails_VM[]>(`${environment.Api_Url}/DisplayItems`,ids);
   }
 
   //Retrive all details about StoreTransaction by storeTransMId

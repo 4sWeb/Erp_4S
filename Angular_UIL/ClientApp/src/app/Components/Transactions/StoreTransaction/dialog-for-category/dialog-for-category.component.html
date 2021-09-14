@@ -21,6 +21,9 @@
           <th>
             الكمية
           </th>
+          <th>
+            القيمة
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -33,7 +36,7 @@
                          [searchable]="true"
                          [clearable]="true"
                          [(ngModel)]="storeTransDetails_VM[i].groupF_Id"
-                         (change)="GroupfChange($event)">
+                         (change)="GroupfChange($event,i)">
                 <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
 
                   {{item.Aname}}
@@ -42,14 +45,15 @@
             </div>
           </td>
           <td>
-            <div class="form-group">
+            <div class="form-group" *ngIf="GroupFChanged==true">
               <ng-select bindLabel="name"
                          name="ITEM"
                          placeholder="Select item"
                          [searchable]="true"
                          [(ngModel)]="storeTransDetails_VM[i].itemId"
-                         (change)="ItemsChange($event)">
-                <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VM">
+                         (change)="ItemsChange($event,i)"
+                         >
+                <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VMs">
                   {{item.name}}
                 </ng-option>
               </ng-select>
@@ -62,6 +66,7 @@
                          placeholder="Select item"
                          [searchable]="true"
                          [clearable]="true"
+                         (change)="UnitesChange(i)"
                          [(ngModel)]="storeTransDetails_VM[i].unitId">
                 <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
 
@@ -70,8 +75,9 @@
               </ng-select>
             </div>
           </td>
-          <td><input type="text" id="price" name="price" value="item.unitPrice" [(ngModel)]="storeTransDetails_VM[i].unitPrice" style="width:50%" /></td>
-          <td><input type="text" id="quantity" name="quantity" value="item.qty" [(ngModel)]="storeTransDetails_VM[i].qty" style="width:50%" /></td>
+          <td><input type="text" id="price" name="price" value="item.unitPrice" (keyup)="onKeyPrice($event,i)" [(ngModel)]="storeTransDetails_VM[i].unitPrice" style="width:70% ; text-align:right" /></td>
+          <td><input type="text" id="quantity" name="quantity" value="item.qty" (keyup)="onKeyQuantity($event,i)" [(ngModel)]="storeTransDetails_VM[i].qty" style="width:70% ; text-align:right" /></td>
+          <td><input type="text" id="value" name="value" value="item.totalo"  [(ngModel)]="storeTransDetails_VM[i].totalo" style="width:70%; text-align:right" /></td>
         </tr>
 
 

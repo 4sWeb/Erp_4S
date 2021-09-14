@@ -22,32 +22,32 @@ namespace BLL.Repo
             context = dbContext4S;
         }
 
-        public List<TransactionsDetails_VM> GetTransactionsDetailsList(List<decimal> TransactionsList)
+        public List<StoreTransDetails_VM> GetTransactionsDetailsList(List<decimal> TransactionsList)
         {
             SItems = new StoreItemsRepo(context);
             SUnit = new StoreUnitsRepo(context);
-            List<TransactionsDetails_VM> ItemsList = new List<TransactionsDetails_VM>();
+            List<StoreTransDetails_VM> ItemsList = new List<StoreTransDetails_VM>();
             foreach (var item in TransactionsList)
             {
-                ItemsList.AddRange(GetByCondition(c => c.StoreTrnsMId == item).Result.Select(s => new TransactionsDetails_VM
+                ItemsList.AddRange(GetByCondition(c => c.StoreTrnsMId == item).Result.Select(s => new StoreTransDetails_VM
                 {
-                    Item_ID = s.ItemId,
-                    Item_Name = SItems.GetByCondition(c => c.StoreItemsId == s.ItemId).Result.FirstOrDefault().Aname,
-                    Quantity = s.Qty,
-                    Price = s.UnitPrice,
-                    Value = s.Totalo,
-                    Disc_Rate = s.DiscRate,
-                    Disc_Value = s.DiscVal,
-                    Tax_Rate = 0,
-                    Tax_Value = s.StaxVal,
-                    Profit_Tax_Rate = 0,
-                    Profit_Tax_Value = 0,
-                    Net_Value = s.Totalo,
-                    Note = s.Notes,
-                    Store_Trns_M_ID = s.StoreTrnsMId,
-                    StoreTrnsOID = s.StoreTrnsOId,
-                    Unit_ID = s.UnitId,
-                    Unit_Name = SUnit.GetByCondition(c => c.Unitid == s.UnitId).Result.FirstOrDefault().Aname,
+                    itemId = s.ItemId,
+                    item_Name = SItems.GetByCondition(c => c.StoreItemsId == s.ItemId).Result.FirstOrDefault().Aname,
+                    qty = s.Qty,
+                    price = s.UnitPrice,
+                    totalo = (decimal)s.Totalo,
+                    disc_Rate = s.DiscRate,
+                    disc_Value = s.DiscVal,
+                    tax_Rate = 0,
+                    tax_Value = s.StaxVal,
+                    profit_Tax_Rate = 0,
+                    profit_Tax_Value = 0,
+                    net_Value = (decimal)s.Totalo,
+                    notes = s.Notes,
+                    store_Trns_M_ID = (decimal)s.StoreTrnsMId,
+                    storeTrnsOId = s.StoreTrnsOId,
+                    unitId = s.UnitId,
+                    unit_Name = SUnit.GetByCondition(c => c.Unitid == s.UnitId).Result.FirstOrDefault().Aname,
                 }).ToList());
 
             }
@@ -62,14 +62,14 @@ namespace BLL.Repo
             {
                 StoreTrnsO StoreTrnsO = new StoreTrnsO
                 {
-                    StoreTrnsOId = item.StoreTrnsOId,
-                    Qty = item.Qty,
-                    UnitId = item.UnitId,
-                    UnitPrice = item.UnitPrice,
-                    Notes = item.Notes,
-                    ItemId = item.ItemId,
-                    Itemapproved = item.Itemapproved,
-                    StoretrnsProformlaId = item.StoretrnsProformlaId
+                    StoreTrnsOId = item.storeTrnsOId,
+                    Qty = item.qty,
+                    UnitId = item.unitId,
+                    UnitPrice = item.unitPrice,
+                    Notes = item.notes,
+                    ItemId = item.itemId,
+                    Itemapproved = item.itemapproved,
+                    StoretrnsProformlaId = item.storetrnsProformlaId
                 };
                 repo._StoreTrnsO.Create(StoreTrnsO);
 
@@ -88,20 +88,21 @@ namespace BLL.Repo
             if (storeTransMId != default)
             {
 
-                var list  = GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new { s.Qty,s.ItemId,s.UnitId,s.StoreTrnsMId,s.Notes,s.Totalo,s.StoreTrnsOId}).ToList();
+                var list  = GetByCondition(c => c.StoreTrnsMId == storeTransMId).Result.Select(s => new { s.Qty,s.ItemId,s.UnitId,s.StoreTrnsMId,s.Notes,s.Totalo,s.StoreTrnsOId,s.UnitPrice}).ToList();
                 foreach (var item in list)
                 {
                     ItemsList.Add(new StoreTransDetails_VM { 
-                        ItemId=item.ItemId,
+                        itemId=item.ItemId,
                         //GroupF_Id = (decimal)SItems.GetByCondition(c => c.StoreItemsId == (decimal)item.ItemId).Result.Select(s => s.StoreItemfromsSpecs.Select(c=>c.GroupfId).FirstOrDefault()).FirstOrDefault(),
                         //GroupF_Id= storespecForm.GetByCondition(c=>c.StoreItemfromsSpecsId=item.st)
-                        Qty =item.Qty,
-                        UnitId = item.UnitId,
-                        Totalo= (decimal)item.Totalo,
-                        StoreTrnsMId = (decimal)item.StoreTrnsMId,
-                        StoreTrnsOId=item.StoreTrnsOId,
-                        Unit_Name = SUnit.GetByCondition(c => c.Unitid == item.UnitId).Result.FirstOrDefault().Aname,
-                        Item_Name = SItems.GetByCondition(c => c.StoreItemsId == item.ItemId).Result.FirstOrDefault().Aname,
+                        qty =item.Qty,
+                        unitId = item.UnitId,
+                        totalo= (decimal)item.Totalo,
+                        storeTrnsMId = (decimal)item.StoreTrnsMId,
+                        storeTrnsOId=item.StoreTrnsOId,
+                        unitPrice=item.UnitPrice,
+                        unit_Name = SUnit.GetByCondition(c => c.Unitid == item.UnitId).Result.FirstOrDefault().Aname,
+                        item_Name = SItems.GetByCondition(c => c.StoreItemsId == item.ItemId).Result.FirstOrDefault().Aname,
                     });
                 }
                 return ItemsList;

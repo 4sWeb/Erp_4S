@@ -121,7 +121,7 @@ namespace Angular_API.Controllers
         public JsonResult DisplayItems([FromBody] List<decimal> Items)
         {
             //List<decimal> Items = new List<decimal>() { 2872, 2878 };
-            List<TransactionsDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);
+            List<StoreTransDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);
             return Json(Results, new System.Text.Json.JsonSerializerOptions());
         }
 
@@ -177,25 +177,25 @@ namespace Angular_API.Controllers
             {
                 StoreTrnsO StoreTrnsO = new StoreTrnsO
                 {
-                    StoreTrnsOId = item.StoreTrnsOId,
-                    Qty = item.Qty,
-                    UnitId = item.UnitId,
-                    UnitPrice = item.UnitPrice,
-                    Notes = item.Notes,
-                    ItemId = item.ItemId,
-                    Itemapproved = item.Itemapproved,
-                    StoretrnsProformlaId = item.StoretrnsProformlaId,
-                    Totalo = item.Totalo,
-                    Weekno = item.Weekno,
-                    StoreTrnsMId = item.StoreTrnsMId,
-                    Todate = item.Todate,
-                    StaxVal = item.StaxVal,
-                    UnitOldprice = item.UnitOldprice,
-                    ItemKind = item.ItemKind,
-                    ItemCost = item.ItemCost,
-                    DiscVal = item.DiscVal,
-                    Agriqty = item.Agriqty,
-                    Item2nddiscVal = item.Item2nddiscVal,
+                    StoreTrnsOId = item.storeTrnsOId,
+                    Qty = item.qty,
+                    UnitId = item.unitId,
+                    UnitPrice = item.unitPrice,
+                    Notes = item.notes,
+                    ItemId = item.itemId,
+                    Itemapproved = item.itemapproved,
+                    StoretrnsProformlaId = item.storetrnsProformlaId,
+                    Totalo = item.totalo,
+                    Weekno = item.weekno,
+                    StoreTrnsMId = item.storeTrnsMId,
+                    Todate = item.todate,
+                    StaxVal = item.staxVal,
+                    UnitOldprice = item.unitOldprice,
+                    ItemKind = item.itemKind,
+                    ItemCost = item.itemCost,
+                    DiscVal = item.discVal,
+                    Agriqty = item.agriqty,
+                    Item2nddiscVal = item.item2nddiscVal,
                 };
                 if (StoreTrnsO != null)
                 {
@@ -271,10 +271,10 @@ namespace Angular_API.Controllers
                 foreach (var item in STM_VM.StoreTransDetails_VM)
                 {
                     int GroupF_Id;
-                    var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.ItemId);
+                    var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.itemId);
                     Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
                         GroupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
-                        item.GroupF_Id = GroupF_Id;
+                        item.groupF_Id = GroupF_Id;
                     var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
                     ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
                     foreach (var itemDetail in ItemList.Result.ToList())
@@ -284,13 +284,13 @@ namespace Angular_API.Controllers
                     }
 
 
-                    var UniteList = repo._StoreUnits.GetUnitesDetails((decimal)STM_VM.StoreTransDetails_VM.FirstOrDefault().ItemId);
+                    var UniteList = repo._StoreUnits.GetUnitesDetails((decimal)STM_VM.StoreTransDetails_VM.FirstOrDefault().itemId);
                     foreach (var itemUnite in UniteList.Result.ToList())
                     {
                         Dictionary<string, object> currentUnite = (Dictionary<string, object>)itemUnite;
                         ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)currentUnite.Values.Last(), uniteId = int.Parse(currentUnite.Values.First().ToString()) });
                     }
-                    item.ItemDetails_VM = ItemDetails_VM;
+                    item.itemDetails_VM = ItemDetails_VM;
                 }
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
                 if (listOfPrevIds != null)

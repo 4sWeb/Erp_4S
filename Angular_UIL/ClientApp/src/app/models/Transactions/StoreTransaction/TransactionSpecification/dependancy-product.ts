@@ -1,5 +1,9 @@
 export class DependancyProduct {
-  constructor(public Item_ID?: number,
+
+
+
+  constructor(
+    public Item_ID?: number,
     public Item_Name?: string,
     public Quantity?: number,
     public Price?: number,

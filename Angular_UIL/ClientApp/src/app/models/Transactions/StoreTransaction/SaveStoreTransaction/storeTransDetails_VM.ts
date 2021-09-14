@@ -3,6 +3,15 @@ import { ItemDetails_VM } from "./StoreTransDetails/ItemDetails_VM";
 
 export class storeTransDetails_VM {
   constructor(
+    public price?: number,
+    public disc_Rate?: number,
+    public disc_Value?: number,
+    public tax_Rate?: number,
+    public tax_Value?: number,
+    public profit_Tax_Rate?: number,
+    public profit_Tax_Value?: number,
+    public net_Value?: number,
+    public store_Trns_M_ID?: number,
     //need to save 
     public storeTrnsOId ?:number,  
     public qty?: number,

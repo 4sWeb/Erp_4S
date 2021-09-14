@@ -44,11 +44,17 @@ export interface DialogData {
 
 //Dialog Edit interface
 export interface DialogEdit {
-  editProduct: DependancyProduct;
+  editProduct: storeTransDetails_VM;
 }
 
 export interface DialogEditStoreTransDetails {
   editStoreTransDetails: storeTransDetails_VM;
+}
+//Dialog For Category
+export interface DialogForCategory {
+  dialogCategoryDetails: storeTransDetails_VM[];
+  productdetails?: storeTransDetails_VM[];
+
 }
 
 
@@ -75,7 +81,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
 
   checkedTransactionsIds?: number[];
   checkedTransactionsMain?: TransactionsDetails[];
-  productdetails?: DependancyProduct[];
+  productdetails?: storeTransDetails_VM[];
 
   Price: number;
   Quantity: number;
@@ -88,7 +94,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
   storeTransMaster_VM?: storeTransMaster_VM;
   storeTransDep_VM?: storeTransDep_VM[];
   storeTransDepDetails_VM?:storeTransDepDetails_VM[];
-  storeTransDetails_VM?: storeTransDetails_VM[];
+  storeTransDetails_VM?: storeTransDetails_VM[]=[];
   Branches: Branches[];
   FromType: FromType[];
   FromTypeDetails: FromTypeDetails[];
@@ -119,6 +125,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
   Items_VMs: Items_VM[];
   unites_VMs: Unites_VM[];
   itemDetails_VM: ItemDetails_VM;
+
+  //For Category Dialog
+  dialogCategoryDetails: storeTransDetails_VM[];
+  popupstoreTransDetails_VM: storeTransDetails_VM[]=[];
 
 
   @ViewChild(DataTableDirective, { static: false })
@@ -374,7 +384,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
     //to delete main product if all of child item is deleted
     let count = 0;
     for (let j = 0; j < this.productdetails.length; j++) {
-      if (this.productdetails[j].Store_Trns_M_ID == id) {
+      if (this.productdetails[j].store_Trns_M_ID == id) {
         count++;
         console.log("count", count);
       }
@@ -395,7 +405,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
     console.log("this.checkedTransactionsMain", this.checkedTransactionsMain);
     //to delete productDetails related to mainTransaction
     for (let j = 0; j < this.productdetails.length; j++) {
-      if (this.productdetails[j].Store_Trns_M_ID == id) {
+      if (this.productdetails[j].store_Trns_M_ID == id) {
         this.productdetails.splice(j, 1);
       }
     }
@@ -475,19 +485,31 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
   openCategoryDialog(): void {
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
 
-      //data: { editProduct: this.editProduct }
+      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails }
     });
     dialogReff.afterClosed().subscribe(result => {
-      console.log('From spec compenent The Category Dialog was closed', result);
+      this.dialogCategoryDetails = result;
+      console.log(this.dialogCategoryDetails);
+      for (var i = 0; i < result.length; i++) {
+        if (this.dialogCategoryDetails[i].itemId != 0
+          && this.dialogCategoryDetails[i].unitId != 0
+          && this.dialogCategoryDetails[i].totalo != 0
+          && this.dialogCategoryDetails[i].qty != 0
+          && this.dialogCategoryDetails[i].unitPrice != 0)
+        {
+          this.popupstoreTransDetails_VM.push(this.dialogCategoryDetails[i]);
+        }
+       // console.log("storeTransDetails_VM",this.storeTransDetails_VM);
 
-
+      }
+      console.log('From spec compenent The Category Dialog was closed', this.popupstoreTransDetails_VM);
+      console.log("storeTransDetails_VM", this.popupstoreTransDetails_VM);
       if (result == null) {
         //result = this.editProduct;
       }
 
       return dialogReff.afterClosed();
     });
-
   };
 
   GroupfChange(id: number, i: number) {

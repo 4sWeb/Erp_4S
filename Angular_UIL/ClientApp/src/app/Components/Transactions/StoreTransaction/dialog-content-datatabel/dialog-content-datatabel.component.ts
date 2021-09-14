@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject } from 'rxjs';
+import { storeTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 import { DependancyProduct } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
 import { TransactionsDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-details';
 import { TransactionsService } from '../../../../services/StoreTransaction/transactions.service';
@@ -23,7 +24,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
 
   checkedTransactions?: number[];
   checkedTransactionsIds?: number[];
-  DependancyProduct?: DependancyProduct[];
+  DependancyProduct?: storeTransDetails_VM[];
 
   constructor(public TransactionsService: TransactionsService,
     private dialogRef: MatDialogRef<DialogContentDatatabelComponent>,

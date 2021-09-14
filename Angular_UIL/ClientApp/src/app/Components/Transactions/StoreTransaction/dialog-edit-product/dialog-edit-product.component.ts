@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject } from 'rxjs';
+import { storeTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 import { DependancyProduct } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
 import { DialogEdit } from '../transaction-specific/transaction-specific.component';
 
@@ -11,7 +12,7 @@ import { DialogEdit } from '../transaction-specific/transaction-specific.compone
 })
 export class DialogEditProductComponent implements OnInit {
 
-  editProduct: DependancyProduct;
+  editProduct: storeTransDetails_VM;
   Quantity: number;
   Note: string;
   Value: number;
@@ -22,17 +23,17 @@ export class DialogEditProductComponent implements OnInit {
     dialogRef.disableClose = true;
 
     this.editProduct = data.editProduct;
-    this.Quantity = this.editProduct.Quantity;
-    this.Note = this.editProduct.Note;
-    this.Value = this.editProduct.Value;
-    this.Price = this.editProduct.Price;
+    this.Quantity = this.editProduct.qty;
+    this.Note = this.editProduct.notes;
+    this.Value = this.editProduct.totalo;
+    this.Price = this.editProduct.unitPrice;
     console.log("From Edit Dialog Component", this.Quantity);
   }
 
   ngOnInit() {
     console.log("onInt");
-    this.Quantity = this.editProduct.Quantity;
-    this.Note = this.editProduct.Note;
+    this.Quantity = this.editProduct.qty;
+    this.Note = this.editProduct.notes;
     console.log("From Edit Dialog Component", this.editProduct);
  
   }
@@ -46,10 +47,10 @@ export class DialogEditProductComponent implements OnInit {
   }
   updateProduct() {
     this.Value=this.Quantity * this.Price;
-    this.editProduct.Quantity = this.Quantity;
-    this.editProduct.Note = this.Note;
-    this.editProduct.Price = this.Price;
-    this.editProduct.Value = this.Value;
+    this.editProduct.qty = this.Quantity;
+    this.editProduct.notes = this.Note;
+    this.editProduct.unitPrice = this.Price;
+    this.editProduct.totalo = this.Value;
   }
   onKeyQuantity(event: any) {
     this.Quantity = event.target.value;
