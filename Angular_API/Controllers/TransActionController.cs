@@ -380,6 +380,37 @@ namespace Angular_API.Controllers
             }
             return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
         }
+       
+
+        [HttpGet]
+        [Route("GetAllGroupsWithItemsDetails")]
+        public JsonResult GetAllGroupsWithItemsDetails()
+        {
+            List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
+            var GroupsList = repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
+            foreach (var group in GroupsList)
+            {
+                //get items for each group
+                var ItemList = repo._StoreItems.GetItemsDetails(group.GroupfId);
+                List<Items_VM> items_VM = new List<Items_VM>();
+                foreach (var item in ItemList.Result.ToList())
+                {
+                    Dictionary<string, object> current = (Dictionary<string, object>)item;
+                    //get unites for each item
+                    List<Unites_VM> Unites_VMs = new List<Unites_VM>();
+                    var UniteList = repo._StoreUnits.GetUnitesDetails(int.Parse(current.Values.First().ToString()));
+                    foreach (var unite in UniteList.Result.ToList())
+                    {
+                        Dictionary<string, object> currentunite = (Dictionary<string, object>)unite;
+                        Unites_VMs.Add(new Unites_VM { name = (string)currentunite.Values.Last(), uniteId = int.Parse(currentunite.Values.First().ToString()) });
+                    }
+                    items_VM.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()), unites_VM = Unites_VMs });
+                }
+                groupF_VMs.Add(new GroupF_VM { Aname = group.Aname, GroupF_Id = (int)group.GroupfId, items_VM = items_VM });
+            }
+            return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
+        }
+
         [HttpGet]
         [Route("GetItemsDetails")]
         public JsonResult GetItemsDetails(decimal GroupF_Id)

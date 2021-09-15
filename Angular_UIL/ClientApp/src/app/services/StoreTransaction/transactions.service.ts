@@ -87,7 +87,10 @@ export class TransactionsService {
     return this.http.get<Unites_VM[]>(`${environment.Api_Url}/GetUnitesDetails?storeItemId=${itemId}`);
   }
 
-
+  GetAllGroupsWithItemsDetails(): Observable<GroupF_VM[]> {
+    console.log("hiii servexies");
+    return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails`)
+  }
 
   //getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<any> {
   //  return this.http.get<Transactions[]>(`${API_Transaction} /UserID=${UserID}&AppID=${AppID}&${periodID}`, { observe: 'response' })

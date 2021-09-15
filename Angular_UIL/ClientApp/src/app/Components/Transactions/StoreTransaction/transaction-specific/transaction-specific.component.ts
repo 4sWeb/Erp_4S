@@ -54,6 +54,7 @@ export interface DialogEditStoreTransDetails {
 export interface DialogForCategory {
   dialogCategoryDetails: storeTransDetails_VM[];
   productdetails?: storeTransDetails_VM[];
+  GroupFs: GroupF_VM[];
 
 }
 
@@ -64,10 +65,11 @@ export interface DialogForCategory {
   templateUrl: './transaction-specific.component.html',
   styleUrls: ['./transaction-specific.component.css']
 })
-export class TransactionSpecificComponent implements OnInit, OnDestroy{
+export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterViewInit{
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService,
     public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
     , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) { }
+    
     
 
   TransactionSpecific: TransactionSpecific;
@@ -140,6 +142,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
   unites_VMs: Unites_VM[];
   itemDetails_VM: ItemDetails_VM;
 
+  //For View Details in Second Way
+  GroupFs: GroupF_VM[];
+
   //For Category Dialog
   dialogCategoryDetails: storeTransDetails_VM[];
   popupstoreTransDetails_VM: storeTransDetails_VM[]=[];
@@ -184,8 +189,16 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
       }
       
     )
+    console.log("before GetAllGroupsWithItemsDetails");
 
-
+    this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
+      (res) => {
+        console.log("GetAllGroupsWithItemsDetails", res);
+        this.GroupFs = res;
+      },
+      (error) => { console.log("errrrrrrror",error); }
+    );
+    console.log("after GetAllGroupsWithItemsDetails");
     this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
       (response) => {
         console.log(id);
@@ -245,6 +258,17 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
     }
   }
 
+
+  ngAfterViewInit() {
+    console.log("hello after view int");
+    this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
+      res => {
+        console.log("GetAllGroupsWithItemsDetails", res);
+        //this.GroupFs = res;
+      }
+    );
+      
+  }
 
 
   //ngAfterViewInit(): void {
@@ -497,9 +521,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
 
   //open CategoryDialog
   openCategoryDialog(): void {
+  
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
 
-      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails }
+      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs }
     });
     dialogReff.afterClosed().subscribe(result => {
       this.dialogCategoryDetails = result;
