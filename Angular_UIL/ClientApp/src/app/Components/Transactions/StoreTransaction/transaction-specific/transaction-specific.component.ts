@@ -394,35 +394,39 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy{
   }
 
   deleteProductRecord(i, id: number) {
-    console.log("product", i)
-    //to delete main product if all of child item is deleted
-    let count = 0;
-    for (let j = 0; j < this.productdetails.length; j++) {
-      if (this.productdetails[j].store_Trns_M_ID == id) {
-        count++;
-        console.log("count", count);
+    if (confirm("سيتم حذف هذا العنصر..تأكيد؟")) {
+      //to delete main product if all of child item is deleted
+      let count = 0;
+      for (let j = 0; j < this.productdetails.length; j++) {
+        if (this.productdetails[j].store_Trns_M_ID == id) {
+          count++;
+          console.log("count", count);
+        }
       }
+      if (count == 1) {
+        console.log("count", count);
+        this.checkedTransactionsMain.forEach((element, index) => {
+          if (element.StoreTrnsMId == id) this.checkedTransactionsMain.splice(index, 1);
+        });
+      }
+      this.productdetails.splice(i, 1);
+      console.log("product after delete", this.productdetails);
     }
-    if (count == 1) {
-      console.log("count", count);
-      this.checkedTransactionsMain.forEach((element, index) => {
-        if (element.StoreTrnsMId == id) this.checkedTransactionsMain.splice(index, 1);
-      });
-    }
-    this.productdetails.splice(i, 1);
-    console.log("product after delete", this.productdetails);
   }
 
   deleteMainRecord(i, id: number) {
-    console.log("mainRecordId", id);
-    this.checkedTransactionsMain.splice(i, 1);
-    console.log("this.checkedTransactionsMain", this.checkedTransactionsMain);
-    //to delete productDetails related to mainTransaction
-    for (let j = 0; j < this.productdetails.length; j++) {
-      if (this.productdetails[j].store_Trns_M_ID == id) {
-        this.productdetails.splice(j, 1);
+    if (confirm("سيتم الحذف ..تأكيد؟")) {
+      console.log("mainRecordId", id);
+      this.checkedTransactionsMain.splice(i, 1);
+      console.log("this.checkedTransactionsMain", this.checkedTransactionsMain);
+      //to delete productDetails related to mainTransaction
+      for (let j = 0; j < this.productdetails.length; j++) {
+        if (this.productdetails[j].store_Trns_M_ID == id) {
+          this.productdetails.splice(j, 1);
+        }
       }
     }
+
   }
 
 

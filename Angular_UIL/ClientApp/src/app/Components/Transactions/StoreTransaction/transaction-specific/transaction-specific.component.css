@@ -13,3 +13,13 @@
 .astricValid {
   color: red;
 }
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #878d92;
+  color: white;
+}
+
+.table-bordered td, .table-bordered th {
+  border: 1px solid #a4a8aa;
+}
+
