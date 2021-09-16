@@ -189,16 +189,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       }
       
     )
-    console.log("before GetAllGroupsWithItemsDetails");
-
-    this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
-      (res) => {
-        console.log("GetAllGroupsWithItemsDetails", res);
-        this.GroupFs = res;
-      },
-      (error) => { console.log("errrrrrrror",error); }
-    );
-    console.log("after GetAllGroupsWithItemsDetails");
+  
     this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
       (response) => {
         console.log(id);
@@ -264,7 +255,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
       res => {
         console.log("GetAllGroupsWithItemsDetails", res);
-        //this.GroupFs = res;
+        this.GroupFs = res;
       }
     );
       
@@ -394,7 +385,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       console.log('The dialog was closed', result);
       //to make sure that ckecked transaction array is empty
       this.checkedTransactionsIds = [];
-      //this.productdetails = [];
+      this.productdetails = [];
 
       if (result == null) {
         result=this.checkedTransactionsMain ;
@@ -525,10 +516,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
   //open CategoryDialog
   openCategoryDialog(): void {
-  
+    //this.productdetails = [];
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
-
       data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs }
+      
     });
     dialogReff.afterClosed().subscribe(result => {
       this.dialogCategoryDetails = result;

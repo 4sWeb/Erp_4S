@@ -20,14 +20,28 @@ export class DialogForCategoryComponent implements OnInit {
   itemDetails_VM: ItemDetails_VM;
   items_VMs: Items_VM[][];
   itemsFilter: Items_VM[] = [];
+  unitesFilter: Unites_VM[] = [];
   items_VM: Items_VM[]=[];
   unites_VMs: Unites_VM[]=[];
   storeTransDetails_VM: storeTransDetails_VM[] = [];
   dialogCategoryDetails: storeTransDetails_VM[] = [];
-  productdetails: storeTransDetails_VM[];
+  productdetails: storeTransDetails_VM[]=[];
 
   GroupFChanged: boolean = false;
-  ItemChanged: boolean;
+  ItemChanged: boolean = false;
+
+  //two way binding
+  quantity: number;
+  unitPrice: number;
+  totalo: number;
+  Group: GroupF_VM;
+  Item: Items_VM;
+  Unite: Unites_VM;
+  GroupId: number;
+  ItemId: number;
+  UniteId: number;
+ 
+
   constructor(public TransactionsService: TransactionsService,
     private dialogRef: MatDialogRef<DialogForCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogForCategory) {
@@ -37,8 +51,11 @@ export class DialogForCategoryComponent implements OnInit {
     console.log("GroupFsFrom Dialog", this.GroupFs);
 
     if (this.productdetails.length>0) {
-    for (var i = 0; i < this.productdetails.length; i++) {
-      this.storeTransDetails_VM.push({ qty: this.productdetails[i].qty, unitId: this.productdetails[i].unitId, itemId: this.productdetails[i].itemId, totalo: this.productdetails[i].totalo })
+      for (var i = 0; i < this.productdetails.length; i++) {
+        this.storeTransDetails_VM.push({
+          qty: this.productdetails[i].qty, unitId: this.productdetails[i].unitId, itemId: this.productdetails[i].itemId, totalo: this.productdetails[i].totalo,
+          item_Name: this.productdetails[i].item_Name, unit_Name: this.productdetails[i].unit_Name
+        })
     }
     }
   }
@@ -65,9 +82,10 @@ export class DialogForCategoryComponent implements OnInit {
       }
     }
 
-    for (var i = 0; i < 5; i++) {
-      this.storeTransDetails_VM.push({ qty: 0, unitPrice:0, unitId: undefined, groupF_Id: 281, itemId: undefined ,totalo:0});
-    }
+    //for (var i = 0; i < 5; i++) {
+    //  this.storeTransDetails_VM.push({ qty: 0, unitPrice:0, unitId: undefined, groupF_Id: 281, itemId: undefined ,totalo:0});
+    //}
+
     //this.TransactionsService.getAllGroups().subscribe(
     //  (data) => {
     //    console.log("GroupFFromDialog", data);
@@ -75,11 +93,12 @@ export class DialogForCategoryComponent implements OnInit {
     //  }
     //);
   }
-  GroupfChange(GroupId: number) {
+  GroupfChange(Group: GroupF_VM) {
     this.GroupFChanged = true;
-    //console.log("GroupId", id);
+    console.log("GroupId", Group);
+    this.Group = Group;
     
-    this.itemsFilter = this.items_VM.filter(s => s.groupId == GroupId);
+    this.itemsFilter = this.items_VM.filter(s => s.groupId == Group.GroupF_Id);
 
     //this.TransactionsService.getItemsDetails(id).subscribe(
     //  (data) => {
@@ -94,8 +113,11 @@ export class DialogForCategoryComponent implements OnInit {
     //);
   };
 
-  ItemsChange(ItemId: number) {
-    return this.unites_VMs.filter(s => s.itemId == ItemId);
+  ItemsChange(Item: Items_VM) {
+    this.ItemChanged = true;
+    this.unitesFilter = this.unites_VMs.filter(s => s.itemId == Item.itemId);
+    this.Item = Item;
+
     //console.log("item id",id);
     //this.TransactionsService.getUnitesDetails(id).subscribe(
     //  (data) => {
@@ -107,19 +129,30 @@ export class DialogForCategoryComponent implements OnInit {
     //);
   };
 
-  UnitesChange(i: number) {
-    this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
+  UnitesChange(Unite: Unites_VM) {
+    this.Unite = Unite;
+    //this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
   }
 
-  onKeyQuantity(event: any, i: number) {
-    this.storeTransDetails_VM[i].qty = event.target.value;
-    this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
+  onKeyQuantity(event: any) {
+  //  this.storeTransDetails_VM[i].qty = event.target.value;
+    //  this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
+    this.totalo = event.target.value * this.unitPrice;
   };
 
   onKeyPrice(event: any, i: number) {
-    this.storeTransDetails_VM[i].unitPrice = event.target.value;
-    this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
+    //this.storeTransDetails_VM[i].unitPrice = event.target.value;
+    //this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
+    this.totalo = event.target.value * this.quantity;
   };
+  SaveOneRow() {
+    //need to validate
+    this.storeTransDetails_VM.push({
+      groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
+      unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo
+    });
+    console.log("storeTransDetails_VM from dialog save",this.storeTransDetails_VM);
+  }
 
   onNoClick(): void {
     //this.storeTransDetails_VM = this.data.dialogCategoryDetails;
