@@ -29,6 +29,7 @@
 
     <div class="modal-content p-3 mb-4" style="font-size:14px">
       <form (ngSubmit)="addStoreTransaction()" #transForm="ngForm">
+        <!--Branch And TransactionSpecific.Aname-->
         <div class="row col-12">
           <div class="form-group row col-6">
             <label class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
@@ -40,18 +41,16 @@
                          name="branchId"
                          placeholder="...اختر"
                          appendTo="body"
-                         [searchable]="true"
-                         [clearable]="true"
+                         [searchable]="true" [clearable]="true"
                          [(ngModel)]="branchId"
-                         (change)="getvalue()" #brnchid="ngModel" required>
+                         (change)="getvalue()" #brnchid="ngModel"
+                         required [class.is-valid]="brnchid.valid" [class.is-invalid]="brnchid.invalid&&brnchid.touched">
                 <ng-option [value]="item.BRANCH_ID" [disabled]="item.disabled" *ngFor="let item of Branches">
                   {{item.NAME}}
                 </ng-option>
               </ng-select>
 
             </div>
-            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
-                   [hidden]="brnchid.untouched ||brnchid.valid"> *يجب اختيار الفرع</small>
           </div>
 
 
@@ -64,14 +63,19 @@
         </div>
 
 
+        <!--Date And DocNumber-->
         <div class="row col-12">
           <div class="form-group row col-6">
             <label for="storedocnum" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
             <div class="col-sm-8">
               <input #storedocno="ngModel" class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum"
-                     [(ngModel)]="storedocnum" type="number" required min="0">
+                     [(ngModel)]="storedocnum" type="number" required min="0"
+                     [class.is-valid]="storedocno.valid" [class.is-invalid]="storedocno.invalid&&storedocno.touched">
+
             </div>
+
           </div>
+
 
 
           <div class="form-group row col-6 mr-4">
@@ -86,7 +90,8 @@
           </div>
         </div>
 
-        <!--div contain من , الي-->
+
+        <!-- من , -->
         <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
           <div class="form-group row col-6" *ngIf="FromType.length > 0">
             <label for="FromTypeId" class="col-sm-3 col-form-label" style="text-align:right">من</label>
@@ -105,8 +110,7 @@
               </ng-select>
 
             </div>
-            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
-                   [hidden]="From.untouched ||From.valid"> *يجب اختيار </small>
+
           </div>
 
           <div class="form-group row col-6 mr-4">
@@ -125,8 +129,7 @@
                 </ng-option>
               </ng-select>
             </div>
-            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
-                   [hidden]="FromDetails.untouched ||FromDetails.valid"> *يجب اختيار </small>
+
           </div>
         </div>
 
@@ -135,6 +138,7 @@
         <!--[ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
   [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">-->
 
+                                  <!--To-->
         <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
           <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0">
             <label for="ToTypeId" class="col-sm-3 col-form-label" style="text-align:right">الى</label>
@@ -151,8 +155,6 @@
                 </ng-option>
               </ng-select>
             </div>
-            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
-                   [hidden]="to.untouched ||to.valid"> *يجب اختيار </small>
           </div>
 
           <div class="form-group row col-6 mr-4">
@@ -171,13 +173,10 @@
                 </ng-option>
               </ng-select>
             </div>
-            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
-                   [hidden]="toDetails.untouched ||toDetails.valid"> *يجب اختيار </small>
           </div>
         </div>
 
 
-        <!--End of div contain من , الي-->
         <div class="form-group row">
           <label for="Rem" class="col-sm-2 col-form-label" style="text-align:right">ملاحظات</label>
           <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
@@ -516,9 +515,6 @@
                 {{item.Transaction_Name}}
               </ng-option>
             </ng-select>
-
-            <small class="text-md-center astricValid" style="direction:rtl;text-align:right;margin-right:50%"
-                   [hidden]="depOn.untouched ||depOn.valid"> *يجب الاختيار </small>
           </div>
           <div class="col-sm-2">
             <!-- open dialog button -->
@@ -716,7 +712,7 @@
                     </svg>
                   </button>
                 </td>
-                <td><input class="form-control"  type="text" id="Note" value="{{trans.notes}}" style="width:100%" /></td>
+                <td><input class="form-control" type="text" id="Note" value="{{trans.notes}}" style="width:100%" /></td>
                 <td>
                   {{trans.unitId}}
                   <ng-select bindLabel="name"
@@ -732,8 +728,8 @@
                   </ng-select>
                 </td>
                 <td><input class="form-control" type="text" id="value" value="{{trans.totalo}}" style="width:50%" /></td>
-                <td><input class="form-control"  type="text" id="price" value="{{trans.unitPrice}}" style="width:50%" (keyup)="onKeyPrice($event)" /></td>
-                <td><input class="form-control"  type="text" id="quantity" value="{{trans.qty}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
+                <td><input class="form-control" type="text" id="price" value="{{trans.unitPrice}}" style="width:50%" (keyup)="onKeyPrice($event)" /></td>
+                <td><input class="form-control" type="text" id="quantity" value="{{trans.qty}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
 
                 <td colspan="2">
                   <div class="form-group row">
@@ -763,8 +759,8 @@
                         </ng-option>
                       </ng-select>
                       <!--<select id="my_select" name="ITEM" class="form-control" style="text-align:right" [(ngModel)]="storeTransDetails_VM[i].itemId" (change)="ItemsChange($event,i)">
-                  <option *ngFor="let item of Items_VMs" [value]="item.itemId">{{item.name}}</option>
-                 </select>-->
+                 <option *ngFor="let item of Items_VMs" [value]="item.itemId">{{item.name}}</option>
+                </select>-->
                     </div>
                   </div>
                 </td>
@@ -774,10 +770,7 @@
         </div>
         <!--End of tabel view StoreTrans details -->
         <!--  ******************************************in View Part  عرض الحركات*********************************************-->
-
-
-
-                      <!----------------------------- ((ADD Operation ))tabel view item selected---------------------------------------- -->
+        <!----------------------------- ((ADD Operation ))tabel view item selected---------------------------------------- -->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="productdetails?.length>0">
           <table class="table  table-bordered table-hover" style="width:100%">
             <thead class="bg-info">
@@ -806,12 +799,12 @@
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of checkedTransactionsMain">
                 <td>
-                <button class="btn btn-outline-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)" title="حذف">
-                  <svg  width="18" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                  </svg>
-                 </button>
+                  <button class="btn btn-outline-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)" title="حذف">
+                    <svg width="18" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                      <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                    </svg>
+                  </button>
                 </td>
                 <td>{{trans.TrnsDate}}</td>
                 <td>
@@ -864,10 +857,10 @@
                   </button>
                 </td>
                 <td>
-                
 
 
-                  
+
+
                   <button class="btn btn-outline-info" [value]="trans" mat-raised-button (click)="EditProduct(trans)" title="تعديل">
                     <svg width="18" height="18" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                       <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
