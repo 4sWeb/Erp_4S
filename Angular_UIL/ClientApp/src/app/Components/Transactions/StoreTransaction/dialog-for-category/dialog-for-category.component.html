@@ -15,123 +15,125 @@
                    [clearable]="true"
                    [(ngModel)]="GroupId"
                    (change)="GroupfChange($event)">
-          <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
+          <ng-option [value]="item" [disabled]="item.disabled" *ngFor="let item of GroupF">
 
-            {{item.Aname}}
-          </ng-option>
-        </ng-select>
-      </div>
+                  {{item.Aname}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </td>
+          <td class="col-2">
+            <div *ngIf="GroupFChanged == true">
+              <ng-select bindLabel="name"
+                         name="ITEM"
+                         placeholder="Select item"
+                         [searchable]="true"
+                         [(ngModel)]="ItemId"
+                         (change)="ItemsChange($event)">
+                <ng-option [value]="item" [disabled]="item.disabled" *ngFor="let item of itemsFilter">
+                  {{item.name}}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div *ngIf="GroupFChanged == false">
+              <ng-select bindLabel="name"
+                         name="ITEM"
+                         placeholder="Select item"
+                         [searchable]="true"
+                         [(ngModel)]="UniteId"
+                         (change)="ItemsChange($event)">
+                <ng-option [value]="item" [disabled]="item.disabled" *ngFor="let item of items_VM">
+                  {{item.name}}
+                </ng-option>
+              </ng-select>
+            </div>
+
+          </td>
+          <td class="col-2">
+            <div *ngIf="ItemChanged==false">
+              <ng-select bindLabel="name"
+                         name="unite"
+                         placeholder="Select item"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="UniteId"
+                         (change)="UnitesChange($event)">
+                <ng-option [value]="item" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
+
+                  {{item.name}}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div *ngIf="ItemChanged==true">
+              <ng-select bindLabel="name"
+                         name="unite"
+                         placeholder="Select item"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="UniteId"
+                         (change)="UnitesChange($event)">
+                <ng-option [value]="item" [disabled]="item.disabled" *ngFor="let item of unitesFilter">
+
+                  {{item.name}}
+                </ng-option>
+              </ng-select>
+            </div>
+
+          </td>
+          <td class="col-2">
+            <div>
+              <input type="text" class="form-control" id="Price" name="Price" value="unitPrice" (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" />
+            </div>
+          </td>
+          <td class="col-2">
+            <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity" (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" />
+
+
+          </td>
+          <td class="col-2">
+
+            <input type="text" class="form-control" id="value" name="value" value="totalo" [(ngModel)]="totalo" />
+
+          </td>
+        </tr>
+
+      </table>
+      <button class="btn btn-outline-primary" (click)="SaveOneRow()">
+        ادراج
+        <svg width="16" height="16" fill="currentColor" class="bi bi-save2-fill" viewBox="0 0 16 16">
+          <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v6h-2a.5.5 0 0 0-.354.854l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5A.5.5 0 0 0 10.5 7.5h-2v-6z" />
+        </svg>
+      </button>
     </div>
 
+    <!--------------------------------------------E-ndOFRow------------------------------------------->
 
-    <!-- contain filter items array only show when Group Change-->
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label" style="text-align:right">الأصناف</label>
-      <div class="col-8" *ngIf="GroupFChanged==true">
-        <ng-select bindLabel="name"
-                   name="ITEM"
-                   placeholder="Select item"
-                   [searchable]="true"
-                   [(ngModel)]="ItemId"
-                   (change)="ItemsChange($event)">
-          <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of itemsFilter">
-            {{item.name}}
-          </ng-option>
-        </ng-select>
-      </div>
 
-      <!--show by default when edit and add button clicked  -->
-      <div class="col-8" *ngIf="GroupFChanged == false||EditingClick==true">
-        <ng-select bindLabel="name"
-                   name="ITEM"
-                   placeholder="Select item"
-                   [searchable]="true"
-                   [(ngModel)]="UniteId"
-                   (change)="ItemsChange($event)">
-          <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VM">
-            {{item.name}}
-          </ng-option>
-        </ng-select>
-      </div>
-    </div>
 
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label" style="text-align:right">الوحدات</label>
-      <!--show by default when edit and add button clicked  -->
-      <div class="col-8" *ngIf="ItemChanged==false||EditingClick==true">
-        <ng-select bindLabel="name"
-                   name="unite"
-                   placeholder="Select item"
-                   [searchable]="true"
-                   [clearable]="true"
-                   [(ngModel)]="UniteId"
-                   (change)="UnitesChange($event)">
-          <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
 
-            {{item.name}}
-          </ng-option>
-        </ng-select>
-      </div>
-      <!-- contain filter unites array only show when item Change-->
-      <div class="col-8" *ngIf="ItemChanged==true">
-        <ng-select bindLabel="name"
-                   name="unite"
-                   placeholder="Select item"
-                   [searchable]="true"
-                   [clearable]="true"
-                   [(ngModel)]="UniteId"
-                   (change)="UnitesChange($event)">
-          <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unitesFilter">
-
-            {{item.name}}
-          </ng-option>
-        </ng-select>
-      </div>
-    </div>
-
-    <div class="form-group row col-12">
-      <label class="col-sm-4 col-form-label" style="text-align:right">الكمية</label>
-      <div class="col-sm-8">
-        <input type="text" id="Quantity" name="Quantity" value="quantity" (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" style="width:70% ; text-align:right" />
-      </div>
-    </div>
-
-    <div class="form-group row col-12">
-      <label class="col-sm-4 col-form-label" style="text-align:right">سعر الوحدة</label>
-      <div class="col-sm-8">
-        <input type="text" id="Price" name="Price" value="unitPrice" (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" style="width:70% ; text-align:right" />
-      </div>
-    </div>
-
-    <div class="form-group row col-12">
-      <label class="col-sm-4 col-form-label" style="text-align:right">القيمة</label>
-      <div class="col-sm-8">
-        <input type="text" id="value" name="value" value="totalo" [(ngModel)]="totalo" style="width:70%; text-align:right" />
-      </div>
-    </div>
-    <button class="btn btn-success" (click)="SaveOneRow()">ادراج</button>
-</div>
+  
 
     <!-- Form End -->
-
     <!-- -----------------*****************Tabel for Details created or dependant details if founded**********-------- --->
     <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%">
-      <table class="table  table-bordered table-hover table-condensed table-striped">
-        <thead class="bg-secondary">
-          <tr style="text-align:right">
+      <table class="table  table-bordered table-hover table-condensed table-striped ">
+        <thead class="bg-secondary text-light text-center ">
+          <tr>
             <th>حذف</th>
             <th>تعديل</th>
             <th>ملاحظات</th>
-            <th style="text-align:right">الوحدة</th>
-            <th style="text-align:right">القيمة</th>
-            <th style="text-align:right">السعر</th>
-            <th style="text-align:right">الكمية</th>
-            <th>الاسم</th>
-            <th>كود</th>
+            <th>القيمة</th>
+            <th>السعر</th>
+            <th>الكمية</th>
+            <th>الوحدة</th>
+            <th>اسم العنصر</th>
+            <th>اسم المجموعه</th>
           </tr>
         </thead>
-        <tbody>
-          <tr style="text-align:right" *ngFor="let trans of storeTransDetails_VM; let i=index">
+        <tbody class="text-center">
+          <tr  *ngFor="let trans of storeTransDetails_VM">
 
             <td>
               <button class="btn btn-outline-danger mr-1" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)" title="حذف">
@@ -155,11 +157,12 @@
 
               </button>
             </td>
-            <td><input class="form-control" type="text" id="Note" value="{{trans.notes}}" style="width:50%" /></td>
-            <td>{{trans.unit_Name}}</td>
-            <td><input class="form-control" type="text" id="value" value="{{trans.totalo}}" style="width:50%" /></td>
-            <td><input class="form-control" type="text" id="price" value="{{trans.unitPrice}}" style="width:50%" /></td>
-            <td><input class="form-control" type="text" id="quantity" value="{{trans.qty}}" style="width:50%" /></td>
+            <td><input class="form-control" type="text" id="Note" value="{{trans.notes}}" /></td>
+           
+            <td><input class="form-control" type="text" id="value" value="{{trans.totalo}}" /></td>
+            <td><input class="form-control" type="text" id="price" value="{{trans.unitPrice}}"/></td>
+            <td><input class="form-control" type="text" id="quantity" value="{{trans.qty}}" /></td>
+             <td>{{trans.unit_Name}}</td>
             <td>{{trans.item_Name}}</td>
             <td>{{trans.itemId}}</td>
 
@@ -169,7 +172,6 @@
     </div>
 
     <!-- End of Tabel -->
-
     <!--<div class="form-group row col-12">
     <label for="qty" class="col-sm-4 col-form-label" style="text-align:right">الكمية</label>
     <div class="col-sm-8">
@@ -274,8 +276,18 @@
   </table>-->
   </mat-dialog-content>
   <mat-dialog-actions >
-    <button mat-button class="btn btn-danger" (click)="onNoClick()">اغلاق</button>
-    <button mat-button [mat-dialog-close]="storeTransDetails_VM" cdkFocusInitial class="btn btn-success mr-3" style="text-align:right">موافق</button>
+    <button mat-button class="btn btn-outline-danger" (click)="onNoClick()">
+      اغلاق
+      <svg width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+      </svg>
+    </button>
+    <button mat-button [mat-dialog-close]="storeTransDetails_VM" cdkFocusInitial class="btn btn-outline-success mr-3" style="text-align:right">
+      حفظ
+      <svg width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+      </svg>
+    </button>
   </mat-dialog-actions>
 </body>
 </html>

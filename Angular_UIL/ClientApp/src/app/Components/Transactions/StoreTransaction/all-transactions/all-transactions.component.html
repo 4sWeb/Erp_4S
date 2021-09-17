@@ -23,7 +23,7 @@
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table  table-bordered hover" style="width:100%">
         <thead>
           <tr style="text-align:right">
-            <th></th>
+            <th style="text-align:center">عرض التفاصيل</th>
             <th>تاريخ</th>
             <th style="text-align:center">
               <span>الى</span>
@@ -46,7 +46,7 @@
         </thead>
         <tbody>
           <tr style="text-align:right" *ngFor="let trans of alltransactions">
-            <td>
+            <td style="text-align:center">
               <a class="btn btn-outline-info" [routerLink]="['/transaction-specific',10,1]" (click)="setViewOperation(trans.StoreTrnsMId)" title="عرض التفاصيل">
 
                 <svg width="18" height="18" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16" >
