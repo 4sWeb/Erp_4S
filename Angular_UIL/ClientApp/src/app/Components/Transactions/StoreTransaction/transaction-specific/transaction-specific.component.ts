@@ -537,6 +537,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
       }
       console.log('From spec compenent The Category Dialog was closed', this.popupstoreTransDetails_VM);
+      this.productdetails = this.popupstoreTransDetails_VM;
       console.log("storeTransDetails_VM", this.popupstoreTransDetails_VM);
       if (result == null) {
         //result = this.editProduct;

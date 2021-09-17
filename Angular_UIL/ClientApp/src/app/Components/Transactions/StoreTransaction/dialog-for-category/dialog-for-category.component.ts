@@ -29,6 +29,8 @@ export class DialogForCategoryComponent implements OnInit {
 
   GroupFChanged: boolean = false;
   ItemChanged: boolean = false;
+  EditingClick: boolean=false;
+  
 
   //two way binding
   quantity: number;
@@ -40,6 +42,7 @@ export class DialogForCategoryComponent implements OnInit {
   GroupId: number;
   ItemId: number;
   UniteId: number;
+  Index: number;
  
 
   constructor(public TransactionsService: TransactionsService,
@@ -93,12 +96,12 @@ export class DialogForCategoryComponent implements OnInit {
     //  }
     //);
   }
-  GroupfChange(Group: GroupF_VM) {
+  GroupfChange(GroupId: number) {
     this.GroupFChanged = true;
-    console.log("GroupId", Group);
-    this.Group = Group;
-    
-    this.itemsFilter = this.items_VM.filter(s => s.groupId == Group.GroupF_Id);
+    this.EditingClick = false;
+    this.Group = this.GroupFs.filter(s => s.GroupF_Id == GroupId)[0]
+    console.log("Group", this.Group);
+    this.itemsFilter = this.items_VM.filter(s => s.groupId == GroupId);
 
     //this.TransactionsService.getItemsDetails(id).subscribe(
     //  (data) => {
@@ -113,10 +116,12 @@ export class DialogForCategoryComponent implements OnInit {
     //);
   };
 
-  ItemsChange(Item: Items_VM) {
+  ItemsChange(ItemId: number) {
     this.ItemChanged = true;
-    this.unitesFilter = this.unites_VMs.filter(s => s.itemId == Item.itemId);
-    this.Item = Item;
+    this.EditingClick = false;
+    this.unitesFilter = this.unites_VMs.filter(s => s.itemId == ItemId);
+    this.Item = this.items_VM.filter(s => s.itemId == ItemId)[0];
+    console.log("item selected",this.Item);
 
     //console.log("item id",id);
     //this.TransactionsService.getUnitesDetails(id).subscribe(
@@ -129,8 +134,9 @@ export class DialogForCategoryComponent implements OnInit {
     //);
   };
 
-  UnitesChange(Unite: Unites_VM) {
-    this.Unite = Unite;
+  UnitesChange(UniteId: number) {
+    this.Unite = this.unites_VMs.filter(s => s.uniteId == UniteId)[0];
+    console.log("selected unite",this.Unite);
     //this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
   }
 
@@ -147,11 +153,53 @@ export class DialogForCategoryComponent implements OnInit {
   };
   SaveOneRow() {
     //need to validate
-    this.storeTransDetails_VM.push({
-      groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
-      unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo
-    });
-    console.log("storeTransDetails_VM from dialog save",this.storeTransDetails_VM);
+  
+    if (this.Index >= 0) {
+      console.log(this.Index)
+      this.storeTransDetails_VM[this.Index].groupF_Id = this.GroupId;
+      this.storeTransDetails_VM[this.Index].unitId = this.UniteId;
+      this.storeTransDetails_VM[this.Index].unit_Name = this.Unite.name;
+      this.storeTransDetails_VM[this.Index].itemId = this.ItemId;
+      this.storeTransDetails_VM[this.Index].item_Name = this.Item.name;
+      this.storeTransDetails_VM[this.Index].qty = this.quantity;
+      this.storeTransDetails_VM[this.Index].totalo = this.totalo;
+      this.storeTransDetails_VM[this.Index].unitPrice = this.unitPrice;
+
+    } else {
+      this.storeTransDetails_VM.push({
+        groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
+        unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo
+      });
+    }
+    console.log("storeTransDetails_VM from dialog save", this.storeTransDetails_VM);
+    //this.EditingClick = true;
+    //this.GroupFChanged = false;
+    //this.ItemChanged = false;
+    //this.GroupId = undefined;
+    //this.ItemId = undefined;
+    //this.UniteId = undefined;
+    //this.quantity = undefined;
+    //this.unitPrice = undefined;
+    
+  }
+
+  EditProduct(i: number) {
+    console.log("transaction", i);
+    this.Index = i;
+    this.EditingClick = true;
+    this.ItemChanged = false;
+    this.GroupFChanged = false;
+    //to view these values in dropDowns
+    this.GroupId = this.storeTransDetails_VM[i].groupF_Id;
+    console.log("this.GroupId", this.GroupId);
+    this.ItemId = this.storeTransDetails_VM[i].itemId;
+    this.UniteId = this.storeTransDetails_VM[i].unitId;
+    this.quantity = this.storeTransDetails_VM[i].qty;
+    this.totalo = this.storeTransDetails_VM[i].totalo;
+    this.unitPrice = this.storeTransDetails_VM[i].unitPrice;
+    //to set new values
+
+    
   }
 
   onNoClick(): void {
