@@ -59,7 +59,7 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
   }
 
   //SetType of operation=View
-  setViewOperation(StoreTransMId) {
+  setViewOperation(StoreTransMId: number) {
     this.StoreTransMId = StoreTransMId;
     console.log("StoreTransMId",StoreTransMId);
     this.operationType = "View";

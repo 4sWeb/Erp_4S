@@ -223,20 +223,25 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
             this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
             this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
             this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
-            //need to enhance as storetransDep array so transcode maybe array
-            this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
-            console.log("transDepCode", this.TransCode);
 
+
+            //console.log("transDepCode", this.TransCode);
             this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
             this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
             this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
             this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
             console.log("storeDocNum", this.storedocnum);
-            this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
+
             this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
+            console.log("storeTransDetails_VM", this.storeTransDetails_VM);
             this.itemDetails_VM = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM;
             this.Items_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.items_VM;
             this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.unites_VM;
+            //need to enhance as storetransDep array so transcode maybe array
+            this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+          
+            this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
+           
           }
         );
         this.TransactionsService.getAllGroups().subscribe(

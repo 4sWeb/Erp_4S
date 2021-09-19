@@ -134,7 +134,7 @@ namespace BLL.Repo
                     FromStoreAllcodesId =string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.FromStoreAllcodesId,
                     BranchId= (decimal)s.BranchId,
                     TrnsCode=s.TrnsCode,
-                    Storedocnum=s.Storedocnum,
+                    Storedocnum= string.IsNullOrEmpty(s.Storedocnum.ToString()) ? 0 : (decimal)s.Storedocnum,
                 }
                 ).FirstOrDefault() ;
                 return result;

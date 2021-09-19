@@ -113,7 +113,7 @@
 
           </div>
 
-          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails.length > 0">
+          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails!=null">
             <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
             <div class="col-sm-8">
               <ng-select bindLabel="Aname"
@@ -139,7 +139,7 @@
   [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">-->
 
                                   <!--To-->
-        <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
+        <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails!=null">
           <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0">
             <label for="ToTypeId" class="col-sm-3 col-form-label" style="text-align:right">الى</label>
             <div class="col-sm-8">
@@ -157,7 +157,7 @@
             </div>
           </div>
 
-          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
+          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails!=null">
             <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
               <ng-select bindLabel="Aname"
@@ -687,7 +687,7 @@
         </div>
         <!-- End of tabel view StoreTrans Dep -->
         <!-- -----------------------------tabel view StoreTrans details----------------------------- -->
-        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction==null&&storeTransDetails_VM?.length>0">
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="storeTransDetails_VM.length>0">
           <table class="table  table-bordered table-hover " style="width:100%">
             <thead class="bg-secondary">
               <tr style="text-align:right">
