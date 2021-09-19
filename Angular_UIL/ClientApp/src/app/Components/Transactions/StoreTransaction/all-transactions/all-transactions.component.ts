@@ -19,8 +19,12 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
 
   operationType: any;
   StoreTransMId: number;
+  TransCode: number;
 
-  constructor(private TransactionsService: TransactionsService, private SharingDataService:SharingDataService, public ar: ActivatedRoute) { }
+  constructor(private TransactionsService: TransactionsService, private SharingDataService: SharingDataService, public ar: ActivatedRoute) {
+    this.TransCode = this.SharingDataService.getTransCode();
+    console.log("this.TransCode", this.TransCode);
+  }
 
   ngOnInit() {
     this.dtOptions = {

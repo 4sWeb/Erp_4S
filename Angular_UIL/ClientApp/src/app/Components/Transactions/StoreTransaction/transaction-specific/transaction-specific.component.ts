@@ -52,7 +52,7 @@ export interface DialogEditStoreTransDetails {
 }
 //Dialog For Category
 export interface DialogForCategory {
-  dialogCategoryDetails: storeTransDetails_VM[];
+  dialogCategoryDetails?: storeTransDetails_VM[];
   productdetails?: storeTransDetails_VM[];
   GroupFs: GroupF_VM[];
 
@@ -516,7 +516,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
   //open CategoryDialog
   openCategoryDialog(): void {
+    console.log("in open dialog method",this.productdetails);
     //this.productdetails = [];
+    if (this.productdetails == undefined) {
+      this.productdetails = [];
+    }
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
       data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs }
       

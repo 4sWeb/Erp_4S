@@ -54,12 +54,13 @@ export class DialogForCategoryComponent implements OnInit {
     console.log("GroupFsFrom Dialog", this.GroupFs);
 
     if (this.productdetails.length>0) {
-      for (var i = 0; i < this.productdetails.length; i++) {
-        this.storeTransDetails_VM.push({
-          qty: this.productdetails[i].qty, unitId: this.productdetails[i].unitId, itemId: this.productdetails[i].itemId, totalo: this.productdetails[i].totalo,
-          item_Name: this.productdetails[i].item_Name, unit_Name: this.productdetails[i].unit_Name
-        })
-    }
+    //  for (var i = 0; i < this.productdetails.length; i++) {
+    //    this.storeTransDetails_VM.push({
+    //      qty: this.productdetails[i].qty, unitId: this.productdetails[i].unitId, itemId: this.productdetails[i].itemId, totalo: this.productdetails[i].totalo,
+    //      item_Name: this.productdetails[i].item_Name, unit_Name: this.productdetails[i].unit_Name
+    //    })
+      //}
+      this.storeTransDetails_VM = this.productdetails;
     }
   }
 
@@ -99,6 +100,11 @@ export class DialogForCategoryComponent implements OnInit {
   GroupfChange(GroupId: number) {
     this.GroupFChanged = true;
     this.EditingClick = false;
+
+    //يوم الجمعه
+     this.ItemId = undefined;
+     this.UniteId = undefined;
+
     this.Group = this.GroupFs.filter(s => s.GroupF_Id == GroupId)[0]
     console.log("Group", this.Group);
     this.itemsFilter = this.items_VM.filter(s => s.groupId == GroupId);
@@ -153,7 +159,8 @@ export class DialogForCategoryComponent implements OnInit {
   };
   SaveOneRow() {
     //need to validate
-  
+
+    //Editing mode
     if (this.Index >= 0) {
       console.log(this.Index)
       this.storeTransDetails_VM[this.Index].groupF_Id = this.GroupId;
@@ -164,6 +171,7 @@ export class DialogForCategoryComponent implements OnInit {
       this.storeTransDetails_VM[this.Index].qty = this.quantity;
       this.storeTransDetails_VM[this.Index].totalo = this.totalo;
       this.storeTransDetails_VM[this.Index].unitPrice = this.unitPrice;
+      this.Index = -1;
 
     } else {
       this.storeTransDetails_VM.push({
@@ -175,11 +183,13 @@ export class DialogForCategoryComponent implements OnInit {
     //this.EditingClick = true;
     //this.GroupFChanged = false;
     //this.ItemChanged = false;
-    //this.GroupId = undefined;
-    //this.ItemId = undefined;
-    //this.UniteId = undefined;
-    //this.quantity = undefined;
-    //this.unitPrice = undefined;
+
+    //set to default values
+    this.GroupId = undefined;
+    this.ItemId = undefined;
+    this.UniteId = undefined;
+    this.quantity = undefined;
+    this.unitPrice = undefined;
     
   }
 

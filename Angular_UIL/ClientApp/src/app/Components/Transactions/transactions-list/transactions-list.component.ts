@@ -2,6 +2,7 @@ import { error } from '@angular/compiler/src/util';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Transactions } from '../../../models/Transactions/transactions';
+import { SharingDataService } from '../../../services/SharingData/sharing-data.service';
 import { TransactionsService } from '../../../services/StoreTransaction/transactions.service';
 
 @Component({
@@ -13,10 +14,11 @@ export class TransactionsListComponent implements OnDestroy,OnInit {
   dtOptions: DataTables.Settings = {};
 
   alltransactions: Transactions[];
+  TransCode: number;
 
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private TransactionsService: TransactionsService) {
+  constructor(private TransactionsService: TransactionsService, private SharingDataService: SharingDataService) {
     console.log("running");
   }
 
@@ -35,6 +37,12 @@ export class TransactionsListComponent implements OnDestroy,OnInit {
         this.dtTrigger.next();
       },
       (error) => { console.log(error); })
+  }
+
+  setTransCode(i: number) {
+    this.TransCode = this.alltransactions[i].TransId;
+    this.SharingDataService.setTransCode(this.TransCode);
+    console.log("this.TransCode", this.TransCode);
   }
 
   ngOnDestroy(): void {

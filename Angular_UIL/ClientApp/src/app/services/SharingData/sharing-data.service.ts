@@ -11,6 +11,8 @@ export class SharingDataService {
 
   private storeTransMId: any = undefined;
 
+  private transCode: any = undefined;
+
   setOperationType(data: any) {
     this.operationType = data;
   }
@@ -24,6 +26,13 @@ export class SharingDataService {
   }
   getStoreTransMId(): any {
     return this.storeTransMId;
+  }
+
+  setTransCode(data: any) {
+    this.transCode = data;
+  }
+  getTransCode(): any{
+    return this.transCode;
   }
 }
 

@@ -97,8 +97,12 @@ namespace Angular_API.Controllers
 
             TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(transCode);
             List<Transaction_VM> Items = new List<Transaction_VM>();
+            if (TransactionSpec.TransactionDepSpec_VM.TransactionsNames.Count > 0) 
+            {
             Items = repo._StoreTrnsM.AllTransByDepID(TransactionSpec.TransactionDepSpec_VM.TransactionsNames.FirstOrDefault().Transaction_Id);
             TransactionSpec.TransactionDepSpec_VM.TrnsList = Items;
+            }
+            
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
         [HttpGet]
@@ -122,6 +126,13 @@ namespace Angular_API.Controllers
         {
             //List<decimal> Items = new List<decimal>() { 2872, 2878 };
             List<StoreTransDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);
+            foreach (var item in Results)
+            {
+                var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.itemId);
+                Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
+                item.groupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
+
+            }
             return Json(Results, new System.Text.Json.JsonSerializerOptions());
         }
 

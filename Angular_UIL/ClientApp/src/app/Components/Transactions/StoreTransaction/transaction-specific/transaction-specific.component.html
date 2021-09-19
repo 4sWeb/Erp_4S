@@ -92,8 +92,8 @@
 
 
         <!-- من , -->
-        <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
-          <div class="form-group row col-6" *ngIf="FromType.length > 0">
+        <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.From_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails?.length > 0">
+          <div class="form-group row col-6" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.From_Type!=null">
             <label for="FromTypeId" class="col-sm-3 col-form-label" style="text-align:right">من</label>
             <div class="col-sm-8">
               <ng-select bindLabel="TYPE_NAME"
@@ -113,7 +113,7 @@
 
           </div>
 
-          <div class="form-group row col-6 mr-4">
+          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails.length > 0">
             <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل من</label>
             <div class="col-sm-8">
               <ng-select bindLabel="Aname"
@@ -157,7 +157,7 @@
             </div>
           </div>
 
-          <div class="form-group row col-6 mr-4">
+          <div class="form-group row col-6 mr-4" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails?.length > 0">
             <label class="col-sm-4 col-form-label" style="text-align:right">تفاصيل الي</label>
             <div class="col-sm-8">
               <ng-select bindLabel="Aname"
