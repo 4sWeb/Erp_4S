@@ -38,7 +38,7 @@
     </div>
 
     <div class="modal-content p-3 mb-4" style="font-size:14px">
-      <form (ngSubmit)="addStoreTransaction()" #transForm="ngForm">
+      <form #transForm="ngForm">
 
 
         <!--Date And DocNumber-->
@@ -523,16 +523,16 @@
         <div class="form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length > 0">
           <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
           <div class="col-sm-7">
-            <!--<select id="my_select" name="TransCode" class="form-control" style="text-align:right" [(ngModel)]="TransCode" (change)="selectChangeHandler()">
-        <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
-      </select>-->
+            <!--<select id="my_select" name="transDepCode" class="form-control" style="text-align:right" [(ngModel)]="transDepCode" (change)="selectChangeHandler()">
+    <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
+  </select>-->
 
             <ng-select bindLabel="Transaction_Name"
-                       name="TransCode"
+                       name="transDepCode"
                        placeholder="...اختر"
                        [searchable]="true"
                        [clearable]="false"
-                       [(ngModel)]="TransCode"
+                       [(ngModel)]="transDepCode"
                        (change)="selectChangeHandler()" #depOn="ngModel" required>
               <ng-option [value]="item.Transaction_Id" [disabled]="item.disabled" *ngFor="let item of DepTransactionNames">
 
@@ -698,7 +698,7 @@
               <tr style="text-align:right" *ngFor="let trans of storeTransDep_VM ; let i = index">
                 <!--<td><button class="btn btn-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>-->
                 <!--trans.StoreTrnsMId Wait from API-->
-                <td class="bg-dark"></td>
+                <td>{{trans.storeTrnsDepId}}</td>
                 <td>{{trans.branchName}}</td>
 
                 <td>
@@ -930,7 +930,7 @@
 
 
 
-        <button type="submit" class="btn btn-outline-success" [disabled]="transForm.invalid">
+        <button type="submit" class="btn btn-outline-success" [disabled]="transForm.invalid" (click)="addStoreTransaction()">
           حفظ
 
           <svg width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">

@@ -92,6 +92,10 @@ export class TransactionsService {
     return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails`)
   }
 
+  CreateTransaction(stroreTransMain: StoreTransMain) {
+    return this.http.post<StoreTransMain>(`${environment.Api_Url}/SaveOrder`, stroreTransMain);
+  }
+
   //getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<any> {
   //  return this.http.get<Transactions[]>(`${API_Transaction} /UserID=${UserID}&AppID=${AppID}&${periodID}`, { observe: 'response' })
   //    .pipe(
