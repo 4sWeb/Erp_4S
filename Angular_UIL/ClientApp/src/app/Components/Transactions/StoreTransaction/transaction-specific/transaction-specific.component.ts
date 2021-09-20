@@ -223,7 +223,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
             this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
             this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
             this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
-
+ 
 
             //console.log("transDepCode", this.TransCode);
             this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
