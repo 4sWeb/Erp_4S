@@ -218,7 +218,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
           (data) => {
             console.log("response2", data);
             this.StoreTransMain = data;
-            console.log(this.StoreTransMain);
+            console.log("*******************",this.StoreTransMain);
             this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
             this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
             this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;

@@ -15,6 +15,16 @@
 
   <link href="https://cdn.syncfusion.com/ej2/ej2-calendars/styles/material.css" rel="stylesheet" />
   <style>
+    .e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left),
+    .e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap,
+    .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left),
+    .e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap,
+    .e-float-input.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap,
+    .e-float-input.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap {
+      border-color:#24971f;
+    }
+
+
   </style>
 </head>
 
@@ -29,25 +39,6 @@
 
     <div class="modal-content p-3 mb-4" style="font-size:14px">
       <form (ngSubmit)="addStoreTransaction()" #transForm="ngForm">
-        <!--Branch And TransactionSpecific.Aname-->
-        <div class="row col-12">
-          <div class="form-group row col-6">
-            <label for="storedocnum" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
-            <div class="col-sm-8">
-              <input #storedocno="ngModel" class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum"
-                     [(ngModel)]="storedocnum" type="number" required min="0"
-                     [class.is-valid]="storedocno.valid" [class.is-invalid]="storedocno.invalid&&storedocno.touched">
-
-            </div>
-
-          </div>
-          <div class="form-group row col-6 mr-4">
-            <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
-            <div class="col-sm-8">
-              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax" readonly>
-            </div>
-          </div>
-        </div>
 
 
         <!--Date And DocNumber-->
@@ -77,16 +68,41 @@
 
 
           <div class="form-group row col-6 mr-4">
-            <label for="inputPassword" class="col-sm-3 col-form-label" style="text-align:right">التاريخ</label>
-            <div class="col-sm-8 mr-4">
-              <ejs-datetimepicker name="Datevalue" id='datetimepicker'
-                                  placeholder='التاريـــــخ' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' style="width:100%" required>
+            <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">التاريخ</label>
+            <div class="col-sm-8 ">
+              <ejs-datetimepicker name="Datevalue" id='datetimepicker' 
+                                  placeholder='التاريـــــخ' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' required>
               </ejs-datetimepicker>
             </div>
 
 
           </div>
         </div>
+
+
+
+        <!--Numbers Doc And Transc-->
+        <div class="row col-12">
+          <div class="form-group row col-6">
+            <label for="storedocnum" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
+            <div class="col-sm-8">
+              <input #storedocno="ngModel" class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum"
+                     [(ngModel)]="storedocnum" type="number" required min="0"
+                     [class.is-valid]="storedocno.valid" [class.is-invalid]="storedocno.invalid&&storedocno.touched">
+
+            </div>
+
+          </div>
+          <div class="form-group row col-6 mr-4">
+            <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
+            <div class="col-sm-8">
+              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax" readonly>
+            </div>
+          </div>
+        </div>
+
+
+
 
 
         <!-- من , -->
@@ -179,6 +195,17 @@
           <div class="col-sm-9" style="text-align:right;padding-left:0%;margin-left:1%">
             <textarea class="form-control" [(ngModel)]="Rem" id="Rem" name="Rem"></textarea>
           </div>
+        </div>
+
+        <div class="text-right" dir="rtl">
+          <button dir="rtl" class="btn btn-info text-right form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length <=0"
+              style="border-bottom-width: 5px; border-right-width: 4px; margin-bottom: -47px;" title="لاضافة اصنافــــ" mat-raised-button (click)="openCategoryDialog()">
+            الاصناف
+
+            <svg width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill mr-1" viewBox="0 0 16 16" >
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+          </button>
         </div>
 
 
@@ -515,12 +542,15 @@
           </div>
           <div class="col-sm-2">
             <!-- open dialog button -->
-            <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-outline-primary">عرض الحركات</button>
+            <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-outline-primary" title="عرض حركات الاعتماد" >
+              حركات الاعتماد
+              <svg width="16" height="16" fill="currentColor" class="bi bi-ui-checks-grid" viewBox="0 0 16 16">
+                <path d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-3zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-3zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0l2-2z" />
+              </svg>
+            </button>
           </div>
           <br />
-          <div>
-            <button *ngIf="selectedTransaction!=null || TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length < 0" mat-raised-button (click)="openCategoryDialog()" class="btn btn-outline-info">الأصناف</button>
-          </div>
+
         </div>
         <!--</form>-->
         <br />
@@ -640,14 +670,8 @@
             <thead class="bg-info">
               <tr style="text-align:right">
                 <!--<th></th>-->
-                <th>تاريخ</th>
-                <th style="text-align:center">
-                  <span>الى</span>
-                  <div class="row">
-                    <div class="col-6">الاسم</div>
-                    <div class="col-6">النوع</div>
-                  </div>
-                </th>
+                <th>كود</th>
+                <th>الفرع</th>
                 <th style="text-align:center">
                   <span>من</span>
                   <br />
@@ -656,28 +680,44 @@
                     <div class="col-6">النوع</div>
                   </div>
                 </th>
-                <th>الفرع</th>
-                <th>كود</th>
+                <th style="text-align:center">
+                  <span>الى</span>
+                  <div class="row">
+                    <div class="col-6">الاسم</div>
+                    <div class="col-6">النوع</div>
+                  </div>
+                </th>
+                <th class="text-center">تاريخ</th>
+
+
+
+
               </tr>
             </thead>
             <tbody>
               <tr style="text-align:right" *ngFor="let trans of storeTransDep_VM ; let i = index">
                 <!--<td><button class="btn btn-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>-->
-                <td>{{trans.trnsDate}}</td>
-                <td>
-                  <div class="row">
-                    <div class="col-6">{{trans.to_StoreAllcodesName}}</div>
-                    <div class="col-6">{{trans.tO_TypeName}}</div>
-                  </div>
-                </td>
+                <!--trans.StoreTrnsMId Wait from API-->
+                <td class="bg-dark"></td>
+                <td>{{trans.branchName}}</td>
+
                 <td>
                   <div class="row">
                     <div class="col-6">{{trans.from_StoreAllcodesName}}</div>
                     <div class="col-6">{{trans.from_TypeName}}</div>
                   </div>
                 </td>
-                <td>{{trans.branchName}}</td>
-                <td>{{trans.trnsCode}}</td>
+
+
+                <td>
+                  <div class="row">
+                    <div class="col-6">{{trans.to_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.tO_TypeName}}</div>
+                  </div>
+                </td>
+
+                <td style="color:#130a80;text-decoration:underline" class="text-center">{{trans.trnsDate}}</td>
+
               </tr>
             </tbody>
           </table>
@@ -767,7 +807,7 @@
         </div>
         <!--End of tabel view StoreTrans details -->
         <!--  ******************************************in View Part  عرض الحركات*********************************************-->
-        <!----------------------------- ((ADD Operation ))tabel view item selected---------------------------------------- -->
+        <!----------------------------- ((ADD Operation ))tabel view item selected Selected Dep-Transaction #NavtTable---------------------------------------- -->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="productdetails?.length>0">
           <table class="table  table-bordered table-hover" style="width:100%">
             <thead class="bg-info">
@@ -790,7 +830,7 @@
                   </div>
                 </th>
                 <th>الفرع</th>
-                <th>كود</th>
+                <th>كود الحركه</th>
               </tr>
             </thead>
             <tbody>
@@ -803,7 +843,7 @@
                     </svg>
                   </button>
                 </td>
-                <td>{{trans.TrnsDate}}</td>
+                <td style="color:#130a80;text-decoration:underline">{{trans.TrnsDate}}</td>
                 <td>
                   <div class="row">
                     <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
@@ -817,7 +857,7 @@
                   </div>
                 </td>
                 <td>{{trans.branch}}</td>
-                <td>{{trans.TrnsNo}}</td>
+                <td>{{trans.StoreTrnsMId}}</td>
               </tr>
             </tbody>
           </table>
@@ -825,8 +865,17 @@
 
 
 
-        <!-- tabel view product details -->
-        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction!=null&&productdetails?.length>0">
+        <!-- tabel view product details  GrayTable-->
+        <div dir="ltr" lang="en" class="mb-4 " style="margin-bottom:30%" *ngIf="selectedTransaction!=null&&productdetails?.length>0">
+          <div dir="rtl" style="text-align:right">
+            <button *ngIf="selectedTransaction!=null || TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length < 0" mat-raised-button (click)="openCategoryDialog()"
+                    class="btn btn-outline-info" title="لاضافة اصنافــــ">
+              الأصناف
+              <svg width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill mr-1" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+              </svg>
+            </button>
+          </div>
           <table class="table  table-bordered table-hover table-condensed table-striped">
             <thead class="bg-secondary">
               <tr style="text-align:right">
@@ -889,7 +938,7 @@
           </svg>
         </button>
 
-        <button type="button" class="btn btn-outline-danger m-1" [disabled]="true" >
+        <button type="button" class="btn btn-outline-danger m-1" [disabled]="true">
           حذف
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
