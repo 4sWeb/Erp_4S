@@ -32,6 +32,28 @@
         <!--Branch And TransactionSpecific.Aname-->
         <div class="row col-12">
           <div class="form-group row col-6">
+            <label for="storedocnum" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
+            <div class="col-sm-8">
+              <input #storedocno="ngModel" class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum"
+                     [(ngModel)]="storedocnum" type="number" required min="0"
+                     [class.is-valid]="storedocno.valid" [class.is-invalid]="storedocno.invalid&&storedocno.touched">
+
+            </div>
+
+          </div>
+          <div class="form-group row col-6 mr-4">
+            <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
+            <div class="col-sm-8">
+              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax" readonly>
+            </div>
+          </div>
+        </div>
+
+
+        <!--Date And DocNumber-->
+        <div class="row col-12">
+
+          <div class="form-group row col-6">
             <label class="col-sm-3 col-form-label" style="text-align:right">الفرع</label>
             <div class="col-sm-8">
               <!--<select name="branchId" [(ngModel)]="branchId" class="form-control" style="text-align:right">
@@ -52,30 +74,6 @@
 
             </div>
           </div>
-
-
-          <div class="form-group row col-6 mr-4">
-            <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
-            <div class="col-sm-8">
-              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax" readonly>
-            </div>
-          </div>
-        </div>
-
-
-        <!--Date And DocNumber-->
-        <div class="row col-12">
-          <div class="form-group row col-6">
-            <label for="storedocnum" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
-            <div class="col-sm-8">
-              <input #storedocno="ngModel" class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum"
-                     [(ngModel)]="storedocnum" type="number" required min="0"
-                     [class.is-valid]="storedocno.valid" [class.is-invalid]="storedocno.invalid&&storedocno.touched">
-
-            </div>
-
-          </div>
-
 
 
           <div class="form-group row col-6 mr-4">
@@ -137,8 +135,7 @@
 
         <!--[ngClass]="{'mr-4': TransactionSpecific.From_Type?.length > 0 }">
   [ngClass]="TransactionSpecific.From_Type?.length > 0 ? 'col-sm-4' : 'col-sm-3'">-->
-
-                                  <!--To-->
+        <!--To-->
         <div class="row col-12" *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0||TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails!=null">
           <div class="form-group row col-6 " *ngIf="TransactionSpecific.TransactionMasterSpec_VM.To_Type?.length > 0">
             <label for="ToTypeId" class="col-sm-3 col-form-label" style="text-align:right">الى</label>
@@ -884,7 +881,22 @@
 
 
 
-        <button type="submit" class="btn btn-success" [disabled]="transForm.invalid">حفظ</button>
+        <button type="submit" class="btn btn-outline-success" [disabled]="transForm.invalid">
+          حفظ
+
+          <svg width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+          </svg>
+        </button>
+
+        <button type="button" class="btn btn-outline-danger m-1" [disabled]="true" >
+          حذف
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+          </svg>
+        </button>
+
+
       </form>
     </div>
   </div>
