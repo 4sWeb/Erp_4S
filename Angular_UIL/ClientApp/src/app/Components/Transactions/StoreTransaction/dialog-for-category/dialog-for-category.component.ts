@@ -159,26 +159,33 @@ export class DialogForCategoryComponent implements OnInit {
   };
   SaveOneRow() {
     //need to validate
-
     //Editing mode
     if (this.Index >= 0) {
-      console.log(this.Index)
-      this.storeTransDetails_VM[this.Index].groupF_Id = this.GroupId;
-      this.storeTransDetails_VM[this.Index].unitId = this.UniteId;
-      this.storeTransDetails_VM[this.Index].unit_Name = this.Unite.name;
-      this.storeTransDetails_VM[this.Index].itemId = this.ItemId;
-      this.storeTransDetails_VM[this.Index].item_Name = this.Item.name;
-      this.storeTransDetails_VM[this.Index].qty = this.quantity;
-      this.storeTransDetails_VM[this.Index].totalo = this.totalo;
-      this.storeTransDetails_VM[this.Index].unitPrice = this.unitPrice;
-      this.Index = -1;
+      if (confirm(`تأكيد عملية التعديل...؟`)){
+        console.log(this.Index)
+        this.storeTransDetails_VM[this.Index].groupF_Id = this.GroupId;
+        this.storeTransDetails_VM[this.Index].unitId = this.UniteId;
+        this.storeTransDetails_VM[this.Index].unit_Name = this.Unite.name;
+        this.storeTransDetails_VM[this.Index].itemId = this.ItemId;
+        this.storeTransDetails_VM[this.Index].item_Name = this.Item.name;
+        this.storeTransDetails_VM[this.Index].qty = this.quantity;
+        this.storeTransDetails_VM[this.Index].totalo = this.totalo;
+        this.storeTransDetails_VM[this.Index].unitPrice = this.unitPrice;
+        this.Index = -1;
+      }
 
-    } else {
+    }
+
+
+    else {
+     
       this.storeTransDetails_VM.push({
         groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
         unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo
       });
+      alert("تمت الاضافه بنجاح")
     }
+   
     console.log("storeTransDetails_VM from dialog save", this.storeTransDetails_VM);
     //this.EditingClick = true;
     //this.GroupFChanged = false;
@@ -217,4 +224,11 @@ export class DialogForCategoryComponent implements OnInit {
     //console.log("from Dialog Category close",this.storeTransDetails_VM);
     this.dialogRef.close();
   };
+
+
+  RemoveRow(i:any): void {
+    console.log(this.storeTransDetails_VM[i])
+  };
+
+
 }
