@@ -28,12 +28,6 @@ export class SharingDataService {
     return this.storeTransMId;
   }
 
-  setTransCode(data: any) {
-    this.transCode = data;
-  }
-  getTransCode(): any{
-    return this.transCode;
-  }
 }
 
 

@@ -130,7 +130,7 @@ namespace BLL.Repo
                 {
                     TrnsDate = s.TrnsDate,
                     Rem=s.Rem,
-                    ToStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.ToStoreAllcodesId,
+                    ToStoreAllcodesId= string.IsNullOrEmpty(s.ToStoreAllcodesId.ToString())?0:(decimal)s.ToStoreAllcodesId,
                     FromStoreAllcodesId =string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.FromStoreAllcodesId,
                     BranchId= (decimal)s.BranchId,
                     TrnsCode=s.TrnsCode,
@@ -159,6 +159,7 @@ namespace BLL.Repo
                     {
                         TrnsDate= s.TrnsDate,
                         Rem=s.Rem,
+                        StoreTrnsDepId=s.StoreTrnsMId,
                         ToStoreAllcodesId= string.IsNullOrEmpty(s.ToStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
                         FromStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.FromStoreAllcodesId,
                         TrnsCode=s.TrnsCode,

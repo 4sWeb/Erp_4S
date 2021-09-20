@@ -684,7 +684,7 @@
         </div>
         <!-- End of tabel view StoreTrans Dep -->
         <!-- -----------------------------tabel view StoreTrans details----------------------------- -->
-        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="storeTransDetails_VM.length>0">
+        <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction==null&&storeTransDetails_VM.length>0">
           <table class="table  table-bordered table-hover " style="width:100%">
             <thead class="bg-secondary">
               <tr style="text-align:right">
@@ -845,7 +845,7 @@
               <tr style="text-align:right" *ngFor="let trans of productdetails">
 
                 <td>
-                  <button class="btn btn-outline-danger mr-1" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)" title="حذف">
+                  <button class="btn btn-outline-danger mr-1" value="trans" (click)="deleteProductRecord($index,trans.store_Trns_M_ID)" title="حذف">
 
                     <svg width="18" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />

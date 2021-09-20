@@ -22,8 +22,7 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
   TransCode: number;
 
   constructor(private TransactionsService: TransactionsService, private SharingDataService: SharingDataService, public ar: ActivatedRoute) {
-    this.TransCode = this.SharingDataService.getTransCode();
-    console.log("this.TransCode", this.TransCode);
+    
   }
 
   ngOnInit() {
@@ -45,6 +44,7 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
         console.log(id);
         console.log("response",response);
         this.alltransactions = response;
+        this.TransCode=this.alltransactions[0].TrnsCode;
         this.dtTrigger.next();
       },
       (error) => { console.log(error); })

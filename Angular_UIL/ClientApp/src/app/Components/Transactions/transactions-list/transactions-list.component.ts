@@ -39,11 +39,6 @@ export class TransactionsListComponent implements OnDestroy,OnInit {
       (error) => { console.log(error); })
   }
 
-  setTransCode(i: number) {
-    this.TransCode = this.alltransactions[i].TransId;
-    this.SharingDataService.setTransCode(this.TransCode);
-    console.log("this.TransCode", this.TransCode);
-  }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

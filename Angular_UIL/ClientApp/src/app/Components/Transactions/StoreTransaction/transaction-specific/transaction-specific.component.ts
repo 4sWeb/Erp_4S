@@ -84,6 +84,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   checkedTransactionsIds?: number[];
   checkedTransactionsMain?: TransactionsDetails[];
   productdetails?: storeTransDetails_VM[];
+  filterProduct?: storeTransDetails_VM[];
+  RealProduct: storeTransDetails_VM[];
 
   Price: number;
   Quantity: number;
@@ -216,29 +218,55 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     if (this.operationType == "View") {
         this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
           (data) => {
-            console.log("response2", data);
+            console.log("response2View", data);
             this.StoreTransMain = data;
             console.log(this.StoreTransMain);
-            this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
-            this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+            try {
+              this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
+            }
+            catch (e) { console.log(e); }
+            try {
+              this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+            }
+            catch (e) { console.log(e); };
             this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
             this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
+            this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
+            console.log("storeTransDetails_VM", this.storeTransDetails_VM);
  
 
             //console.log("transDepCode", this.TransCode);
-            this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
-            this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
-            this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
-            this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
-            console.log("storeDocNum", this.storedocnum);
+            try {
+              this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+            }
+            catch (e) { console.log(e); };
 
-            this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
-            console.log("storeTransDetails_VM", this.storeTransDetails_VM);
+            try {
+              this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+            }
+            catch (e) { console.log(e); };
+            //console.log("this.StoreTransMain.storeTransMaster_VM.to_Type[0]", this.StoreTransMain.storeTransMaster_VM.to_Type[0])
+
+            try {
+              this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
+            }
+            catch (e) { console.log(e); };
+            try {
+              this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
+            }
+            catch (e) { console.log(e); };
+            
+            //console.log("storeDocNum", this.storedocnum);
+
+            
             this.itemDetails_VM = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM;
             this.Items_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.items_VM;
             this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.unites_VM;
             //need to enhance as storetransDep array so transcode maybe array
-            this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+            try {
+              this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+            }
+            catch (e) { console.log(e); }
           
             this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
            
@@ -417,7 +445,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     if (confirm("سيتم حذف هذا العنصر..تأكيد؟")) {
       //to delete main product if all of child item is deleted
       let count = 0;
-      for (let j = 0; j < this.productdetails.length; j++) {
+      console.log("count", count);
+      for (var j = 0; j < this.productdetails.length; j++) {
         if (this.productdetails[j].store_Trns_M_ID == id) {
           count++;
           console.log("count", count);
@@ -434,17 +463,22 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     }
   }
 
-  deleteMainRecord(i, id: number) {
+  deleteMainRecord(i: number, id: number) {
     if (confirm("سيتم الحذف ..تأكيد؟")) {
-      console.log("mainRecordId", id);
-      this.checkedTransactionsMain.splice(i, 1);
-      console.log("this.checkedTransactionsMain", this.checkedTransactionsMain);
+    
       //to delete productDetails related to mainTransaction
-      for (let j = 0; j < this.productdetails.length; j++) {
-        if (this.productdetails[j].store_Trns_M_ID == id) {
-          this.productdetails.splice(j, 1);
-        }
-      }
+     
+      
+
+      this.filterProduct = this.productdetails.filter(s => s.store_Trns_M_ID == id);
+      this.RealProduct = this.productdetails.filter(s => s.store_Trns_M_ID != id);
+      
+        this.productdetails.splice(0, this.productdetails.length);
+
+      this.productdetails = this.RealProduct;
+      console.log(this.productdetails,"productdetails");
+      this.checkedTransactionsMain.splice(i, 1);
+
     }
 
   }

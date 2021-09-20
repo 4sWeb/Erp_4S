@@ -105,7 +105,7 @@ export class DialogForCategoryComponent implements OnInit {
      this.ItemId = undefined;
      this.UniteId = undefined;
 
-    this.Group = this.GroupFs.filter(s => s.GroupF_Id == GroupId)[0]
+    this.Group = this.GroupFs.filter(s => s.GroupF_Id == GroupId)[0];
     console.log("Group", this.Group);
     this.itemsFilter = this.items_VM.filter(s => s.groupId == GroupId);
 
