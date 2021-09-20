@@ -11,6 +11,6 @@ namespace BLL.ModelsView
         public StoreTransMaster_VM StoreTransMaster_VM { get; set; }
         public List<StoreTransDep_VM> StoreTransDep_VM { get; set; }
         public List< StoreTransDepDetails_VM >StoreTransDepDetails_VM { get; set; }
-        public List<StoreTransDetails_VM> StoreTransDetails_VM { get; set; }
+        public List<StoreTransDetails_VM> StoreTransDetails_VM { get; set; } 
     }
 }

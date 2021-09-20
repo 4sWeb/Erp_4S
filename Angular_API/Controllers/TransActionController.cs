@@ -142,6 +142,8 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
+            //ModelState //1
+
             StoreTrnsM StoreTrnsM = new StoreTrnsM()
             {
                 TrnsCode = StoreTransMain_VM.StoreTransMaster_VM.TrnsCode,
@@ -186,6 +188,8 @@ namespace Angular_API.Controllers
             //Add StoreTransDetails
             foreach (var item in StoreTransMain_VM.StoreTransDetails_VM)
             {
+
+                //Check Incoming Obj(item)
                 StoreTrnsO StoreTrnsO = new StoreTrnsO
                 {
                     StoreTrnsOId = item.storeTrnsOId,
