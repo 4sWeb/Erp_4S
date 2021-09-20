@@ -35,6 +35,8 @@ import { GroupF_VM } from '../../../../models/Transactions/StoreTransaction/Save
 import { Unites_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
 import { Items_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Items_VM';
 import { ItemDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
+import { transcode } from 'buffer';
+import { stringify } from 'querystring';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -68,7 +70,9 @@ export interface DialogForCategory {
 export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterViewInit{
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService,
     public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
-    , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) { }
+    , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) {
+    this.storeTransmOHAMED = { trnsCode: 0, trnsDate: null, trnsNo: 0 };
+  }
     
     
 
@@ -95,7 +99,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
   //Save
   StoreTransMain?: StoreTransMain;
-  storeTransMaster_VM?: storeTransMaster_VM;
+  storeTransMaster_VM?: storeTransMaster_VM ;
   storeTransDep_VM?: storeTransDep_VM[];
   storeTransDepDetails_VM?:storeTransDepDetails_VM[];
   storeTransDetails_VM?: storeTransDetails_VM[]=[];
@@ -105,6 +109,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   ToType: ToType[];
   ToTypeDetails: ToTypeDetails[];
   DepTransactionNames: TransactionsName[];
+  Transcode: number = 0;
+  storeTransmOHAMED: storeTransMaster_VM;
+  StoreTransDepDetailsOnly: storeTransDepDetails_VM[];
+
 
 
          //datePicker
@@ -127,11 +135,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   FromTypeId: number;
   ToTypeDetailsId: number;
   ToTypeId: number;
-  TransCode: number;
+  transDepCode: number;
   Rem: string;
   //Datevalue: Date;
   storeTransMax: number;
   storedocnum: number;
+  transDepId: number;
   //For Edit while creating
   editProduct: DependancyProduct;
 
@@ -159,6 +168,18 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
  
   ngOnInit() {
+
+    //Readig From Param
+    let Transcode = 0;
+    this.ar.params.subscribe(
+      a => {
+        Transcode = a['id'];
+      }
+    );
+
+    console.log("Transcode", Transcode);
+    this.Transcode = Transcode;
+
     this.operationType = this.SharingDataService.getOperationType();
     console.log("this.operationType", this.operationType);
 
@@ -264,7 +285,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
             this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.unites_VM;
             //need to enhance as storetransDep array so transcode maybe array
             try {
-              this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+              this.transDepCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
+              this.transDepId = this.StoreTransMain.storeTransDep_VM[0].storeTrnsDepId;
             }
             catch (e) { console.log(e); }
           
@@ -353,13 +375,13 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     //update the ui
     $("#second-table").DataTable().clear().draw();
 
-    this.selectedTransaction = this.TransCode;
+    this.selectedTransaction = this.transDepCode;
 
     console.log(this.selectedTransaction);
-    console.log("TransCode", this.TransCode);
-    this.TransactionsService.getTransactionsByDepID(this.TransCode).subscribe(
+    console.log("transDepCode", this.transDepCode);
+    this.TransactionsService.getTransactionsByDepID(this.transDepCode).subscribe(
       (response) => {
-        console.log("selected id transaction", this.TransCode);
+        console.log("selected id transaction", this.transDepCode);
         this.TransactionsDetails = response;
         this.rerender();
         console.log("selected id transaction", response)
@@ -499,6 +521,36 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
   //add Store Transaction
   addStoreTransaction() {
+    this.StoreTransMain = new StoreTransMain();
+       
+    //var storeTransMaster_VM = new storeTransMaster_VM({ trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo:this.storeTransMax });
+    this.storeTransmOHAMED = { storeTrnsMId: this.storeTransMax, trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo: this.storeTransMax };
+   
+    console.log("this.Transcode", this.Transcode);
+    console.log("Datevalue", this.Datevalue);
+    console.log("storeTransMax", this.storeTransMax);
+    //this.storeTransMaster_VM.trnsCode = this.Transcode;
+    //this.storeTransMaster_VM.trnsDate = this.Datevalue;
+    //this.storeTransMaster_VM.trnsNo = this.storeTransMax;
+    console.log("AHHHHHHHHHHHHHH", this.storeTransmOHAMED);
+    this.StoreTransMain.storeTransMaster_VM = this.storeTransmOHAMED;
+    this.StoreTransMain.storeTransDetails_VM = this.productdetails;
+   
+    //this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
+    for (var i = 0; i < this.storeTransDep_VM.length; i++) {
+      this.StoreTransMain.storeTransDep_VM[i].ptransrowid = this.storeTransDep_VM[i].ptransrowid;
+      this.StoreTransMain.storeTransDep_VM[i].ctrnsrowid = this.storeTransMax;
+    }
+
+    this.StoreTransMain.storeTransDepDetails_VM
+
+    
+    this.TransactionsService.CreateTransaction(this.StoreTransMain).subscribe(
+      (ews) => {
+        console.log(ews);
+      },
+      (error) => { console.log(error); }
+    )
 
   }
 
