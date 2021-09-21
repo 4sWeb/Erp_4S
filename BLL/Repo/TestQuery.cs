@@ -59,6 +59,9 @@ namespace BLL.Repo
                     OracleDataReader Reader = null;
                     DataTable Data = new DataTable();
                     if (conn.State == ConnectionState.Closed) conn.Open();
+                    if(type == 2) { 
+                    cmd.ExecuteNonQuery();
+                    }
                     Reader = cmd.ExecuteReader();
 
                     if (Reader.HasRows)

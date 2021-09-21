@@ -143,12 +143,12 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-            var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
-            if (enstorTransM != null)
-            {
-                repo._StoreTrnsM.Delete(enstorTransM);
-            }
-
+            //var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
+            //if (enstorTransM != null)
+            //{
+            //    repo._StoreTrnsM.Delete(enstorTransM);
+            //}
+           
             var GetNext = (Dictionary<string, object>)repo.CallQuery("select STORE_TRNS_M_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
             object NextValue = GetNext.GetValueOrDefault("NEXTVAL");
 
@@ -180,7 +180,6 @@ namespace Angular_API.Controllers
                 FromStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.FromStoreAllcodesId,
                 ToStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.ToStoreAllcodesId,
                 Period = StoreTransMain_VM.StoreTransMaster_VM.Period,
-                StoreTrnsMId = StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId,
                 Disc = StoreTransMain_VM.StoreTransMaster_VM.Disc,
                 DiscRate = StoreTransMain_VM.StoreTransMaster_VM.DiscRate,
                 Stax = StoreTransMain_VM.StoreTransMaster_VM.Stax,
@@ -297,6 +296,15 @@ namespace Angular_API.Controllers
             try
             {
                 repo.Save();
+                var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
+                if (enstorTransM != null)
+                {
+                    try
+                    {
+                        repo.CallQuery("delete STORE_TRNS_M where STORE_TRNS_M_ID= " + StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId + " ", null, 2);
+                    }
+                    catch (Exception ex) { }
+                }
             }
             catch (Exception ex)
             {
@@ -312,11 +320,18 @@ namespace Angular_API.Controllers
         public JsonResult deleteOrder(decimal trnsID) {
             var enstorTransM = repo._StoreTrnsM.GetByCondition(a=>a.StoreTrnsMId==trnsID).Result.FirstOrDefault();
             if (enstorTransM!=null) {
-                repo._StoreTrnsM.Delete(enstorTransM);
+                try 
+                {
+                    repo.CallQuery("delete STORE_TRNS_M where STORE_TRNS_M_ID= " + trnsID + " ", null, 2);
+                }
+                catch (Exception ex) { }
             }
 
-           
-            try {  repo.Save(); }
+            
+            try 
+            {
+                //repo.Save();
+            }
 
             catch (Exception ex){ return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions()); }
 

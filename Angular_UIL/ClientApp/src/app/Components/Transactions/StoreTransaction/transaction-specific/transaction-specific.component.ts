@@ -261,6 +261,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
             this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
             this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
             this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
+            //اخر اليوم
+            this.productdetails = this.StoreTransMain.storeTransDetails_VM;
+            ///
             console.log("storeTransDetails_VM", this.storeTransDetails_VM);
  
 
@@ -545,18 +548,31 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   //add Store Transaction
   addStoreTransaction() {
     this.StoreTransMain = new StoreTransMain();
-       
-    //var storeTransMaster_VM = new storeTransMaster_VM({ trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo:this.storeTransMax });
-    this.storeTransmOHAMED = {
-      storeTrnsMId: 0,
-      branchId: this.branchId,
-      trnsCode: this.Transcode,
-      trnsDate: this.Datevalue,
-      trnsNo: this.storeTransMax,
-      fromStoreAllcodesId: this.fromStoreAllcodesId,
-      toStoreAllcodesId: this.fromStoreAllcodesId,
-      period:2
-    };
+    if (this.operationType == "View") {
+      this.storeTransmOHAMED = {
+        storeTrnsMId: this.StoreTransMId,
+        branchId: this.branchId,
+        trnsCode: this.Transcode,
+        trnsDate: this.Datevalue,
+        trnsNo: this.storeTransMax,
+        fromStoreAllcodesId: this.fromStoreAllcodesId,
+        toStoreAllcodesId: this.fromStoreAllcodesId,
+        period: 2
+      };
+    }
+    else {
+      this.storeTransmOHAMED = {
+        storeTrnsMId: 0,
+        branchId: this.branchId,
+        trnsCode: this.Transcode,
+        trnsDate: this.Datevalue,
+        trnsNo: this.storeTransMax,
+        fromStoreAllcodesId: this.fromStoreAllcodesId,
+        toStoreAllcodesId: this.fromStoreAllcodesId,
+        period: 2
+      };
+    }
+   
    
  
     this.StoreTransMain.storeTransMaster_VM = this.storeTransmOHAMED;
@@ -733,12 +749,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   };
 
   deleteTransaction(StoreTransMId: number) {
+    console.log("clicked");
     StoreTransMId = this.StoreTransMId;
+    console.log(StoreTransMId);
     this.TransactionsService.DeleteTransaction(StoreTransMId).subscribe(
-      res => { console.log("Delet", res); }
-      , err => { console.log(err); }
+      (res) => { console.log("Delet", res); }
+      ,
+      (error) => { console.log(error); }
     );
-    this._router.navigate(['/']);
+      this._router.navigate(['/']);
   }
 
   ngOnDestroy(): void {
