@@ -142,11 +142,13 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-            try
+
+            int _trsId = int.Parse(StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId.ToString());
+            var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == _trsId).Result.FirstOrDefault();
+            if (enstorTransM != null)
             {
-                repo._StoreTrnsM.Delete((int)StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId);
+                repo._StoreTrnsM.Delete(enstorTransM);
             }
-            catch { }
 
             var GetNext = (Dictionary<string, object>)repo.CallQuery("select STORE_TRNS_M_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
             object NextValue = GetNext.GetValueOrDefault("NEXTVAL");
@@ -306,7 +308,13 @@ namespace Angular_API.Controllers
         [HttpDelete]
         [Route("deleteOrder/{trnsID}")]
         public JsonResult deleteOrder(decimal trnsID) {
-            repo._StoreTrnsM.Delete((int)trnsID);
+            int _trsId = int.Parse(trnsID.ToString());
+            var enstorTransM = repo._StoreTrnsM.GetByCondition(a=>a.StoreTrnsMId==trnsID).Result.FirstOrDefault();
+            if (enstorTransM!=null) {
+                repo._StoreTrnsM.Delete(enstorTransM);
+            }
+
+           
             try { repo.Save(); }
 
             catch (Exception ex){
