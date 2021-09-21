@@ -241,6 +241,7 @@ namespace Angular_API.Controllers
                     Depdetailsid = item.Depdetailsid,
                     Itemid = item.Itemid,
                     ProwId = item.ProwId,
+                    Ctrnsorowid=item.Ctrnsorowid,
                     Unitid = item.Unitid,
                     Unitprice = item.Unitprice,
 
