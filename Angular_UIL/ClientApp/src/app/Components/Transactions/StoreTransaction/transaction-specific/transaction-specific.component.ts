@@ -157,6 +157,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   //For View Details in Second Way
   GroupFs: GroupF_VM[];
 
+  //ByMo
+  ItemsAvailable: boolean= false;
+
   //For Category Dialog
   dialogCategoryDetails: storeTransDetails_VM[];
   popupstoreTransDetails_VM: storeTransDetails_VM[]=[];
@@ -316,6 +319,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       res => {
         console.log("GetAllGroupsWithItemsDetails", res);
         this.GroupFs = res;
+        this.ItemsAvailable = true;
       }
     );
       
