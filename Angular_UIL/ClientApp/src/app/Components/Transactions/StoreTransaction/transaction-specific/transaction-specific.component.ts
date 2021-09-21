@@ -100,7 +100,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   //Save
   StoreTransMain?: StoreTransMain;
   storeTransMaster_VM?: storeTransMaster_VM ;
-  storeTransDep_VM?: storeTransDep_VM[];
+  storeTransDep_VM?: storeTransDep_VM[]=[];
   storeTransDepDetails_VM?:storeTransDepDetails_VM[];
   storeTransDetails_VM?: storeTransDetails_VM[]=[];
   Branches: Branches[];
@@ -111,8 +111,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   DepTransactionNames: TransactionsName[];
   Transcode: number = 0;
   storeTransmOHAMED: storeTransMaster_VM;
-  StoreTransDepDetailsOnly: storeTransDepDetails_VM[]=[];
-
+  StoreTransDepDetailsOnly: storeTransDepDetails_VM[] = [];
+  filterStoreTransDepDetails: storeTransDetails_VM[] = [];
 
 
          //datePicker
@@ -461,7 +461,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
               groupF_Id: this.productdetails[i].groupF_Id, item_ID: this.productdetails[i].itemId,
               unitId: this.productdetails[i].unitId, qty: this.productdetails[i].qty,
               unitPrice: this.productdetails[i].unitPrice, totalo: this.productdetails[i].totalo,
-              storeTrnsOId: this.productdetails[i].storeTrnsOId
+              storeTrnsOId: this.productdetails[i].storeTrnsOId,
+              store_Trns_M_ID: this.productdetails[i].store_Trns_M_ID
             });
           }
           console.log("StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
@@ -490,6 +491,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
         });
       }
       this.productdetails.splice(i, 1);
+      this.StoreTransDepDetailsOnly = this.productdetails.filter(s => s.storeTrnsOId > 0);
+      console.log("StoreTransDepDetailsOnly after delete", this.StoreTransDepDetailsOnly);
       console.log("product after delete", this.productdetails);
     }
   }
@@ -510,6 +513,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       console.log(this.productdetails,"productdetails");
       this.checkedTransactionsMain.splice(i, 1);
 
+      this.StoreTransDepDetailsOnly = this.productdetails.filter(s => s.storeTrnsOId > 0);
+      console.log("StoreTransDepDetailsOnly after delete", this.StoreTransDepDetailsOnly);
     }
 
   }
@@ -533,27 +538,31 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     this.StoreTransMain = new StoreTransMain();
        
     //var storeTransMaster_VM = new storeTransMaster_VM({ trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo:this.storeTransMax });
-    this.storeTransmOHAMED = { storeTrnsMId: this.storeTransMax, trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo: this.storeTransMax };
+    this.storeTransmOHAMED = { trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo: this.storeTransMax };
    
-    console.log("this.Transcode", this.Transcode);
-    console.log("Datevalue", this.Datevalue);
-    console.log("storeTransMax", this.storeTransMax);
-    //this.storeTransMaster_VM.trnsCode = this.Transcode;
-    //this.storeTransMaster_VM.trnsDate = this.Datevalue;
-    //this.storeTransMaster_VM.trnsNo = this.storeTransMax;
-    console.log("AHHHHHHHHHHHHHH", this.storeTransmOHAMED);
+ 
     this.StoreTransMain.storeTransMaster_VM = this.storeTransmOHAMED;
+    console.log("storeTransMaster_VM", this.StoreTransMain.storeTransMaster_VM);
+
     this.StoreTransMain.storeTransDetails_VM = this.productdetails;
+    for (var i = 0; i < this.checkedTransactionsMain.length; i++) {
+      this.storeTransDep_VM.push({
+        ptransrowid: this.checkedTransactionsMain[i].StoreTrnsMId,
+        branchId: this.checkedTransactionsMain[i].BranchId,
+        toStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
+        fromStoreAllcodesId: this.checkedTransactionsMain[i].From_StoreAllcodesId,
+        trnsCode: this.checkedTransactionsMain[i].TrnsCode,
+        trnsDate: this.checkedTransactionsMain[i].TrnsDate
+      });
+    }
    
-    //this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
-    //for (var i = 0; i < this.storeTransDep_VM.length; i++) {
-    //  this.StoreTransMain.storeTransDep_VM[i].ptransrowid = this.storeTransDep_VM[i].ptransrowid;
-    //  this.StoreTransMain.storeTransDep_VM[i].ctrnsrowid = this.storeTransMax;
-    //}
+    this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
+    console.log("storeTransDep_VM", this.storeTransDep_VM);
+    this.StoreTransMain.storeTransDepDetails_VM = this.StoreTransDepDetailsOnly;
+    console.log("storeTransDepDetails_VM", this.StoreTransMain.storeTransDepDetails_VM);
 
-   
-
-    
+    this.StoreTransMain.storeTransDetails_VM = this.productdetails;
+    console.log("storeTransDetails_VM", this.StoreTransMain.storeTransDetails_VM);
     this.TransactionsService.CreateTransaction(this.StoreTransMain).subscribe(
       (ews) => {
         console.log(ews);
@@ -645,22 +654,26 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       console.log("storeTransDetails_VM", this.popupstoreTransDetails_VM);
 
 
-      ////depdetails
-      //for (var i = 0; i < this.productdetails.length; i++) {
-      //  for (var j = 0; j < this.StoreTransDepDetailsOnly.length; j++) {
-      //    if (this.productdetails[i].storeTrnsOId == this.StoreTransDepDetailsOnly[j].storeTrnsOId) {
-      //      console.log("nowwwwwwwwwwwwwwwww");
-      //      this.StoreTransDepDetailsOnly[j].item_ID = this.productdetails[i].itemId;
-      //      this.StoreTransDepDetailsOnly[j].unitId = this.productdetails[i].unitId;
-      //      this.StoreTransDepDetailsOnly[j].groupF_Id = this.productdetails[i].groupF_Id;
-      //      this.StoreTransDepDetailsOnly[j].qty = this.productdetails[i].qty;
-      //      this.StoreTransDepDetailsOnly[j].unitPrice = this.productdetails[i].unitPrice;
-      //      this.StoreTransDepDetailsOnly[j].totalo = this.productdetails[i].totalo;
-      //    }
-      //  }
-      //}
 
-      console.log("this.StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
+      ////depdetails
+
+      this.filterStoreTransDepDetails = this.productdetails.filter(s => s.storeTrnsOId > 0);
+      this.StoreTransDepDetailsOnly = [];
+      for (var i = 0; i < this.filterStoreTransDepDetails.length; i++) {
+
+        this.StoreTransDepDetailsOnly.push({
+          item_ID: this.filterStoreTransDepDetails[i].itemId,
+          unitId: this.filterStoreTransDepDetails[i].unitId,
+          groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
+          qty: this.filterStoreTransDepDetails[i].qty,
+          unitPrice: this.filterStoreTransDepDetails[i].unitPrice,
+          totalo: this.filterStoreTransDepDetails[i].totalo,
+          store_Trns_M_ID: this.filterStoreTransDepDetails[i].store_Trns_M_ID
+        });
+      }
+
+
+    console.log("this.StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
 
       if (result == null) {
         //result = this.editProduct;
