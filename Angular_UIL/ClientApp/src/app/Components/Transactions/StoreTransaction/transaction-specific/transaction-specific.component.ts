@@ -111,7 +111,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   DepTransactionNames: TransactionsName[];
   Transcode: number = 0;
   storeTransmOHAMED: storeTransMaster_VM;
-  StoreTransDepDetailsOnly: storeTransDepDetails_VM[];
+  StoreTransDepDetailsOnly: storeTransDepDetails_VM[]=[];
 
 
 
@@ -456,6 +456,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
           console.log("LOLOLOLOLOLOL");
           this.productdetails = response;
           console.log("productDetails", this.productdetails);
+          for (var i = 0; i < this.productdetails.length; i++) {
+            this.StoreTransDepDetailsOnly.push({
+              groupF_Id: this.productdetails[i].groupF_Id, item_ID: this.productdetails[i].itemId,
+              unitId: this.productdetails[i].unitId, qty: this.productdetails[i].qty,
+              unitPrice: this.productdetails[i].unitPrice, totalo: this.productdetails[i].totalo,
+              storeTrnsOId: this.productdetails[i].storeTrnsOId
+            });
+          }
+          console.log("StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
           //to make sure that ckecked transaction array is empty
           this.checkedTransactionsIds = [];
         });
@@ -535,15 +544,14 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     console.log("AHHHHHHHHHHHHHH", this.storeTransmOHAMED);
     this.StoreTransMain.storeTransMaster_VM = this.storeTransmOHAMED;
     this.StoreTransMain.storeTransDetails_VM = this.productdetails;
-   // console.log("#################", this.storeTransDep_VM)
-   
-    //this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
-    //for (var i = 0; i < this.storeTransDep_VM.length; i++) {
-    //  this.StoreTransMain.storeTransDep_VM[i].ptransrowid = this.storeTransDep_VM[i].ptransrowid;
-    //  this.StoreTransMain.storeTransDep_VM[i].ctrnsrowid = this.storeTransMax;
-    //}
 
-   
+    //this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
+    for (var i = 0; i < this.storeTransDep_VM.length; i++) {
+      this.StoreTransMain.storeTransDep_VM[i].ptransrowid = this.storeTransDep_VM[i].ptransrowid;
+      this.StoreTransMain.storeTransDep_VM[i].ctrnsrowid = this.storeTransMax;
+    }
+
+    this.StoreTransMain.storeTransDepDetails_VM
 
     
     this.TransactionsService.CreateTransaction(this.StoreTransMain).subscribe(
@@ -635,6 +643,25 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       console.log('From spec compenent The Category Dialog was closed', this.popupstoreTransDetails_VM);
       this.productdetails = this.popupstoreTransDetails_VM;
       console.log("storeTransDetails_VM", this.popupstoreTransDetails_VM);
+
+
+      ////depdetails
+      //for (var i = 0; i < this.productdetails.length; i++) {
+      //  for (var j = 0; j < this.StoreTransDepDetailsOnly.length; j++) {
+      //    if (this.productdetails[i].storeTrnsOId == this.StoreTransDepDetailsOnly[j].storeTrnsOId) {
+      //      console.log("nowwwwwwwwwwwwwwwww");
+      //      this.StoreTransDepDetailsOnly[j].item_ID = this.productdetails[i].itemId;
+      //      this.StoreTransDepDetailsOnly[j].unitId = this.productdetails[i].unitId;
+      //      this.StoreTransDepDetailsOnly[j].groupF_Id = this.productdetails[i].groupF_Id;
+      //      this.StoreTransDepDetailsOnly[j].qty = this.productdetails[i].qty;
+      //      this.StoreTransDepDetailsOnly[j].unitPrice = this.productdetails[i].unitPrice;
+      //      this.StoreTransDepDetailsOnly[j].totalo = this.productdetails[i].totalo;
+      //    }
+      //  }
+      //}
+
+      console.log("this.StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
+
       if (result == null) {
         //result = this.editProduct;
       }
