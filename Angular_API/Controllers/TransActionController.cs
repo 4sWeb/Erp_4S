@@ -22,6 +22,7 @@ namespace Angular_API.Controllers
         public TransActionController(IRepoWrapper _repo)
         {
             repo = _repo;
+            
         }
 
         [HttpGet]
@@ -142,9 +143,7 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-
-            int _trsId = int.Parse(StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId.ToString());
-            var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == _trsId).Result.FirstOrDefault();
+            var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
             if (enstorTransM != null)
             {
                 repo._StoreTrnsM.Delete(enstorTransM);
@@ -308,18 +307,15 @@ namespace Angular_API.Controllers
         [HttpDelete]
         [Route("deleteOrder/{trnsID}")]
         public JsonResult deleteOrder(decimal trnsID) {
-            int _trsId = int.Parse(trnsID.ToString());
             var enstorTransM = repo._StoreTrnsM.GetByCondition(a=>a.StoreTrnsMId==trnsID).Result.FirstOrDefault();
             if (enstorTransM!=null) {
                 repo._StoreTrnsM.Delete(enstorTransM);
             }
 
            
-            try { repo.Save(); }
+            try {  repo.Save(); }
 
-            catch (Exception ex){
-                return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
-            }
+            catch (Exception ex){ return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions()); }
 
             return Json(new { ID = "200", Result = "Ok Deleted Successfuly.." }, new System.Text.Json.JsonSerializerOptions());
 
