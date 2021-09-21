@@ -32,13 +32,11 @@ namespace BLL.Repo
             table.Add(Entity);
         }
 
-        public void Delete(int id)
+        public void Delete(T Entity)
         {
-            var t=table.Find(id);
-            if (t != null)
-            {
-                table.Remove(t);
-            }
+            
+                table.Remove(Entity);
+          
         }
 
         public async  Task<List<T>> GetAll()

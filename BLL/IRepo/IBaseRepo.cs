@@ -14,6 +14,6 @@ namespace BLL.IRepo
         IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> order = null, string includeproperties = "");
         void  Create(T Entity);
         void  Update(T Entity);
-        void  Delete(int id);
+        void  Delete(T Entity);
     }
 }
