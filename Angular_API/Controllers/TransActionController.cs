@@ -142,6 +142,11 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
+            try
+            {
+                repo._StoreTrnsM.Delete((int)StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId);
+            }
+            catch { }
 
             var GetNext = (Dictionary<string, object>)repo.CallQuery("select STORE_TRNS_M_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
             object NextValue = GetNext.GetValueOrDefault("NEXTVAL");
@@ -200,9 +205,9 @@ namespace Angular_API.Controllers
                 MainAccountid = StoreTransMain_VM.StoreTransMaster_VM.MainAccountid,
                 MainCostcenterid = StoreTransMain_VM.StoreTransMaster_VM.MainCostcenterid
             };
-
             repo._StoreTrnsM.Create(StoreTrnsM);
-            repo.Save();
+            //repo.Save();
+
 
 
             //Add StoreTransDetails
@@ -235,12 +240,15 @@ namespace Angular_API.Controllers
                 if (StoreTrnsO != null)
                 {
                     repo._StoreTrnsO.Create(StoreTrnsO);
-                    repo.Save();
+                    
 
                 }
 
             }
-
+           
+            
+            var _StoreTrnsDepId = decimal.Parse(NextValueD.ToString()) + 1;
+            if (StoreTransMain_VM.IsDependant) { 
             foreach (var item in StoreTransMain_VM.StoreTransDep_VM)
             {
                 StoreTrnsDep storeTrnsDep = new StoreTrnsDep()
@@ -250,64 +258,41 @@ namespace Angular_API.Controllers
                     Commited = item.Commited,
                     Depslot = item.Depslot,
                     Depdetailsid = item.Depdetailsid,
-                    StoreTrnsDepId = decimal.Parse(NextValueD.ToString())+1,
+                    StoreTrnsDepId = _StoreTrnsDepId++,//decimal.Parse(NextValueD.ToString())+1
                     Ctrnsrowid = decimal.Parse(NextValue.ToString()) + 1 //StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ctrnsrowid,
-
                 };
-                if (storeTrnsDep != null)
-                {
-                    repo._StoreTrnsDep.Create(storeTrnsDep);
-                }
-                foreach (var stdepd in StoreTransMain_VM.StoreTransDepDetails_VM)
-                {
-                    StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
-                    {
-                        Commited = stdepd.Commited,
-                        Depdetailsid = decimal.Parse(NextValueDt.ToString())+1,
-                        Itemid = stdepd.Itemid,
-                        ProwId = decimal.Parse(NextValueD.ToString()) + 1,
-                        Ctrnsorowid= decimal.Parse(NextValueO.ToString()) + 1,
-                        Unitid = stdepd.Unitid,
-                        Unitprice = stdepd.Unitprice,
+                        if (storeTrnsDep != null)
+                        {
+                            repo._StoreTrnsDep.Create(storeTrnsDep);
+                        }
+                        var _Depdetailsid = decimal.Parse(NextValueDt.ToString()) + 1;
+                        foreach (var stdepd in StoreTransMain_VM.StoreTransDepDetails_VM)
+                        {
+                            StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
+                            {
+                                Commited = stdepd.Commited,
+                                Depdetailsid = _Depdetailsid++, //decimal.Parse(NextValueDt.ToString())+1
+                                Itemid = stdepd.Itemid,
+                                ProwId = decimal.Parse(NextValueD.ToString()) + 1,
+                                Ctrnsorowid= decimal.Parse(NextValueO.ToString()) + 1,
+                                Unitid = stdepd.Unitid,
+                                Unitprice = stdepd.Unitprice,
 
-                    };
-                    if (storeTransDepDetails != null)
-                    {
-                        repo._StoreTrnsDepDetails.Create(storeTransDepDetails);
+                            };
+                            if (storeTransDepDetails != null)
+                            {
+                                repo._StoreTrnsDepDetails.Create(storeTransDepDetails);
 
-                    }
+                            }
 
-                }
+                        }
             }
-
-            //if (storeTrnsDep != null)
-            //{
-            //    //repo._StoreTrnsDep.Create(storeTrnsDep);
-            //}
-
-            //foreach (var item in StoreTransMain_VM.StoreTransDepDetails_VM)
-            //{
-            //    StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
-            //    {
-            //        Commited = item.Commited,
-            //        Depdetailsid = item.Depdetailsid,
-            //        Itemid = item.Itemid,
-            //        ProwId = item.ProwId,
-            //        Unitid = item.Unitid,
-            //        Unitprice = item.Unitprice,
-
-            //    };
-            //    if (storeTransDepDetails != null)
-            //    {
-            //        repo._StoreTrnsDepDetails.Create(storeTransDepDetails);
-
-            //    }
-
-            //}
+            }
+           
 
             try
             {
-                //repo.Save();
+                repo.Save();
             }
             catch (Exception ex)
             {
@@ -315,6 +300,21 @@ namespace Angular_API.Controllers
             }
 
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
+        }
+
+
+        [HttpDelete]
+        [Route("deleteOrder/{trnsID}")]
+        public JsonResult deleteOrder(decimal trnsID) {
+            repo._StoreTrnsM.Delete((int)trnsID);
+            try { repo.Save(); }
+
+            catch (Exception ex){
+                return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
+            }
+
+            return Json(new { ID = "200", Result = "Ok Deleted Successfuly.." }, new System.Text.Json.JsonSerializerOptions());
+
         }
 
         [HttpGet]
@@ -513,6 +513,10 @@ namespace Angular_API.Controllers
             }
             return Json(Unites_VMs, new System.Text.Json.JsonSerializerOptions());
         }
+
+
+
+
 
     }
 }

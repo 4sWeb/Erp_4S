@@ -35,8 +35,10 @@ namespace BLL.Repo
         public void Delete(int id)
         {
             var t=table.Find(id);
-            table.Remove(t);
-            
+            if (t != null)
+            {
+                table.Remove(t);
+            }
         }
 
         public async  Task<List<T>> GetAll()
