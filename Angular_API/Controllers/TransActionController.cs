@@ -142,7 +142,11 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-            repo._StoreTrnsM.Delete((int)StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId);
+            try
+            {
+                repo._StoreTrnsM.Delete((int)StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId);
+            }
+            catch { }
 
             var GetNext = (Dictionary<string, object>)repo.CallQuery("select STORE_TRNS_M_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
             object NextValue = GetNext.GetValueOrDefault("NEXTVAL");
@@ -296,6 +300,21 @@ namespace Angular_API.Controllers
             }
 
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
+        }
+
+
+        [HttpDelete]
+        [Route("deleteOrder/{trnsID}")]
+        public JsonResult deleteOrder(decimal trnsID) {
+            repo._StoreTrnsM.Delete((int)trnsID);
+            try { repo.Save(); }
+
+            catch (Exception ex){
+                return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
+            }
+
+            return Json(new { ID = "200", Result = "Ok Deleted Successfuly.." }, new System.Text.Json.JsonSerializerOptions());
+
         }
 
         [HttpGet]
@@ -494,6 +513,10 @@ namespace Angular_API.Controllers
             }
             return Json(Unites_VMs, new System.Text.Json.JsonSerializerOptions());
         }
+
+
+
+
 
     }
 }
