@@ -8,7 +8,8 @@ export class StoreTransMain {
     public storeTransMaster_VM?: storeTransMaster_VM,
     public storeTransDep_VM?: storeTransDep_VM[],
     public storeTransDepDetails_VM?: storeTransDepDetails_VM[],
-    public storeTransDetails_VM?: storeTransDetails_VM[]
+    public storeTransDetails_VM?: storeTransDetails_VM[],
+    public IsDependant?: boolean
   ) { }
 
 }

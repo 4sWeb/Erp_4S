@@ -208,7 +208,7 @@ namespace Angular_API.Controllers
                 MainCostcenterid = StoreTransMain_VM.StoreTransMaster_VM.MainCostcenterid
             };
             repo._StoreTrnsM.Create(StoreTrnsM);
-            //repo.Save();
+            repo.Save();
 
 
 
@@ -250,8 +250,11 @@ namespace Angular_API.Controllers
            
             
             var _StoreTrnsDepId = decimal.Parse(NextValueD.ToString()) + 1;
-            if (StoreTransMain_VM.IsDependant) { 
-            foreach (var item in StoreTransMain_VM.StoreTransDep_VM)
+
+            if (StoreTransMain_VM.IsDependant) {
+
+                var _Depdetailsid = decimal.Parse(NextValueDt.ToString()) + 1;
+                foreach (var item in StoreTransMain_VM.StoreTransDep_VM)
             {
                 StoreTrnsDep storeTrnsDep = new StoreTrnsDep()
                 {
@@ -267,7 +270,7 @@ namespace Angular_API.Controllers
                         {
                             repo._StoreTrnsDep.Create(storeTrnsDep);
                         }
-                        var _Depdetailsid = decimal.Parse(NextValueDt.ToString()) + 1;
+                      
                         foreach (var stdepd in StoreTransMain_VM.StoreTransDepDetails_VM)
                         {
                             StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
@@ -305,8 +308,8 @@ namespace Angular_API.Controllers
         }
 
 
-        [HttpDelete]
-        [Route("deleteOrder/{trnsID}")]
+        [HttpGet]
+        [Route("deleteOrder")]
         public JsonResult deleteOrder(decimal trnsID) {
             int _trsId = int.Parse(trnsID.ToString());
             var enstorTransM = repo._StoreTrnsM.GetByCondition(a=>a.StoreTrnsMId==trnsID).Result.FirstOrDefault();

@@ -98,7 +98,7 @@ export class TransactionsService {
 
   //Delete Transaction
   DeleteTransaction(storeTransMId: number) {
-    return this.http.delete(`${environment.Api_Url}/SaveOrder/=${storeTransMId}`);
+    return this.http.get(`${environment.Api_Url}/deleteOrder?trnsID=${storeTransMId}`);
   }
 
   //getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<any> {

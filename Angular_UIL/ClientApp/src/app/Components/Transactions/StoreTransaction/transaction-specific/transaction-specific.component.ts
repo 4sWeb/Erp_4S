@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { from, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -68,7 +68,7 @@ export interface DialogForCategory {
   styleUrls: ['./transaction-specific.component.css']
 })
 export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterViewInit{
-  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService,
+  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService , private _router: Router,
     public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
     , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) {
     this.storeTransmOHAMED = { trnsCode: 0, trnsDate: null, trnsNo: 0 };
@@ -113,6 +113,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   storeTransmOHAMED: storeTransMaster_VM;
   StoreTransDepDetailsOnly: storeTransDepDetails_VM[] = [];
   filterStoreTransDepDetails: storeTransDetails_VM[] = [];
+  IsDependant?: boolean = false;
 
 
          //datePicker
@@ -123,7 +124,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   public currentHour: number = this.today.getHours();
   public currentMinute: number = this.today.getMinutes();
   public currentSecond: number = this.today.getSeconds();
-  public Datevalue: Date = new Date(new Date().setDate(14));
+  public Datevalue: Date = new Date("2021-09-21T12:47:00.382Z");
             ///
 
 
@@ -169,17 +170,16 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
  
   ngOnInit() {
 
-    //Readig From Param
-    let Transcode = 0;
+   
     this.ar.params.subscribe(
       a => {
-        Transcode = a['id'];
+        this.Transcode = parseInt( a['id']);
       }
     );
 
-    console.log("Transcode", Transcode);
-    this.Transcode = Transcode;
-
+    console.log("Transcode", typeof (this.Transcode));
+    this.Transcode =(this.Transcode) ;
+    console.log("Transcode", typeof (this.Transcode));
     this.operationType = this.SharingDataService.getOperationType();
     console.log("this.operationType", this.operationType);
 
@@ -223,7 +223,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
         this.FromType = this.TransactionSpecific.TransactionMasterSpec_VM.From_Type;
         this.ToTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails;
         this.Branches = this.TransactionSpecific.TransactionMasterSpec_VM.Branches;
-        this.DepTransactionNames = this.TransactionSpecific.TransactionDepSpec_VM.TransactionsNames;
+        try {
+          this.DepTransactionNames = this.TransactionSpecific.TransactionDepSpec_VM.TransactionsNames;
+          //if (this.DepTransactionNames != null) {
+          //  this.IsDependant = true;
+          //}
+        } catch (e) { console.log(e) };
         this.ToType = this.TransactionSpecific.TransactionMasterSpec_VM.To_Type;
         this.storeTransMax = this.TransactionSpecific.StoreTransMax;
         //need to correct
@@ -538,7 +543,16 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     this.StoreTransMain = new StoreTransMain();
        
     //var storeTransMaster_VM = new storeTransMaster_VM({ trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo:this.storeTransMax });
-    this.storeTransmOHAMED = { trnsCode: this.Transcode, trnsDate: this.Datevalue, trnsNo: this.storeTransMax };
+    this.storeTransmOHAMED = {
+      storeTrnsMId: 0,
+      branchId: this.branchId,
+      trnsCode: this.Transcode,
+      trnsDate: this.Datevalue,
+      trnsNo: this.storeTransMax,
+      fromStoreAllcodesId: this.fromStoreAllcodesId,
+      toStoreAllcodesId: this.fromStoreAllcodesId,
+      period:2
+    };
    
  
     this.StoreTransMain.storeTransMaster_VM = this.storeTransmOHAMED;
@@ -561,15 +575,20 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     this.StoreTransMain.storeTransDepDetails_VM = this.StoreTransDepDetailsOnly;
     console.log("storeTransDepDetails_VM", this.StoreTransMain.storeTransDepDetails_VM);
 
+
     this.StoreTransMain.storeTransDetails_VM = this.productdetails;
-    console.log("storeTransDetails_VM", this.StoreTransMain.storeTransDetails_VM);
+    this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
+    console.log("storeTransDetails_VM", this.storeTransDetails_VM);
+
+    this.StoreTransMain.IsDependant = this.IsDependant;
     this.TransactionsService.CreateTransaction(this.StoreTransMain).subscribe(
       (ews) => {
-        console.log(ews);
+        console.log(ews, this.StoreTransMain);
+       
       },
       (error) => { console.log(error); }
     )
-
+    this._router.navigate(['/']);
   }
 
 
@@ -651,7 +670,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       }
       console.log('From spec compenent The Category Dialog was closed', this.popupstoreTransDetails_VM);
       this.productdetails = this.popupstoreTransDetails_VM;
-      console.log("storeTransDetails_VM", this.popupstoreTransDetails_VM);
+      this.storeTransDetails_VM = this.productdetails;
+      console.log("storeTransDetails_VM", this.storeTransDetails_VM);
 
 
 
@@ -695,7 +715,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
         this.storeTransDetails_VM[0].unitId = this.itemDetails_VM.unites_VM[0].uniteId;
       }
     );
-  }
+  };
 
   ItemsChange(id: number) {
     this.TransactionsService.getUnitesDetails(id).subscribe(
@@ -706,6 +726,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       }
     )
 
+  };
+
+  deleteTransaction(StoreTransMId: number) {
+    StoreTransMId = this.StoreTransMId;
+    this.TransactionsService.DeleteTransaction(StoreTransMId).subscribe(
+      res => { console.log("Delet", res); }
+      , err => { console.log(err); }
+    );
+    this._router.navigate(['/']);
   }
 
   ngOnDestroy(): void {
