@@ -26,8 +26,8 @@
                          [searchable]="true"
                          [clearable]="true"
                          [(ngModel)]="GroupId"
-                         (change)="GroupfChange($event)">
-                <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF" required>
+                         (change)="GroupfChange($event)" required>
+                <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
 
                   {{item.Aname}}
                 </ng-option>
@@ -41,7 +41,7 @@
                          placeholder="Select item"
                          [searchable]="true"
                          [(ngModel)]="ItemId"
-                         (change)="ItemsChange($event)">
+                         (change)="ItemsChange($event)" required>
                 <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of itemsFilter">
                   {{item.name}}
                 </ng-option>
@@ -54,7 +54,7 @@
                          placeholder="Select item"
                          [searchable]="true"
                          [(ngModel)]="UniteId"
-                         (change)="ItemsChange($event)">
+                         (change)="ItemsChange($event)" required>
                 <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VM">
                   {{item.name}}
                 </ng-option>
@@ -70,7 +70,7 @@
                          [searchable]="true"
                          [clearable]="true"
                          [(ngModel)]="UniteId"
-                         (change)="UnitesChange($event)">
+                         (change)="UnitesChange($event)" required>
                 <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
 
                   {{item.name}}
@@ -85,7 +85,7 @@
                          [searchable]="true"
                          [clearable]="true"
                          [(ngModel)]="UniteId"
-                         (change)="UnitesChange($event)">
+                         (change)="UnitesChange($event)" required>
                 <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unitesFilter">
 
                   {{item.name}}
@@ -96,17 +96,17 @@
           </td>
           <td class="col-2">
             <div>
-              <input type="text" class="form-control" id="Price" name="Price" value="unitPrice" (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" />
+              <input type="text" class="form-control" id="Price" name="Price" value="unitPrice" (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" required />
             </div>
           </td>
           <td class="col-2">
-            <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity" (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" />
+            <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity" (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" required />
 
 
           </td>
           <td class="col-2">
 
-            <input type="text" class="form-control" id="value" name="value" value="totalo" [(ngModel)]="totalo" />
+            <input type="text" class="form-control" id="value" name="value" value="totalo" [(ngModel)]="totalo" readonly/>
 
           </td>
         </tr>
