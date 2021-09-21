@@ -59,10 +59,10 @@ namespace Angular_API.Controllers
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(transCode);
             var listOfBranches = repo._branch.GetAllBranches(userId);
             List<Branches_VM> branches_VMs = new List<Branches_VM>();
-            foreach(var item in listOfBranches.Result.ToList())
+            foreach (var item in listOfBranches.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
-                branches_VMs.Add(new Branches_VM { BRANCH_ID = int.Parse(current.Values.First().ToString()),NAME = current.Values.Last().ToString() });
+                branches_VMs.Add(new Branches_VM { BRANCH_ID = int.Parse(current.Values.First().ToString()), NAME = current.Values.Last().ToString() });
             }
             TransactionSpec.TransactionMasterSpec_VM.Branches = branches_VMs;
 
@@ -97,12 +97,12 @@ namespace Angular_API.Controllers
 
             TransactionSpec.ExtraFields = repo._Extra.GetExtraByTrnsID(transCode);
             List<Transaction_VM> Items = new List<Transaction_VM>();
-            if (TransactionSpec.TransactionDepSpec_VM.TransactionsNames.Count > 0) 
+            if (TransactionSpec.TransactionDepSpec_VM.TransactionsNames.Count > 0)
             {
-            Items = repo._StoreTrnsM.AllTransByDepID(TransactionSpec.TransactionDepSpec_VM.TransactionsNames.FirstOrDefault().Transaction_Id);
-            TransactionSpec.TransactionDepSpec_VM.TrnsList = Items;
+                Items = repo._StoreTrnsM.AllTransByDepID(TransactionSpec.TransactionDepSpec_VM.TransactionsNames.FirstOrDefault().Transaction_Id);
+                TransactionSpec.TransactionDepSpec_VM.TrnsList = Items;
             }
-            
+
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
         [HttpGet]
@@ -142,6 +142,27 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
+
+            var GetNext = (Dictionary<string, object>)repo.CallQuery("select STORE_TRNS_M_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
+            object NextValue = GetNext.GetValueOrDefault("NEXTVAL");
+
+
+            var GetNextO = (Dictionary<string, object>)repo.CallQuery("SELECT STORE_TRNS_o_SEQ.NEXTVAL FROM dual").Result.FirstOrDefault();
+            object NextValueO = GetNextO.GetValueOrDefault("NEXTVAL");
+
+
+            var GetNextD = (Dictionary<string, object>)repo.CallQuery("SELECT STORE_TRNS_DEP_SEQ.NEXTVAL FROM dual").Result.FirstOrDefault();
+            object NextValueD = GetNextD.GetValueOrDefault("NEXTVAL");
+
+            var GetNextDt = (Dictionary<string, object>)repo.CallQuery("SELECT STORE_TRNS_DEP_DETAILS_SEQ.NEXTVAL FROM dual").Result.FirstOrDefault();
+            object NextValueDt = GetNextDt.GetValueOrDefault("NEXTVAL");
+
+
+            //ModelState //1
+
+            //       
+
+            //StoreTrnsMID
             StoreTrnsM StoreTrnsM = new StoreTrnsM()
             {
                 TrnsCode = StoreTransMain_VM.StoreTransMaster_VM.TrnsCode,
@@ -181,11 +202,14 @@ namespace Angular_API.Controllers
             };
 
             repo._StoreTrnsM.Create(StoreTrnsM);
+            repo.Save();
 
 
             //Add StoreTransDetails
             foreach (var item in StoreTransMain_VM.StoreTransDetails_VM)
             {
+
+                //Check Incoming Obj(item)
                 StoreTrnsO StoreTrnsO = new StoreTrnsO
                 {
                     StoreTrnsOId = item.storeTrnsOId,
@@ -198,7 +222,7 @@ namespace Angular_API.Controllers
                     StoretrnsProformlaId = item.storetrnsProformlaId,
                     Totalo = item.totalo,
                     Weekno = item.weekno,
-                    StoreTrnsMId = item.storeTrnsMId,
+                    StoreTrnsMId = decimal.Parse(NextValue.ToString()) + 1,
                     Todate = item.todate,
                     StaxVal = item.staxVal,
                     UnitOldprice = item.unitOldprice,
@@ -211,52 +235,79 @@ namespace Angular_API.Controllers
                 if (StoreTrnsO != null)
                 {
                     repo._StoreTrnsO.Create(StoreTrnsO);
+                    repo.Save();
 
                 }
 
             }
 
-
-            StoreTrnsDep storeTrnsDep = new StoreTrnsDep()
+            foreach (var item in StoreTransMain_VM.StoreTransDep_VM)
             {
-                Ptransrowid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ptransrowid,
-                Groupid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Groupid,
-                Commited = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Commited,
-                Depslot = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Depslot,
-                Depdetailsid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Depdetailsid,
-                StoreTrnsDepId = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().StoreTrnsDepId,
-                Ctrnsrowid = StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ctrnsrowid,
-
-            };
-            if (storeTrnsDep != null)
-            {
-                repo._StoreTrnsDep.Create(storeTrnsDep);
-            }
-
-            foreach (var item in StoreTransMain_VM.StoreTransDepDetails_VM)
-            {
-                StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
+                StoreTrnsDep storeTrnsDep = new StoreTrnsDep()
                 {
+                    Ptransrowid = item.Ptransrowid,
+                    Groupid = item.Groupid,
                     Commited = item.Commited,
+                    Depslot = item.Depslot,
                     Depdetailsid = item.Depdetailsid,
-                    Itemid = item.Itemid,
-                    ProwId = item.ProwId,
-                    Ctrnsorowid=item.Ctrnsorowid,
-                    Unitid = item.Unitid,
-                    Unitprice = item.Unitprice,
+                    StoreTrnsDepId = decimal.Parse(NextValueD.ToString())+1,
+                    Ctrnsrowid = decimal.Parse(NextValue.ToString()) + 1 //StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ctrnsrowid,
 
                 };
-                if (storeTransDepDetails != null)
+                if (storeTrnsDep != null)
                 {
-                    repo._StoreTrnsDepDetails.Create(storeTransDepDetails);
+                    repo._StoreTrnsDep.Create(storeTrnsDep);
+                }
+                foreach (var stdepd in StoreTransMain_VM.StoreTransDepDetails_VM)
+                {
+                    StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
+                    {
+                        Commited = stdepd.Commited,
+                        Depdetailsid = decimal.Parse(NextValueDt.ToString())+1,
+                        Itemid = stdepd.Itemid,
+                        ProwId = decimal.Parse(NextValueD.ToString()) + 1,
+                        Ctrnsorowid= decimal.Parse(NextValueO.ToString()) + 1,
+                        Unitid = stdepd.Unitid,
+                        Unitprice = stdepd.Unitprice,
+
+                    };
+                    if (storeTransDepDetails != null)
+                    {
+                        repo._StoreTrnsDepDetails.Create(storeTransDepDetails);
+
+                    }
 
                 }
-
             }
+
+            //if (storeTrnsDep != null)
+            //{
+            //    //repo._StoreTrnsDep.Create(storeTrnsDep);
+            //}
+
+            //foreach (var item in StoreTransMain_VM.StoreTransDepDetails_VM)
+            //{
+            //    StoreTrnsDepDetail storeTransDepDetails = new StoreTrnsDepDetail()
+            //    {
+            //        Commited = item.Commited,
+            //        Depdetailsid = item.Depdetailsid,
+            //        Itemid = item.Itemid,
+            //        ProwId = item.ProwId,
+            //        Unitid = item.Unitid,
+            //        Unitprice = item.Unitprice,
+
+            //    };
+            //    if (storeTransDepDetails != null)
+            //    {
+            //        repo._StoreTrnsDepDetails.Create(storeTransDepDetails);
+
+            //    }
+
+            //}
 
             try
             {
-                repo.Save();
+                //repo.Save();
             }
             catch (Exception ex)
             {
@@ -279,14 +330,14 @@ namespace Angular_API.Controllers
                 STM_VM.StoreTransMaster_VM.StoreTransMax = repo._StoreTrnsM.GetMaxID(STM_VM.StoreTransMaster_VM.TrnsCode, 2, STM_VM.StoreTransMaster_VM.BranchId);
                 STM_VM.StoreTransDetails_VM = repo._StoreTrnsO.RetriveDetailsTransactionById(storeTransMId);
 
-               
+
                 foreach (var item in STM_VM.StoreTransDetails_VM)
                 {
                     int GroupF_Id;
                     var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.itemId);
                     Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
-                        GroupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
-                        item.groupF_Id = GroupF_Id;
+                    GroupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
+                    item.groupF_Id = GroupF_Id;
                     var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
                     ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
                     foreach (var itemDetail in ItemList.Result.ToList())
@@ -385,14 +436,14 @@ namespace Angular_API.Controllers
         public JsonResult GetGroupsDetails()
         {
             List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
-            var GroupsList= repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
+            var GroupsList = repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
             foreach (var item in GroupsList)
             {
-                groupF_VMs.Add(new GroupF_VM {Aname= item.Aname,GroupF_Id= (int)item.GroupfId });
+                groupF_VMs.Add(new GroupF_VM { Aname = item.Aname, GroupF_Id = (int)item.GroupfId });
             }
             return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
         }
-       
+
 
         [HttpGet]
         [Route("GetAllGroupsWithItemsDetails")]
@@ -435,8 +486,8 @@ namespace Angular_API.Controllers
                 ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()) });
             }
 
-    
-            var UniteList= repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.items_VM.FirstOrDefault().itemId);
+
+            var UniteList = repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.items_VM.FirstOrDefault().itemId);
             foreach (var item in UniteList.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
@@ -446,22 +497,22 @@ namespace Angular_API.Controllers
 
             //int.TryParse(repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice }).FirstOrDefault().BranchPrice.ToString(), out price);
 
-           //var Price=repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice}).FirstOrDefault().BranchPrice.ToString();
+            //var Price=repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice}).FirstOrDefault().BranchPrice.ToString();
             return Json(ItemDetails_VM, new System.Text.Json.JsonSerializerOptions());
         }
         [HttpGet]
         [Route("GetUnitesDetails")]
         public JsonResult GetUnitesDetails(decimal storeItemId)
         {
-            List<Unites_VM> Unites_VMs = new List<Unites_VM> ();
+            List<Unites_VM> Unites_VMs = new List<Unites_VM>();
             var UniteList = repo._StoreUnits.GetUnitesDetails(storeItemId);
             foreach (var item in UniteList.Result.ToList())
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
-                Unites_VMs .Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
+                Unites_VMs.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
             }
             return Json(Unites_VMs, new System.Text.Json.JsonSerializerOptions());
         }
 
-      }
+    }
 }
