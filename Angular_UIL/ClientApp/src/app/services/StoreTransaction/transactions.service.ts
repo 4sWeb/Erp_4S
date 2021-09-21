@@ -91,9 +91,14 @@ export class TransactionsService {
     console.log("hiii servexies");
     return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails`)
   }
-
+  //Create Transaction
   CreateTransaction(stroreTransMain: StoreTransMain) {
     return this.http.post<StoreTransMain>(`${environment.Api_Url}/SaveOrder`, stroreTransMain);
+  }
+
+  //Delete Transaction
+  DeleteTransaction(storeTransMId: number) {
+    return this.http.delete(`${environment.Api_Url}/SaveOrder/=${storeTransMId}`);
   }
 
   //getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<any> {
