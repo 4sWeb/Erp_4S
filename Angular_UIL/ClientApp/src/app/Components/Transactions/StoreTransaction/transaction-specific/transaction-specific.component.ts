@@ -535,14 +535,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     console.log("AHHHHHHHHHHHHHH", this.storeTransmOHAMED);
     this.StoreTransMain.storeTransMaster_VM = this.storeTransmOHAMED;
     this.StoreTransMain.storeTransDetails_VM = this.productdetails;
+   // console.log("#################", this.storeTransDep_VM)
    
     //this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
-    for (var i = 0; i < this.storeTransDep_VM.length; i++) {
-      this.StoreTransMain.storeTransDep_VM[i].ptransrowid = this.storeTransDep_VM[i].ptransrowid;
-      this.StoreTransMain.storeTransDep_VM[i].ctrnsrowid = this.storeTransMax;
-    }
+    //for (var i = 0; i < this.storeTransDep_VM.length; i++) {
+    //  this.StoreTransMain.storeTransDep_VM[i].ptransrowid = this.storeTransDep_VM[i].ptransrowid;
+    //  this.StoreTransMain.storeTransDep_VM[i].ctrnsrowid = this.storeTransMax;
+    //}
 
-    this.StoreTransMain.storeTransDepDetails_VM
+   
 
     
     this.TransactionsService.CreateTransaction(this.StoreTransMain).subscribe(

@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -70,7 +70,7 @@
           <div class="form-group row col-6 mr-4">
             <label for="inputPassword" class="col-sm-4 col-form-label" style="text-align:right">التاريخ</label>
             <div class="col-sm-8 ">
-              <ejs-datetimepicker name="Datevalue" id='datetimepicker' 
+              <ejs-datetimepicker name="Datevalue" id='datetimepicker'
                                   placeholder='التاريـــــخ' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' required>
               </ejs-datetimepicker>
             </div>
@@ -199,10 +199,10 @@
 
         <div class="text-right" dir="rtl">
           <button dir="rtl" class="btn btn-info text-right form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length <=0"
-              style="border-bottom-width: 5px; border-right-width: 4px; margin-bottom: -47px;" title="لاضافة اصنافــــ" mat-raised-button (click)="openCategoryDialog()">
+                  style="border-bottom-width: 5px; border-right-width: 4px; margin-bottom: -47px;" title="لاضافة اصنافــــ" mat-raised-button (click)="openCategoryDialog()">
             الاصناف
 
-            <svg width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill mr-1" viewBox="0 0 16 16" >
+            <svg width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill mr-1" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
             </svg>
           </button>
@@ -524,8 +524,8 @@
           <label class="col-sm-2 col-form-label" style="text-align:right">يعتمد على</label>
           <div class="col-sm-7">
             <!--<select id="my_select" name="transDepCode" class="form-control" style="text-align:right" [(ngModel)]="transDepCode" (change)="selectChangeHandler()">
-    <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
-  </select>-->
+        <option *ngFor="let item of DepTransactionNames" [value]="item.Transaction_Id">{{item.Transaction_Name}}</option>
+      </select>-->
 
             <ng-select bindLabel="Transaction_Name"
                        name="transDepCode"
@@ -542,7 +542,7 @@
           </div>
           <div class="col-sm-2">
             <!-- open dialog button -->
-            <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-outline-primary" title="عرض حركات الاعتماد" >
+            <button *ngIf="selectedTransaction!=null" mat-raised-button (click)="openDialog()" class="btn btn-outline-primary" title="عرض حركات الاعتماد">
               حركات الاعتماد
               <svg width="16" height="16" fill="currentColor" class="bi bi-ui-checks-grid" viewBox="0 0 16 16">
                 <path d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-3zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-3zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0l2-2z" />
@@ -670,8 +670,8 @@
             <thead class="bg-info">
               <tr style="text-align:right">
                 <!--<th></th>-->
-                <th>كود</th>
-                <th>الفرع</th>
+                <th class="text-center">كود</th>
+                <th class="text-center">الفرع</th>
                 <th style="text-align:center">
                   <span>من</span>
                   <br />
@@ -698,8 +698,8 @@
               <tr style="text-align:right" *ngFor="let trans of storeTransDep_VM ; let i = index">
                 <!--<td><button class="btn btn-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>-->
                 <!--trans.StoreTrnsMId Wait from API-->
-                <td>{{trans.storeTrnsDepId}}</td>
-                <td>{{trans.branchName}}</td>
+                <td class="text-center">{{trans.storeTrnsDepId}}</td>
+                <td class="text-center">{{trans.branchName}}</td>
 
                 <td>
                   <div class="row">
@@ -723,18 +723,21 @@
           </table>
         </div>
         <!-- End of tabel view StoreTrans Dep -->
-        <!-- -----------------------------tabel view StoreTrans details Gray Gedaan LastTbl----------------------------- -->
+        <!-- -----------------------------tabel view StoreTrans details==(StoreTansO) Gray Gedaan LastTbl ----------------------------- -->
         <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="selectedTransaction==null&&storeTransDetails_VM.length>0">
           <table class="table  table-bordered table-hover " style="width:100%">
             <thead class="bg-secondary">
               <tr style="text-align:right">
-                <th></th>
+                <th>تعديل</th>
                 <th>ملاحظاتاااااااااااااااااااااااا</th>
-                <th style="text-align:right">الوحدة</th>
-                <th style="text-align:right">القيمة</th>
-                <th style="text-align:right">السعر</th>
-                <th style="text-align:right">الكمية</th>
-                <th colspan="2">الصنف</th>
+
+                <th style="text-align:center">القيمة</th>
+
+                <th style="text-align:center">الكمية</th>
+                <th style="text-align:center">السعر</th>
+                <th style="text-align:center">الوحدة</th>
+                <th class="text-center">الصنف</th>
+                <th class="text-center">المجموعه</th>
               </tr>
             </thead>
             <tbody>
@@ -749,57 +752,20 @@
                     </svg>
                   </button>
                 </td>
-                <td><input class="form-control" type="text" id="Note" value="{{trans.notes}}" style="width:100%" /></td>
+                <td><span>{{trans.notes}}</span></td>
+                <td><span>{{trans.totalo}}</span></td>
+                <td><span>{{trans.qty}}</span></td>
+                <td><span>{{trans.unitPrice}}"</span></td>
                 <td>
-                  {{trans.unitId}}
-                  <ng-select bindLabel="name"
-                             name="unite"
-                             placeholder="Select item"
-                             [searchable]="true"
-                             [clearable]="true"
-                             [(ngModel)]="storeTransDetails_VM[i].unitId">
-                    <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
-
-                      {{item.name}}
-                    </ng-option>
-                  </ng-select>
+                  <span> <span>{{trans.unit_Name}}: </span>  </span>
                 </td>
-                <td><input class="form-control" type="text" id="value" value="{{trans.totalo}}" style="width:50%" /></td>
-                <td><input class="form-control" type="text" id="price" value="{{trans.unitPrice}}" style="width:50%" (keyup)="onKeyPrice($event)" /></td>
-                <td><input class="form-control" type="text" id="quantity" value="{{trans.qty}}" style="width:50%" (keyup)="onKeyQuantity($event)" /></td>
-
-                <td colspan="2">
-                  <div class="form-group row">
-                    <div class="col-12">
-                      {{trans.groupF_Id}}
-                      <ng-select bindLabel="Aname" name="GroupFName" placeholder="Select item"
-                                 [searchable]="true"
-                                 [clearable]="true"
-                                 [(ngModel)]="storeTransDetails_VM[i].groupF_Id"
-                                 (change)="GroupfChange($event)">
-                        <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
-
-                          {{item.Aname}}
-                        </ng-option>
-                      </ng-select>
-                    </div>
-                    <div class="col-12">
-                      {{trans.itemId}}
-                      <ng-select bindLabel="name"
-                                 name="ITEM"
-                                 placeholder="Select item"
-                                 [searchable]="true"
-                                 [(ngModel)]="storeTransDetails_VM[i].itemId"
-                                 (change)="ItemsChange($event,i)">
-                        <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of Items_VMs">
-                          {{item.name}}
-                        </ng-option>
-                      </ng-select>
-                      <!--<select id="my_select" name="ITEM" class="form-control" style="text-align:right" [(ngModel)]="storeTransDetails_VM[i].itemId" (change)="ItemsChange($event,i)">
-                 <option *ngFor="let item of Items_VMs" [value]="item.itemId">{{item.name}}</option>
-                </select>-->
-                    </div>
-                  </div>
+               
+              <td>
+                <span>{{trans.itemId}}: {{trans.item_Name}}</span>
+              </td>
+               
+                <td>
+                  <span>{{trans.groupF_Id}}: {{trans.itemId}}</span>
                 </td>
               </tr>
             </tbody>
