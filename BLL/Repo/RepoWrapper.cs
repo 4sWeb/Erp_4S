@@ -159,9 +159,9 @@ namespace BLL.Repo
             return result;
         }
 
-        public void Save()
+        public async void Save()
         {
-            _contex.SaveChanges();
+            await _contex.SaveChangesAsync();
         }
     }
 }
