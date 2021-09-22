@@ -568,9 +568,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       },
       (error) => { console.log(error, this.StoreTransMain); }
     )
-    this._router.navigate(['/']);
+    this._router.navigate([`/all-transactions/${this.Transcode}`]);
   }
-
 
   selectFromDetailsChange(FromDetailsValue: number) {
     this.fromStoreAllcodesId = FromDetailsValue;
@@ -719,8 +718,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
               (res) => { console.log("Delet", res); }
               ,
               (error) => { console.log(error); }
-            );
-            this._router.navigate(['/']);
+      );
+      this._router.navigate([`/all-transactions/${this.Transcode}`]);
     }
 
   }
