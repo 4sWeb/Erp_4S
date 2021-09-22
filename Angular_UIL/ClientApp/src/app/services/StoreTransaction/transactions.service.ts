@@ -113,25 +113,7 @@ export class TransactionsService {
 
   //Create Transaction
   CreateTransaction(stroreTransMain: StoreTransMain): Observable<any>{
-    return this.http.post<StoreTransMain>(`${environment.Api_Url}/SaveOrder`, stroreTransMain, { observe: 'response' })
-      .pipe(
-        map((res) => {
-          if (res) {
-            if (res.status === 200) {
-              console.log(res.body);
-              return res.body;
-
-            }
-            return res.status;
-          }
-        }),
-        catchError((error: any) => {
-          if (error.status > 400 || error.status === 500) {
-            return [{ status: error.status }];
-          }
-          return error.status;
-        })
-      );
+    return this.http.post<StoreTransMain>(`${environment.Api_Url}/SaveOrder`, stroreTransMain);
   };
 
 

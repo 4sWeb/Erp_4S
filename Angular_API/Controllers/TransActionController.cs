@@ -177,8 +177,8 @@ namespace Angular_API.Controllers
                 BranchId = StoreTransMain_VM.StoreTransMaster_VM.BranchId,
                 TrnsDate = StoreTransMain_VM.StoreTransMaster_VM.TrnsDate,
                 Storedocnum = StoreTransMain_VM.StoreTransMaster_VM.Storedocnum,
-                FromStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.FromStoreAllcodesId,
-                ToStoreAllcodesId = StoreTransMain_VM.StoreTransMaster_VM.ToStoreAllcodesId,
+                FromStoreAllcodesId =string.IsNullOrEmpty( StoreTransMain_VM.StoreTransMaster_VM.FromStoreAllcodesId.ToString())?null: StoreTransMain_VM.StoreTransMaster_VM.FromStoreAllcodesId,
+                ToStoreAllcodesId = string.IsNullOrEmpty(StoreTransMain_VM.StoreTransMaster_VM.ToStoreAllcodesId.ToString())?null: StoreTransMain_VM.StoreTransMaster_VM.ToStoreAllcodesId,
                 Period = StoreTransMain_VM.StoreTransMaster_VM.Period,
                 Disc = StoreTransMain_VM.StoreTransMaster_VM.Disc,
                 DiscRate = StoreTransMain_VM.StoreTransMaster_VM.DiscRate,
@@ -217,7 +217,7 @@ namespace Angular_API.Controllers
                 //Check Incoming Obj(item)
                 StoreTrnsO StoreTrnsO = new StoreTrnsO
                 {
-                    StoreTrnsOId = item.storeTrnsOId,
+                    
                     Qty = item.qty,
                     UnitId = item.unitId,
                     UnitPrice = item.unitPrice,
@@ -262,7 +262,9 @@ namespace Angular_API.Controllers
                     Depslot = item.Depslot,
                     Depdetailsid = item.Depdetailsid,
                     StoreTrnsDepId = _StoreTrnsDepId++,//decimal.Parse(NextValueD.ToString())+1
-                    Ctrnsrowid = decimal.Parse(NextValue.ToString()) + 1 //StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ctrnsrowid,
+                    Ctrnsrowid = decimal.Parse(NextValue.ToString()) + 1, //StoreTransMain_VM.StoreTransDep_VM.FirstOrDefault().Ctrnsrowid,
+                    
+                    
                 };
                         if (storeTrnsDep != null)
                         {
@@ -380,6 +382,7 @@ namespace Angular_API.Controllers
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
                 if (listOfPrevIds != null)
                 {
+                    STM_VM.IsDependant = true;
                     STM_VM.StoreTransDep_VM = repo._StoreTrnsM.RetriveTransaDepById(listOfPrevIds);
                     //foreach (var id in listOfPrevIds)
                     //{

@@ -71,7 +71,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService , private _router: Router,
     public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
     , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) {
-    this.storeTransmOHAMED = { trnsCode: 0, trnsDate: null, trnsNo: 0 };
+    this.storeTransMaster = { trnsCode: 0, trnsDate: null, trnsNo: 0 };
   }
     
     
@@ -110,7 +110,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   ToTypeDetails: ToTypeDetails[];
   DepTransactionNames: TransactionsName[];
   Transcode: number = 0;
-  storeTransmOHAMED: storeTransMaster_VM;
+  storeTransMaster: storeTransMaster_VM;
   StoreTransDepDetailsOnly: storeTransDepDetails_VM[] = [];
   filterStoreTransDepDetails: storeTransDetails_VM[] = [];
   IsDependant?: boolean = false;
@@ -124,7 +124,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   public currentHour: number = this.today.getHours();
   public currentMinute: number = this.today.getMinutes();
   public currentSecond: number = this.today.getSeconds();
-  public Datevalue: Date = new Date("2021-09-21T12:47:00.382Z");
+  public Datevalue: Date = new Date();
             ///
 
 
@@ -228,9 +228,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
         this.Branches = this.TransactionSpecific.TransactionMasterSpec_VM.Branches;
         try {
           this.DepTransactionNames = this.TransactionSpecific.TransactionDepSpec_VM.TransactionsNames;
-          //if (this.DepTransactionNames != null) {
-          //  this.IsDependant = true;
-          //}
+          if (this.DepTransactionNames.length>0) {
+            this.IsDependant = true;
+            console.log("IsDependant", this.IsDependant);
+          }
         } catch (e) { console.log(e) };
         this.ToType = this.TransactionSpecific.TransactionMasterSpec_VM.To_Type;
         this.storeTransMax = this.TransactionSpecific.StoreTransMax;
@@ -287,7 +288,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
               this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
             }
             catch (e) { console.log(e); };
-            
+            try {
+              this.Rem = this.StoreTransMain.storeTransMaster_VM.rem;
+            }
+            catch (e) { console.log(e); };
             //console.log("storeDocNum", this.storedocnum);
 
             
@@ -326,60 +330,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       }
     );
       
-  }
-
-
-  //ngAfterViewInit(): void {
-  //  if (this.operationType == "View") {
-  //    this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
-  //      (data) => {
-  //        console.log("response2", data);
-  //        this.StoreTransMain = data;
-  //        console.log(this.StoreTransMain);
-  //        this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
-  //        this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
-  //        this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
-  //        this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
-  //        //need to enhance as storetransDep array so transcode maybe array
-  //        this.TransCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
-  //        console.log("storeTransDepId", this.TransCode);
-  //        this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
-  //        this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
-  //        this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
-  //        this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
-  //        console.log("storeDocNum", this.storedocnum);
-  //        this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
-  //        this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
-
-  //      }
-  //    );
-  //    this.TransactionsService.getAllGroups().subscribe(
-  //      (data) => {
-  //        console.log("GroupF", data);
-  //        this.GroupF = data;
-  //      }
-  //    );
-
-  //  }
-
-
-
-  //  let id = 0;
-  //  let userId = 0;
-  //  this.ar.params.subscribe(
-  //    a => {
-  //      id = a['id'],
-  //        userId = a['userId']
-  //    }
-  //  )
-  //  this.TransactionsService.displayAllFieldesSpecificTransaction(id, userId).subscribe(
-  //    (response) => {
-  //      console.log(id);
-  //      this.AllTransactions = response.TransactionDepSpec.TrnsList;
-  //      console.log(this.selectedTransaction);
-  //      this.dtTrigger1.next();
-  //  });
-  //}
+  };
 
 
   //event handler for the select element's change event
@@ -467,14 +418,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
         (response) => {
           console.log("LOLOLOLOLOLOL");
           this.productdetails = response;
+          var productFilter = this.productdetails.filter(s => s.totalo > 0);
+          this.productdetails = productFilter;
           console.log("productDetails", this.productdetails);
           for (var i = 0; i < this.productdetails.length; i++) {
             this.StoreTransDepDetailsOnly.push({
               groupF_Id: this.productdetails[i].groupF_Id, item_ID: this.productdetails[i].itemId,
-              unitId: this.productdetails[i].unitId, qty: this.productdetails[i].qty,
+              unitid: this.productdetails[i].unitId, quantity: this.productdetails[i].qty,
               unitPrice: this.productdetails[i].unitPrice, totalo: this.productdetails[i].totalo,
-              storeTrnsOId: this.productdetails[i].storeTrnsOId,
-              store_Trns_M_ID: this.productdetails[i].store_Trns_M_ID
+              storeTrnsOId: this.productdetails[i].storeTrnsOId
             });
           }
           console.log("StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
@@ -549,7 +501,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   addStoreTransaction() {
     this.StoreTransMain = new StoreTransMain();
     if (this.operationType == "View") {
-      this.storeTransmOHAMED = {
+      this.storeTransMaster = {
         storeTrnsMId: this.StoreTransMId,
         branchId: this.branchId,
         trnsCode: this.Transcode,
@@ -557,25 +509,27 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
         trnsNo: this.storeTransMax,
         fromStoreAllcodesId: this.fromStoreAllcodesId,
         toStoreAllcodesId: this.fromStoreAllcodesId,
-        period: 2
+        period: 2,
+        rem: this.Rem
       };
     }
     else {
-      this.storeTransmOHAMED = {
+      this.storeTransMaster = {
         storeTrnsMId: 0,
         branchId: this.branchId,
         trnsCode: this.Transcode,
         trnsDate: this.Datevalue,
         trnsNo: this.storeTransMax,
         fromStoreAllcodesId: this.fromStoreAllcodesId,
-        toStoreAllcodesId: this.fromStoreAllcodesId,
-        period: 2
+        toStoreAllcodesId: this.ToTypeDetailsId,
+        period: 2,
+        rem: this.Rem
       };
     }
    
    
  
-    this.StoreTransMain.storeTransMaster_VM = this.storeTransmOHAMED;
+    this.StoreTransMain.storeTransMaster_VM = this.storeTransMaster;
     console.log("storeTransMaster_VM", this.StoreTransMain.storeTransMaster_VM);
 
     this.StoreTransMain.storeTransDetails_VM = this.productdetails;
@@ -583,8 +537,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       this.storeTransDep_VM.push({
         ptransrowid: this.checkedTransactionsMain[i].StoreTrnsMId,
         branchId: this.checkedTransactionsMain[i].BranchId,
-        toStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
-        fromStoreAllcodesId: this.checkedTransactionsMain[i].From_StoreAllcodesId,
+        //toStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
+       // fromStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
         trnsCode: this.checkedTransactionsMain[i].TrnsCode,
         trnsDate: this.checkedTransactionsMain[i].TrnsDate
       });
@@ -592,6 +546,27 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
    
     this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
     console.log("storeTransDep_VM", this.storeTransDep_VM);
+
+
+    this.filterStoreTransDepDetails = this.productdetails.filter(s => s.storeTrnsOId > 0);
+    this.StoreTransDepDetailsOnly = [];
+    for (var i = 0; i < this.filterStoreTransDepDetails.length; i++) {
+      //NEED TO CHECK IF QUANTITY NOT EQUAL ZERO
+      if (this.filterStoreTransDepDetails[i].totalo > 0) {
+        console.log("enter");
+        this.StoreTransDepDetailsOnly.push({
+          item_ID: this.filterStoreTransDepDetails[i].itemId,
+          unitid: this.filterStoreTransDepDetails[i].unitId,
+          groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
+          quantity: this.filterStoreTransDepDetails[i].qty,
+          unitPrice: this.filterStoreTransDepDetails[i].unitPrice,
+          totalo: this.filterStoreTransDepDetails[i].totalo,
+          prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
+          commited: 0
+        });
+      }
+    }
+
     this.StoreTransMain.storeTransDepDetails_VM = this.StoreTransDepDetailsOnly;
     console.log("storeTransDepDetails_VM", this.StoreTransMain.storeTransDepDetails_VM);
 
@@ -606,7 +581,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
         console.log(ews, this.StoreTransMain);
        
       },
-      (error) => { console.log(error); }
+      (error) => { console.log(error, this.StoreTransMain); }
     )
     this._router.navigate(['/']);
   }
@@ -703,12 +678,13 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
         this.StoreTransDepDetailsOnly.push({
           item_ID: this.filterStoreTransDepDetails[i].itemId,
-          unitId: this.filterStoreTransDepDetails[i].unitId,
+          unitid: this.filterStoreTransDepDetails[i].unitId,
           groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
-          qty: this.filterStoreTransDepDetails[i].qty,
+          quantity: this.filterStoreTransDepDetails[i].qty,
           unitPrice: this.filterStoreTransDepDetails[i].unitPrice,
           totalo: this.filterStoreTransDepDetails[i].totalo,
-          store_Trns_M_ID: this.filterStoreTransDepDetails[i].store_Trns_M_ID
+          prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
+          commited:0
         });
       }
 
