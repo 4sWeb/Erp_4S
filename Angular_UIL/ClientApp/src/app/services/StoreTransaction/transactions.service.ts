@@ -2,7 +2,7 @@ import { HttpClient,HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators'
 
-import { Observable} from 'rxjs';
+import { Observable, pipe} from 'rxjs';
 import { Transactions } from '../../models/Transactions/transactions';
 import { AllTransactions } from '../../models/Transactions/StoreTransaction/AllStoreTransacion/all-transactions';
 import { environment } from '../../../environments/environment';
@@ -30,9 +30,28 @@ export class TransactionsService {
 
   
 //get list of transaction
-  getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<Transactions[]> {
+  getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<any> {
     console.log(UserID, AppID);
-    return this.http.get<Transactions[]>(`${environment.Api_Url}?UserID=${UserID}&AppID=${AppID}&PeriodID=${periodID}`)
+    return this.http.get<Transactions[]>(`${environment.Api_Url}?UserID=${UserID}&AppID=${AppID}&PeriodID=${periodID}`, { observe: 'response' })
+      .pipe(
+        map((res) => {
+          if (res) {
+            if (res.status === 200) {
+              console.log(res.body);
+              return res.body;
+
+            }
+            return res.status;
+          }
+        }),
+        catchError((error: any) => {
+          if (error.status > 400 || error.status === 500) {
+            return [{ status: error.status }];
+          }
+          return error.status;
+        })
+      );
+     
   }
 
 
@@ -90,11 +109,31 @@ export class TransactionsService {
   GetAllGroupsWithItemsDetails(): Observable<GroupF_VM[]> {
     console.log("hiii servexies");
     return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails`)
-  }
+  };
+
   //Create Transaction
-  CreateTransaction(stroreTransMain: StoreTransMain) {
-    return this.http.post<StoreTransMain>(`${environment.Api_Url}/SaveOrder`, stroreTransMain);
-  }
+  CreateTransaction(stroreTransMain: StoreTransMain): Observable<any>{
+    return this.http.post<StoreTransMain>(`${environment.Api_Url}/SaveOrder`, stroreTransMain, { observe: 'response' })
+      .pipe(
+        map((res) => {
+          if (res) {
+            if (res.status === 200) {
+              console.log(res.body);
+              return res.body;
+
+            }
+            return res.status;
+          }
+        }),
+        catchError((error: any) => {
+          if (error.status > 400 || error.status === 500) {
+            return [{ status: error.status }];
+          }
+          return error.status;
+        })
+      );
+  };
+
 
   //Delete Transaction
   DeleteTransaction(storeTransMId: number): Observable<any> {
