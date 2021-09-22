@@ -322,13 +322,18 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
   ngAfterViewInit() {
     console.log("hello after view int");
-    this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
-      res => {
-        console.log("GetAllGroupsWithItemsDetails", res);
-        this.GroupFs = res;
-        this.ItemsAvailable = true;
-      }
-    );
+    //this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
+    //  res => {
+    //    console.log("GetAllGroupsWithItemsDetails", res);
+    //    this.GroupFs = res;
+    //    this.ItemsAvailable = true;
+    //  }
+    //);
+
+    console.log("@@@@@@@@@@@@@@@@", this.TransactionsService.ShraingListOfGroupsandItems)
+    this.GroupFs = this.TransactionsService.ShraingListOfGroupsandItems;
+    console.log("Items available in GrpFs", this.GroupFs)
+    this.ItemsAvailable = true;
       
   };
 

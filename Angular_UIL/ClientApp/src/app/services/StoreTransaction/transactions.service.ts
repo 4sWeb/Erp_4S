@@ -26,7 +26,18 @@ import { storeTransDetails_VM } from '../../models/Transactions/StoreTransaction
 export class TransactionsService {
 
   constructor(private http: HttpClient) {
-  console.log("from services");}
+    console.log("**********from services*************");
+    this.GetAllGroupsWithItemsDetails().subscribe(
+      res => {
+        console.log("*************GetAllGroupsWithItemsDetails From SHaring service Constructor*******", res);
+        this.ShraingListOfGroupsandItems = res;
+        
+      }
+    );
+
+  }
+
+  ShraingListOfGroupsandItems: GroupF_VM[];
 
   
 //get list of transaction
