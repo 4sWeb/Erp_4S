@@ -88,18 +88,8 @@ export class DialogForCategoryComponent implements OnInit {
         }
       }
     }
+  };
 
-    //for (var i = 0; i < 5; i++) {
-    //  this.storeTransDetails_VM.push({ qty: 0, unitPrice:0, unitId: undefined, groupF_Id: 281, itemId: undefined ,totalo:0});
-    //}
-
-    //this.TransactionsService.getAllGroups().subscribe(
-    //  (data) => {
-    //    console.log("GroupFFromDialog", data);
-    //    this.GroupF = data;
-    //  }
-    //);
-  }
   GroupfChange(GroupId: number) {
     this.GroupFChanged = true;
     this.EditingClick = false;

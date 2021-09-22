@@ -342,6 +342,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
     console.log(this.selectedTransaction);
     console.log("transDepCode", this.transDepCode);
+    //22-9
+    this.productdetails = [];
+    //
     this.TransactionsService.getTransactionsByDepID(this.transDepCode).subscribe(
       (response) => {
         console.log("selected id transaction", this.transDepCode);
@@ -376,24 +379,6 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
 
 
-  //openDialog() {
-  //  //const dialogRef = this.dialog.open(DialogContentDatatabelComponent);
-
-  //  const dialogConfig = new MatDialogConfig();
-  //  dialogConfig.disableClose = true;
-  //  dialogConfig.autoFocus = true;
-
-  //  dialogConfig.data = {
-  //    selectedTransaction: this.selectedTransaction,
-  //  };
-  //  console.log("from open dialog",this.selectedTransaction);
-
-  //  this.dialog.open(DialogContentDatatabelComponent, dialogConfig);
-
-  //  //dialogRef.afterClosed().subscribe(result => {
-  //  //  console.log(`Dialog result: ${result}`);
-  //  //});
-  //}
   openDialog(): Observable<any> {
     const dialogRef = this.dialog.open(DialogContentDatatabelComponent, {
       data: { selectedTransaction: this.selectedTransaction, checkedTransactions: this.checkedTransactionsIds }
