@@ -725,15 +725,19 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   };
 
   deleteTransaction(StoreTransMId: number) {
+
     console.log("clicked");
-    StoreTransMId = this.StoreTransMId;
-    console.log(StoreTransMId);
-    this.TransactionsService.DeleteTransaction(StoreTransMId).subscribe(
-      (res) => { console.log("Delet", res); }
-      ,
-      (error) => { console.log(error); }
-    );
-      this._router.navigate(['/']);
+    if (confirm("تأكيــد عملية الحذف")) {
+            StoreTransMId = this.StoreTransMId;
+            console.log(StoreTransMId);
+            this.TransactionsService.DeleteTransaction(StoreTransMId).subscribe(
+              (res) => { console.log("Delet", res); }
+              ,
+              (error) => { console.log(error); }
+            );
+            this._router.navigate(['/']);
+    }
+
   }
 
   ngOnDestroy(): void {

@@ -29,7 +29,8 @@ export class DialogForCategoryComponent implements OnInit {
 
   GroupFChanged: boolean = false;
   ItemChanged: boolean = false;
-  EditingClick: boolean=false;
+  EditingClick: boolean = false;
+  AddedRowObjecDone: boolean = false;
   
 
   //two way binding
@@ -43,6 +44,7 @@ export class DialogForCategoryComponent implements OnInit {
   ItemId: number;
   UniteId: number;
   Index: number;
+  selected: any;
  
 
   constructor(public TransactionsService: TransactionsService,
@@ -68,7 +70,8 @@ export class DialogForCategoryComponent implements OnInit {
     //Second Way
     for (var i = 0; i < this.GroupFs.length; i++) {
       this.GroupF.push({ GroupF_Id: this.GroupFs[i].GroupF_Id, Aname: this.GroupFs[i].Aname });
-      console.log("Group Dialog",this.GroupF);
+      console.log("Group Dialog", this.GroupF);
+      this.selected = this.GroupF[0];
      
     }
     for (var i = 0; i < this.GroupFs.length; i++) {
@@ -158,6 +161,7 @@ export class DialogForCategoryComponent implements OnInit {
     this.totalo = event.target.value * this.quantity;
   };
   SaveOneRow() {
+    this.AddedRowObjecDone = true;
     //need to validate
     //Editing mode
     if (this.Index >= 0) {
@@ -183,8 +187,9 @@ export class DialogForCategoryComponent implements OnInit {
         groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
         unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo
       });
-      alert("تمت الاضافه بنجاح")
+     
     }
+    
    
     console.log("storeTransDetails_VM from dialog save", this.storeTransDetails_VM);
     //this.EditingClick = true;

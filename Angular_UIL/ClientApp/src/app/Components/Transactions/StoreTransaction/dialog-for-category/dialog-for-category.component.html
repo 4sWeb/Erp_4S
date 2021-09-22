@@ -1,128 +1,150 @@
-<p>dialog-for-category works!</p>
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <body>
   <mat-dialog-content class="mat-typography">
+    <div class="row text-right" dir="rtl" style="border-bottom-color:#144d72">
+      <div class="col">
+        <button mat-button class="btn btn-outline-danger ml-auto mt-2 mb-2 text-right" dir="rtl" (click)="onNoClick()" title=" اغلاق">
+          اغلاق
+          <svg width="19" height="19" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+          </svg>
+        </button>
+
+      </div>
+
+    </div>
+   
     <!-- Form start -->
     <!--------------------------------------------ADD Row------------------------------------------->
     <div class="container-fluid">
-      <table class="table table-bordered table-hover text-center">
-        <thead style="background-color:#d0cccc">
+      <form #myformdiv="ngForm">
+        <table class="table table-bordered table-hover text-center">
+          <thead style="background-color:#d0cccc">
+            <tr class="d-flex">
+              <th class="col-2">المجموعات</th>
+              <th class="col-2">الأصناف</th>
+              <th class="col-2">الوحدات</th>
+              <th class="col-2">سعر الوحدة</th>
+              <th class="col-2">الكمية</th>
+              <th class="col-2">القيمة</th>
+            </tr>
+          </thead>
           <tr class="d-flex">
-            <th class="col-2">المجموعات</th>
-            <th class="col-2">الأصناف</th>
-            <th class="col-2">الوحدات</th>
-            <th class="col-2">سعر الوحدة</th>
-            <th class="col-2">الكمية</th>
-            <th class="col-2">القيمة</th>
+            <td class="col-2">
+              <div>
+                <ng-select bindLabel="Aname"
+                           name="GroupFName"
+                           placeholder="Select item"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="GroupId"
+                           (change)="GroupfChange($event)" required>
+                  <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
+
+                    {{item.Aname}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </td>
+            <td class="col-2">
+              <div *ngIf="GroupFChanged == true">
+                <ng-select bindLabel="name"
+                           name="ITEM"
+                           placeholder="Select item"
+                           [searchable]="true"
+                           [(ngModel)]="ItemId"
+                           (change)="ItemsChange($event)" required>
+                  <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of itemsFilter">
+                    {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+
+              <div *ngIf="GroupFChanged == false||EditingClick==true">
+                <ng-select bindLabel="name"
+                           name="ITEM"
+                           placeholder="Select item"
+                           [searchable]="true"
+                           [(ngModel)]="UniteId"
+                           (change)="ItemsChange($event)" required>
+                  <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VM">
+                    {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+
+            </td>
+            <td class="col-2">
+              <div *ngIf="ItemChanged==false||EditingClick==true">
+                <ng-select bindLabel="name"
+                           name="unite"
+                           placeholder="Select item"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="UniteId"
+                           (change)="UnitesChange($event)" required>
+                  <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
+
+                    {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+
+              <div *ngIf="ItemChanged==true">
+                <ng-select bindLabel="name"
+                           name="unite"
+                           placeholder="Select item"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="UniteId"
+                           (change)="UnitesChange($event)" required>
+                  <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unitesFilter">
+
+                    {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+
+            </td>
+            <td class="col-2">
+              <div>
+                <input type="number" class="form-control" id="Price" name="Price" value="unitPrice" (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" required />
+              </div>
+            </td>
+            <td class="col-2">
+              <input type="number" class="form-control" id="Quantity" name="Quantity" value="quantity" (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" required />
+
+
+            </td>
+            <td class="col-2">
+
+              <input type="number" class="form-control" id="value" name="value" value="totalo" [(ngModel)]="totalo" readonly />
+
+            </td>
           </tr>
-        </thead>
-        <tr class="d-flex">
-          <td class="col-2">
-            <div>
-              <ng-select bindLabel="Aname"
-                         name="GroupFName"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [clearable]="true"
-                         [(ngModel)]="GroupId"
-                         (change)="GroupfChange($event)" required>
-                <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
 
-                  {{item.Aname}}
-                </ng-option>
-              </ng-select>
-            </div>
-          </td>
-          <td class="col-2">
-            <div *ngIf="GroupFChanged == true">
-              <ng-select bindLabel="name"
-                         name="ITEM"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [(ngModel)]="ItemId"
-                         (change)="ItemsChange($event)" required>
-                <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of itemsFilter">
-                  {{item.name}}
-                </ng-option>
-              </ng-select>
-            </div>
+        </table>
 
-            <div *ngIf="GroupFChanged == false||EditingClick==true">
-              <ng-select bindLabel="name"
-                         name="ITEM"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [(ngModel)]="UniteId"
-                         (change)="ItemsChange($event)" required>
-                <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VM">
-                  {{item.name}}
-                </ng-option>
-              </ng-select>
-            </div>
+        <button class="btn btn-outline-primary" (click)="SaveOneRow()" [disabled]="myformdiv.invalid">
+          ادراج
+          <svg width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
+          </svg>
+        </button>
+      </form>
 
-          </td>
-          <td class="col-2">
-            <div *ngIf="ItemChanged==false||EditingClick==true">
-              <ng-select bindLabel="name"
-                         name="unite"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [clearable]="true"
-                         [(ngModel)]="UniteId"
-                         (change)="UnitesChange($event)" required>
-                <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
-
-                  {{item.name}}
-                </ng-option>
-              </ng-select>
-            </div>
-
-            <div *ngIf="ItemChanged==true">
-              <ng-select bindLabel="name"
-                         name="unite"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [clearable]="true"
-                         [(ngModel)]="UniteId"
-                         (change)="UnitesChange($event)" required>
-                <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unitesFilter">
-
-                  {{item.name}}
-                </ng-option>
-              </ng-select>
-            </div>
-
-          </td>
-          <td class="col-2">
-            <div>
-              <input type="text" class="form-control" id="Price" name="Price" value="unitPrice" (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" required />
-            </div>
-          </td>
-          <td class="col-2">
-            <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity" (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" required />
-
-
-          </td>
-          <td class="col-2">
-
-            <input type="text" class="form-control" id="value" name="value" value="totalo" [(ngModel)]="totalo" readonly/>
-
-          </td>
-        </tr>
-
-      </table>
-      <button class="btn btn-outline-primary" (click)="SaveOneRow()">
-        ادراج
-        <svg  width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-        </svg>
-      </button>
     </div>
     <br />
     <hr />
     <!--------------------------------------------E-ndOFRow------------------------------------------->
     <!-- Form End -->
+
+
+
+
+
+
     <!-- -----------------*****************Tabel for Details created or dependant details if founded**********-------- --->
     <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="storeTransDetails_VM.length>0">
       <table class="table  table-bordered table-hover table-condensed table-striped ">
@@ -132,8 +154,9 @@
             <th>تعديل</th>
             <th>ملاحظات</th>
             <th>القيمة</th>
-            <th>السعر</th>
+
             <th>الكمية</th>
+            <th>السعر</th>
             <th>الوحدة</th>
             <th> الصنف</th>
             <th> المجموعه</th>
@@ -164,14 +187,13 @@
 
               </button>
             </td>
-            <td><input class="form-control" type="text" id="Note" value="{{trans.notes}}" /></td>
-
-            <td><input class="form-control" type="text" id="value" value="{{trans.totalo}}" /></td>
-            <td><input class="form-control" type="text" id="price" value="{{trans.unitPrice}}" /></td>
-            <td><input class="form-control" type="text" id="quantity" value="{{trans.qty}}" /></td>
-            <td>{{trans.unit_Name}}</td>
-            <td>{{trans.item_Name}}</td> <!--(ItemName+ITEMCODE)-->
-            <td>{{trans.groupF_Id}}</td>
+            <td><p>{{trans.notes}} </p></td>
+            <td><p>{{trans.totalo}}</p></td>
+            <td><p>{{trans.qty}}</p></td>
+            <td><p>{{trans.unitPrice}}</p></td>
+            <td><p>{{trans.unit_Name}}</p></td>
+            <td><p>{{trans.item_Name}}</p></td> <!--(ItemName+ITEMCODE)-->
+            <td><p>{{trans.groupF_Id}}</p></td>
 
           </tr>
         </tbody>
@@ -180,121 +202,118 @@
 
     <!-- End of Tabel -->
     <!--<div class="form-group row col-12">
-      <label for="qty" class="col-sm-4 col-form-label" style="text-align:right">الكمية</label>
-      <div class="col-sm-8">
-        <input type="text" id="quantity" name="quantity" value="item.qty" (keyup)="onKeyQuantity($event,i)" [(ngModel)]="storeTransDetails_VM[i].qty" style="width:70% ; text-align:right" />
-      </div>
+    <label for="qty" class="col-sm-4 col-form-label" style="text-align:right">الكمية</label>
+    <div class="col-sm-8">
+      <input type="text" id="quantity" name="quantity" value="item.qty" (keyup)="onKeyQuantity($event,i)" [(ngModel)]="storeTransDetails_VM[i].qty" style="width:70% ; text-align:right" />
     </div>
+  </div>
 
 
-    <div class="form-group row col-12">
-      <label for="unitPrice" class="col-sm-4 col-form-label" style="text-align:right">سعر الوحدة</label>
-      <div class="col-sm-8">
-        <input type="text" id="price" name="price" value="item.unitPrice" (keyup)="onKeyPrice($event,i)" [(ngModel)]="storeTransDetails_VM[i].unitPrice" style="width:70% ; text-align:right" />
-      </div>
+  <div class="form-group row col-12">
+    <label for="unitPrice" class="col-sm-4 col-form-label" style="text-align:right">سعر الوحدة</label>
+    <div class="col-sm-8">
+      <input type="text" id="price" name="price" value="item.unitPrice" (keyup)="onKeyPrice($event,i)" [(ngModel)]="storeTransDetails_VM[i].unitPrice" style="width:70% ; text-align:right" />
     </div>
+  </div>
 
-    <div class="form-group row col-12">
-      <label for="totalo" class="col-sm-4 col-form-label" style="text-align:right">القيمة</label>
-      <div class="col-sm-8">
-        <input type="text" id="value" name="value" value="item.totalo" [(ngModel)]="storeTransDetails_VM[i].totalo" style="width:70%; text-align:right" />
-      </div>
-    </div>-->
+  <div class="form-group row col-12">
+    <label for="totalo" class="col-sm-4 col-form-label" style="text-align:right">القيمة</label>
+    <div class="col-sm-8">
+      <input type="text" id="value" name="value" value="item.totalo" [(ngModel)]="storeTransDetails_VM[i].totalo" style="width:70%; text-align:right" />
+    </div>
+  </div>-->
     <!--<table class="table  table-bordered hover" style="width:100%">
-      <thead>
-        <tr style="text-align:right">
-          <th style="text-align:center">
-            الصنف
-          </th>
-          <th>
-            الاسم
-          </th>
-          <th>
-            الوحدة
-          </th>
-          <th>
-            السعر
-          </th>
-          <th>
-            الكمية
-          </th>
-          <th>
-            القيمة
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of storeTransDetails_VM; let i = index">
-          <td>
-            <div class="form-group">
-              <ng-select bindLabel="Aname"
-                         name="GroupFName"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [clearable]="true"
-                         [(ngModel)]="storeTransDetails_VM[i].groupF_Id"
-                         (change)="GroupfChange($event,i)">
-                <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
+    <thead>
+      <tr style="text-align:right">
+        <th style="text-align:center">
+          الصنف
+        </th>
+        <th>
+          الاسم
+        </th>
+        <th>
+          الوحدة
+        </th>
+        <th>
+          السعر
+        </th>
+        <th>
+          الكمية
+        </th>
+        <th>
+          القيمة
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of storeTransDetails_VM; let i = index">
+        <td>
+          <div class="form-group">
+            <ng-select bindLabel="Aname"
+                       name="GroupFName"
+                       placeholder="Select item"
+                       [searchable]="true"
+                       [clearable]="true"
+                       [(ngModel)]="storeTransDetails_VM[i].groupF_Id"
+                       (change)="GroupfChange($event,i)">
+              <ng-option [value]="item.GroupF_Id" [disabled]="item.disabled" *ngFor="let item of GroupF">
 
-                  {{item.Aname}}
-                </ng-option>
-              </ng-select>
-            </div>
-          </td>
-          <td>
-            <div class="form-group" *ngIf="GroupFChanged==true">
-              <ng-select bindLabel="name"
-                         name="ITEM"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [(ngModel)]="storeTransDetails_VM[i].itemId"
-                         (change)="ItemsChange($event,i)"
-                         >
-                <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VM">
-                  {{item.name}}
-                </ng-option>
-              </ng-select>
-            </div>
-          </td>
-          <td>
-            <div class="form-group">
-              <ng-select bindLabel="name"
-                         name="unite"
-                         placeholder="Select item"
-                         [searchable]="true"
-                         [clearable]="true"
-                         (change)="UnitesChange(i)"
-                         [(ngModel)]="storeTransDetails_VM[i].unitId">
-                <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
+                {{item.Aname}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </td>
+        <td>
+          <div class="form-group" *ngIf="GroupFChanged==true">
+            <ng-select bindLabel="name"
+                       name="ITEM"
+                       placeholder="Select item"
+                       [searchable]="true"
+                       [(ngModel)]="storeTransDetails_VM[i].itemId"
+                       (change)="ItemsChange($event,i)"
+                       >
+              <ng-option [value]="item.itemId" [disabled]="item.disabled" *ngFor="let item of items_VM">
+                {{item.name}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <ng-select bindLabel="name"
+                       name="unite"
+                       placeholder="Select item"
+                       [searchable]="true"
+                       [clearable]="true"
+                       (change)="UnitesChange(i)"
+                       [(ngModel)]="storeTransDetails_VM[i].unitId">
+              <ng-option [value]="item.uniteId" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
 
-                  {{item.name}}
-                </ng-option>
-              </ng-select>
-            </div>
-          </td>
-          <td><input type="text" id="price" name="price" value="item.unitPrice" (keyup)="onKeyPrice($event,i)" [(ngModel)]="storeTransDetails_VM[i].unitPrice" style="width:70% ; text-align:right" /></td>
-          <td><input type="text" id="quantity" name="quantity" value="item.qty" (keyup)="onKeyQuantity($event,i)" [(ngModel)]="storeTransDetails_VM[i].qty" style="width:70% ; text-align:right" /></td>
-          <td><input type="text" id="value" name="value" value="item.totalo"  [(ngModel)]="storeTransDetails_VM[i].totalo" style="width:70%; text-align:right" /></td>
-        </tr>
+                {{item.name}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </td>
+        <td><input type="text" id="price" name="price" value="item.unitPrice" (keyup)="onKeyPrice($event,i)" [(ngModel)]="storeTransDetails_VM[i].unitPrice" style="width:70% ; text-align:right" /></td>
+        <td><input type="text" id="quantity" name="quantity" value="item.qty" (keyup)="onKeyQuantity($event,i)" [(ngModel)]="storeTransDetails_VM[i].qty" style="width:70% ; text-align:right" /></td>
+        <td><input type="text" id="value" name="value" value="item.totalo"  [(ngModel)]="storeTransDetails_VM[i].totalo" style="width:70%; text-align:right" /></td>
+      </tr>
 
 
 
-      </tbody>
-    </table>-->
+    </tbody>
+  </table>-->
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button class="btn btn-outline-danger" (click)="onNoClick()">
-      اغلاق
-      <svg width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-      </svg>
-    </button>
-    <button mat-button [mat-dialog-close]="storeTransDetails_VM" cdkFocusInitial class="btn btn-outline-success mr-3" style="text-align:right">
+
+    <button mat-button [mat-dialog-close]="storeTransDetails_VM" cdkFocusInitial class="btn btn-outline-success m-4 focus p-3"
+            style="text-align:right"  *ngIf="AddedRowObjecDone==true">
       حفظ
       <svg width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
       </svg>
     </button>
+
   </mat-dialog-actions>
 </body>
 </html>
