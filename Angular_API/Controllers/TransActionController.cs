@@ -384,15 +384,16 @@ namespace Angular_API.Controllers
                 {
                     STM_VM.IsDependant = true;
                     STM_VM.StoreTransDep_VM = repo._StoreTrnsM.RetriveTransaDepById(listOfPrevIds);
-                    //foreach (var id in listOfPrevIds)
-                    //{
-                    //    var listOfStoreTransDepIds = repo._StoreTrnsDep.RetriveListTransDepIds(id);
-                    //    var listOfStoreTransDepDetails = repo._StoreTrnsDepDetails.RetiveDepTransDetails(listOfStoreTransDepIds);
-                    //    foreach (var item in listOfStoreTransDepDetails)
-                    //    {
-                    //        STM_VM.StoreTransDepDetails_VM.Add(item);
-                    //    }
-                    //}
+
+                    foreach (var id in listOfPrevIds)
+                    {
+                        var listOfStoreTransDepIds = repo._StoreTrnsDep.RetriveListTransDepIds(id);
+                        var listOfStoreTransDepDetails = repo._StoreTrnsDepDetails.RetiveDepTransDetails(listOfStoreTransDepIds);
+                        foreach (var item in listOfStoreTransDepDetails)
+                        {
+                            STM_VM.StoreTransDepDetails_VM.Add(item);
+                        }
+                    }
 
                 }
             }

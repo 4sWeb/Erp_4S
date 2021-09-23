@@ -8,6 +8,12 @@ namespace BLL.ModelsView
 {
    public class StoreTransMain_VM
     {
+        public StoreTransMain_VM()
+        {
+            StoreTransDepDetails_VM = new List<StoreTransDepDetails_VM>();
+
+
+        }
         public bool IsDependant { get; set; }
         public StoreTransMaster_VM StoreTransMaster_VM { get; set; }
         public List<StoreTransDep_VM> StoreTransDep_VM { get; set; }

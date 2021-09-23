@@ -61,7 +61,8 @@ namespace BLL.Repo
             List<decimal> ids = new List<decimal>();
             if (previousId!=default)
             {
-                  var result = GetByCondition(c => c.Ptransrowid == previousId).Result.Select(c => c.StoreTrnsDepId);
+                  var result = GetByCondition(c => c.Ptransrowid == previousId).Result
+                    .Select(c => c.StoreTrnsDepId);
                     foreach (var item in result)
                     {
                         ids.Add(item);

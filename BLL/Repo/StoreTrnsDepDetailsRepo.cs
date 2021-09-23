@@ -42,14 +42,21 @@ namespace BLL.Repo
            
             foreach(var item in storeTransDepIds)
             {
-                var oneItem = GetByCondition(c => c.ProwId == item).Result.Select(s=>new StoreTransDepDetails_VM {
-                    Item_ID= (decimal)s.Itemid,
-                    Unitprice = (decimal)s.Unitprice,
-                    Quantity= (decimal)s.Quantity,
-                    
-                }).FirstOrDefault();
-                storeTransDepDetails.Add(oneItem);
-            }
+                    var oneItem = GetByCondition(c => c.ProwId == item).Result.Select(s => new StoreTransDepDetails_VM
+                    {
+                        Item_ID = string.IsNullOrEmpty(s.Itemid.ToString()) ? 0 : (decimal)s.Itemid,
+                        Unitprice = string.IsNullOrEmpty(s.Unitprice.ToString()) ? 0 : (decimal)s.Unitprice,
+                        Quantity = string.IsNullOrEmpty(s.Quantity.ToString()) ? 0 : (decimal)s.Quantity,
+
+                    }).ToList();
+
+              
+                    foreach (var DepDetailsitem in oneItem)
+                    {
+                        storeTransDepDetails.Add(DepDetailsitem);
+                    }
+                }
+                
                 return storeTransDepDetails;
             }
 
