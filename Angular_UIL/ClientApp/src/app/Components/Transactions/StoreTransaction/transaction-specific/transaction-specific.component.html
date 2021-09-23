@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -738,8 +738,9 @@
                 <th>تعديل</th>
                 <th>ملاحظات</th>
                 <th style="text-align:center">القيمة</th>
-                <th style="text-align:center">الكمية</th>
+
                 <th style="text-align:center">السعر</th>
+                <th style="text-align:center">الكمية</th>
                 <th style="text-align:center">الوحدة</th>
                 <th class="text-center">الصنف</th>
                 <th class="text-center">المجموعه</th>
@@ -759,8 +760,9 @@
                 </td>
                 <td><span>{{trans.notes}}</span></td>
                 <td><span>{{trans.totalo}}</span></td>
-                <td><span>{{trans.qty}}</span></td>
+
                 <td><span>{{trans.unitPrice}}</span></td>
+                <td><span>{{trans.qty}}</span></td>
                 <td>
                   <span> <span>{{trans.unit_Name}} </span>  </span>
                 </td>
@@ -849,15 +851,16 @@
           </div>
           <table class="table  table-bordered table-hover table-condensed table-striped text-center">
             <thead style="background-color:#4c8eca">
-              <tr >
+              <tr>
                 <th>حذف</th>
                 <th>تعديل</th>
                 <th>ملاحظات</th>
 
-                <th >القيمة</th>
-                <th >الكمية</th>
-                <th >السعر</th>
-                <th >الوحدة</th>
+                <th>القيمة</th>
+
+                <th>السعر</th>
+                <th>الكمية</th>
+                <th>الوحدة</th>
 
                 <th>اسم الصنف</th>
                 <th>كود</th>
@@ -888,14 +891,15 @@
 
                   </button>
                 </td>
-                <td>{{trans.notes}}</td>
+                <td><p>{{trans.notes}}</p></td>
 
-                <td>{{trans.totalo}}</td>
-                <td>{{trans.qty}}</td>
-                <td>{{trans.unitPrice}}</td>
-                <td>{{trans.unit_Name}}</td>
-                <td>{{trans.item_Name}}</td>
-                <td>{{trans.itemId}}</td>
+                <td><p>{{trans.totalo}}</p></td>
+
+                <td><p>{{trans.unitPrice}}</p></td>
+                <td><p>{{trans.qty}}</p></td>
+                <td><p>{{trans.unit_Name}}</p></td>
+                <td><p>{{trans.item_Name}}</p></td>
+                <td><p>{{trans.itemId}}</p></td>
 
               </tr>
             </tbody>
