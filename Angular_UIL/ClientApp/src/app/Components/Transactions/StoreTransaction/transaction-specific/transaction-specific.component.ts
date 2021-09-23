@@ -584,7 +584,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
       if (this.filterStoreTransDepDetails[i].totalo > 0) {
         console.log("enter");
         this.StoreTransDepDetailsOnly.push({
-          item_ID: this.filterStoreTransDepDetails[i].itemId,
+          itemid: this.filterStoreTransDepDetails[i].itemId,
           unitid: this.filterStoreTransDepDetails[i].unitId,
           groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
           quantity: this.filterStoreTransDepDetails[i].qty,

@@ -282,6 +282,7 @@ namespace Angular_API.Controllers
                                 Ctrnsorowid= decimal.Parse(NextValueO.ToString()) + 1,
                                 Unitid = stdepd.Unitid,
                                 Unitprice = stdepd.Unitprice,
+                                Quantity=stdepd.Quantity
 
                             };
                             if (storeTransDepDetails != null)
