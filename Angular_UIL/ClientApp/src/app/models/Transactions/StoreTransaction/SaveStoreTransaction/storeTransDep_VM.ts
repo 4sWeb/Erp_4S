@@ -4,6 +4,7 @@ export class storeTransDep_VM {
     public ctrnsrowid?: number,
     public groupid?: number,
     public trnsCode?: number,
+    public trnsNo?:number,
     public toStoreAllcodesId?: number,
     public fromStoreAllcodesId?: number,
     public branchId?: number,

@@ -163,6 +163,7 @@ namespace BLL.Repo
                         ToStoreAllcodesId= string.IsNullOrEmpty(s.ToStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
                         FromStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.FromStoreAllcodesId,
                         TrnsCode=s.TrnsCode,
+                        TrnsNo=s.TrnsNo,
                         BranchId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.BranchId,
                         BranchName = storeAllsubcodesRepo.GetStoreAllSubCodeByID(s.BranchId) != null ? storeAllsubcodesRepo.GetStoreAllSubCodeByID(s.BranchId).Aname : null,
                         From_TypeName = mainTypesRepo.GetNameFromMAinType(s.FromStoreAllcodesId) != null ? mainTypesRepo.GetNameFromMAinType(s.FromStoreAllcodesId):null,

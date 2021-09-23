@@ -252,11 +252,33 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
             this.StoreTransMain = data;
             console.log(this.StoreTransMain);
             try {
-              this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
+              if (this.StoreTransMain.isDependant == true) {
+
+                if (this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].from_TypeName) {
+                  this.fromStoreAllcodesId = this.StoreTransMain.storeTransDep_VM[0].fromStoreAllcodesId;
+                } else {
+                  this.fromStoreAllcodesId = undefined;
+                }
+              }
+              else {
+                this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
+              }
             }
             catch (e) { console.log(e); }
             try {
-              this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+              console.log("hello try");
+              console.log(this.StoreTransMain.isDependant);
+              if (this.StoreTransMain.isDependant == true) {
+                console.log("enter dep");
+                if (this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].tO_TypeName) {
+                  console.log("enter dep equal");
+                  this.ToTypeDetailsId = this.StoreTransMain.storeTransDep_VM[0].toStoreAllcodesId;
+                } else {
+                  this.ToTypeDetailsId = undefined;
+                }
+              }else {
+                this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
+              }
             }
             catch (e) { console.log(e); };
             this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
@@ -565,7 +587,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
     console.log("storeTransDetails_VM", this.storeTransDetails_VM);
 
-    this.StoreTransMain.IsDependant = this.IsDependant;
+    this.StoreTransMain.isDependant = this.IsDependant;
     this.TransactionsService.CreateTransaction(this.StoreTransMain).subscribe(
       (ews) => {
         console.log(ews, this.StoreTransMain);
