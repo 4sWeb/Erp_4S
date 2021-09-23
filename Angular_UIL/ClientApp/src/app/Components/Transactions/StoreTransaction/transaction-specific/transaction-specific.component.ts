@@ -333,6 +333,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
     console.log("@@@@@@@@@@@@@@@@", this.TransactionsService.ShraingListOfGroupsandItems)
     this.GroupFs = this.TransactionsService.ShraingListOfGroupsandItems;
     console.log("Items available in GrpFs", this.GroupFs)
+
     this.ItemsAvailable = true;
       
   };
