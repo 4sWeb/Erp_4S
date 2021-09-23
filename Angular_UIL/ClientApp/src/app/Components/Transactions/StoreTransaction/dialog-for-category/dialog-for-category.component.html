@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <body>
-  <mat-dialog-content class="mat-typography">
+  <mat-dialog-content class="mat-typography" style="border-radius:25px;">
     <div class="row text-right" dir="rtl" style="border-bottom-color:#144d72">
       <div class="col">
-        <button mat-button class="btn btn-outline-danger ml-auto mt-2 mb-2 text-right" dir="rtl" (click)="onNoClick()" title=" اغلاق">
-          اغلاق
+        <button mat-button class="btn btn-outline-danger ml-auto mt-1 mb-2 text-right" dir="rtl" (click)="onNoClick()" title=" اغلاق">
+
           <svg width="19" height="19" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
           </svg>
+          اغلاق
         </button>
 
       </div>
@@ -20,7 +21,7 @@
     <div class="container-fluid">
       <form #myformdiv="ngForm">
         <table class="table table-bordered table-hover text-center">
-          <thead style="background-color:#d0cccc">
+          <thead style="background-color:rgba(86, 187, 155, 0.65)">
             <tr class="d-flex">
               <th class="col-2">المجموعات</th>
               <th class="col-2">الأصناف</th>
@@ -147,16 +148,16 @@
 
 
 
-    <!-- -----------------*****************Tabel for Details created or dependant details if founded**********-------- --->
+    <!-- -----------------*****************Tabel for Details created or dependant details if founded (( MintTable))**********-------- --->
     <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="storeTransDetails_VM.length>0">
       <table class="table  table-bordered table-hover table-condensed table-striped ">
-        <thead class="bg-secondary text-light text-center ">
+        <thead class="text-light text-center " style="background-color:rgb(15, 157, 112)">
           <tr>
             <th>حذف</th>
             <th>تعديل</th>
             <th>ملاحظات</th>
             <th>القيمة</th>
-            <th>السعر</th>
+            <th> سعر الوحدة</th>
             <th>الكمية</th>
 
             <th>الوحدة</th>
