@@ -292,12 +292,28 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
 
             //console.log("transDepCode", this.TransCode);
             try {
-              this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+              if (this.StoreTransMain.isDependant == true) {
+                if (this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].from_TypeName) {
+                  this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+                } else {
+                  this.FromTypeId = undefined;
+                }
+              } else {
+                this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+              }
             }
             catch (e) { console.log(e); };
 
             try {
-              this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+              if (this.StoreTransMain.isDependant == true) {
+                if (this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].tO_TypeName) {
+                  this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+                } else {
+                  this.ToTypeId = undefined;
+                }
+              } else {
+                this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+              }
             }
             catch (e) { console.log(e); };
             //console.log("this.StoreTransMain.storeTransMaster_VM.to_Type[0]", this.StoreTransMain.storeTransMaster_VM.to_Type[0])
