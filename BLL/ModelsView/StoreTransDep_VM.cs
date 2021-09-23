@@ -21,7 +21,7 @@ namespace BLL.ModelsView
         public string Rem { get; set; }
         public DateTime TrnsDate { get; set; }
         public decimal TrnsCode { get; set; }
-
+        public decimal TrnsNo { get; set; }
         public string BranchName { get; set; }
         public string From_TypeName { get; set; }
         public string TO_TypeName { get; set; }
