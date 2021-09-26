@@ -55,14 +55,16 @@ export class DialogForCategoryComponent implements OnInit {
     this.GroupFs = data.GroupFs;
     console.log("GroupFsFrom Dialog", this.GroupFs);
 
-    if (this.productdetailsDialog.length>0) {
-    //  for (var i = 0; i < this.productdetails.length; i++) {
-    //    this.storeTransDetails_VM.push({
-    //      qty: this.productdetails[i].qty, unitId: this.productdetails[i].unitId, itemId: this.productdetails[i].itemId, totalo: this.productdetails[i].totalo,
-    //      item_Name: this.productdetails[i].item_Name, unit_Name: this.productdetails[i].unit_Name
-    //    })
-      //}
-      this.storeTransDetailsDialog = this.productdetailsDialog;
+    if (this.productdetailsDialog.length > 0) {
+
+      for (var i = 0; i < this.productdetailsDialog.length; i++) {
+        this.storeTransDetailsDialog.push({
+          qty: this.productdetailsDialog[i].qty, unitId: this.productdetailsDialog[i].unitId, itemId: this.productdetailsDialog[i].itemId, totalo: this.productdetailsDialog[i].totalo,
+          item_Name: this.productdetailsDialog[i].item_Name, unit_Name: this.productdetailsDialog[i].unit_Name, groupF_Id: this.productdetailsDialog[i].groupF_Id,
+          storeTrnsOId: this.productdetailsDialog[i].storeTrnsOId, unitPrice: this.productdetailsDialog[i].unitPrice
+        });
+      }
+      this.productdetailsDialog = [];
     }
   }
 
@@ -211,21 +213,35 @@ export class DialogForCategoryComponent implements OnInit {
     
   }
   saveChanges() {
-    this.productdetailsDialog = [];
-    //this.productdetailsDialog = this.storeTransDetailsDialog;
+    console.log("this.productdetailsDialog", this.productdetailsDialog);
+    console.log("this.storeTransDetailsDialog", this.storeTransDetailsDialog);
+    //var temp: storeTransDetails_VM[];
+    //temp = this.storeTransDetailsDialog;
+    //console.log(temp);
+    //this.productdetailsDialog = temp;
+    for (var i = 0; i < this.storeTransDetailsDialog.length; i++) {
+      this.productdetailsDialog.push({
+        qty: this.storeTransDetailsDialog[i].qty, unitId: this.storeTransDetailsDialog[i].unitId, itemId: this.storeTransDetailsDialog[i].itemId, totalo: this.storeTransDetailsDialog[i].totalo,
+        item_Name: this.storeTransDetailsDialog[i].item_Name, unit_Name: this.storeTransDetailsDialog[i].unit_Name, groupF_Id: this.storeTransDetailsDialog[i].groupF_Id, storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId
+      });
+    }
+    this.productdetailsDialog = this.storeTransDetailsDialog;
     console.log("this.productdetailsDialog from save changes", this.productdetailsDialog);
   }
 
   onNoClick(): void {
     //this.storeTransDetails_VM = this.data.dialogCategoryDetails;
     //console.log("from Dialog Category close",this.storeTransDetails_VM);
+    //this.productdetailsDialog = this.storeTransDetailsDialog.filter(s => s.tempAdded == false);
 
     this.dialogRef.close();
   };
 
 
-  RemoveRow(i:any): void {
-    console.log(this.storeTransDetailsDialog[i])
+  RemoveRow(i: number){
+    console.log("clicked");
+    this.storeTransDetailsDialog.splice(i, 1);
+    console.log(this.storeTransDetailsDialog)
   };
 
 
