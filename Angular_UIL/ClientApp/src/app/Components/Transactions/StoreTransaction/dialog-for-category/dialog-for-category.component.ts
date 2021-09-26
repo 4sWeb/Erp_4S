@@ -56,7 +56,7 @@ export class DialogForCategoryComponent implements OnInit {
     console.log("GroupFsFrom Dialog", this.GroupFs);
 
     if (this.productdetailsDialog.length > 0) {
-
+      this.storeTransDetailsDialog = [];
       for (var i = 0; i < this.productdetailsDialog.length; i++) {
         this.storeTransDetailsDialog.push({
           qty: this.productdetailsDialog[i].qty, unitId: this.productdetailsDialog[i].unitId, itemId: this.productdetailsDialog[i].itemId, totalo: this.productdetailsDialog[i].totalo,
@@ -219,10 +219,11 @@ export class DialogForCategoryComponent implements OnInit {
     //temp = this.storeTransDetailsDialog;
     //console.log(temp);
     //this.productdetailsDialog = temp;
+
     for (var i = 0; i < this.storeTransDetailsDialog.length; i++) {
       this.productdetailsDialog.push({
         qty: this.storeTransDetailsDialog[i].qty, unitId: this.storeTransDetailsDialog[i].unitId, itemId: this.storeTransDetailsDialog[i].itemId, totalo: this.storeTransDetailsDialog[i].totalo,
-        item_Name: this.storeTransDetailsDialog[i].item_Name, unit_Name: this.storeTransDetailsDialog[i].unit_Name, groupF_Id: this.storeTransDetailsDialog[i].groupF_Id, storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId
+        item_Name: this.storeTransDetailsDialog[i].item_Name, unit_Name: this.storeTransDetailsDialog[i].unit_Name, groupF_Id: this.storeTransDetailsDialog[i].groupF_Id, storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId, unitPrice: this.storeTransDetailsDialog[i].unitPrice
       });
     }
     this.productdetailsDialog = this.storeTransDetailsDialog;

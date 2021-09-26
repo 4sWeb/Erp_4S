@@ -67,28 +67,32 @@ namespace BLL.Repo
                 Dictionary<string, object> par = new Dictionary<string, object>();
                 par.Add("@DepDetID", null);
                 par.Add("@TRANSCODE", DepID);
-                var TransList = test.Get("GetdepremaningqtyAllTrans2", par, 1);
-                foreach (var item in TransList.Result.ToList())
+                var Transt = test.Get("GetdepremaningqtyAllTrans2", par, 1);
+                var TransList = Transt.Result.ToList().Distinct();
+                foreach (var item in TransList)
                 {
                     Dictionary<string, object> Current = (Dictionary<string, object>)item;
-                    var NewItem = GetByCondition(c => c.StoreTrnsMId == decimal.Parse(Current.GetValueOrDefault("MID").ToString())).Result.Select(s => new { s.TrnsCode, s.TrnsDate, s.TrnsNo, s.StoreTrnsMId, s.FromStoreAllcodesId, s.ToStoreAllcodesId, s.BranchId, s.Storedocnum, s.Period });
+                    var NewItem = GetByCondition(c => c.StoreTrnsMId == decimal.Parse(Current.GetValueOrDefault("MID").ToString())).Result.Select(s => new { s.TrnsCode, s.TrnsDate, s.TrnsNo, s.StoreTrnsMId, s.FromStoreAllcodesId, s.ToStoreAllcodesId, s.BranchId, s.Storedocnum, s.Period }).FirstOrDefault();
+                    var exist=Items.Find(s => s.StoreTrnsMId != NewItem.StoreTrnsMId);
+                    if (exist==null) { 
                     Items.Add(new Transaction_VM
                     {
-                        StoreTrnsMId = NewItem.FirstOrDefault().StoreTrnsMId,
-                        TrnsCode = NewItem.FirstOrDefault().TrnsCode,
-                        TrnsDate = NewItem.FirstOrDefault().TrnsDate,
-                        From_TypeName = mainTypesRepo.GetNameFromMAinType(NewItem.FirstOrDefault().FromStoreAllcodesId),
-                        From_StoreAllcodesId = NewItem.FirstOrDefault().FromStoreAllcodesId,
-                        From_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.FirstOrDefault().FromStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.FirstOrDefault().FromStoreAllcodesId).Aname : null,
-                        TO_TypeName = mainTypesRepo.GetNameFromMAinType(NewItem.FirstOrDefault().ToStoreAllcodesId),
-                        To_StoreAllcodesId = NewItem.FirstOrDefault().ToStoreAllcodesId,
-                        To_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.FirstOrDefault().ToStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.FirstOrDefault().ToStoreAllcodesId).Aname : null,
-                        BranchId = NewItem.FirstOrDefault().BranchId,
-                        branch = storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.FirstOrDefault().BranchId) != null ? storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.FirstOrDefault().BranchId).Aname : null,
-                        Storedocnum = NewItem.FirstOrDefault().Storedocnum,
-                        Period = NewItem.FirstOrDefault().Period,
-                        TrnsNo = NewItem.FirstOrDefault().TrnsNo
+                        StoreTrnsMId = NewItem.StoreTrnsMId,
+                        TrnsCode = NewItem.TrnsCode,
+                        TrnsDate = NewItem.TrnsDate,
+                        From_TypeName = mainTypesRepo.GetNameFromMAinType(NewItem.FromStoreAllcodesId),
+                        From_StoreAllcodesId = NewItem.FromStoreAllcodesId,
+                        From_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.FromStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.FromStoreAllcodesId).Aname : null,
+                        TO_TypeName = mainTypesRepo.GetNameFromMAinType(NewItem.ToStoreAllcodesId),
+                        To_StoreAllcodesId = NewItem.ToStoreAllcodesId,
+                        To_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.ToStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.ToStoreAllcodesId).Aname : null,
+                        BranchId = NewItem.BranchId,
+                        branch = storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.BranchId) != null ? storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.BranchId).Aname : null,
+                        Storedocnum = NewItem.Storedocnum,
+                        Period = NewItem.Period,
+                        TrnsNo = NewItem.TrnsNo
                     });
+                    }
                 }
             }
             return Items;

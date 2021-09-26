@@ -537,6 +537,21 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
   //add Store Transaction
   addStoreTransaction() {
+    var FromAllCodes:number;
+    var ToAllCodes:number;
+    try {
+      if (this.fromStoreAllcodesId != undefined&&this.ToTypeDetailsId!=undefined) {
+        FromAllCodes = this.fromStoreAllcodesId;
+        ToAllCodes = this.ToTypeDetailsId;
+      } if (this.fromStoreAllcodesId != undefined && this.ToTypeDetailsId == undefined) {
+        FromAllCodes = this.fromStoreAllcodesId;
+        ToAllCodes = this.fromStoreAllcodesId;
+      }
+      if (this.fromStoreAllcodesId == undefined && this.ToTypeDetailsId != undefined) {
+        ToAllCodes = this.ToTypeDetailsId;
+        FromAllCodes = this.ToTypeDetailsId;
+      }
+      } catch (e) {}
     this.StoreTransMain = new StoreTransMain();
     if (this.operationType == "View") {
       this.storeTransMaster = {
@@ -558,8 +573,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         trnsCode: this.Transcode,
         trnsDate: this.Datevalue,
         trnsNo: this.storeTransMax,
-        fromStoreAllcodesId: this.fromStoreAllcodesId,
-        toStoreAllcodesId: this.ToTypeDetailsId,
+        fromStoreAllcodesId: FromAllCodes,
+        toStoreAllcodesId: ToAllCodes,
         period: 2,
         rem: this.Rem
       };
@@ -688,18 +703,19 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     dialogReff.afterClosed().subscribe(result => {
       this.dialogCategoryDetails = result;
       console.log(this.dialogCategoryDetails);
-      for (var i = 0; i < result.length; i++) {
-        if (this.dialogCategoryDetails[i].itemId != 0
-          && this.dialogCategoryDetails[i].unitId != 0
-          && this.dialogCategoryDetails[i].totalo != 0
-          && this.dialogCategoryDetails[i].qty != 0
-          && this.dialogCategoryDetails[i].unitPrice != 0)
-        {
-          this.popupstoreTransDetails_VM.push(this.dialogCategoryDetails[i]);
-        }
-       // console.log("storeTransDetails_VM",this.storeTransDetails_VM);
+      //for (var i = 0; i < result.length; i++) {
+      //  if (this.dialogCategoryDetails[i].itemId != 0
+      //    && this.dialogCategoryDetails[i].unitId != 0
+      //    && this.dialogCategoryDetails[i].totalo != 0
+      //    && this.dialogCategoryDetails[i].qty != 0
+      //    && this.dialogCategoryDetails[i].unitPrice != 0)
+      //  {
+      //    this.popupstoreTransDetails_VM.push(this.dialogCategoryDetails[i]);
+      //  }
+      // // console.log("storeTransDetails_VM",this.storeTransDetails_VM);
 
-      }
+      //}
+      this.popupstoreTransDetails_VM = this.dialogCategoryDetails;
       console.log('From spec compenent The Category Dialog was closed', this.popupstoreTransDetails_VM);
       this.productdetails = this.popupstoreTransDetails_VM;
       this.storeTransDetails_VM = this.productdetails;
