@@ -23,9 +23,9 @@ export class DialogForCategoryComponent implements OnInit {
   unitesFilter: Unites_VM[] = [];
   items_VM: Items_VM[]=[];
   unites_VMs: Unites_VM[]=[];
-  storeTransDetails_VM: storeTransDetails_VM[] = [];
+  storeTransDetailsDialog: storeTransDetails_VM[] = [];
   dialogCategoryDetails: storeTransDetails_VM[] = [];
-  productdetails: storeTransDetails_VM[]=[];
+  productdetailsDialog: storeTransDetails_VM[]=[];
 
   GroupFChanged: boolean = false;
   ItemChanged: boolean = false;
@@ -51,18 +51,18 @@ export class DialogForCategoryComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogForCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogForCategory) {
     dialogRef.disableClose = true;
-    this.productdetails = data.productdetails;
+    this.productdetailsDialog = data.productdetails;
     this.GroupFs = data.GroupFs;
     console.log("GroupFsFrom Dialog", this.GroupFs);
 
-    if (this.productdetails.length>0) {
+    if (this.productdetailsDialog.length>0) {
     //  for (var i = 0; i < this.productdetails.length; i++) {
     //    this.storeTransDetails_VM.push({
     //      qty: this.productdetails[i].qty, unitId: this.productdetails[i].unitId, itemId: this.productdetails[i].itemId, totalo: this.productdetails[i].totalo,
     //      item_Name: this.productdetails[i].item_Name, unit_Name: this.productdetails[i].unit_Name
     //    })
       //}
-      this.storeTransDetails_VM = this.productdetails;
+      this.storeTransDetailsDialog = this.productdetailsDialog;
     }
   }
 
@@ -157,23 +157,19 @@ export class DialogForCategoryComponent implements OnInit {
     if (this.Index >= 0) {
       if (confirm(`تأكيد عملية التعديل...؟`)){
         console.log(this.Index)
-        this.storeTransDetails_VM[this.Index].groupF_Id = this.GroupId;
-        this.storeTransDetails_VM[this.Index].unitId = this.UniteId;
-        this.storeTransDetails_VM[this.Index].unit_Name = this.Unite.name;
-        this.storeTransDetails_VM[this.Index].itemId = this.ItemId;
-        this.storeTransDetails_VM[this.Index].item_Name = this.Item.name;
-        this.storeTransDetails_VM[this.Index].qty = this.quantity;
-        this.storeTransDetails_VM[this.Index].totalo = this.totalo;
-        this.storeTransDetails_VM[this.Index].unitPrice = this.unitPrice;
+        this.storeTransDetailsDialog[this.Index].groupF_Id = this.GroupId;
+        this.storeTransDetailsDialog[this.Index].unitId = this.UniteId;
+        this.storeTransDetailsDialog[this.Index].unit_Name = this.Unite.name;
+        this.storeTransDetailsDialog[this.Index].itemId = this.ItemId;
+        this.storeTransDetailsDialog[this.Index].item_Name = this.Item.name;
+        this.storeTransDetailsDialog[this.Index].qty = this.quantity;
+        this.storeTransDetailsDialog[this.Index].totalo = this.totalo;
+        this.storeTransDetailsDialog[this.Index].unitPrice = this.unitPrice;
         this.Index = -1;
       }
-
-    }
-
-
-    else {
+    } else {
      
-      this.storeTransDetails_VM.push({
+      this.storeTransDetailsDialog.push({
         groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
         unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo
       });
@@ -181,7 +177,8 @@ export class DialogForCategoryComponent implements OnInit {
     }
     
    
-    console.log("storeTransDetails_VM from dialog save", this.storeTransDetails_VM);
+    console.log("storeTransDetails_VM from dialog save", this.storeTransDetailsDialog);
+    console.log("productdetails from dialog save", this.productdetailsDialog);
     //this.EditingClick = true;
     //this.GroupFChanged = false;
     //this.ItemChanged = false;
@@ -202,27 +199,33 @@ export class DialogForCategoryComponent implements OnInit {
     this.ItemChanged = false;
     this.GroupFChanged = false;
     //to view these values in dropDowns
-    this.GroupId = this.storeTransDetails_VM[i].groupF_Id;
+    this.GroupId = this.storeTransDetailsDialog[i].groupF_Id;
     console.log("this.GroupId", this.GroupId);
-    this.ItemId = this.storeTransDetails_VM[i].itemId;
-    this.UniteId = this.storeTransDetails_VM[i].unitId;
-    this.quantity = this.storeTransDetails_VM[i].qty;
-    this.totalo = this.storeTransDetails_VM[i].totalo;
-    this.unitPrice = this.storeTransDetails_VM[i].unitPrice;
+    this.ItemId = this.storeTransDetailsDialog[i].itemId;
+    this.UniteId = this.storeTransDetailsDialog[i].unitId;
+    this.quantity = this.storeTransDetailsDialog[i].qty;
+    this.totalo = this.storeTransDetailsDialog[i].totalo;
+    this.unitPrice = this.storeTransDetailsDialog[i].unitPrice;
     //to set new values
 
     
+  }
+  saveChanges() {
+    this.productdetailsDialog = [];
+    //this.productdetailsDialog = this.storeTransDetailsDialog;
+    console.log("this.productdetailsDialog from save changes", this.productdetailsDialog);
   }
 
   onNoClick(): void {
     //this.storeTransDetails_VM = this.data.dialogCategoryDetails;
     //console.log("from Dialog Category close",this.storeTransDetails_VM);
+
     this.dialogRef.close();
   };
 
 
   RemoveRow(i:any): void {
-    console.log(this.storeTransDetails_VM[i])
+    console.log(this.storeTransDetailsDialog[i])
   };
 
 

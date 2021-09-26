@@ -35,7 +35,7 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
     let id = 0;
     this.ar.params.subscribe(
       a => {
-        id = a['id'];
+        id = parseInt(a['id']);
       }
     )
 
@@ -44,7 +44,7 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
         console.log(id);
         console.log("response",response);
         this.alltransactions = response;
-        this.TransCode=this.alltransactions[0].TrnsCode;
+        this.TransCode=id;
         this.dtTrigger.next();
       },
       (error) => { console.log(error); })

@@ -149,7 +149,7 @@
 
 
     <!-- -----------------*****************Tabel for Details created or dependant details if founded (( MintTable))**********-------- --->
-    <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="storeTransDetails_VM.length>0">
+    <div dir="ltr" lang="en" class="mb-4" style="margin-bottom:30%" *ngIf="productdetailsDialog.length>0">
       <table class="table  table-bordered table-hover table-condensed table-striped ">
         <thead class="text-light text-center " style="background-color:rgba(24, 167, 121, 0.93)">
           <tr>
@@ -166,7 +166,7 @@
           </tr>
         </thead>
         <tbody class="text-center">
-          <tr *ngFor="let trans of storeTransDetails_VM ;let i=index">
+          <tr *ngFor="let trans of productdetailsDialog ;let i=index">
 
             <td>
               <button class="btn btn-outline-danger mr-1" [value]="trans" (click)="RemoveRow(i)" title="حذف">
@@ -310,8 +310,8 @@
   </mat-dialog-content>
   <mat-dialog-actions>
 
-    <button mat-button [mat-dialog-close]="storeTransDetails_VM" cdkFocusInitial class="btn btn-outline-success m-4 focus p-2"
-            style="text-align:right"  *ngIf="AddedRowObjecDone==true">
+    <button mat-button [mat-dialog-close]="productdetailsDialog" cdkFocusInitial class="btn btn-outline-success m-4 focus p-2"
+            style="text-align:right"  *ngIf="AddedRowObjecDone==true"(click)="saveChanges()">
       موافق
       <svg width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />

@@ -143,12 +143,16 @@ namespace Angular_API.Controllers
         [Route("SaveOrder")]
         public JsonResult SaveOrder([FromBody] StoreTransMain_VM StoreTransMain_VM)
         {
-            //var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
-            //if (enstorTransM != null)
-            //{
-            //    repo._StoreTrnsM.Delete(enstorTransM);
-            //}
-           
+            var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
+            if (enstorTransM != null)
+            {
+                try
+                {
+                    repo.CallQuery("delete STORE_TRNS_M where STORE_TRNS_M_ID= " + StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId + " ", null, 2);
+                }
+                catch (Exception ex) { }
+            }
+
             var GetNext = (Dictionary<string, object>)repo.CallQuery("select STORE_TRNS_M_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
             object NextValue = GetNext.GetValueOrDefault("NEXTVAL");
 
@@ -299,15 +303,15 @@ namespace Angular_API.Controllers
             try
             {
                 repo.Save();
-                var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
-                if (enstorTransM != null)
-                {
-                    try
-                    {
-                        repo.CallQuery("delete STORE_TRNS_M where STORE_TRNS_M_ID= " + StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId + " ", null, 2);
-                    }
-                    catch (Exception ex) { }
-                }
+                //var enstorTransM = repo._StoreTrnsM.GetByCondition(a => a.StoreTrnsMId == StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId).Result.FirstOrDefault();
+                //if (enstorTransM != null)
+                //{
+                //    try
+                //    {
+                //        repo.CallQuery("delete STORE_TRNS_M where STORE_TRNS_M_ID= " + StoreTransMain_VM.StoreTransMaster_VM.StoreTrnsMId + " ", null, 2);
+                //    }
+                //    catch (Exception ex) { }
+                //}
             }
             catch (Exception ex)
             {
