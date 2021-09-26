@@ -67,14 +67,13 @@ namespace BLL.Repo
                 Dictionary<string, object> par = new Dictionary<string, object>();
                 par.Add("@DepDetID", null);
                 par.Add("@TRANSCODE", DepID);
-                var Transt = test.Get("GetdepremaningqtyAllTrans2", par, 1);
-                var TransList = Transt.Result.ToList().Distinct();
+                var TransList = test.Get("GetdepremaningqtyAllTrans2", par, 1).Result.ToList();
                 foreach (var item in TransList)
                 {
                     Dictionary<string, object> Current = (Dictionary<string, object>)item;
                     var NewItem = GetByCondition(c => c.StoreTrnsMId == decimal.Parse(Current.GetValueOrDefault("MID").ToString())).Result.Select(s => new { s.TrnsCode, s.TrnsDate, s.TrnsNo, s.StoreTrnsMId, s.FromStoreAllcodesId, s.ToStoreAllcodesId, s.BranchId, s.Storedocnum, s.Period }).FirstOrDefault();
                     var exist=Items.Find(s => s.StoreTrnsMId != NewItem.StoreTrnsMId);
-                    if (exist==null) { 
+                    
                     Items.Add(new Transaction_VM
                     {
                         StoreTrnsMId = NewItem.StoreTrnsMId,
@@ -92,7 +91,7 @@ namespace BLL.Repo
                         Period = NewItem.Period,
                         TrnsNo = NewItem.TrnsNo
                     });
-                    }
+                    
                 }
             }
             return Items;
