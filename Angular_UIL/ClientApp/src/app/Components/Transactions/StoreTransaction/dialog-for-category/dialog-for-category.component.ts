@@ -173,7 +173,7 @@ export class DialogForCategoryComponent implements OnInit {
      
       this.storeTransDetailsDialog.push({
         groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
-        unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo
+        unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo, storeTrnsOId: null
       });
      
     }
@@ -223,7 +223,7 @@ export class DialogForCategoryComponent implements OnInit {
     for (var i = 0; i < this.storeTransDetailsDialog.length; i++) {
       this.productdetailsDialog.push({
         qty: this.storeTransDetailsDialog[i].qty, unitId: this.storeTransDetailsDialog[i].unitId, itemId: this.storeTransDetailsDialog[i].itemId, totalo: this.storeTransDetailsDialog[i].totalo,
-        item_Name: this.storeTransDetailsDialog[i].item_Name, unit_Name: this.storeTransDetailsDialog[i].unit_Name, groupF_Id: this.storeTransDetailsDialog[i].groupF_Id, storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId, unitPrice: this.storeTransDetailsDialog[i].unitPrice
+        item_Name: this.storeTransDetailsDialog[i].item_Name, unit_Name: this.storeTransDetailsDialog[i].unit_Name, groupF_Id: this.storeTransDetailsDialog[i].groupF_Id, storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId
       });
     }
     this.productdetailsDialog = this.storeTransDetailsDialog;
@@ -239,10 +239,13 @@ export class DialogForCategoryComponent implements OnInit {
   };
 
 
-  RemoveRow(i: number){
-    console.log("clicked");
-    this.storeTransDetailsDialog.splice(i, 1);
-    console.log(this.storeTransDetailsDialog)
+  RemoveRow(i: number) {
+    if (confirm(`سيتم حذف الصنف ${this.storeTransDetailsDialog[i].item_Name} ؟؟`)) {
+      console.log("clicked");
+      this.storeTransDetailsDialog.splice(i, 1);
+      console.log(this.storeTransDetailsDialog)
+      this.AddedRowObjecDone = true;
+    }
   };
 
 
