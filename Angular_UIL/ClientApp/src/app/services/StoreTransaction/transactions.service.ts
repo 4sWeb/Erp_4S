@@ -31,6 +31,7 @@ export class TransactionsService {
       res => {
         console.log("*************GetAllGroupsWithItemsDetails From SHaring service Constructor*******", res);
         this.ShraingListOfGroupsandItems = res;
+        this.ListOfGroupsandItemsReady = true;
         
       }
     );
@@ -38,6 +39,8 @@ export class TransactionsService {
   }
 
   ShraingListOfGroupsandItems: GroupF_VM[];
+  ListOfGroupsandItemsReady: boolean= false;
+
 
   
 //get list of transaction

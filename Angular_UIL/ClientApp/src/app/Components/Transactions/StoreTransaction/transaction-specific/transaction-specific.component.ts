@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { from, Observable, Subject } from 'rxjs';
@@ -67,7 +67,7 @@ export interface DialogForCategory {
   templateUrl: './transaction-specific.component.html',
   styleUrls: ['./transaction-specific.component.css']
 })
-export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterViewInit{
+export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService , private _router: Router,
     public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
     , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) {
@@ -358,23 +358,32 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy,AfterView
   }
 
 
-  ngAfterViewInit() {
-    console.log("hello after view int");
-    //this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
-    //  res => {
-    //    console.log("GetAllGroupsWithItemsDetails", res);
-    //    this.GroupFs = res;
-    //    this.ItemsAvailable = true;
-    //  }
-    //);
-
-    console.log("@@@@@@@@@@@@@@@@", this.TransactionsService.ShraingListOfGroupsandItems)
-    this.GroupFs = this.TransactionsService.ShraingListOfGroupsandItems;
-    console.log("Items available in GrpFs", this.GroupFs)
-
-    this.ItemsAvailable = true;
+  //ngAfterViewInit() {
+  //  console.log("hello after view int");
+  //  //this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
+  //  //  res => {
+  //  //    console.log("GetAllGroupsWithItemsDetails", res);
+  //  //    this.GroupFs = res;
+  //  //    this.ItemsAvailable = true;
+  //  //  }
+  //  //);
+  //  console.log("@@@@@@@@@@@@@@@@", this.TransactionsService.ShraingListOfGroupsandItems)
+  //  this.GroupFs = this.TransactionsService.ShraingListOfGroupsandItems;
+  //  console.log("Items available in GrpFs", this.GroupFs)
+  //  this.ItemsAvailable = true;
       
-  };
+  //};
+
+  ngDoCheck() {
+    console.log("hello NGDOCHEEEEEECK TransSpecific-Comp");
+  
+    this.GroupFs = this.TransactionsService.ShraingListOfGroupsandItems;
+    if (this.TransactionsService.ListOfGroupsandItemsReady) {
+      this.ItemsAvailable = true;
+    }
+    
+  }
+
 
 
   //event handler for the select element's change event
