@@ -86,7 +86,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   selectedTransaction: number;
 
   checkedTransactionsIds?: number[];
-  checkedTransactionsMain?: TransactionsDetails[];
+  checkedTransactionsMain?: TransactionsDetails[]=[];
   productdetails?: storeTransDetails_VM[];
   filterProduct?: storeTransDetails_VM[];
   RealProduct: storeTransDetails_VM[];
@@ -250,6 +250,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           (data) => {
             console.log("response2View", data);
             this.StoreTransMain = data;
+            this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.trnsNo;
             console.log(this.StoreTransMain);
             try {
               if (this.StoreTransMain.isDependant == true) {
@@ -318,10 +319,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             catch (e) { console.log(e); };
             //console.log("this.StoreTransMain.storeTransMaster_VM.to_Type[0]", this.StoreTransMain.storeTransMaster_VM.to_Type[0])
 
-            try {
-              this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.storeTransMax;
-            }
-            catch (e) { console.log(e); };
+          
             try {
               this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
             }
@@ -560,12 +558,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         trnsCode: this.Transcode,
         trnsDate: this.Datevalue,
         trnsNo: this.storeTransMax,
-        fromStoreAllcodesId: this.fromStoreAllcodesId,
-        toStoreAllcodesId: this.fromStoreAllcodesId,
+        fromStoreAllcodesId: FromAllCodes,
+        toStoreAllcodesId: ToAllCodes,
         period: 2,
         rem: this.Rem,
         storedocnum: this.storedocnum
       };
+      alert("hii");
+      this.storeTransDep_VM = this.editTransaction();
+      console.log("bye");
     }
     else {
       this.storeTransMaster = {
@@ -580,6 +581,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         rem: this.Rem,
         storedocnum: this.storedocnum
       };
+      alert("بدأت");
+      this.storeTransDep_VM= this.fillStoreTranDep();
+      console.log("خلصت");
     }
    
    
@@ -588,16 +592,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     console.log("storeTransMaster_VM", this.StoreTransMain.storeTransMaster_VM);
 
     this.StoreTransMain.storeTransDetails_VM = this.productdetails;
-    for (var i = 0; i < this.checkedTransactionsMain.length; i++) {
-      this.storeTransDep_VM.push({
-        ptransrowid: this.checkedTransactionsMain[i].StoreTrnsMId,
-        branchId: this.checkedTransactionsMain[i].BranchId,
-        //toStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
-       // fromStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
-        //trnsCode: this.checkedTransactionsMain[i].TrnsCode,
-        //trnsDate: this.checkedTransactionsMain[i].TrnsDate
-      });
-    }
+
+    
    
     this.StoreTransMain.storeTransDep_VM = this.storeTransDep_VM;
     console.log("storeTransDep_VM", this.storeTransDep_VM);
@@ -802,7 +798,30 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       this._router.navigate([`/all-transactions/${this.Transcode}`]);
     }
 
-  }
+  };
+
+  editTransaction(): storeTransDep_VM[] {
+    try {
+      if (this.checkedTransactionsMain.length > 0) {
+        this.fillStoreTranDep();
+      }
+     
+    } catch (e) {
+      this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;};
+    return this.storeTransDep_VM;
+  };
+
+  fillStoreTranDep(): storeTransDep_VM[] {
+    console.log("بدأت");
+    for (var i = 0; i < this.checkedTransactionsMain.length; i++) {
+      this.storeTransDep_VM.push({
+        ptransrowid: this.checkedTransactionsMain[i].StoreTrnsMId,
+        branchId: this.checkedTransactionsMain[i].BranchId,
+      });
+      return this.storeTransDep_VM;
+    };
+    console.log("خلصت");
+  };
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
