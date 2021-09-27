@@ -159,6 +159,12 @@ namespace BLL.Repo
             return result;
         }
 
+        public async Task<List<T>> CallQuery<T>(string query, Dictionary<string, object> para = null, int type = 0)
+        {
+            var result = await TestQuery.Get<T>(query, para, type);
+            return result;
+        }
+
         public async void Save()
         {
             await _contex.SaveChangesAsync();

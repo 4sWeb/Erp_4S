@@ -97,15 +97,28 @@ namespace BLL.Repo
             return Items;
         }
 
-        public object GetMaxID(decimal TransCode, decimal PeriodID, decimal BranchID)
+        public object GetMaxID(decimal TransCode, decimal PeriodID)
         {
-            if (GetByCondition(c => c.BranchId == BranchID && c.TrnsCode == TransCode && c.Period == PeriodID).Result.Any())
+            if (GetByCondition(c => c.TrnsCode == TransCode && c.Period == PeriodID).Result.Any())
             {
-                return GetByCondition(c => c.BranchId == BranchID && c.TrnsCode == TransCode && c.Period == PeriodID).Result.LastOrDefault().TrnsNo + 1;
+                return GetByCondition(c =>  c.TrnsCode == TransCode && c.Period == PeriodID).Result.Max().TrnsNo + 1;
 
 
             }
          
+            return 1;
+        }
+
+
+        public object GetMaxID(decimal TransCode, decimal PeriodID,decimal BranchID)
+        {
+            if (GetByCondition(c => c.TrnsCode == TransCode && c.Period == PeriodID&&c.BranchId==BranchID).Result.Any())
+            {
+                return GetByCondition(c => c.TrnsCode == TransCode && c.Period == PeriodID &&c.BranchId == BranchID).Result.Max().TrnsNo + 1;
+
+
+            }
+
             return 1;
         }
 

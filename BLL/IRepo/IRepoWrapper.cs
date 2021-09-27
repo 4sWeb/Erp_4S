@@ -73,6 +73,7 @@ namespace BLL.IRepo
         ICommittee _Committee { get; }
         ICommitteedetail _Committeedetail { get; }
         Task<List<object>> CallQuery(string query, Dictionary<string, object> para = null, int type = 0);
+        Task<List<T>> CallQuery<T>(string query, Dictionary<string, object> para = null, int type = 0);
         void Save();
     }
 }

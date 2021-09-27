@@ -55,7 +55,7 @@ namespace Angular_API.Controllers
 
         [HttpGet]
         [Route("TransactionSpec")]
-        public JsonResult TransactionSpecByID(decimal transCode, decimal userId)
+        public JsonResult TransactionSpecByID(decimal transCode, decimal userId,decimal Period=2)
         {
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(transCode);
             var listOfBranches = repo._branch.GetAllBranches(userId);
@@ -67,10 +67,10 @@ namespace Angular_API.Controllers
             }
             TransactionSpec.TransactionMasterSpec_VM.Branches = branches_VMs;
 
-            var branches = listOfBranches.Result.FirstOrDefault();
-            Dictionary<string, object> currently = (Dictionary<string, object>)branches;
-            var brancheId = int.Parse(currently.FirstOrDefault().Value.ToString());
-            TransactionSpec.StoreTransMax = repo._StoreTrnsM.GetMaxID(transCode, 2, brancheId);
+            //var branches = listOfBranches.Result.FirstOrDefault();
+            //Dictionary<string, object> currently = (Dictionary<string, object>)branches;
+            //var brancheId = int.Parse(currently.FirstOrDefault().Value.ToString());
+            TransactionSpec.StoreTransMax = repo._StoreTrnsM.GetMaxID(transCode, Period);//(branchId)
 
             TransactionSpec.TransactionMasterSpec_VM.From_Type = repo._Groupf.GetAllTypes(transCode, "F"); // Altaraf From
             TransactionSpec.TransactionMasterSpec_VM.To_Type = repo._Groupf.GetAllTypes(transCode, "T");   // Altaraf TO
