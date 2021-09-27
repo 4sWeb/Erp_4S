@@ -72,8 +72,8 @@ namespace BLL.Repo
                 {
                     Dictionary<string, object> Current = (Dictionary<string, object>)item;
                     var NewItem = GetByCondition(c => c.StoreTrnsMId == decimal.Parse(Current.GetValueOrDefault("MID").ToString())).Result.Select(s => new { s.TrnsCode, s.TrnsDate, s.TrnsNo, s.StoreTrnsMId, s.FromStoreAllcodesId, s.ToStoreAllcodesId, s.BranchId, s.Storedocnum, s.Period }).FirstOrDefault();
-                 
-                    
+                    var Exist = Items.Where(c => c.StoreTrnsMId == NewItem.StoreTrnsMId);
+                    if(Exist.Count()==0)
                     Items.Add(new Transaction_VM
                     {
                         StoreTrnsMId = NewItem.StoreTrnsMId,
