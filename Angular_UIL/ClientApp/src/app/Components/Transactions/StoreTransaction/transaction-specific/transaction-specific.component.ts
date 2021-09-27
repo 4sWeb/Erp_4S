@@ -614,7 +614,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           quantity: this.filterStoreTransDepDetails[i].qty,
           unitPrice: this.filterStoreTransDepDetails[i].unitPrice,
           totalo: this.filterStoreTransDepDetails[i].totalo,
-          prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
+          //prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
           commited: 0
         });
       }
@@ -693,14 +693,21 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   openCategoryDialog(): void {
     console.log("in open dialog method",this.productdetails);
     //this.productdetails = [];
+    var temp = this.productdetails;
+    console.log("temp",temp);
     if (this.productdetails == undefined) {
       this.productdetails = [];
     }
+    console.log("temp", temp);
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
       data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs }
       
     });
     dialogReff.afterClosed().subscribe(result => {
+      console.log("specific close", result);
+      if (result == undefined) {
+        result = temp;
+      }
       this.dialogCategoryDetails = result;
       console.log(this.dialogCategoryDetails);
       //for (var i = 0; i < result.length; i++) {
@@ -736,7 +743,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           quantity: this.filterStoreTransDepDetails[i].qty,
           unitPrice: this.filterStoreTransDepDetails[i].unitPrice,
           totalo: this.filterStoreTransDepDetails[i].totalo,
-          prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
+         // prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
           commited:0
         });
       }

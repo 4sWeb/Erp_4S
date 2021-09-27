@@ -25,7 +25,8 @@ export class DialogForCategoryComponent implements OnInit {
   unites_VMs: Unites_VM[]=[];
   storeTransDetailsDialog: storeTransDetails_VM[] = [];
   dialogCategoryDetails: storeTransDetails_VM[] = [];
-  productdetailsDialog: storeTransDetails_VM[]=[];
+  productdetailsDialog: storeTransDetails_VM[] = [];
+
 
   GroupFChanged: boolean = false;
   ItemChanged: boolean = false;
@@ -52,6 +53,9 @@ export class DialogForCategoryComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogForCategory) {
     dialogRef.disableClose = true;
     this.productdetailsDialog = data.productdetails;
+
+
+    
     this.GroupFs = data.GroupFs;
     console.log("GroupFsFrom Dialog", this.GroupFs);
 
@@ -59,12 +63,20 @@ export class DialogForCategoryComponent implements OnInit {
       this.storeTransDetailsDialog = [];
       for (var i = 0; i < this.productdetailsDialog.length; i++) {
         this.storeTransDetailsDialog.push({
-          qty: this.productdetailsDialog[i].qty, unitId: this.productdetailsDialog[i].unitId, itemId: this.productdetailsDialog[i].itemId, totalo: this.productdetailsDialog[i].totalo,
-          item_Name: this.productdetailsDialog[i].item_Name, unit_Name: this.productdetailsDialog[i].unit_Name, groupF_Id: this.productdetailsDialog[i].groupF_Id,
-          storeTrnsOId: this.productdetailsDialog[i].storeTrnsOId, unitPrice: this.productdetailsDialog[i].unitPrice
+          qty: this.productdetailsDialog[i].qty,
+          unitId: this.productdetailsDialog[i].unitId,
+          itemId: this.productdetailsDialog[i].itemId,
+          totalo: this.productdetailsDialog[i].totalo,
+          item_Name: this.productdetailsDialog[i].item_Name,
+          unit_Name: this.productdetailsDialog[i].unit_Name,
+          groupF_Id: this.productdetailsDialog[i].groupF_Id,
+          storeTrnsOId: this.productdetailsDialog[i].storeTrnsOId,
+          unitPrice: this.productdetailsDialog[i].unitPrice
         });
       }
+      
       this.productdetailsDialog = [];
+  
     }
   }
 
@@ -172,8 +184,15 @@ export class DialogForCategoryComponent implements OnInit {
     } else {
      
       this.storeTransDetailsDialog.push({
-        groupF_Id: this.Group.GroupF_Id, itemId: this.Item.itemId, item_Name: this.Item.name, unitId: this.Unite.uniteId,
-        unit_Name: this.Unite.name, qty: this.quantity, unitPrice: this.unitPrice, totalo: this.totalo, storeTrnsOId: null
+        groupF_Id: this.Group.GroupF_Id,
+        itemId: this.Item.itemId,
+        item_Name: this.Item.name,
+        unitId: this.Unite.uniteId,
+        unit_Name: this.Unite.name,
+        qty: this.quantity,
+        unitPrice: this.unitPrice,
+        totalo: this.totalo,
+        //storeTrnsOId: null
       });
      
     }
@@ -222,8 +241,15 @@ export class DialogForCategoryComponent implements OnInit {
 
     for (var i = 0; i < this.storeTransDetailsDialog.length; i++) {
       this.productdetailsDialog.push({
-        qty: this.storeTransDetailsDialog[i].qty, unitId: this.storeTransDetailsDialog[i].unitId, itemId: this.storeTransDetailsDialog[i].itemId, totalo: this.storeTransDetailsDialog[i].totalo,
-        item_Name: this.storeTransDetailsDialog[i].item_Name, unit_Name: this.storeTransDetailsDialog[i].unit_Name, groupF_Id: this.storeTransDetailsDialog[i].groupF_Id, storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId, unitPrice: this.storeTransDetailsDialog[i].unitPrice
+        qty: this.storeTransDetailsDialog[i].qty,
+        unitId: this.storeTransDetailsDialog[i].unitId,
+        itemId: this.storeTransDetailsDialog[i].itemId,
+        totalo: this.storeTransDetailsDialog[i].totalo,
+        item_Name: this.storeTransDetailsDialog[i].item_Name,
+        unit_Name: this.storeTransDetailsDialog[i].unit_Name,
+        groupF_Id: this.storeTransDetailsDialog[i].groupF_Id,
+        storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId,
+        unitPrice: this.storeTransDetailsDialog[i].unitPrice
       });
     }
     this.productdetailsDialog = this.storeTransDetailsDialog;
@@ -231,9 +257,6 @@ export class DialogForCategoryComponent implements OnInit {
   }
 
   onNoClick(): void {
-    //this.storeTransDetails_VM = this.data.dialogCategoryDetails;
-    //console.log("from Dialog Category close",this.storeTransDetails_VM);
-    //this.productdetailsDialog = this.storeTransDetailsDialog.filter(s => s.tempAdded == false);
 
     this.dialogRef.close();
   };
