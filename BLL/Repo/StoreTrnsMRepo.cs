@@ -114,7 +114,7 @@ namespace BLL.Repo
         {
             if (GetByCondition(c => c.TrnsCode == TransCode && c.Period == PeriodID&&c.BranchId==BranchID).Result.Any())
             {
-                return GetByCondition(c => c.TrnsCode == TransCode && c.Period == PeriodID &&c.BranchId == BranchID).Result.Max().TrnsNo + 1;
+                return GetByCondition(c => c.TrnsCode == TransCode && c.Period == PeriodID &&c.BranchId == BranchID).Result.Max(a=>a.TrnsNo) + 1;
 
 
             }
@@ -183,6 +183,7 @@ namespace BLL.Repo
                         Rem=s.Rem,
 
                       // StoreTrnsDepId = s.StoreTrnsMId,
+                       Ptransrowid=item,
                        ToStoreAllcodesId = string.IsNullOrEmpty(s.ToStoreAllcodesId.ToString()) ? 0 : (decimal)s.ToStoreAllcodesId,
                         FromStoreAllcodesId= string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString()) ? 0 : (decimal)s.FromStoreAllcodesId,
                         TrnsCode=s.TrnsCode,

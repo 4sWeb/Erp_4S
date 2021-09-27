@@ -198,7 +198,7 @@
         </div>
 
         <div class="text-right" dir="rtl">
-          <button dir="rtl" class="btn btn-info text-right form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length <=0 && ItemsAvailable==true && productdetails==undefined"
+          <button dir="rtl" class="btn btn-info text-right form-group row" *ngIf="TransactionSpecific.TransactionDepSpec_VM.TransactionsNames?.length <=0 && ItemsAvailable==true &&( productdetails==undefined||productdetails.length==0)"
                   style="border-bottom-width: 5px; border-right-width: 4px; margin-bottom: -47px;" title="لاضافة اصنافــــ" mat-raised-button (click)="openCategoryDialog()">
             الاصناف
 

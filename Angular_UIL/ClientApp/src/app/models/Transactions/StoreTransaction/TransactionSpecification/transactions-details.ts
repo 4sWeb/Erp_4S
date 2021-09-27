@@ -1,6 +1,7 @@
 export class TransactionsDetails {
   constructor(
     public StoreTrnsMId?: number,
+    //public ptransrowid?:number,
     public TrnsCode?: number,
     public TrnsNo?: number,
     public Storedocnum?: number,

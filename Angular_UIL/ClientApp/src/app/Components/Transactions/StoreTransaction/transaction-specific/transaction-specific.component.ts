@@ -563,7 +563,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         fromStoreAllcodesId: this.fromStoreAllcodesId,
         toStoreAllcodesId: this.fromStoreAllcodesId,
         period: 2,
-        rem: this.Rem
+        rem: this.Rem,
+        storedocnum: this.storedocnum
       };
     }
     else {
@@ -576,7 +577,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         fromStoreAllcodesId: FromAllCodes,
         toStoreAllcodesId: ToAllCodes,
         period: 2,
-        rem: this.Rem
+        rem: this.Rem,
+        storedocnum: this.storedocnum
       };
     }
    
@@ -592,8 +594,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         branchId: this.checkedTransactionsMain[i].BranchId,
         //toStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
        // fromStoreAllcodesId: this.checkedTransactionsMain[i].To_StoreAllcodesId,
-        trnsCode: this.checkedTransactionsMain[i].TrnsCode,
-        trnsDate: this.checkedTransactionsMain[i].TrnsDate
+        //trnsCode: this.checkedTransactionsMain[i].TrnsCode,
+        //trnsDate: this.checkedTransactionsMain[i].TrnsDate
       });
     }
    
@@ -705,8 +707,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     });
     dialogReff.afterClosed().subscribe(result => {
       console.log("specific close", result);
-      if (result == undefined) {
+      if (result == undefined && temp != undefined) {
         result = temp;
+      } else if (result == undefined && temp == undefined) {
+        result = [];
       }
       this.dialogCategoryDetails = result;
       console.log(this.dialogCategoryDetails);
