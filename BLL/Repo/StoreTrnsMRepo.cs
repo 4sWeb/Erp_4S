@@ -101,7 +101,7 @@ namespace BLL.Repo
         {
             if (GetByCondition(c => c.TrnsCode == TransCode && c.Period == PeriodID).Result.Any())
             {
-                return GetByCondition(c =>  c.TrnsCode == TransCode && c.Period == PeriodID).Result.Max().TrnsNo + 1;
+                return GetByCondition(c =>  c.TrnsCode == TransCode && c.Period == PeriodID).Result.Max(a=>a.TrnsNo) + 1;
 
 
             }
