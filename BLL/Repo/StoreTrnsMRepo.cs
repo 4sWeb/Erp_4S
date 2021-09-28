@@ -157,6 +157,7 @@ namespace BLL.Repo
                     BranchId= (decimal)s.BranchId,
                     TrnsCode=s.TrnsCode,
                     Storedocnum= string.IsNullOrEmpty(s.Storedocnum.ToString()) ? 0 : (decimal)s.Storedocnum,
+                    TrnsNo= string.IsNullOrEmpty(s.TrnsNo.ToString())?0:s.TrnsNo
                 }
                 ).FirstOrDefault() ;
                 return result;
