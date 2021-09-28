@@ -125,6 +125,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   public currentMinute: number = this.today.getMinutes();
   public currentSecond: number = this.today.getSeconds();
   public Datevalue: Date = new Date();
+  public maxDate: Date = new Date();
             ///
 
 
