@@ -110,13 +110,13 @@
 
             </td>
             <td class="col-2">
-              <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity"  (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" required  pattern="^((\\+91-?)|0)?[0-9]{10}$"/>
+              <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity"  (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" required  pattern="^[0-9]+$"/>
 
 
             </td>
             <td class="col-2">
               <div>
-                <input type="number" class="form-control" id="Price" name="Price" value="unitPrice"  (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" required pattern="^((\\+91-?)|0)?[0-9]{10}$"/>
+                <input type="text" class="form-control" id="Price" name="Price" value="unitPrice"  (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" required pattern="^[0-9]+$"/>
               </div>
             </td>
 

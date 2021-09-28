@@ -743,7 +743,14 @@
                 <th style="text-align:center">السعر</th>
                 <th style="text-align:center">الكمية</th>
                 <th style="text-align:center">الوحدة</th>
-                <th class="text-center">الصنف</th>
+                <th class="text-center">
+                  <div class="row">
+                    <div class="col-6">اسم الصنف</div>
+                    <div class="col-6">كود الصنف</div>
+
+
+                  </div>
+                </th>
                 <th class="text-center">المجموعه</th>
               </tr>
             </thead>
@@ -765,12 +772,17 @@
                 <td><span>{{trans.unitPrice}}</span></td>
                 <td><span>{{trans.qty}}</span></td>
                 <td>
-                  <span> <span>{{trans.unit_Name}} </span>  </span>
+                  <span> {{trans.unit_Name}} </span>  
                 </td>
 
                 <td>
-                  <span> {{trans.item_Name}}</span>
+                  <div class="row">
+                    <div class="col-6">{{trans.item_Name}}</div>
+                    <div class="col-6">{{trans.itemId}}</div>
+
+                  </div>
                 </td>
+
 
                 <td>
                   <span>{{trans.groupF_Id}}</span>
