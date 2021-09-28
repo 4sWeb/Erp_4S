@@ -250,8 +250,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           (data) => {
             console.log("response2View", data);
             this.StoreTransMain = data;
-            this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.trnsNo;
-            console.log(this.StoreTransMain);
+            console.log("this.StoreTransMain",this.StoreTransMain);
+            try {
+              this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.trnsNo;
+              console.log("storeTransMax", this.storeTransMax);
+            } catch (e) { }
             try {
               console.log("FromTypeId");
               this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
@@ -496,21 +499,42 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
 
   //add Store Transaction
-  addStoreTransaction() {
+  addStoreTransaction()
+  {
     var FromAllCodes:number;
     var ToAllCodes:number;
     try {
-      if (this.fromStoreAllcodesId != undefined&&this.ToTypeDetailsId!=undefined) {
+      alert(this.ToTypeDetailsId);
+      alert(this.fromStoreAllcodesId);
+      if (this.fromStoreAllcodesId != undefined && this.ToTypeDetailsId != undefined) //Input In From And To Done
+      {
         FromAllCodes = this.fromStoreAllcodesId;
         ToAllCodes = this.ToTypeDetailsId;
-      } if (this.fromStoreAllcodesId != undefined && this.ToTypeDetailsId == undefined) {
+        console.log("11111111111111");
+       
+        console.log(FromAllCodes);
+        console.log("////////////", ToAllCodes);
+
+      }
+      else if (this.fromStoreAllcodesId != undefined && this.ToTypeDetailsId == undefined)//From Input Done But No To
+      {
         FromAllCodes = this.fromStoreAllcodesId;
-        ToAllCodes = this.fromStoreAllcodesId;
+        ToAllCodes =null;
+
       }
-      if (this.fromStoreAllcodesId == undefined && this.ToTypeDetailsId != undefined) {
+      else if (this.fromStoreAllcodesId == undefined && this.ToTypeDetailsId != undefined) {
         ToAllCodes = this.ToTypeDetailsId;
-        FromAllCodes = this.ToTypeDetailsId;
+        FromAllCodes = null;
+
+     
       }
+
+      else {
+        ToAllCodes = null;
+        FromAllCodes = null;
+      }
+
+
       } catch (e) {}
     this.StoreTransMain = new StoreTransMain();
     if (this.operationType == "View") {
@@ -526,9 +550,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         rem: this.Rem,
         storedocnum: this.storedocnum
       };
-      alert("hii");
+
       this.storeTransDep_VM = this.editTransaction();
-      console.log("bye");
     }
     else {
       this.storeTransMaster = {
@@ -543,9 +566,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         rem: this.Rem,
         storedocnum: this.storedocnum
       };
-      alert("بدأت");
       this.storeTransDep_VM= this.fillStoreTranDep();
-      console.log("خلصت");
+
     }
    
    

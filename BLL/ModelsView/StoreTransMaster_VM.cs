@@ -11,8 +11,8 @@ namespace BLL.ModelsView
         public decimal TrnsCode { get; set; }
         public decimal TrnsNo { get; set; }
         public decimal BranchId { get; set; }
-        public decimal FromStoreAllcodesId { get; set; }
-        public decimal ToStoreAllcodesId { get; set; }
+        public decimal ? FromStoreAllcodesId  { get; set; }
+        public decimal ?ToStoreAllcodesId { get; set; }
         public string Rem { get; set; }
         public DateTime TrnsDate { get; set; }
         public decimal? Storedocnum { get; set; }
