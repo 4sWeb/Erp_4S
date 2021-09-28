@@ -253,35 +253,27 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.trnsNo;
             console.log(this.StoreTransMain);
             try {
-              if (this.StoreTransMain.isDependant == true) {
+              console.log("FromTypeId");
+              this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
+              console.log("FromTypeId", this.FromTypeId);
+            }
+            catch (e) { console.log(e); };
 
-                if (this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].from_TypeName) {
-                  this.fromStoreAllcodesId = this.StoreTransMain.storeTransDep_VM[0].fromStoreAllcodesId;
-                } else {
-                  this.fromStoreAllcodesId = undefined;
-                }
-              }
-              else {
+            try {
+              this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
+            }
+            catch (e) { console.log(e); };
+            try {
+
                 this.fromStoreAllcodesId = this.StoreTransMain.storeTransMaster_VM.fromStoreAllcodesId;
-              }
             }
             catch (e) { console.log(e); }
             try {
-              console.log("hello try");
-              console.log(this.StoreTransMain.isDependant);
-              if (this.StoreTransMain.isDependant == true) {
-                console.log("enter dep");
-                if (this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].tO_TypeName) {
-                  console.log("enter dep equal");
-                  this.ToTypeDetailsId = this.StoreTransMain.storeTransDep_VM[0].toStoreAllcodesId;
-                } else {
-                  this.ToTypeDetailsId = undefined;
-                }
-              }else {
+              
                 this.ToTypeDetailsId = this.StoreTransMain.storeTransMaster_VM.toStoreAllcodesId;
-              }
             }
             catch (e) { console.log(e); };
+
             this.branchId = this.StoreTransMain.storeTransMaster_VM.branchId;
             this.Datevalue = this.StoreTransMain.storeTransMaster_VM.trnsDate;
             this.storeTransDetails_VM = this.StoreTransMain.storeTransDetails_VM;
@@ -289,36 +281,6 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             this.productdetails = this.StoreTransMain.storeTransDetails_VM;
             ///
             console.log("storeTransDetails_VM", this.storeTransDetails_VM);
- 
-
-            //console.log("transDepCode", this.TransCode);
-            try {
-              if (this.StoreTransMain.isDependant == true) {
-                if (this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].from_TypeName) {
-                  this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
-                } else {
-                  this.FromTypeId = undefined;
-                }
-              } else {
-                this.FromTypeId = this.StoreTransMain.storeTransMaster_VM.from_Type[0].TYPE_ID;
-              }
-            }
-            catch (e) { console.log(e); };
-
-            try {
-              if (this.StoreTransMain.isDependant == true) {
-                if (this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_NAME == this.StoreTransMain.storeTransDep_VM[0].tO_TypeName) {
-                  this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
-                } else {
-                  this.ToTypeId = undefined;
-                }
-              } else {
-                this.ToTypeId = this.StoreTransMain.storeTransMaster_VM.to_Type[0].TYPE_ID;
-              }
-            }
-            catch (e) { console.log(e); };
-            //console.log("this.StoreTransMain.storeTransMaster_VM.to_Type[0]", this.StoreTransMain.storeTransMaster_VM.to_Type[0])
-
           
             try {
               this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
