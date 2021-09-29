@@ -152,8 +152,8 @@ namespace BLL.Repo
                 {
                     TrnsDate = s.TrnsDate,
                     Rem=s.Rem,
-                    ToStoreAllcodesId= string.IsNullOrEmpty(s.ToStoreAllcodesId.ToString())?0:(decimal)s.ToStoreAllcodesId,
-                    FromStoreAllcodesId =string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?0:(decimal)s.FromStoreAllcodesId,
+                    ToStoreAllcodesId= string.IsNullOrEmpty(s.ToStoreAllcodesId.ToString())?null:(decimal)s.ToStoreAllcodesId,
+                    FromStoreAllcodesId =string.IsNullOrEmpty(s.FromStoreAllcodesId.ToString())?null:(decimal)s.FromStoreAllcodesId,
                     BranchId= (decimal)s.BranchId,
                     TrnsCode=s.TrnsCode,
                     Storedocnum= string.IsNullOrEmpty(s.Storedocnum.ToString()) ? 0 : (decimal)s.Storedocnum,

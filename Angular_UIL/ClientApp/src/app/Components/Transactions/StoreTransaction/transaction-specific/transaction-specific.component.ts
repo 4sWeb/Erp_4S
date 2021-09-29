@@ -114,6 +114,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   StoreTransDepDetailsOnly: storeTransDepDetails_VM[] = [];
   filterStoreTransDepDetails: storeTransDetails_VM[] = [];
   IsDependant?: boolean = false;
+  TrnsNo: number;
+  storedocnumv: number;
 
 
          //datePicker
@@ -135,7 +137,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   Rem: string;
   //Datevalue: Date;
   storeTransMax: number;
-  storeTransCurrent: number;
+
   storedocnum: number;
   transDepId: number;
   //For Edit while creating
@@ -248,8 +250,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             this.StoreTransMain = data;
             console.log("this.StoreTransMain",this.StoreTransMain);
             try {
-              this.storeTransCurrent = this.StoreTransMain.storeTransMaster_VM.trnsNo;
-              console.log("storeTransMax", this.storeTransCurrent);
+              this.TrnsNo = this.StoreTransMain.storeTransMaster_VM.trnsNo;
+              console.log("storeTransMax", this.storeTransMax);
             } catch (e) { }
             try {
               console.log("FromTypeId");
@@ -282,7 +284,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             console.log("storeTransDetails_VM", this.storeTransDetails_VM);
           
             try {
-              this.storedocnum = this.StoreTransMain.storeTransMaster_VM.storedocnum;
+              this.storedocnumv = this.StoreTransMain.storeTransMaster_VM.storedocnum;
             }
             catch (e) { console.log(e); };
             try {
@@ -291,10 +293,6 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             catch (e) { console.log(e); };
             //console.log("storeDocNum", this.storedocnum);
 
-            
-            this.itemDetails_VM = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM;
-            this.Items_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.items_VM;
-            this.unites_VMs = this.StoreTransMain.storeTransDetails_VM[0].itemDetails_VM.unites_VM;
             //need to enhance as storetransDep array so transcode maybe array
             try {
               this.transDepCode = this.StoreTransMain.storeTransDep_VM[0].trnsCode;
@@ -303,7 +301,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             catch (e) { console.log(e); }
           
             this.storeTransDep_VM = this.StoreTransMain.storeTransDep_VM;
-           
+            console.log(this.storeTransDep_VM);
+            console.log("selectedTransaction",this.selectedTransaction);
           }
         );
         this.TransactionsService.getAllGroups().subscribe(
@@ -521,10 +520,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       else if (this.fromStoreAllcodesId == undefined && this.ToTypeDetailsId != undefined) {
         ToAllCodes = this.ToTypeDetailsId;
         FromAllCodes = null;
-
-     
       }
-
+    
       else {
         ToAllCodes = null;
         FromAllCodes = null;
@@ -539,12 +536,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         branchId: this.branchId,
         trnsCode: this.Transcode,
         trnsDate: this.Datevalue,
-        trnsNo: this.storeTransMax,
+        trnsNo: this.TrnsNo,
         fromStoreAllcodesId: FromAllCodes,
         toStoreAllcodesId: ToAllCodes,
         period: 2,
         rem: this.Rem,
-        storedocnum: this.storedocnum
+        storedocnum: this.storedocnumv
       };
 
       this.storeTransDep_VM = this.editTransaction();
