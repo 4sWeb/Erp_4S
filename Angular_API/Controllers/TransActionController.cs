@@ -367,22 +367,22 @@ namespace Angular_API.Controllers
                     Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
                     GroupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
                     item.groupF_Id = GroupF_Id;
-                    var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
-                    ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
-                    foreach (var itemDetail in ItemList.Result.ToList())
-                    {
-                        Dictionary<string, object> currentItem = (Dictionary<string, object>)itemDetail;
-                        ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)currentItem.Values.Last(), itemId = int.Parse(currentItem.Values.First().ToString()) });
-                    }
+                    //var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
+                    //ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
+                    //foreach (var itemDetail in ItemList.Result.ToList())
+                    //{
+                    //    Dictionary<string, object> currentItem = (Dictionary<string, object>)itemDetail;
+                    //    ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)currentItem.Values.Last(), itemId = int.Parse(currentItem.Values.First().ToString()) });
+                    //}
 
 
-                    var UniteList = repo._StoreUnits.GetUnitesDetails((decimal)STM_VM.StoreTransDetails_VM.FirstOrDefault().itemId);
-                    foreach (var itemUnite in UniteList.Result.ToList())
-                    {
-                        Dictionary<string, object> currentUnite = (Dictionary<string, object>)itemUnite;
-                        ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)currentUnite.Values.Last(), uniteId = int.Parse(currentUnite.Values.First().ToString()) });
-                    }
-                    item.itemDetails_VM = ItemDetails_VM;
+                    //var UniteList = repo._StoreUnits.GetUnitesDetails((decimal)STM_VM.StoreTransDetails_VM.FirstOrDefault().itemId);
+                    //foreach (var itemUnite in UniteList.Result.ToList())
+                    //{
+                    //    Dictionary<string, object> currentUnite = (Dictionary<string, object>)itemUnite;
+                    //    ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)currentUnite.Values.Last(), uniteId = int.Parse(currentUnite.Values.First().ToString()) });
+                    //}
+                    //item.itemDetails_VM = ItemDetails_VM;
                 }
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
                 if (listOfPrevIds != null)

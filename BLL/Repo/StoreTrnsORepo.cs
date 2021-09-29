@@ -103,7 +103,8 @@ namespace BLL.Repo
                         storeTrnsOId=item.StoreTrnsOId,
                         unitPrice=item.UnitPrice,
                         unit_Name = SUnit.GetByCondition(c => c.Unitid == item.UnitId).Result.FirstOrDefault().Aname,
-                        item_Name = SItems.GetByCondition(c => c.StoreItemsId == item.ItemId).Result.FirstOrDefault().Aname,
+                        item_Name = SItems.GetByCondition(c => c.StoreItemsId == item.ItemId).Result.FirstOrDefault().Aname+"-"+
+                                    SItems.GetByCondition(c => c.StoreItemsId == item.ItemId).Result.FirstOrDefault().ItemCode,
                     });
                 }
                 return ItemsList;
