@@ -117,13 +117,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
 
          //datePicker
-  public today: Date = new Date();
-  public currentYear: number = this.today.getFullYear();
-  public currentMonth: number = this.today.getMonth();
-  public currentDay: number = this.today.getDate();
-  public currentHour: number = this.today.getHours();
-  public currentMinute: number = this.today.getMinutes();
-  public currentSecond: number = this.today.getSeconds();
+ 
   public Datevalue: Date = new Date();
   public maxDate: Date = new Date();
             ///
@@ -141,6 +135,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   Rem: string;
   //Datevalue: Date;
   storeTransMax: number;
+  storeTransCurrent: number;
   storedocnum: number;
   transDepId: number;
   //For Edit while creating
@@ -253,8 +248,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             this.StoreTransMain = data;
             console.log("this.StoreTransMain",this.StoreTransMain);
             try {
-              this.storeTransMax = this.StoreTransMain.storeTransMaster_VM.trnsNo;
-              console.log("storeTransMax", this.storeTransMax);
+              this.storeTransCurrent = this.StoreTransMain.storeTransMaster_VM.trnsNo;
+              console.log("storeTransMax", this.storeTransCurrent);
             } catch (e) { }
             try {
               console.log("FromTypeId");

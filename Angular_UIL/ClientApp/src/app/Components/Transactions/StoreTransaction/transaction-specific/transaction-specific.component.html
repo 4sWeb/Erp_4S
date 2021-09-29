@@ -74,9 +74,7 @@
               <ejs-datetimepicker name="Datevalue" id='datetimepicker'  format='dd-MM-yyyy hh:mm:ss'
                                   placeholder='التاريـــــخ' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' required>
               </ejs-datetimepicker>
-            </div>
-
-
+            </div> 
           </div>
         </div>
 
@@ -97,7 +95,7 @@
           <div class="form-group row col-6 mr-4">
             <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax" readonly>
+              <input class="form-control" id="storeTransCurrent" name="storeTransCurrent" [value]="storeTransCurrent" [(ngModel)]="storeTransCurrent" readonly>
             </div>
           </div>
         </div>
