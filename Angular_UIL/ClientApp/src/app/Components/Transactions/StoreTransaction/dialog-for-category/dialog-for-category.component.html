@@ -23,17 +23,16 @@
         <table class="table table-bordered table-hover text-center">
           <thead style="background-color:rgba(86, 187, 155, 0.65)">
             <tr class="d-flex">
-              <th class="col-2">المجموعات</th>
-              <th class="col-2">الأصناف</th>
-              <th class="col-2">الوحدات</th>
-              <th class="col-2">الكمية</th>
-              <th class="col-2">سعر الوحدة</th>
-
-              <th class="col-2">القيمة</th>
+              <th class="col-sm-3 col-md-3 col-lg-3" >المجموعات</th>
+              <th class="col-sm-3 col-md-3 col-lg-3" >الأصناف</th>
+              <th class="col-sm-2 col-md-2 col-lg-2" >الوحدات</th>
+              <th class="col-sm-1 col-md-1 col-lg-1" >الكمية</th>
+              <th class="col-sm-1 col-md-1 col-lg-1" >سعر الوحدة</th>
+              <th class="col-sm-2 col-md-2 col-lg-2" >القيمة</th>
             </tr>
           </thead>
           <tr class="d-flex">
-            <td class="col-2">
+            <td class="col-sm-3 col-md-3 col-lg-3 pr-2 pl-2" >
               <div>
                 <ng-select bindLabel="Aname"
                            name="GroupFName"
@@ -49,7 +48,7 @@
                 </ng-select>
               </div>
             </td>
-            <td class="col-2">
+            <td class="col-sm-3 col-md-3 col-lg-3 pr-2 pl-2" >
               <div *ngIf="GroupFChanged == true">
                 <ng-select bindLabel="name"
                            name="ITEM"
@@ -77,7 +76,7 @@
               </div>
 
             </td>
-            <td class="col-2">
+            <td class="col-sm-2 col-md-2 col-lg-2 pr-2 pl-2" >
               <div *ngIf="ItemChanged==false||EditingClick==true">
                 <ng-select bindLabel="name"
                            name="unite"
@@ -109,20 +108,23 @@
               </div>
 
             </td>
-            <td class="col-2">
-              <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity"  (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" required  pattern="^[0-9]+$"/>
+            <td class="col-sm-1 col-md-1 col-lg-1 pr-1 pl-1">
+              <input type="text" class="form-control" id="Quantity" name="Quantity" value="quantity" style="padding-right:1px;padding-left:1px; font-size:12px"
+               (keyup)="onKeyQuantity($event)" [(ngModel)]="quantity" required  pattern="^[0-9]+$"/>
 
 
             </td>
-            <td class="col-2">
+            <td class="col-sm-1 col-md-1 col-lg-1 pr-1 pl-1" >
               <div>
-                <input type="text" class="form-control" id="Price" name="Price" value="unitPrice"  (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" required pattern="^[0-9]+$"/>
+                <input type="text" class="form-control" id="Price" name="Price" value="unitPrice" style="padding-right:0px;padding-left:0px; font-size:12px"
+                       (keyup)="onKeyPrice($event)" [(ngModel)]="unitPrice" required pattern="^[0-9]+$"/>
               </div>
             </td>
 
-            <td class="col-2">
+            <td class="col-sm-2 col-md-2 col-lg-2 pr-1 pl-1">
 
-              <input type="number" class="form-control" id="value" name="value" value="totalo" [(ngModel)]="totalo" readonly />
+              <input type="number" class="form-control" id="value" style="padding-right:1px;padding-left:1px; font-size:12px"
+                     name="value" value="totalo" [(ngModel)]="totalo" readonly />
 
             </td>
           </tr>
@@ -197,7 +199,7 @@
             <td><p>{{trans.qty}}</p></td>
             <td><p>{{trans.unit_Name}}</p></td>
             <td><p>{{trans.item_Name}}</p></td> <!--(ItemName+ITEMCODE)-->
-            <td><p>{{trans.groupF_Id}}</p></td>
+            <td><p>{{trans.groupF_Name}}</p></td>
 
           </tr>
         </tbody>

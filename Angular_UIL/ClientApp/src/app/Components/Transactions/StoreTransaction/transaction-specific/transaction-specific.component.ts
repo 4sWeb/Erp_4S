@@ -499,16 +499,14 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     var FromAllCodes:number;
     var ToAllCodes:number;
     try {
-      alert(this.ToTypeDetailsId);
-      alert(this.fromStoreAllcodesId);
       if (this.fromStoreAllcodesId != undefined && this.ToTypeDetailsId != undefined) //Input In From And To Done
       {
         FromAllCodes = this.fromStoreAllcodesId;
         ToAllCodes = this.ToTypeDetailsId;
-        console.log("11111111111111");
+    
        
         console.log(FromAllCodes);
-        console.log("////////////", ToAllCodes);
+      
 
       }
       else if (this.fromStoreAllcodesId != undefined && this.ToTypeDetailsId == undefined)//From Input Done But No To
@@ -545,6 +543,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       };
 
       this.storeTransDep_VM = this.editTransaction();
+      alert(` تم تعديل حركة ${this.TransactionSpecific.Aname} برقم ${this.TrnsNo} `);
     }
     else {
       this.storeTransMaster = {
@@ -559,7 +558,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         rem: this.Rem,
         storedocnum: this.storedocnum
       };
-      this.storeTransDep_VM= this.fillStoreTranDep();
+      this.storeTransDep_VM = this.fillStoreTranDep();
+      alert(` تم اضافة حركة ${this.TransactionSpecific.Aname} برقم ${this.storeTransMax} `);
 
     }
    

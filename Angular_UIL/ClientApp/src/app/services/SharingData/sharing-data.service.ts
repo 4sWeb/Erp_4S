@@ -12,6 +12,7 @@ export class SharingDataService {
   private storeTransMId: any = undefined;
 
   private transCode: any = undefined;
+  CurrentTrnsName: string;
 
   setOperationType(data: any) {
     this.operationType = data;

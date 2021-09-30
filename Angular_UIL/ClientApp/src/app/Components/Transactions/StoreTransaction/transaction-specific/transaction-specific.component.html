@@ -103,14 +103,14 @@
           <div class="form-group row col-6 mr-4" *ngIf="operationType != 'View'">
             <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax">
+              <input class="form-control" id="storeTransMax" name="storeTransMax" [value]="storeTransMax" [(ngModel)]="storeTransMax" readonly>
             </div>
           </div>
 
           <div class="form-group row col-6 mr-4" *ngIf="operationType == 'View'">
             <label for="storeTransMax" class="col-sm-4 col-form-label" style="text-align:right">رقم {{TransactionSpecific.Aname}}</label>
             <div class="col-sm-8">
-              <input class="form-control" id="TrnsNo" name="TrnsNo" [value]="TrnsNo" [(ngModel)]="TrnsNo">
+              <input class="form-control" id="TrnsNo" name="TrnsNo" [value]="TrnsNo" [(ngModel)]="TrnsNo" readonly>
             </div>
           </div>
         </div>
@@ -749,7 +749,7 @@
           <table class="table  table-bordered table-hover " style="width:100%">
             <thead style="background-color:#306c77">
               <tr style="text-align:right">
-                <th>تعديل</th>
+                <!--<th>تعديل</th>-->
                 <th>ملاحظات</th>
                 <th style="text-align:center">القيمة</th>
 
@@ -757,48 +757,42 @@
                 <th style="text-align:center">الكمية</th>
                 <th style="text-align:center">الوحدة</th>
                 <th class="text-center">
-                  <div class="row">
-                    <div class="col-6">اسم الصنف</div>
-                    <div class="col-6">كود الصنف</div>
-
-
-                  </div>
+                    اسم الصنف
                 </th>
                 <th class="text-center">المجموعه</th>
               </tr>
             </thead>
             <tbody>
               <tr style="text-align:center" *ngFor="let trans of storeTransDetails_VM ; let i = index">
-                <td>
-                  <!--<button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button>-->
-                  <button class="btn btn-outline-primary" [value]="trans" mat-raised-button (click)="EditDetails(trans)">
+                <!--<td>
+    <button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button>
+    <button class="btn btn-outline-primary" [value]="trans" mat-raised-button (click)="EditDetails(trans)">
 
-                    <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                    </svg>
-                  </button>
-                </td>
+      <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+      </svg>
+    </button>
+  </td>-->
                 <td><span>{{trans.notes}}</span></td>
                 <td><span>{{trans.totalo}}</span></td>
 
                 <td><span>{{trans.unitPrice}}</span></td>
                 <td><span>{{trans.qty}}</span></td>
                 <td>
-                  <span> {{trans.unit_Name}} </span>  
+                  <span> {{trans.unit_Name}} </span>
                 </td>
 
                 <td>
-                  <div class="row">
-                    <div class="col-6">{{trans.item_Name}}</div>
-                    <div class="col-6">{{trans.itemId}}</div>
+                  {{trans.item_Name}}
 
-                  </div>
                 </td>
+                <!--// -->
 
+                <td dir="ltr">
 
-                <td>
-                  <span>{{trans.groupF_Id}}</span>
+                  <span>{{trans.groupF_Id}}</span> <!--<span>{{trans.groupF_Name}}</span>-->  
+
                 </td>
               </tr>
             </tbody>

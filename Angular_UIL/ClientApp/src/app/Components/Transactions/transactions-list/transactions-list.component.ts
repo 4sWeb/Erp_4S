@@ -1,5 +1,6 @@
 import { error } from '@angular/compiler/src/util';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { inputs } from '@syncfusion/ej2-angular-calendars/src/datetimepicker/datetimepicker.component';
 import { Subject } from 'rxjs';
 import { Transactions } from '../../../models/Transactions/transactions';
 import { SharingDataService } from '../../../services/SharingData/sharing-data.service';
@@ -35,9 +36,12 @@ export class TransactionsListComponent implements OnDestroy,OnInit {
         console.log(Response);
         this.alltransactions = Response;
         this.dtTrigger.next();
+     
       },
       (error) => { console.log(error); })
   }
+
+
 
 
   ngOnDestroy(): void {
