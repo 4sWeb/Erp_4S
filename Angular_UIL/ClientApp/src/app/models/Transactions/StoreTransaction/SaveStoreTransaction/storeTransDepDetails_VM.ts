@@ -15,6 +15,7 @@ export class storeTransDepDetails_VM {
     public unit_Name?: string,
     public note?: string,
     public groupF_Id?: number,
+    public groupF_Name?: string,
     public totalo?: number,
     public store_Trns_M_ID?: number
 

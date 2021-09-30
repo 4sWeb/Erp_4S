@@ -10,6 +10,7 @@ namespace BLL.ModelsView
     {
         public decimal storeTrnsOId { get; set; }
         public int groupF_Id { get; set; }
+        public string groupF_Name { get; set; }
         public decimal? qty { get; set; }
         public decimal? unitId { get; set; }
         public string  unit_Name { get; set; }

@@ -70,6 +70,7 @@ export class DialogForCategoryComponent implements OnInit {
           item_Name: this.productdetailsDialog[i].item_Name,
           unit_Name: this.productdetailsDialog[i].unit_Name,
           groupF_Id: this.productdetailsDialog[i].groupF_Id,
+          groupF_Name: this.productdetailsDialog[i].groupF_Name,
           storeTrnsOId: this.productdetailsDialog[i].storeTrnsOId,
           unitPrice: this.productdetailsDialog[i].unitPrice
         });
@@ -185,6 +186,7 @@ export class DialogForCategoryComponent implements OnInit {
      
       this.storeTransDetailsDialog.push({
         groupF_Id: this.Group.GroupF_Id,
+        groupF_Name: this.Group.Aname,
         itemId: this.Item.itemId,
         item_Name: this.Item.name,
         unitId: this.Unite.uniteId,

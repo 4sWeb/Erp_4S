@@ -27,7 +27,7 @@ namespace BLL.ModelsView
         public object ExtraFields { get; set; } 
         public byte TrnsType { get; set; }
         public byte TrnsNature { get; set; }
-        public bool? SalesRep { get; set; }
+        public int? SalesRep { get; set; }
         public bool? PriceEffect { get; set; }
         public bool? PayEffect { get; set; }
         public bool? QtyEffect { get; set; }

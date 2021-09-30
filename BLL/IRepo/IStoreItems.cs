@@ -10,5 +10,6 @@ namespace BLL.IRepo
     {
         Task<List<object>> GetItemsDetails(decimal Id);
         Task<List<object>> GetGroupFIDForItem(decimal Id);
+        Task<List<object>> GetGroupFNameForItem(decimal Id);
     }
 }

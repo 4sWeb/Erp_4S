@@ -132,6 +132,11 @@ namespace Angular_API.Controllers
                 var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.itemId);
                 Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
                 item.groupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
+                string GroupF_Name;
+                var ListOfGroupsFName = repo._StoreItems.GetGroupFNameForItem(item.groupF_Id);
+                Dictionary<string, object> currentName = (Dictionary<string, object>)ListOfGroupsFName.Result.FirstOrDefault();
+                GroupF_Name = currentName.FirstOrDefault().Value.ToString();
+                item.groupF_Name = GroupF_Name;
 
             }
             return Json(Results, new System.Text.Json.JsonSerializerOptions());
@@ -348,12 +353,16 @@ namespace Angular_API.Controllers
 
         [HttpGet]
         [Route("Retrieve")]
-        public StoreTransMain_VM Retrive(decimal storeTransMId)
+        public JsonResult Retrive(decimal storeTransMId)
         {
             StoreTransMain_VM STM_VM = new StoreTransMain_VM();
             if (storeTransMId != default)
             {
                 STM_VM.StoreTransMaster_VM = repo._StoreTrnsM.RetriveMasterTransactionById(storeTransMId);
+                if (STM_VM.StoreTransMaster_VM == null)
+                {
+                    return Json (new {Id="-1",Result="not found" } , new System.Text.Json.JsonSerializerOptions());
+                }
                 STM_VM.StoreTransMaster_VM.From_Type = repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "F");
                 STM_VM.StoreTransMaster_VM.To_Type = repo._Groupf.GetAllTypes(STM_VM.StoreTransMaster_VM.TrnsCode, "T");
                 STM_VM.StoreTransMaster_VM.StoreTransMax = repo._StoreTrnsM.GetMaxID(STM_VM.StoreTransMaster_VM.TrnsCode, 2, STM_VM.StoreTransMaster_VM.BranchId);
@@ -367,22 +376,12 @@ namespace Angular_API.Controllers
                     Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
                     GroupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
                     item.groupF_Id = GroupF_Id;
-                    //var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
-                    //ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
-                    //foreach (var itemDetail in ItemList.Result.ToList())
-                    //{
-                    //    Dictionary<string, object> currentItem = (Dictionary<string, object>)itemDetail;
-                    //    ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)currentItem.Values.Last(), itemId = int.Parse(currentItem.Values.First().ToString()) });
-                    //}
 
-
-                    //var UniteList = repo._StoreUnits.GetUnitesDetails((decimal)STM_VM.StoreTransDetails_VM.FirstOrDefault().itemId);
-                    //foreach (var itemUnite in UniteList.Result.ToList())
-                    //{
-                    //    Dictionary<string, object> currentUnite = (Dictionary<string, object>)itemUnite;
-                    //    ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)currentUnite.Values.Last(), uniteId = int.Parse(currentUnite.Values.First().ToString()) });
-                    //}
-                    //item.itemDetails_VM = ItemDetails_VM;
+                    string GroupF_Name;
+                    var ListOfGroupsFName = repo._StoreItems.GetGroupFNameForItem(item.groupF_Id);
+                    Dictionary<string, object> currentName = (Dictionary<string, object>)ListOfGroupsFName.Result.FirstOrDefault();
+                    GroupF_Name = currentName.FirstOrDefault().Value.ToString();
+                    item.groupF_Name = GroupF_Name;
                 }
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
                 if (listOfPrevIds != null)
@@ -402,7 +401,7 @@ namespace Angular_API.Controllers
 
                 }
             }
-            return STM_VM;
+            return Json(STM_VM, new System.Text.Json.JsonSerializerOptions());
         }
 
         [HttpPost]
@@ -480,29 +479,60 @@ namespace Angular_API.Controllers
         [Route("GetAllGroupsWithItemsDetails")]
         public JsonResult GetAllGroupsWithItemsDetails()
         {
-            List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
-            var GroupsList = repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
-            foreach (var group in GroupsList)
-            {
-                //get items for each group
-                var ItemList = repo._StoreItems.GetItemsDetails(group.GroupfId);
-                List<Items_VM> items_VM = new List<Items_VM>();
-                foreach (var item in ItemList.Result.ToList())
-                {
-                    Dictionary<string, object> current = (Dictionary<string, object>)item;
-                    //get unites for each item
-                    List<Unites_VM> Unites_VMs = new List<Unites_VM>();
-                    var UniteList = repo._StoreUnits.GetUnitesDetails(int.Parse(current.Values.First().ToString()));
-                    foreach (var unite in UniteList.Result.ToList())
-                    {
-                        Dictionary<string, object> currentunite = (Dictionary<string, object>)unite;
-                        Unites_VMs.Add(new Unites_VM { name = (string)currentunite.Values.Last(), uniteId = int.Parse(currentunite.Values.First().ToString()) });
-                    }
-                    items_VM.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()), unites_VM = Unites_VMs });
-                }
-                groupF_VMs.Add(new GroupF_VM { Aname = group.Aname, GroupF_Id = (int)group.GroupfId, items_VM = items_VM });
-            }
-            return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
+            //List<GroupItemsUnits_VM> GroupItemsUnits_VM = new List<GroupItemsUnits_VM>();
+
+            //VM=>GROUP_ID GROUP_NAME ITEM_ID ITEM_CODE ITEM_NAME UNIT_ID UNIT_NAME
+            string GroupItemsUnitsQuery = @"SELECT GF.GROUPF_ID AS GROUP_ID,
+                                            GF.ANAME GROUP_NAME,
+                                            SI.STORE_ITEMS_ID AS ITEM_ID,
+                                            SI.ITEM_CODE AS ITEM_CODE,
+                                            SI.ANAME AS ITEM_NAME,
+                                            SU.UNITID AS UNIT_ID,
+                                            SU.ANAME AS UNIT_NAME
+                                       FROM STORE_ITEMS SI
+                                            LEFT JOIN STORE_ITEM_UNITS SIU
+                                               ON SIU.STORE_ITEMS_ID = SI.STORE_ITEMS_ID
+                                            LEFT JOIN STORE_UNITS SU
+                                               ON SU.UNITID = SIU.UNITID
+                                            LEFT JOIN STORE_ITEMFORMS_SPECS SIFS
+                                               ON SIFS.STORE_ITEMFROMS_SPECS_ID = SI.STORE_ITEMFROMS_SPECS_ID
+                                            LEFT JOIN STORE_ITEMFORM_UNITS SIFU
+                                               ON SIFU.UNITID = SU.UNITID
+                                                  AND SIFU.STORE_ITEMFORM_SPECS_ID =
+                                                         SIFS.STORE_ITEMFROMS_SPECS_ID
+                                            LEFT JOIN GROUPF GF
+                                               ON GF.GROUPF_ID = SIFS.GROUPF_ID
+                                            LEFT JOIN MAIN_TYPES MT
+                                               ON MT.ID = GF.CODETYPE
+                                   ORDER BY GF.GROUPF_ID, SI.ITEM_CODE, SU.UNITID";
+
+            var GroupItemsUnits_VM = repo.CallQuery<GroupItemsUnits_VM>(GroupItemsUnitsQuery).Result.ToList();
+
+
+
+            //List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
+            //var GroupsList = repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
+            //foreach (var group in GroupsList)
+            //{
+            //    //get items for each group
+            //    var ItemList = repo._StoreItems.GetItemsDetails(group.GroupfId);
+            //    List<Items_VM> items_VM = new List<Items_VM>();
+            //    foreach (var item in ItemList.Result.ToList())
+            //    {
+            //        Dictionary<string, object> current = (Dictionary<string, object>)item;
+            //        //get unites for each item
+            //        List<Unites_VM> Unites_VMs = new List<Unites_VM>();
+            //        var UniteList = repo._StoreUnits.GetUnitesDetails(int.Parse(current.Values.First().ToString()));
+            //        foreach (var unite in UniteList.Result.ToList())
+            //        {
+            //            Dictionary<string, object> currentunite = (Dictionary<string, object>)unite;
+            //            Unites_VMs.Add(new Unites_VM { name = (string)currentunite.Values.Last(), uniteId = int.Parse(currentunite.Values.First().ToString()) });
+            //        }
+            //        items_VM.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()), unites_VM = Unites_VMs });
+            //    }
+            //    groupF_VMs.Add(new GroupF_VM { Aname = group.Aname, GroupF_Id = (int)group.GroupfId, items_VM = items_VM });
+            //}
+            return Json(GroupItemsUnits_VM, new System.Text.Json.JsonSerializerOptions());
         }
 
         [HttpGet]

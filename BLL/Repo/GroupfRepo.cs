@@ -38,6 +38,7 @@ namespace BLL.Repo
                             where DST.FT in '" + type + "' and DST.TRNSCODE = " + Id + " ";
             var ResQuery = testQuery.Get(query, null, 0).Result;
             return ResQuery;
+
         }
 
 
