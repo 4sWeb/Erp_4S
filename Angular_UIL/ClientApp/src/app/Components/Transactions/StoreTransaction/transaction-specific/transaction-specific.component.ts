@@ -422,7 +422,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
               groupF_Id: this.productdetails[i].groupF_Id, item_ID: this.productdetails[i].itemId,
               unitid: this.productdetails[i].unitId, quantity: this.productdetails[i].qty,
               unitPrice: this.productdetails[i].unitPrice, totalo: this.productdetails[i].totalo,
-              storeTrnsOId: this.productdetails[i].storeTrnsOId
+              storeTrnsOId: this.productdetails[i].storeTrnsOId,
+              groupF_Name: this.productdetails[i].groupF_Name
             });
           }
           console.log("StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);

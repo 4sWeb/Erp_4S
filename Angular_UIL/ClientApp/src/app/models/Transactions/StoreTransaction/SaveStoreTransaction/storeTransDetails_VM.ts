@@ -16,6 +16,7 @@ export class storeTransDetails_VM {
     public storeTrnsOId ?:number,  
     public qty?: number,
     public groupF_Id?: number,
+    public groupF_Name?: string,
     public unitId?: number,
     public unit_Name?: string,
     public unitPrice?: number,
