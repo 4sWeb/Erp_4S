@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DoCheck, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, DoCheck, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { from, Observable, Subject } from 'rxjs';
@@ -37,6 +37,7 @@ import { Items_VM } from '../../../../models/Transactions/StoreTransaction/SaveS
 import { ItemDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
 import { transcode } from 'buffer';
 import { stringify } from 'querystring';
+import { GroupItemsUnits_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -56,7 +57,7 @@ export interface DialogEditStoreTransDetails {
 export interface DialogForCategory {
   dialogCategoryDetails?: storeTransDetails_VM[];
   productdetails?: storeTransDetails_VM[];
-  GroupFs: GroupF_VM[];
+  GroupFs: GroupItemsUnits_VM[];
 
 }
 
@@ -67,12 +68,15 @@ export interface DialogForCategory {
   templateUrl: './transaction-specific.component.html',
   styleUrls: ['./transaction-specific.component.css']
 })
-export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
+export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck,AfterContentChecked{
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService , private _router: Router,
     public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
     , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) {
     this.storeTransMaster = { trnsCode: 0, trnsDate: null, trnsNo: 0 };
   }
+    ngAfterContentChecked() {
+       
+    }
     
     
 
@@ -153,7 +157,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   itemDetails_VM: ItemDetails_VM;
 
   //For View Details in Second Way
-  GroupFs: GroupF_VM[];
+  GroupFs: GroupItemsUnits_VM[];
 
   //ByMo
   ItemsAvailable: boolean= false;
@@ -338,9 +342,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     this.GroupFs = this.TransactionsService.ShraingListOfGroupsandItems;
     if (this.TransactionsService.ListOfGroupsandItemsReady) {
       this.ItemsAvailable = true;
-    }
-    
-  }
+    };
+  };
+
 
 
 
@@ -745,8 +749,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         this.itemDetails_VM = data;
         this.Items_VMs = this.itemDetails_VM.items_VM;
         this.unites_VMs = this.itemDetails_VM.unites_VM;
-        this.storeTransDetails_VM[0].itemId = this.itemDetails_VM.items_VM[0].itemId;
-        this.storeTransDetails_VM[0].unitId = this.itemDetails_VM.unites_VM[0].uniteId;
+        this.storeTransDetails_VM[0].itemId = this.itemDetails_VM.items_VM[0].ITEM_ID;
+        this.storeTransDetails_VM[0].unitId = this.itemDetails_VM.unites_VM[0].UNIT_ID;
       }
     );
   };
@@ -756,7 +760,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       (data) => {
         console.log("unites",data);
         this.unites_VMs = data;
-        this.storeTransDetails_VM[0].unitId = this.unites_VMs[0].uniteId;
+        this.storeTransDetails_VM[0].unitId = this.unites_VMs[0].UNIT_ID;
       }
     )
 

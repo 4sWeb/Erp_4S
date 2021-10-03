@@ -8,5 +8,6 @@ namespace BLL.IRepo
 {
     public interface IStoreDepSpecsDetails:IBaseRepo<StoreDepSpecsDetail>
     {
+        public StoreDepSpecDetails_VM GetSpecificationForStoreDep(decimal StoreDepSpecID);
     }
 }

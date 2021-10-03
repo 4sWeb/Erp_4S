@@ -106,7 +106,19 @@ namespace Angular_API.Controllers
 
             return Json(TransactionSpec, new System.Text.Json.JsonSerializerOptions());
         }
+
+
+
         [HttpGet]
+        [Route("TransactionDepSpec")]
+        public JsonResult TransactionDepSpecDetails(decimal StoreDepSpecID)
+        { 
+           var StoreDepSpecDetails_VM= repo._StoreDepSpecsDetails.GetSpecificationForStoreDep(StoreDepSpecID);
+
+            return Json(StoreDepSpecDetails_VM, new System.Text.Json.JsonSerializerOptions());
+        }
+
+            [HttpGet]
         [Route("GetTransactionsByDepID")]
         public JsonResult GetTransactionsByDepID(decimal DepTransID)
         {

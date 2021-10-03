@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { GroupF_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupF_VM';
+import { GroupItemsUnits_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 import { ItemDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
 import { Items_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Items_VM';
 import { Unites_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
@@ -15,8 +16,11 @@ import { DialogForCategory } from '../transaction-specific/transaction-specific.
   styleUrls: ['./dialog-for-category.component.css']
 })
 export class DialogForCategoryComponent implements OnInit {
-  GroupF: GroupF_VM[]=[];
-  GroupFs: GroupF_VM[];
+  GroupF: GroupF_VM[] = [];
+  output: GroupF_VM[] = [];
+  ItemsOutput: Items_VM[] = [];
+  Unitesoutput: Unites_VM[] = [];
+  GroupFs: GroupItemsUnits_VM[];
   itemDetails_VM: ItemDetails_VM;
   items_VMs: Items_VM[][];
   itemsFilter: Items_VM[] = [];
@@ -53,11 +57,30 @@ export class DialogForCategoryComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogForCategory) {
     dialogRef.disableClose = true;
     this.productdetailsDialog = data.productdetails;
-
-
+ 
     
     this.GroupFs = data.GroupFs;
     console.log("GroupFsFrom Dialog", this.GroupFs);
+    var flags = [];
+    var itemFlags = [];
+
+    for (var i = 0; i < this.GroupFs.length; i++) {
+      if (flags[this.GroupFs[i].GROUP_ID]) continue;
+      flags[this.GroupFs[i].GROUP_ID] = true;
+      this.GroupF.push({ GROUP_ID: this.GroupFs[i].GROUP_ID, GROUP_NAME: this.GroupFs[i].GROUP_NAME });
+      console.log("Group Dialog", this.GroupF);
+      this.selected = this.GroupF[0];
+
+    }
+    for (var i = 0; i < this.GroupFs.length; i++) {
+      if (itemFlags[this.GroupFs[i].ITEM_ID]) continue;
+      itemFlags[this.GroupFs[i].ITEM_ID] = true;
+      this.items_VM.push({ ITEM_ID: this.GroupFs[i].ITEM_ID, GROUP_ID: this.GroupFs[i].GROUP_ID, ITEM_NAME: this.GroupFs[i].ITEM_NAME, ITEM_CODE: this.GroupFs[i].ITEM_CODE });
+
+    }
+    for (var i = 0; i < this.GroupFs.length; i++) {
+      this.unites_VMs.push({ UNIT_ID: this.GroupFs[i].UNIT_ID, ITEM_ID: this.GroupFs[i].ITEM_ID, UNIT_NAME: this.GroupFs[i].UNIT_NAME });
+    }
 
     if (this.productdetailsDialog.length > 0) {
       this.storeTransDetailsDialog = [];
@@ -80,30 +103,13 @@ export class DialogForCategoryComponent implements OnInit {
   
     }
   }
+ 
 
   ngOnInit() {
-    //Second Way
-    for (var i = 0; i < this.GroupFs.length; i++) {
-      this.GroupF.push({ GroupF_Id: this.GroupFs[i].GroupF_Id, Aname: this.GroupFs[i].Aname });
-      console.log("Group Dialog", this.GroupF);
-      this.selected = this.GroupF[0];
-     
-    }
-    for (var i = 0; i < this.GroupFs.length; i++) {
-      for (var j = 0; j < this.GroupFs[i].items_VM.length;j++) {
-        this.items_VM.push({ itemId: this.GroupFs[i].items_VM[j].itemId, groupId: this.GroupFs[i].GroupF_Id, name: this.GroupFs[i].items_VM[j].name });
-      }
-      console.log("items_VM", this.items_VM);
-    }
-    for (var i = 0; i < this.GroupFs.length; i++) {
-      for (var j = 0; j < this.GroupFs[i].items_VM.length; j++) {
-        for (var k = 0; k < this.GroupFs[i].items_VM[j].unites_VM.length;k++) {
-        this.unites_VMs.push({ uniteId: this.GroupFs[i].items_VM[j].unites_VM[k].uniteId, itemId: this.GroupFs[i].items_VM[j].itemId, name: this.GroupFs[i].items_VM[j].unites_VM[k].name })
-
-        }
-      }
-    }
+    console.log("After this.unites_VMs.length", this.unites_VMs.length);
+    console.log("After this.unites_VMs.length", this.unites_VMs);
   };
+  
 
   GroupfChange(GroupId: number) {
     this.GroupFChanged = true;
@@ -113,43 +119,22 @@ export class DialogForCategoryComponent implements OnInit {
      this.ItemId = undefined;
      this.UniteId = undefined;
 
-    this.Group = this.GroupFs.filter(s => s.GroupF_Id == GroupId)[0];
+    this.Group = this.GroupFs.filter(s => s.GROUP_ID == GroupId)[0];
     console.log("Group", this.Group);
-    this.itemsFilter = this.items_VM.filter(s => s.groupId == GroupId);
+    this.itemsFilter = this.items_VM.filter(s => s.GROUP_ID == GroupId);
 
-    //this.TransactionsService.getItemsDetails(id).subscribe(
-    //  (data) => {
-    //    console.log("ItemDetails from Dialog Cat", data);
-    //    this.itemDetails_VM = data;
-    //    this.items_VM = this.itemDetails_VM.items_VM;
-        
-    //    this.unites_VMs = this.itemDetails_VM.unites_VM;
-    //    this.storeTransDetails_VM[i].itemId = this.itemDetails_VM.items_VM[0].itemId;
-    //    this.storeTransDetails_VM[i].unitId = this.itemDetails_VM.unites_VM[0].uniteId;
-    //  }
-    //);
   };
 
   ItemsChange(ItemId: number) {
     this.ItemChanged = true;
     this.EditingClick = false;
-    this.unitesFilter = this.unites_VMs.filter(s => s.itemId == ItemId);
-    this.Item = this.items_VM.filter(s => s.itemId == ItemId)[0];
+    this.unitesFilter = this.unites_VMs.filter(s => s.ITEM_ID == ItemId);
+    this.Item = this.items_VM.filter(s => s.ITEM_ID == ItemId)[0];
     console.log("item selected",this.Item);
-
-    //console.log("item id",id);
-    //this.TransactionsService.getUnitesDetails(id).subscribe(
-    //  (data) => {
-    //    console.log("unites", data);
-    //    this.unites_VMs = data;
-    //    this.ItemChanged = true;
-    //    this.storeTransDetails_VM[i].unitId = this.unites_VMs[0].uniteId;
-    //  }
-    //);
   };
 
   UnitesChange(UniteId: number) {
-    this.Unite = this.unites_VMs.filter(s => s.uniteId == UniteId)[0];
+    this.Unite = this.unites_VMs.filter(s => s.UNIT_ID == UniteId)[0];
     console.log("selected unite",this.Unite);
     //this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
   }
@@ -174,9 +159,9 @@ export class DialogForCategoryComponent implements OnInit {
         console.log(this.Index)
         this.storeTransDetailsDialog[this.Index].groupF_Id = this.GroupId;
         this.storeTransDetailsDialog[this.Index].unitId = this.UniteId;
-        this.storeTransDetailsDialog[this.Index].unit_Name = this.Unite.name;
+        this.storeTransDetailsDialog[this.Index].unit_Name = this.Unite.UNIT_NAME;
         this.storeTransDetailsDialog[this.Index].itemId = this.ItemId;
-        this.storeTransDetailsDialog[this.Index].item_Name = this.Item.name;
+        this.storeTransDetailsDialog[this.Index].item_Name = this.Item.ITEM_NAME;
         this.storeTransDetailsDialog[this.Index].qty = this.quantity;
         this.storeTransDetailsDialog[this.Index].totalo = this.totalo;
         this.storeTransDetailsDialog[this.Index].unitPrice = this.unitPrice;
@@ -185,12 +170,12 @@ export class DialogForCategoryComponent implements OnInit {
     } else {
      
       this.storeTransDetailsDialog.push({
-        groupF_Id: this.Group.GroupF_Id,
-        groupF_Name: this.Group.Aname,
-        itemId: this.Item.itemId,
-        item_Name: this.Item.name,
-        unitId: this.Unite.uniteId,
-        unit_Name: this.Unite.name,
+        groupF_Id: this.Group.GROUP_ID,
+        groupF_Name: this.Group.GROUP_NAME,
+        itemId: this.Item.ITEM_ID,
+        item_Name: this.Item.ITEM_NAME,
+        unitId: this.Unite.UNIT_ID,
+        unit_Name: this.Unite.UNIT_NAME,
         qty: this.quantity,
         unitPrice: this.unitPrice,
         totalo: this.totalo,

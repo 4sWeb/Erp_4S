@@ -14,6 +14,7 @@ import { GroupF_VM } from '../../models/Transactions/StoreTransaction/SaveStoreT
 import { ItemDetails_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
 import { Unites_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
 import { storeTransDetails_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
+import { GroupItemsUnits_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 
 
 
@@ -38,7 +39,7 @@ export class TransactionsService {
 
   }
 
-  ShraingListOfGroupsandItems: GroupF_VM[];
+  ShraingListOfGroupsandItems: GroupItemsUnits_VM[];
   ListOfGroupsandItemsReady: boolean= false;
 
 
