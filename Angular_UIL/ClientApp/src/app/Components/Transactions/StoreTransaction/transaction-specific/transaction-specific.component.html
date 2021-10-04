@@ -74,7 +74,7 @@
               <ejs-datetimepicker name="Datevalue" id='datetimepicker'  format='dd-MM-yyyy hh:mm:ss'
                                   placeholder='التاريـــــخ' [(ngModel)]="Datevalue" [min]='minDate' [max]='maxDate' required>
               </ejs-datetimepicker>
-            </div> 
+            </div>
           </div>
         </div>
 
@@ -82,7 +82,7 @@
 
         <!--Numbers Doc And Transc-->
         <div class="row col-12">
-          <div class="form-group row col-6"*ngIf="operationType != 'View'">
+          <div class="form-group row col-6" *ngIf="operationType != 'View'">
             <label for="storedocnum" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
             <div class="col-sm-8">
               <input #storedocno="ngModel" class="form-control" id="storedocnum" name="storedocnum" [value]="storedocnum"
@@ -91,7 +91,7 @@
             </div>
           </div>
 
-          <div class="form-group row col-6"*ngIf="operationType == 'View'">
+          <div class="form-group row col-6" *ngIf="operationType == 'View'">
             <label for="storedocnumv" class="col-sm-3 col-form-label" style="text-align:right">الرقم الدفترى</label>
             <div class="col-sm-8">
               <input #storedocnumvo="ngModel" class="form-control" id="storedocnumv" name="storedocnumv" [value]="storedocnumv"
@@ -157,7 +157,6 @@
                 </ng-option>
               </ng-select>
             </div>
-
           </div>
         </div>
 
@@ -202,6 +201,48 @@
             </div>
           </div>
         </div>
+
+
+
+        <!-- Start of salesRep optional -->
+        <div class="form-group row col-6" *ngIf="TransactionSpecific.SalesRep==1">
+          <label class="col-sm-3 col-form-label" style="text-align:right"> مندوب</label>
+          <div class="col-sm-8  pr-2 pl-4">
+            <ng-select bindLabel="SALES_NAME"
+                       name="SALES_ID"
+                       placeholder="...اختر"
+                       appendTo="body"
+                       [searchable]="true"
+                       [clearable]="true"
+                       [(ngModel)]="salesRepId">
+              <ng-option [value]="item.SALES_ID" [disabled]="item.disabled" *ngFor="let item of Sales_Rep">
+
+                {{item.SALES_NAME}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+         <!--End of salesRep optional-->
+
+         <!--Start of salesRep Mandatory--> 
+        <div class="form-group row col-6" *ngIf="TransactionSpecific.SalesRep==2">
+          <label class="col-sm-3 col-form-label" style="text-align:right"> مندوب</label>
+          <div class="col-sm-8  pr-2 pl-4">
+            <ng-select bindLabel="SALES_NAME"
+                       name="SALES_ID"
+                       placeholder="...اختر"
+                       appendTo="body"
+                       [searchable]="true"
+                       [clearable]="true"
+                       [(ngModel)]="salesRepId" #salesRep="ngModel" required>
+              <ng-option [value]="item.SALES_ID" [disabled]="item.disabled" *ngFor="let item of Sales_Rep">
+
+                {{item.SALES_NAME}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <!-- End of salesRep Mandatory-->
 
 
         <div class="form-group row">
@@ -757,7 +798,7 @@
                 <th style="text-align:center">الكمية</th>
                 <th style="text-align:center">الوحدة</th>
                 <th class="text-center">
-                    اسم الصنف
+                  اسم الصنف
                 </th>
                 <th class="text-center">المجموعه</th>
               </tr>
@@ -765,15 +806,15 @@
             <tbody>
               <tr style="text-align:center" *ngFor="let trans of storeTransDetails_VM ; let i = index">
                 <!--<td>
-    <button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button>
-    <button class="btn btn-outline-primary" [value]="trans" mat-raised-button (click)="EditDetails(trans)">
+            <button class="btn btn-danger" value="trans" (click)="deleteProductRecord($index,trans.Store_Trns_M_ID)">حذف</button>
+            <button class="btn btn-outline-primary" [value]="trans" mat-raised-button (click)="EditDetails(trans)">
 
-      <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-      </svg>
-    </button>
-  </td>-->
+              <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+              </svg>
+            </button>
+          </td>-->
                 <td><span>{{trans.notes}}</span></td>
                 <td><span>{{trans.totalo}}</span></td>
 
@@ -791,7 +832,7 @@
 
                 <td dir="ltr">
 
-                  <span>{{trans.groupF_Id}}</span> <!--<span>{{trans.groupF_Name}}</span>-->  
+                  <span>{{trans.groupF_Id}}</span> <!--<span>{{trans.groupF_Name}}</span>-->
 
                 </td>
               </tr>
@@ -925,12 +966,12 @@
             </tbody>
           </table>
         </div>
-     
+
 
 
         <button type="submit" class="btn btn-outline-success focus" [disabled]="(transForm.valid && (storeTransDetails_VM==undefined ||productdetails==undefined))|| transForm.invalid  " (click)="addStoreTransaction()">
           حفظ
-          
+
           <svg width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
           </svg>

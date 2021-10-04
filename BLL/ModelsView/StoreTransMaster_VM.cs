@@ -48,6 +48,7 @@ namespace BLL.ModelsView
         public decimal? Employeeno { get; set; }
         public decimal? MainCostcenterid { get; set; }
         public decimal? MainAccountid { get; set; }
+        public decimal? Salesrep { get; set; }
 
 
         //need to enhace (generic class for ado) 

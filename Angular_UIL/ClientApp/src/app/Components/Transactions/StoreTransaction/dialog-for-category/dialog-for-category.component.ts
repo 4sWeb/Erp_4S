@@ -70,17 +70,17 @@ export class DialogForCategoryComponent implements OnInit {
       this.GroupF.push({ GROUP_ID: this.GroupFs[i].GROUP_ID, GROUP_NAME: this.GroupFs[i].GROUP_NAME });
       console.log("Group Dialog", this.GroupF);
       this.selected = this.GroupF[0];
+    };
 
-    }
     for (var i = 0; i < this.GroupFs.length; i++) {
       if (itemFlags[this.GroupFs[i].ITEM_ID]) continue;
       itemFlags[this.GroupFs[i].ITEM_ID] = true;
       this.items_VM.push({ ITEM_ID: this.GroupFs[i].ITEM_ID, GROUP_ID: this.GroupFs[i].GROUP_ID, ITEM_NAME: this.GroupFs[i].ITEM_NAME, ITEM_CODE: this.GroupFs[i].ITEM_CODE });
+    };
 
-    }
     for (var i = 0; i < this.GroupFs.length; i++) {
       this.unites_VMs.push({ UNIT_ID: this.GroupFs[i].UNIT_ID, ITEM_ID: this.GroupFs[i].ITEM_ID, UNIT_NAME: this.GroupFs[i].UNIT_NAME });
-    }
+    };
 
     if (this.productdetailsDialog.length > 0) {
       this.storeTransDetailsDialog = [];

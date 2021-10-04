@@ -9,18 +9,18 @@ export class storeTransMaster_VM {
   constructor(
 
 
-    public trnsCode?: number,
-    public trnsNo?: number,         
-    public trnsDate?: Date, 
-    public rem?: string,
-    public branchId?: number,
-    public storedocnum?: number,
-    public period?: number,
-    public fromStoreAllcodesId?: number,
-    public toStoreAllcodesId?: number,
+    public TrnsCode?: number,
+    public TrnsNo?: number,         
+    public TrnsDate?: Date, 
+    public Rem?: string,
+    public BranchId?: number,
+    public Storedocnum?: number,
+    public Period?: number,
+    public FromStoreAllcodesId?: number,
+    public ToStoreAllcodesId?: number,
     public storeTrnsMId?: number,
-    public from_Type?: FromType,
-    public to_Type?: ToType,
+    public From_Type?: FromType,
+    public To_Type?: ToType,
     public storeTransMax?: number,
     public disc?: number,
     public discRate?: number,
@@ -48,6 +48,7 @@ export class storeTransMaster_VM {
     public employeeno?: number,
     public mainCostcenterid?: number,
     public mainAccountid?: number,
+    public Salesrep?: number,
 
 
   ) {}        

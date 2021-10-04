@@ -12,6 +12,7 @@ namespace BLL.ModelsView
         {
             TransactionDepSpec_VM = new TransactionDepSpec_VM();
             TransactionMasterSpec_VM = new TransactionMasterSpec_VM();
+            Sales_Rep_VM = new List<Sales_Rep_VM>();
         }
 
         //public object Branches { get; set; }
@@ -202,5 +203,6 @@ namespace BLL.ModelsView
         public string Rem { get; set; }
         public TransactionDepSpec_VM TransactionDepSpec_VM { get; set; }
         public TransactionMasterSpec_VM TransactionMasterSpec_VM { get; set; }
+        public List<Sales_Rep_VM >Sales_Rep_VM { get; set; }
     }
 }

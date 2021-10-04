@@ -5,11 +5,11 @@ import { storeTransDepDetails_VM } from "./storeTransDepDetails_VM";
 
 export class StoreTransMain {
   constructor(
-    public storeTransMaster_VM?: storeTransMaster_VM,
-    public storeTransDep_VM?: storeTransDep_VM[],
-    public storeTransDepDetails_VM?: storeTransDepDetails_VM[],
-    public storeTransDetails_VM?: storeTransDetails_VM[],
-    public isDependant?: boolean
+    public StoreTransMaster_VM?: storeTransMaster_VM,
+    public StoreTransDep_VM?: storeTransDep_VM[],
+    public StoreTransDepDetails_VM?: storeTransDepDetails_VM[],
+    public StoreTransDetails_VM?: storeTransDetails_VM[],
+    public IsDependant?: boolean
   ) { }
 
 }

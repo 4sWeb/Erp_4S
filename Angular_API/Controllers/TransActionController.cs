@@ -58,6 +58,11 @@ namespace Angular_API.Controllers
         public JsonResult TransactionSpecByID(decimal transCode, decimal userId,decimal Period=2)
         {
             var TransactionSpec = repo._StoreTrns.GetTransactionSpecsById(transCode);
+            if (TransactionSpec.SalesRep!=0) 
+            {
+                TransactionSpec.Sales_Rep_VM= repo._StoreAllcodes.GetAllSalesRep(7);
+                
+            }
             var listOfBranches = repo._branch.GetAllBranches(userId);
             List<Branches_VM> branches_VMs = new List<Branches_VM>();
             foreach (var item in listOfBranches.Result.ToList())
@@ -224,7 +229,8 @@ namespace Angular_API.Controllers
                 Trnsusersid = StoreTransMain_VM.StoreTransMaster_VM.Trnsusersid,
                 Employeeno = StoreTransMain_VM.StoreTransMaster_VM.Employeeno,
                 MainAccountid = StoreTransMain_VM.StoreTransMaster_VM.MainAccountid,
-                MainCostcenterid = StoreTransMain_VM.StoreTransMaster_VM.MainCostcenterid
+                MainCostcenterid = StoreTransMain_VM.StoreTransMaster_VM.MainCostcenterid,
+                Salesrep= StoreTransMain_VM.StoreTransMaster_VM.Salesrep
             };
             repo._StoreTrnsM.Create(StoreTrnsM);
             repo.Save();
@@ -368,6 +374,7 @@ namespace Angular_API.Controllers
         public JsonResult Retrive(decimal storeTransMId)
         {
             StoreTransMain_VM STM_VM = new StoreTransMain_VM();
+            STM_VM.IsDependant = false;
             if (storeTransMId != default)
             {
                 STM_VM.StoreTransMaster_VM = repo._StoreTrnsM.RetriveMasterTransactionById(storeTransMId);
@@ -396,7 +403,8 @@ namespace Angular_API.Controllers
                     item.groupF_Name = GroupF_Name;
                 }
                 var listOfPrevIds = repo._StoreTrnsDep.RetriveListPrevTransIds(storeTransMId);
-                if (listOfPrevIds != null)
+               
+                if (listOfPrevIds.Count >0)
                 {
                     STM_VM.IsDependant = true;
                     STM_VM.StoreTransDep_VM = repo._StoreTrnsM.RetriveTransaDepById(listOfPrevIds);
@@ -411,7 +419,8 @@ namespace Angular_API.Controllers
                         }
                     }
 
-                }
+                }  
+               
             }
             return Json(STM_VM, new System.Text.Json.JsonSerializerOptions());
         }
