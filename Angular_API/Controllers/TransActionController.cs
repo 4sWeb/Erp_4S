@@ -509,7 +509,8 @@ namespace Angular_API.Controllers
                                             SI.ITEM_CODE AS ITEM_CODE,
                                             SI.ANAME AS ITEM_NAME,
                                             SU.UNITID AS UNIT_ID,
-                                            SU.ANAME AS UNIT_NAME
+                                            SU.ANAME AS UNIT_NAME, 
+                                            NVL(SIFU.UNITID,0.00) + 0 AS BASIC_UNIT
                                        FROM STORE_ITEMS SI
                                             LEFT JOIN STORE_ITEM_UNITS SIU
                                                ON SIU.STORE_ITEMS_ID = SI.STORE_ITEMS_ID
@@ -597,7 +598,12 @@ namespace Angular_API.Controllers
         }
 
 
-
+        [HttpGet]
+        [Route("GetItemsWithBasicUniteAndBalance")]
+        public JsonResult GetItemsWithBasicUniteAndBalance()
+        {
+            return Json( new System.Text.Json.JsonSerializerOptions());
+        }
 
 
     }

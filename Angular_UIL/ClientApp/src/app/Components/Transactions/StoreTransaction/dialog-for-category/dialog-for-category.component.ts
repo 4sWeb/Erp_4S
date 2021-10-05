@@ -75,7 +75,8 @@ export class DialogForCategoryComponent implements OnInit {
     for (var i = 0; i < this.GroupFs.length; i++) {
       if (itemFlags[this.GroupFs[i].ITEM_ID]) continue;
       itemFlags[this.GroupFs[i].ITEM_ID] = true;
-      this.items_VM.push({ ITEM_ID: this.GroupFs[i].ITEM_ID, GROUP_ID: this.GroupFs[i].GROUP_ID, ITEM_NAME: this.GroupFs[i].ITEM_NAME, ITEM_CODE: this.GroupFs[i].ITEM_CODE });
+      this.items_VM.push({ ITEM_ID: this.GroupFs[i].ITEM_ID, GROUP_ID: this.GroupFs[i].GROUP_ID, ITEM_NAME: this.GroupFs[i].ITEM_NAME, ITEM_CODE: this.GroupFs[i].ITEM_CODE, BASIC_UNIT: this.GroupFs[i].BASIC_UNIT });
+      //console.log("items_VM",this.items_VM);
     };
 
     for (var i = 0; i < this.GroupFs.length; i++) {
@@ -130,7 +131,9 @@ export class DialogForCategoryComponent implements OnInit {
     this.EditingClick = false;
     this.unitesFilter = this.unites_VMs.filter(s => s.ITEM_ID == ItemId);
     this.Item = this.items_VM.filter(s => s.ITEM_ID == ItemId)[0];
-    console.log("item selected",this.Item);
+    this.UniteId = this.Item.BASIC_UNIT;
+    console.log("item selected", this.Item);
+    console.log(" UniteId", this.UniteId);
   };
 
   UnitesChange(UniteId: number) {
