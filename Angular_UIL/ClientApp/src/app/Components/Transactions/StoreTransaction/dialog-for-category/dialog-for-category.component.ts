@@ -132,23 +132,21 @@ export class DialogForCategoryComponent implements OnInit {
     this.unitesFilter = this.unites_VMs.filter(s => s.ITEM_ID == ItemId);
     this.Item = this.items_VM.filter(s => s.ITEM_ID == ItemId)[0];
     var BasicUnite: number;
+    var BasicUniteExist: number;
      BasicUnite= this.Item.BASIC_UNIT;
     console.log("BasicUnite", BasicUnite);
 
-    var tempUnites: Unites_VM[] = [];
-    tempUnites = this.unites_VMs.filter(s => s.ITEM_ID == ItemId);
+   
     try
     {
-      var BasicUniteExist = tempUnites.filter(s => s.UNIT_ID == BasicUnite);
+      BasicUniteExist = this.unitesFilter.filter(s => s.UNIT_ID == BasicUnite)[0].UNIT_ID;
       console.log("BasicUniteExist", BasicUniteExist);
-      if (BasicUniteExist.length != 0)
+      if (BasicUniteExist != undefined)
       {
         this.UniteId = BasicUnite;
       }
         
         console.log("BasicUnite", BasicUnite);
-      
-      
       
     } catch (e)
     {
@@ -242,7 +240,7 @@ export class DialogForCategoryComponent implements OnInit {
     this.totalo = this.storeTransDetailsDialog[i].totalo;
     this.unitPrice = this.storeTransDetailsDialog[i].unitPrice;
     //to set new values
-
+  
     
   }
   saveChanges() {
