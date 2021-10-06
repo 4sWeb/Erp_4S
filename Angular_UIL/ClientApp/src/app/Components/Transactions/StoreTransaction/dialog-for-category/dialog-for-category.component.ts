@@ -131,7 +131,30 @@ export class DialogForCategoryComponent implements OnInit {
     this.EditingClick = false;
     this.unitesFilter = this.unites_VMs.filter(s => s.ITEM_ID == ItemId);
     this.Item = this.items_VM.filter(s => s.ITEM_ID == ItemId)[0];
-    this.UniteId = this.Item.BASIC_UNIT;
+    var BasicUnite: number;
+     BasicUnite= this.Item.BASIC_UNIT;
+    console.log("BasicUnite", BasicUnite);
+
+    var tempUnites: Unites_VM[] = [];
+    tempUnites = this.unites_VMs.filter(s => s.ITEM_ID == ItemId);
+    try
+    {
+      var BasicUniteExist = tempUnites.filter(s => s.UNIT_ID == BasicUnite);
+      console.log("BasicUniteExist", BasicUniteExist);
+      if (BasicUniteExist.length != 0)
+      {
+        this.UniteId = BasicUnite;
+      }
+        
+        console.log("BasicUnite", BasicUnite);
+      
+      
+      
+    } catch (e)
+    {
+      this.UniteId = undefined;
+    }
+    this.Unite = this.unites_VMs.filter(s => s.UNIT_ID == this.UniteId)[0];
     console.log("item selected", this.Item);
     console.log(" UniteId", this.UniteId);
   };
@@ -161,6 +184,7 @@ export class DialogForCategoryComponent implements OnInit {
       if (confirm(`تأكيد عملية التعديل...؟`)){
         console.log(this.Index)
         this.storeTransDetailsDialog[this.Index].groupF_Id = this.GroupId;
+        this.storeTransDetailsDialog[this.Index].groupF_Name = this.GroupF.filter(s => s.GROUP_ID == this.GroupId)[0].GROUP_NAME;
         this.storeTransDetailsDialog[this.Index].unitId = this.UniteId;
         this.storeTransDetailsDialog[this.Index].unit_Name = this.Unite.UNIT_NAME;
         this.storeTransDetailsDialog[this.Index].itemId = this.ItemId;
@@ -238,6 +262,7 @@ export class DialogForCategoryComponent implements OnInit {
         item_Name: this.storeTransDetailsDialog[i].item_Name,
         unit_Name: this.storeTransDetailsDialog[i].unit_Name,
         groupF_Id: this.storeTransDetailsDialog[i].groupF_Id,
+        groupF_Name: this.GroupF.filter(s => s.GROUP_ID == (this.storeTransDetailsDialog[i].groupF_Id))[0].GROUP_NAME,
         storeTrnsOId: this.storeTransDetailsDialog[i].storeTrnsOId,
         unitPrice: this.storeTransDetailsDialog[i].unitPrice
       });
