@@ -32,11 +32,10 @@ export class DialogForCategoryComponent implements OnInit {
   productdetailsDialog: storeTransDetails_VM[] = [];
 
 
-  GroupFChanged: boolean = false;
-  ItemChanged: boolean = false;
-  EditingClick: boolean = false;
+
   AddedRowObjecDone: boolean = false;
-  
+  disabelItems = true;
+  disabelUnites = true;
 
   //two way binding
   quantity: number;
@@ -113,8 +112,7 @@ export class DialogForCategoryComponent implements OnInit {
   
 
   GroupfChange(GroupId: number) {
-    this.GroupFChanged = true;
-    this.EditingClick = false;
+    this.disabelItems = false;
 
     //يوم الجمعه
      this.ItemId = undefined;
@@ -127,8 +125,7 @@ export class DialogForCategoryComponent implements OnInit {
   };
 
   ItemsChange(ItemId: number) {
-    this.ItemChanged = true;
-    this.EditingClick = false;
+    this.disabelUnites = false;
     this.unitesFilter = this.unites_VMs.filter(s => s.ITEM_ID == ItemId);
     this.Item = this.items_VM.filter(s => s.ITEM_ID == ItemId)[0];
     var BasicUnite: number;
@@ -228,13 +225,15 @@ export class DialogForCategoryComponent implements OnInit {
   EditProduct(i: number) {
     console.log("transaction", i);
     this.Index = i;
-    this.EditingClick = true;
-    this.ItemChanged = false;
-    this.GroupFChanged = false;
+    //this.disabelItems = true;
+    this.disabelUnites = true;
     //to view these values in dropDowns
     this.GroupId = this.storeTransDetailsDialog[i].groupF_Id;
     console.log("this.GroupId", this.GroupId);
+    //this.itemsFilter = this.items_VM.filter(s => s.GROUP_ID == this.GroupId);
+    this.GroupfChange(this.GroupId);
     this.ItemId = this.storeTransDetailsDialog[i].itemId;
+    this.ItemsChange(this.ItemId);
     this.UniteId = this.storeTransDetailsDialog[i].unitId;
     this.quantity = this.storeTransDetailsDialog[i].qty;
     this.totalo = this.storeTransDetailsDialog[i].totalo;

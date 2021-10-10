@@ -51,11 +51,12 @@
               </div>
             </td>
             <td class="col-sm-3 col-md-3 col-lg-3 pr-2 pl-2">
-              <div *ngIf="GroupFChanged == true">
+              <div>
                 <ng-select bindLabel="ITEM_NAME"
                            name="ITEM"
                            placeholder="Select item"
                            [searchable]="true"
+                           [disabled]="disabelItems"
                            [(ngModel)]="ItemId"
                            (change)="ItemsChange($event)" required>
                   <ng-option [value]="item.ITEM_ID" [disabled]="item.disabled" *ngFor="let item of itemsFilter">
@@ -63,42 +64,14 @@
                   </ng-option>
                 </ng-select>
               </div>
-
-              <div *ngIf="GroupFChanged == false||EditingClick==true">
-                <ng-select bindLabel="ITEM_NAME"
-                           name="ITEM"
-                           placeholder="Select item"
-                           [searchable]="true"
-                           [(ngModel)]="ItemId"
-                           (change)="ItemsChange($event)" required>
-                  <ng-option [value]="item.ITEM_ID" [disabled]="item.disabled" *ngFor="let item of items_VM">
-                    {{item.ITEM_NAME}}
-                  </ng-option>
-                </ng-select>
-              </div>
-
             </td>
             <td class="col-sm-2 col-md-2 col-lg-2 pr-2 pl-2">
-              <div *ngIf="ItemChanged==false||EditingClick==true">
+              <div>
                 <ng-select bindLabel="UNIT_NAME"
                            name="unite"
                            placeholder="Select item"
                            [searchable]="true"
-                           [clearable]="true"
-                           [(ngModel)]="UniteId"
-                           (change)="UnitesChange($event)" required>
-                  <ng-option [value]="item.UNIT_ID" [disabled]="item.disabled" *ngFor="let item of unites_VMs">
-
-                    {{item.UNIT_NAME}}
-                  </ng-option>
-                </ng-select>
-              </div>
-
-              <div *ngIf="ItemChanged==true">
-                <ng-select bindLabel="UNIT_NAME"
-                           name="unite"
-                           placeholder="Select item"
-                           [searchable]="true"
+                           [disabled]="disabelUnites"
                            [clearable]="true"
                            [(ngModel)]="UniteId"
                            (change)="UnitesChange($event)" required>
