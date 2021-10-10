@@ -12,7 +12,8 @@ export class Items_VM {
     public ITEM_ID?: number,
     public ITEM_CODE?: string,
     public ITEM_NAME?: string,
-    public BASIC_UNIT?: number
+    public BASIC_UNIT?: number,
+    public UNIT_RATE?: number
   ) {
 
   }

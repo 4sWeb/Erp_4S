@@ -16,6 +16,7 @@ namespace BLL.ModelsView
         public string GROUP_NAME { get; set; }
         public string ITEM_NAME { get; set; }
         public string UNIT_NAME { get; set; }
+        public decimal? UNIT_RATE { get; set; }
 
     }
 }

@@ -511,8 +511,8 @@ namespace Angular_API.Controllers
                                             SU.UNITID AS UNIT_ID,
                                             SU.ANAME AS UNIT_NAME, 
                                             --NVL(SIFU.UNITID,0.00) + 0 AS BASIC_UNIT
-                                            (SELECT SIFU2.UNITID FROM STORE_ITEMFORM_UNITS SIFU2 
-                                            WHERE  SIFU2.STORE_ITEMFORM_SPECS_ID =SIFS.STORE_ITEMFROMS_SPECS_ID ) AS BASIC_UNIT
+                                            NVL(SIU.UNIT_RATE,1) AS UNIT_RATE,
+                                            NVL( (SELECT SIFU2.UNITID FROM STORE_ITEM_UNITS SIFU2 WHERE  SIFU2.STORE_ITEMS_ID= SI.STORE_ITEMS_ID  AND SIFU2.BASIC_UNIT=1),0.00) + 0 AS BASIC_UNIT
                                        FROM STORE_ITEMS SI
                                             LEFT JOIN STORE_ITEM_UNITS SIU
                                                ON SIU.STORE_ITEMS_ID = SI.STORE_ITEMS_ID

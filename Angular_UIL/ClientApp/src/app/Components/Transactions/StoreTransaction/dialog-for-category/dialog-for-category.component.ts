@@ -74,12 +74,12 @@ export class DialogForCategoryComponent implements OnInit {
     for (var i = 0; i < this.GroupFs.length; i++) {
       if (itemFlags[this.GroupFs[i].ITEM_ID]) continue;
       itemFlags[this.GroupFs[i].ITEM_ID] = true;
-      this.items_VM.push({ ITEM_ID: this.GroupFs[i].ITEM_ID, GROUP_ID: this.GroupFs[i].GROUP_ID, ITEM_NAME: this.GroupFs[i].ITEM_NAME, ITEM_CODE: this.GroupFs[i].ITEM_CODE, BASIC_UNIT: this.GroupFs[i].BASIC_UNIT });
+      this.items_VM.push({ ITEM_ID: this.GroupFs[i].ITEM_ID, GROUP_ID: this.GroupFs[i].GROUP_ID, ITEM_NAME: this.GroupFs[i].ITEM_NAME, ITEM_CODE: this.GroupFs[i].ITEM_CODE, BASIC_UNIT: this.GroupFs[i].BASIC_UNIT, UNIT_RATE: this.GroupFs[i].UNIT_RATE });
       //console.log("items_VM",this.items_VM);
     };
 
     for (var i = 0; i < this.GroupFs.length; i++) {
-      this.unites_VMs.push({ UNIT_ID: this.GroupFs[i].UNIT_ID, ITEM_ID: this.GroupFs[i].ITEM_ID, UNIT_NAME: this.GroupFs[i].UNIT_NAME });
+      this.unites_VMs.push({ UNIT_ID: this.GroupFs[i].UNIT_ID, ITEM_ID: this.GroupFs[i].ITEM_ID, UNIT_NAME: this.GroupFs[i].UNIT_NAME, UNIT_RATE: this.GroupFs[i].UNIT_RATE });
     };
 
     if (this.productdetailsDialog.length > 0) {
@@ -225,12 +225,10 @@ export class DialogForCategoryComponent implements OnInit {
   EditProduct(i: number) {
     console.log("transaction", i);
     this.Index = i;
-    //this.disabelItems = true;
     this.disabelUnites = true;
     //to view these values in dropDowns
     this.GroupId = this.storeTransDetailsDialog[i].groupF_Id;
     console.log("this.GroupId", this.GroupId);
-    //this.itemsFilter = this.items_VM.filter(s => s.GROUP_ID == this.GroupId);
     this.GroupfChange(this.GroupId);
     this.ItemId = this.storeTransDetailsDialog[i].itemId;
     this.ItemsChange(this.ItemId);
