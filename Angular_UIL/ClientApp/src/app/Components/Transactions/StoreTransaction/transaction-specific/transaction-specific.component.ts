@@ -39,6 +39,7 @@ import { transcode } from 'buffer';
 import { stringify } from 'querystring';
 import { GroupItemsUnits_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 import { Sales_Rep_VM } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Sales_Rep_VM';
+import { ItemsWithBalance_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -59,8 +60,8 @@ export interface DialogForCategory {
   dialogCategoryDetails?: storeTransDetails_VM[];
   productdetails?: storeTransDetails_VM[];
   GroupFs: GroupItemsUnits_VM[];
-  FromDistanceIsStore: boolean;
-
+  BringBalance: boolean;
+  StoreId: number;
 }
 
 
@@ -157,10 +158,14 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
   //For View Details in Second Way
   GroupFs: GroupItemsUnits_VM[];
+  ItemsWithBalance: ItemsWithBalance_VM[];
 
   //ByMo
   ItemsAvailable: boolean = false;
   FromDistanceIsStore: boolean = false;
+  StoreId: number;
+  disabelCategories: boolean = true;
+  QtyEffect: boolean ;
 
   //For Category Dialog
   dialogCategoryDetails: storeTransDetails_VM[];
@@ -224,6 +229,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         console.log("response", response);
         this.TransactionSpecific = response;
         console.log("this.TransactionSpecific", this.TransactionSpecific);
+        if (this.TransactionSpecific.QtyEffect == false) {
+          this.QtyEffect = false;
+          this.disabelCategories = false;
+        } else {
+          this.QtyEffect = true;
+        }
         try {
           this.Sales_Rep = this.TransactionSpecific.Sales_Rep_VM;
         }
@@ -334,18 +345,13 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
   //ngAfterViewInit() {
   //  console.log("hello after view int");
-  //  //this.TransactionsService.GetAllGroupsWithItemsDetails().subscribe(
-  //  //  res => {
-  //  //    console.log("GetAllGroupsWithItemsDetails", res);
-  //  //    this.GroupFs = res;
-  //  //    this.ItemsAvailable = true;
-  //  //  }
-  //  //);
-  //  console.log("@@@@@@@@@@@@@@@@", this.TransactionsService.ShraingListOfGroupsandItems)
-  //  this.GroupFs = this.TransactionsService.ShraingListOfGroupsandItems;
-  //  console.log("Items available in GrpFs", this.GroupFs)
-  //  this.ItemsAvailable = true;
-      
+  //  this.TransactionsService.GetAllItemsBalance().subscribe(
+  //    res => {
+  //      console.log("GetAllItemsBalance", res);
+  //      this.ItemsWithBalance = res;
+  //      console.log("GetAllItemsBalance", this.ItemsWithBalance);
+  //    }
+  //  );
   //};
 
   ngDoCheck() {
@@ -685,7 +691,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
   //open CategoryDialog
   openCategoryDialog(): void {
-    console.log("in open dialog method",this.productdetails);
+    console.log("in open dialog method", this.productdetails);
+    this.StoreId = this.fromStoreAllcodesId;
     //this.productdetails = [];
     var temp = this.productdetails;
     console.log("temp",temp);
@@ -695,7 +702,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     console.log("temp", temp);
     console.log("FromDistanceIsStore from spesc componenet", this.FromDistanceIsStore);
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
-      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs, FromDistanceIsStore: this.FromDistanceIsStore }
+      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs, BringBalance: this.FromDistanceIsStore, ItemsWithBalance: this.ItemsWithBalance, StoreId: this.StoreId }
       
     });
     dialogReff.afterClosed().subscribe(result => {
@@ -757,12 +764,36 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   };
 
   FromDistChange(event: any) {
-    if (event == 221) {
-      this.FromDistanceIsStore = true;
-    } else {
-      this.FromDistanceIsStore = false;
-    }
+    console.log("FromDistChange");
+    console.log("FromDistChange", event);
+    try { console.log(this.fromStoreAllcodesId); } catch (e) {}
+    console.log(this.QtyEffect);
+    try {
+      if (event == 221 && this.QtyEffect == true && this.fromStoreAllcodesId != undefined) {
+        this.FromDistanceIsStore = true;
+        this.disabelCategories = false;
+      } else {
+        this.FromDistanceIsStore = false;
+      }
+    } catch (e) {}
     
+  }
+
+  FromDistDetailsChange(event: any) {
+    console.log("FromDistDetailsChange");
+    console.log("FromDistDetailsChange", event);
+    console.log("FromDistDetailsChange", this.QtyEffect);
+    try { console.log(this.FromTypeId); } catch (e) { };
+    try {
+      if (this.FromTypeId == 221 && this.QtyEffect == true && event != undefined) {
+        console.log(this.FromTypeId, this.QtyEffect, event);
+        this.disabelCategories = false;
+        this.FromDistanceIsStore = true;
+      } else {
+        this.FromDistanceIsStore = false;
+      }
+    } catch (e) {}
+
   }
 
 

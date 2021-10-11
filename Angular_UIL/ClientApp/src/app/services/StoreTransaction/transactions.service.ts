@@ -15,6 +15,7 @@ import { ItemDetails_VM } from '../../models/Transactions/StoreTransaction/SaveS
 import { Unites_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
 import { storeTransDetails_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 import { GroupItemsUnits_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
+import { ItemsWithBalance_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
 
 
 
@@ -121,9 +122,15 @@ export class TransactionsService {
     return this.http.get<Unites_VM[]>(`${environment.Api_Url}/GetUnitesDetails?storeItemId=${itemId}`);
   }
 
-  GetAllGroupsWithItemsDetails(): Observable<GroupF_VM[]> {
+  GetAllGroupsWithItemsDetails(): Observable<GroupItemsUnits_VM[]> {
     console.log("hiii servexies");
-    return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails`)
+    return this.http.get<GroupItemsUnits_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails`)
+  };
+
+  //Get All Items With Balance
+  GetAllItemsBalance(): Observable<ItemsWithBalance_VM[]> {
+    console.log("hiii servexies Get All Items With Balance");
+    return this.http.get<ItemsWithBalance_VM[]>(`${environment.Api_Url}/GetItemsWithAndBalance`)
   };
 
   //Create Transaction

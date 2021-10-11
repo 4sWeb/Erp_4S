@@ -601,10 +601,43 @@ namespace Angular_API.Controllers
 
 
         [HttpGet]
-        [Route("GetItemsWithBasicUniteAndBalance")]
-        public JsonResult GetItemsWithBasicUniteAndBalance()
+        [Route("GetItemsWithAndBalance")]
+        public JsonResult GetItemsWithAndBalance()
         {
-            return Json( new System.Text.Json.JsonSerializerOptions());
+            string GroupItemsBalanceQuery = @"SELECT T.CODE AS STORE_ID , T.ANAME AS STORE_NAME , T.ITEM_ID AS ITEM_ID , SUM(QTY) AS QTY 
+                                        FROM( 
+                                            SELECT SAC.STORE_ALLCODES_ID AS CODE, SAC.ANAME AS ANAME, SI.STORE_ITEMS_ID AS ITEM_ID
+                                            , SIB.I_QTY * (SELECT SIFU2.UNIT_RATE FROM STORE_ITEM_UNITS SIFU2 WHERE  SIFU2.STORE_ITEMS_ID = SI.STORE_ITEMS_ID AND SIFU2.UNITID = SIB.UNIT_ID) AS QTY
+                                             FROM STORE_ITEMS SI
+                                             INNER JOIN STORE_ITEMS_BAL SIB ON SI.STORE_ITEMS_ID = SIB.STORE_ITEMS_ID
+                                             INNER JOIN STORE_ALLCODES SAC ON SAC.STORE_ALLCODES_ID = SIB.STORE_ALLCODES_ID
+                                             INNER JOIN GROUPF GF ON GF.GROUPF_ID = SAC.GROUPF_ID
+                                             INNER JOIN MAIN_TYPES MT ON MT.ID = GF.CODETYPE
+                                             WHERE MT.ID = 4 AND SIB.PERIOD = 2
+                                             UNION ALL
+                                             SELECT SAC.STORE_ALLCODES_ID AS CODE,SAC.ANAME AS ANAME
+                                             ,STO.ITEM_ID AS ITEM_ID ,STO.QTY * (SELECT SIFU2.UNIT_RATE FROM STORE_ITEM_UNITS SIFU2 WHERE SIFU2.STORE_ITEMS_ID = STO.ITEM_ID AND SIFU2.UNITID = STO.UNIT_ID) AS QTY
+                                             FROM STORE_TRNS_O STO
+                                             INNER JOIN STORE_TRNS_M STM ON STO.STORE_TRNS_M_ID = STM.STORE_TRNS_M_ID
+                                             INNER JOIN STORE_ALLCODES SAC ON SAC.STORE_ALLCODES_ID = STM.TO_STORE_ALLCODES_ID
+                                             INNER JOIN GROUPF GF ON GF.GROUPF_ID = SAC.GROUPF_ID
+                                             INNER JOIN MAIN_TYPES MT ON MT.ID = GF.CODETYPE
+                                             WHERE MT.ID = 4 AND STM.PERIOD = 2 AND STM.COMMITED = 1
+                                             UNION ALL
+                                             SELECT SAC.STORE_ALLCODES_ID AS CODE,SAC.ANAME AS ANAME
+                                             ,STO.ITEM_ID AS ITEM_ID , (STO.QTY * -1) * (SELECT SIFU2.UNIT_RATE FROM STORE_ITEM_UNITS SIFU2 WHERE SIFU2.STORE_ITEMS_ID = STO.ITEM_ID AND SIFU2.UNITID = STO.UNIT_ID) AS QTY
+                                             FROM STORE_TRNS_O STO
+                                             INNER JOIN STORE_TRNS_M STM ON STO.STORE_TRNS_M_ID = STM.STORE_TRNS_M_ID
+                                             INNER JOIN STORE_ALLCODES SAC ON SAC.STORE_ALLCODES_ID = STM.FROM_STORE_ALLCODES_ID
+                                             INNER JOIN GROUPF GF ON GF.GROUPF_ID = SAC.GROUPF_ID
+                                             INNER JOIN MAIN_TYPES MT ON MT.ID = GF.CODETYPE
+                                             WHERE MT.ID = 4 AND STM.PERIOD = 2 AND STM.COMMITED = 1
+                                             ) T
+                                             GROUP BY T.CODE  , T.ANAME  , T.ITEM_ID
+                                             ORDER BY T.ITEM_ID, STORE_ID";
+            var ItemsWithBalance_VM = repo.CallQuery<ItemsWithBalance_VM>(GroupItemsBalanceQuery).Result.ToList();
+
+            return Json(ItemsWithBalance_VM, new System.Text.Json.JsonSerializerOptions());
         }
 
 

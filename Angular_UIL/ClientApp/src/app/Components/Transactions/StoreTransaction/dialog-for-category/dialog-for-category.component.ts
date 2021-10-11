@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { GroupF_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupF_VM';
 import { GroupItemsUnits_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 import { ItemDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemDetails_VM';
+import { ItemsWithBalance_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
 import { Items_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Items_VM';
 import { Unites_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/Unites_VM';
 import { storeTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
@@ -30,7 +31,9 @@ export class DialogForCategoryComponent implements OnInit {
   storeTransDetailsDialog: storeTransDetails_VM[] = [];
   dialogCategoryDetails: storeTransDetails_VM[] = [];
   productdetailsDialog: storeTransDetails_VM[] = [];
-  FromDistanceIsStore: boolean;
+  ItemsWithBalance: ItemsWithBalance_VM[]=[];
+  BringBalance: boolean;
+  StoreId: number;
 
 
   AddedRowObjecDone: boolean = false;
@@ -56,12 +59,14 @@ export class DialogForCategoryComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogForCategory) {
     dialogRef.disableClose = true;
     this.productdetailsDialog = data.productdetails;
-    this.FromDistanceIsStore = data.FromDistanceIsStore;
+    this.BringBalance = data.BringBalance;
+    this.StoreId = data.StoreId;
+    console.log("this.hambozo", this.StoreId);
  
     
     this.GroupFs = data.GroupFs;
     console.log("GroupFsFrom Dialog", this.GroupFs);
-    console.log("FromDistanceIsStore From Dialog", this.FromDistanceIsStore);
+    console.log("BringBalance From Dialog", this.BringBalance);
     var flags = [];
     var itemFlags = [];
 
@@ -108,6 +113,15 @@ export class DialogForCategoryComponent implements OnInit {
  
 
   ngOnInit() {
+    if (this.BringBalance == true) {
+    this.TransactionsService.GetAllItemsBalance().subscribe(
+      res => {
+        console.log("GetAllItemsBalance", res);
+        this.ItemsWithBalance = res;
+        console.log("GetAllItemsBalance", this.ItemsWithBalance);
+      }
+      );
+    }
     console.log("After this.unites_VMs.length", this.unites_VMs.length);
     console.log("After this.unites_VMs.length", this.unites_VMs);
   };
@@ -239,6 +253,7 @@ export class DialogForCategoryComponent implements OnInit {
     this.totalo = this.storeTransDetailsDialog[i].totalo;
     this.unitPrice = this.storeTransDetailsDialog[i].unitPrice;
     //to set new values
+
   
     
   }
