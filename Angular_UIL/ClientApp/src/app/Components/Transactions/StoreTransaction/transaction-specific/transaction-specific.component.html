@@ -130,6 +130,7 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
+                          (change)="FromDistChange($event)"
                          [(ngModel)]="FromTypeId" #From="ngModel" required>
                 <ng-option [value]="item.TYPE_ID" [disabled]="item.disabled" *ngFor="let item of FromType">
 

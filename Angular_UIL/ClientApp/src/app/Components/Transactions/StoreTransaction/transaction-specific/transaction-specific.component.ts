@@ -59,6 +59,7 @@ export interface DialogForCategory {
   dialogCategoryDetails?: storeTransDetails_VM[];
   productdetails?: storeTransDetails_VM[];
   GroupFs: GroupItemsUnits_VM[];
+  FromDistanceIsStore: boolean;
 
 }
 
@@ -158,7 +159,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   GroupFs: GroupItemsUnits_VM[];
 
   //ByMo
-  ItemsAvailable: boolean= false;
+  ItemsAvailable: boolean = false;
+  FromDistanceIsStore: boolean = false;
 
   //For Category Dialog
   dialogCategoryDetails: storeTransDetails_VM[];
@@ -224,10 +226,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         console.log("this.TransactionSpecific", this.TransactionSpecific);
         try {
           this.Sales_Rep = this.TransactionSpecific.Sales_Rep_VM;
+        }
+        catch (e) { }
+        try {
+          this.FromType = this.TransactionSpecific.TransactionMasterSpec_VM.From_Type;
         } catch (e) {}
-        
         this.FromTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails;
-        this.FromType = this.TransactionSpecific.TransactionMasterSpec_VM.From_Type;
         this.ToTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails;
         this.Branches = this.TransactionSpecific.TransactionMasterSpec_VM.Branches;
         try {
@@ -689,8 +693,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       this.productdetails = [];
     }
     console.log("temp", temp);
+    console.log("FromDistanceIsStore from spesc componenet", this.FromDistanceIsStore);
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
-      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs }
+      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs, FromDistanceIsStore: this.FromDistanceIsStore }
       
     });
     dialogReff.afterClosed().subscribe(result => {
@@ -750,6 +755,16 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       return dialogReff.afterClosed();
     });
   };
+
+  FromDistChange(event: any) {
+    if (event == 221) {
+      this.FromDistanceIsStore = true;
+    } else {
+      this.FromDistanceIsStore = false;
+    }
+    
+  }
+
 
   GroupfChange(id: number, i: number) {
 

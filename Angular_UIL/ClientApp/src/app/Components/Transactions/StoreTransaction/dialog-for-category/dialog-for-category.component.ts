@@ -30,7 +30,7 @@ export class DialogForCategoryComponent implements OnInit {
   storeTransDetailsDialog: storeTransDetails_VM[] = [];
   dialogCategoryDetails: storeTransDetails_VM[] = [];
   productdetailsDialog: storeTransDetails_VM[] = [];
-
+  FromDistanceIsStore: boolean;
 
 
   AddedRowObjecDone: boolean = false;
@@ -56,10 +56,12 @@ export class DialogForCategoryComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogForCategory) {
     dialogRef.disableClose = true;
     this.productdetailsDialog = data.productdetails;
+    this.FromDistanceIsStore = data.FromDistanceIsStore;
  
     
     this.GroupFs = data.GroupFs;
     console.log("GroupFsFrom Dialog", this.GroupFs);
+    console.log("FromDistanceIsStore From Dialog", this.FromDistanceIsStore);
     var flags = [];
     var itemFlags = [];
 
