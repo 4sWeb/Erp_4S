@@ -340,13 +340,31 @@ export class DialogForCategoryComponent implements OnInit {
       console.log("Yarb",this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId));
       this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId)[0].QTY;
       if (this.CurrentBalance < 0) {
+        this.GroupId = undefined;
+        this.ItemId = undefined;
+        this.UniteId = undefined;
+        this.quantity = undefined;
+        this.unitPrice = undefined;
+        this.totalo = undefined;
+        this.BalanceBefore = undefined;
+        this.BalanceBeforeConvert = undefined;
+        this.BalanceAfter = undefined;
         alert("االكمية المطلوبة غير متاحة");
       }
       else {
-        alert("هذا الصنف غير موجود في ذلك المخزن");
+        var tempCurrentBalance = this.CurrentBalance;
+        console.log("this.CurrentBalance", this.CurrentBalance);
+        this.UniteRate = this.unitesFilter.filter(s => s.UNIT_ID == this.UniteId)[0].UNIT_RATE;
+        console.log(" this.UniteRate from item change", this.UniteRate);
+        this.BalanceBefore = tempCurrentBalance;
+        this.UniteChanged = true;
+        this.BalanceBeforeConvert = this.BalanceBefore / (this.UniteRate);
+        this.BalanceBefore = this.BalanceBeforeConvert;
+        this.BalanceAfter = (this.BalanceBefore) - (this.QuantityNeeded);
       }
     }
     catch (e) {
+      alert("هذا الصنف غير موجود في ذلك المخزن");
       this.GroupId = undefined;
       this.ItemId = undefined;
       this.UniteId = undefined;
