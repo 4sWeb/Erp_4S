@@ -329,9 +329,21 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             try { this.storeTransDep_VM = this.StoreTransMain.StoreTransDep_VM;
             console.log(this.storeTransDep_VM);
               console.log("selectedTransaction", this.selectedTransaction);
-            } catch (e) { console.log(e);};
+            } catch (e) { console.log(e); };
+            try {
+              console.log("inTry");
+              if (this.FromTypeId == 221 && this.QtyEffect == true && this.fromStoreAllcodesId != undefined) {
+                this.FromDistanceIsStore = true;
+                this.disabelCategories = false;
+                console.log("LKLKLKLKLLLKL", this.FromTypeId, this.QtyEffect, this.fromStoreAllcodesId);
+              } else {
+                this.FromDistanceIsStore = false;
+              }
+            } catch (e) { }
           }
-        );
+      );
+     
+
         this.TransactionsService.getAllGroups().subscribe(
           (data) => {
             console.log("GroupF", data);

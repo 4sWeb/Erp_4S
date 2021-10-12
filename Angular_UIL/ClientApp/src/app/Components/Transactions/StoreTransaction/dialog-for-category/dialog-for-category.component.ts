@@ -31,10 +31,15 @@ export class DialogForCategoryComponent implements OnInit {
   storeTransDetailsDialog: storeTransDetails_VM[] = [];
   dialogCategoryDetails: storeTransDetails_VM[] = [];
   productdetailsDialog: storeTransDetails_VM[] = [];
-  ItemsWithBalance: ItemsWithBalance_VM[]=[];
+  ItemsWithBalance: ItemsWithBalance_VM[] = [];
+  UniteChanged: boolean = false;
   BringBalance: boolean;
   StoreId: number;
-
+  CurrentBalance: number;
+  UniteRate: number;
+  QuantityNeeded: number;
+  BalanceBeforeConvert: number;
+  BalanceAfter: number;
 
   AddedRowObjecDone: boolean = false;
   disabelItems = true;
@@ -52,7 +57,7 @@ export class DialogForCategoryComponent implements OnInit {
   UniteId: number;
   Index: number;
   selected: any;
- 
+  BalanceBefore: number;
 
   constructor(public TransactionsService: TransactionsService,
     private dialogRef: MatDialogRef<DialogForCategoryComponent>,
@@ -132,7 +137,9 @@ export class DialogForCategoryComponent implements OnInit {
 
     //يوم الجمعه
      this.ItemId = undefined;
-     this.UniteId = undefined;
+    this.UniteId = undefined;
+    this.BalanceBefore = undefined;
+    this.totalo = undefined;
 
     this.Group = this.GroupFs.filter(s => s.GROUP_ID == GroupId)[0];
     console.log("Group", this.Group);
@@ -168,18 +175,86 @@ export class DialogForCategoryComponent implements OnInit {
     this.Unite = this.unites_VMs.filter(s => s.UNIT_ID == this.UniteId)[0];
     console.log("item selected", this.Item);
     console.log(" UniteId", this.UniteId);
+
+    this.UniteRate = this.unitesFilter.filter(s => s.UNIT_ID == this.UniteId)[0].UNIT_RATE;
+    console.log(" this.UniteRate from item change", this.UniteRate);
+
+    //Get Balance for selected item
+    try
+    {
+      console.log("this.StoreId", this.StoreId);
+      console.log("this.ItemId", this.ItemId);
+      console.log(this.ItemsWithBalance.filter(s => s.ITEM_ID == ItemId && s.STORE_ID == this.StoreId));
+      this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == ItemId && s.STORE_ID == this.StoreId)[0].QTY;
+      
+      console.log("There is need to calculate balance", this.CurrentBalance);
+      this.BalanceBefore = this.CurrentBalance;
+      console.log("BalanceBefore", this.BalanceBefore);
+    }
+    catch (e)
+    {
+      this.GroupId = undefined;
+      this.ItemId = undefined;
+      this.Item = undefined;
+      ItemId = undefined;
+      this.unitesFilter = [];
+      this.itemsFilter = [];
+      this.UniteId = undefined;
+
+      console.log(this.GroupId );
+      console.log(this.ItemId );
+      console.log(this.Item);
+      console.log(ItemId );
+      console.log(this.unitesFilter);
+      console.log(this.itemsFilter);
+      console.log(this.UniteId);
+      alert("هذا الصنف غير موجود في ذلك المخزن");
+      
+    }
   };
 
   UnitesChange(UniteId: number) {
+    
     this.Unite = this.unites_VMs.filter(s => s.UNIT_ID == UniteId)[0];
     console.log("selected unite",this.Unite);
-    //this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
+    //Get UniteRate in Bring Balance case
+    this.UniteRate = this.unitesFilter.filter(s => s.UNIT_ID == UniteId)[0].UNIT_RATE;
+    console.log(" this.UniteRate", this.UniteRate);
+    try
+    {
+      var tempCurrentBalance = this.CurrentBalance;
+      this.BalanceBefore = tempCurrentBalance;
+      this.UniteChanged = true;
+      this.BalanceBeforeConvert = this.BalanceBefore / (this.UniteRate);
+      this.BalanceBefore = this.BalanceBeforeConvert;
+      this.BalanceAfter = (this.BalanceBefore) - (this.QuantityNeeded);
+    } catch (e) { }
   }
 
   onKeyQuantity(event: any) {
-  //  this.storeTransDetails_VM[i].qty = event.target.value;
-    //  this.storeTransDetails_VM[i].totalo = this.storeTransDetails_VM[i].qty * this.storeTransDetails_VM[i].unitPrice;
+
     this.totalo = event.target.value * this.unitPrice;
+    //Convert Quantity selected to BasicUnite
+    this.QuantityNeeded = event.target.value ;
+    console.log("QuantityNeeded", this.QuantityNeeded);
+    try {
+      if (this.UniteChanged != true) {
+        console.log("this.CurrentBalance;", this.CurrentBalance);
+        this.BalanceBefore = this.CurrentBalance;
+        console.log("this.QuantityNeeded", this.QuantityNeeded);
+        this.BalanceAfter = (this.BalanceBefore) - ((this.QuantityNeeded));
+      }
+    else
+      {
+        var tempCurrentBalance = this.CurrentBalance;
+        this.BalanceBefore = tempCurrentBalance;
+        this.UniteChanged = true;
+        this.BalanceBeforeConvert = this.BalanceBefore / (this.UniteRate);
+        this.BalanceBefore = this.BalanceBeforeConvert;
+        this.BalanceAfter = (this.BalanceBefore) - (this.QuantityNeeded);
+      }
+    }
+    catch (e) { }
   };
 
   onKeyPrice(event: any, i: number) {
@@ -192,7 +267,7 @@ export class DialogForCategoryComponent implements OnInit {
     //need to validate
     //Editing mode
     if (this.Index >= 0) {
-      if (confirm(`تأكيد عملية التعديل...؟`)){
+      if (confirm(`تأكيد عملية التعديل...؟`)) {
         console.log(this.Index)
         this.storeTransDetailsDialog[this.Index].groupF_Id = this.GroupId;
         this.storeTransDetailsDialog[this.Index].groupF_Name = this.GroupF.filter(s => s.GROUP_ID == this.GroupId)[0].GROUP_NAME;
@@ -205,8 +280,8 @@ export class DialogForCategoryComponent implements OnInit {
         this.storeTransDetailsDialog[this.Index].unitPrice = this.unitPrice;
         this.Index = -1;
       }
-    } else {
-     
+    } else if (this.QuantityNeeded <= this.CurrentBalance) {
+
       this.storeTransDetailsDialog.push({
         groupF_Id: this.Group.GROUP_ID,
         groupF_Name: this.Group.GROUP_NAME,
@@ -219,7 +294,11 @@ export class DialogForCategoryComponent implements OnInit {
         totalo: this.totalo,
         //storeTrnsOId: null
       });
-     
+
+    }
+    else {
+      alert("االكمية المطلوبة غير متاحة");
+      console.log("االكمية المطلوبة غير متاحة");
     }
     
    
@@ -235,6 +314,10 @@ export class DialogForCategoryComponent implements OnInit {
     this.UniteId = undefined;
     this.quantity = undefined;
     this.unitPrice = undefined;
+    this.totalo = undefined;
+    this.BalanceBefore = undefined;
+    this.BalanceBeforeConvert = undefined;
+    this.BalanceAfter = undefined;
     
   }
 
@@ -253,6 +336,27 @@ export class DialogForCategoryComponent implements OnInit {
     this.totalo = this.storeTransDetailsDialog[i].totalo;
     this.unitPrice = this.storeTransDetailsDialog[i].unitPrice;
     //to set new values
+    try {
+      console.log("Yarb",this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId));
+      this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId)[0].QTY;
+      if (this.CurrentBalance < 0) {
+        alert("االكمية المطلوبة غير متاحة");
+      }
+      else {
+        alert("هذا الصنف غير موجود في ذلك المخزن");
+      }
+    }
+    catch (e) {
+      this.GroupId = undefined;
+      this.ItemId = undefined;
+      this.UniteId = undefined;
+      this.quantity = undefined;
+      this.unitPrice = undefined;
+      this.totalo = undefined;
+      this.BalanceBefore = undefined;
+      this.BalanceBeforeConvert = undefined;
+      this.BalanceAfter = undefined;
+    }
 
   
     

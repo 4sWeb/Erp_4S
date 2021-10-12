@@ -755,25 +755,25 @@
               <tr style="text-align:right" *ngFor="let trans of storeTransDep_VM ; let i = index">
                 <!--<td><button class="btn btn-danger" value="trans" (click)="deleteMainRecord($index,trans.StoreTrnsMId)">حذف</button></td>-->
                 <!--trans.StoreTrnsMId Wait from API-->
-                <td class="text-center">{{trans.trnsNo}}</td>
-                <td class="text-center">{{trans.branchName}}</td>
+                <td class="text-center">{{trans.TrnsNo}}</td>
+                <td class="text-center">{{trans.BranchName}}</td>
 
                 <td>
                   <div class="row">
-                    <div class="col-6">{{trans.from_TypeName}}</div>
-                    <div class="col-6">{{trans.from_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.From_TypeName}}</div>
+                    <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
                   </div>
                 </td>
 
 
                 <td>
                   <div class="row">
-                    <div class="col-6">{{trans.tO_TypeName}}</div>
-                    <div class="col-6">{{trans.to_StoreAllcodesName}}</div>
+                    <div class="col-6">{{trans.TO_TypeName}}</div>
+                    <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
                   </div>
                 </td>
 
-                <td style="color:#130a80;text-decoration:underline" class="text-center">{{trans.trnsDate}}</td>
+                <td style="color:#130a80;text-decoration:underline" class="text-center">{{trans.TrnsDate}}</td>
 
               </tr>
             </tbody>
