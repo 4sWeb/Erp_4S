@@ -1,7 +1,10 @@
 export class TransactionsName {
-  constructor(public StoreDepSpec_Id?: number,
+  constructor
+    (
+    public StoreDepSpec_Id?: number,
     public Transaction_Id?: number,
-    public Transaction_Name?: string) {
+    public Transaction_Name?: string
+  ) {
 
   }
 }

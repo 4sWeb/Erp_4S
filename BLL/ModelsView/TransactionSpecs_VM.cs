@@ -21,15 +21,11 @@ namespace BLL.ModelsView
         public decimal TrnsCode { get; set; }
         public string Aname { get; set; }
         public string Ename { get; set; }
-        //public object From_Type { get; set; }  // ( Altaraf From )
-        //public object To_Type { get; set; }    // ( Altaraf TO )
-        //public object FromTypeDetails { get; set; }  // ( Altaraf From )
-        //public object ToTypeDetails { get; set; }    // ( Altaraf TO )
         public object ExtraFields { get; set; } 
         public byte TrnsType { get; set; }
         public byte TrnsNature { get; set; }
         public int? SalesRep { get; set; }
-        public bool? PriceEffect { get; set; }
+        public int? PriceEffect { get; set; }
         public bool? PayEffect { get; set; }
         public bool? QtyEffect { get; set; }
         public byte? ItemPrice { get; set; }
@@ -45,7 +41,7 @@ namespace BLL.ModelsView
         public decimal? FromStoreAllcodesId { get; set; }
         public decimal? ToStoreAllcodesId { get; set; }
         public byte? Item2ndprice { get; set; }
-        public bool? ShowPrice { get; set; }
+        public int? ShowPrice { get; set; }
         public bool? Show2ndprice { get; set; }
         public bool? Item2ndpriceEffect { get; set; }
         public decimal? ItemPricelistId { get; set; }

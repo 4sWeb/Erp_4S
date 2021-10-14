@@ -116,7 +116,7 @@ namespace Angular_API.Controllers
 
         [HttpGet]
         [Route("TransactionDepSpec")]
-        public JsonResult TransactionDepSpecDetails(decimal StoreDepSpecID)
+        public JsonResult TransactionDepSpec(decimal StoreDepSpecID)
         { 
            var StoreDepSpecDetails_VM= repo._StoreDepSpecsDetails.GetSpecificationForStoreDep(StoreDepSpecID);
 

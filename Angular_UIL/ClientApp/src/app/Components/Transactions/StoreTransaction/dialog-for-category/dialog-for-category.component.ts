@@ -58,6 +58,7 @@ export class DialogForCategoryComponent implements OnInit {
   Index: number;
   selected: any;
   BalanceBefore: number;
+  ShowPrice: boolean;
 
   constructor(public TransactionsService: TransactionsService,
     private dialogRef: MatDialogRef<DialogForCategoryComponent>,
@@ -66,7 +67,9 @@ export class DialogForCategoryComponent implements OnInit {
     this.productdetailsDialog = data.productdetails;
     this.BringBalance = data.BringBalance;
     this.StoreId = data.StoreId;
+    this.ShowPrice = data.ShowPrice;
     console.log("this.hambozo", this.StoreId);
+    console.log("this.PriceEffect", this.ShowPrice);
  
     
     this.GroupFs = data.GroupFs;
@@ -227,16 +230,20 @@ export class DialogForCategoryComponent implements OnInit {
 
     this.totalo = event.target.value * this.unitPrice;
     this.QuantityNeeded = event.target.value ;
-    console.log("QuantityNeeded", this.QuantityNeeded);
-    try {
+    //console.log("QuantityNeeded", this.QuantityNeeded);
+    //try {
 
-      if (this.Index > -1 && this.storeTransDetailsDialog[this.Index].storeTrnsOId != undefined) {
-        this.CalculateRestFullBalance();
-      }
-    } catch (e) {
-      this.ConvertCurrentBalance();
-      this.CalculateRestFullBalance();
+    //  if (this.Index > -1 && this.storeTransDetailsDialog[this.Index].storeTrnsOId != undefined) {
+    //    this.CalculateRestFullBalance();
+    //  }
+    //} catch (e) {
+    //  this.ConvertCurrentBalance();
+    //  this.CalculateRestFullBalance();
+    //}
+    if (this.QuantityNeeded == undefined) {
+      this.QuantityNeeded = 0;
     }
+    this.BalanceAfter = this.BalanceBefore - this.QuantityNeeded;
   };
 
 
@@ -313,16 +320,15 @@ export class DialogForCategoryComponent implements OnInit {
     this.unitPrice = this.storeTransDetailsDialog[i].unitPrice;
     //to set new values
     try {
-      console.log("Yarb",this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId));
       this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId)[0].QTY;
-
+      this.UniteRate = this.unitesFilter.filter(s => s.UNIT_ID == this.UniteId)[0].UNIT_RATE;
       try {
         if (this.storeTransDetailsDialog[this.Index].storeTrnsOId != undefined) {
           this.ConvertCurrentBalanceInEditMode();
         } else {
-          this.ConvertCurrentBalance();
-        }
-      } catch (e) { this.ConvertCurrentBalance(); }
+          this.BalanceBefore= this.CurrentBalance / this.UniteRate;
+        } 
+      } catch (e) {  }
 
       this.CalculateRestFullBalance();
 
@@ -332,28 +338,14 @@ export class DialogForCategoryComponent implements OnInit {
         this.SetInputValuesToDefalut();
         alert("االكمية المطلوبة غير متاحة");
       }
-      else
-      {
-      
-  
-        this.UniteRate = this.unitesFilter.filter(s => s.UNIT_ID == this.UniteId)[0].UNIT_RATE;
-        console.log(" this.UniteRate from item change", this.UniteRate);
-
-        try {
-          if (this.storeTransDetailsDialog[this.Index].storeTrnsOId != undefined) {
-            this.ConvertCurrentBalanceInEditMode();
-          } else {
-            this.ConvertCurrentBalance();
-          }
-        } catch (e) { this.ConvertCurrentBalance();}
-        this.CalculateRestFullBalance();
-      }
+     
     }
     catch (e) {
       alert("هذا الصنف غير موجود في ذلك المخزن");
          this.SetInputValuesToDefalut();
     }
   }
+
 
 
   saveChanges() {
@@ -449,9 +441,11 @@ export class DialogForCategoryComponent implements OnInit {
     this.ItemId = undefined;
     this.UniteId = undefined;
     this.quantity = undefined;
+    this.QuantityNeeded = undefined;
     this.unitPrice = undefined;
     this.totalo = undefined;
     this.BalanceBefore = undefined;
+    this.CurrentBalance = undefined;
     this.BalanceBeforeConvert = undefined;
     this.BalanceAfter = undefined;
   };

@@ -40,6 +40,7 @@ import { stringify } from 'querystring';
 import { GroupItemsUnits_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 import { Sales_Rep_VM } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Sales_Rep_VM';
 import { ItemsWithBalance_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
+import { StoreDepSpecDetails_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/StoreDepSpecDetails_VM';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -62,6 +63,7 @@ export interface DialogForCategory {
   GroupFs: GroupItemsUnits_VM[];
   BringBalance: boolean;
   StoreId: number;
+  ShowPrice: boolean;
 }
 
 
@@ -121,6 +123,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   TrnsNo: number;
   storedocnumv: number;
 
+  //For DepSpecfication
+  StoreDepSpecDetails_VM: StoreDepSpecDetails_VM;
 
          //datePicker
  
@@ -165,8 +169,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   FromDistanceIsStore: boolean = false;
   StoreId: number;
   disabelCategories: boolean = true;
-  QtyEffect: boolean ;
-
+  QtyEffect: boolean;
+  ShowPrice: boolean = false;
   //For Category Dialog
   dialogCategoryDetails: storeTransDetails_VM[];
   popupstoreTransDetails_VM: storeTransDetails_VM[]=[];
@@ -235,6 +239,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         } else {
           this.QtyEffect = true;
         }
+
+        //Price Effect
+        if (this.TransactionSpecific.ShowPrice == 1) {
+          this.ShowPrice = true;
+        }
+
         try {
           this.Sales_Rep = this.TransactionSpecific.Sales_Rep_VM;
         }
@@ -389,17 +399,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     console.log("transDepCode", this.transDepCode);
     //22-9
     this.productdetails = [];
-    //
-    this.TransactionsService.getTransactionsByDepID(this.transDepCode).subscribe(
-      (response) => {
-        console.log("selected id transaction", this.transDepCode);
-        this.TransactionsDetails = response;
-        this.rerender();
-        console.log("selected id transaction", response)
-        this.dtTrigger2.next();
-      });
-    this.rerender();
-    this.dtTrigger2.next();
+    //Call Specification for Store Trans Dep
+    var StoreDepSpec_Id: number = this.DepTransactionNames.filter(s => s.Transaction_Id == this.transDepCode)[0].StoreDepSpec_Id;
+    this.TransactionsService.GetSpecificationForDependancy(StoreDepSpec_Id).subscribe(
+      res => {
+        this.StoreDepSpecDetails_VM = res;
+        console.log("response forDepSpes", res);
+        console.log("StoreDepSpecDetails_VM", this.StoreDepSpecDetails_VM);
+      }
+    );
    // $("#my_select").data("default-value", $("#my_select").val());
    // $('#my_select').val('...');
    // this.rerender();
@@ -637,6 +645,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
 
     this.StoreTransMain.StoreTransDetails_VM = this.productdetails;
+
+    //Which price will be Saved
+
     this.storeTransDetails_VM = this.StoreTransMain.StoreTransDetails_VM;
     console.log("storeTransDetails_VM", this.storeTransDetails_VM);
 
@@ -714,7 +725,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     console.log("temp", temp);
     console.log("FromDistanceIsStore from spesc componenet", this.FromDistanceIsStore);
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
-      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs, BringBalance: this.FromDistanceIsStore, ItemsWithBalance: this.ItemsWithBalance, StoreId: this.StoreId }
+      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs, BringBalance: this.FromDistanceIsStore, ItemsWithBalance: this.ItemsWithBalance, StoreId: this.StoreId, ShowPrice: this.ShowPrice }
       
     });
     dialogReff.afterClosed().subscribe(result => {

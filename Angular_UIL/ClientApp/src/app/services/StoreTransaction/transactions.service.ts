@@ -16,6 +16,7 @@ import { Unites_VM } from '../../models/Transactions/StoreTransaction/SaveStoreT
 import { storeTransDetails_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 import { GroupItemsUnits_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 import { ItemsWithBalance_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
+import { StoreDepSpecDetails_VM } from '../../models/Transactions/StoreTransaction/TransactionDepSpecification/StoreDepSpecDetails_VM';
 
 
 
@@ -162,32 +163,13 @@ export class TransactionsService {
         })
       );
   }
-      
+
+  //Get Specification For StoreTransDependancy
+  //StoreDepSpecDetails_VM
+  GetSpecificationForDependancy(DepTransID: number): Observable<StoreDepSpecDetails_VM> {
+    return this.http.get<StoreDepSpecDetails_VM>(`${environment.Api_Url}/TransactionDepSpec?StoreDepSpecID=${DepTransID}`);
+  }
   }
 
-  //getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<any> {
-  //  return this.http.get<Transactions[]>(`${API_Transaction} /UserID=${UserID}&AppID=${AppID}&${periodID}`, { observe: 'response' })
-  //    .pipe(
-  //      map((res) => {
-  //        if (res) {
-  //          if (res.status === 200) {
-  //            console.log(res.body);
-  //            return res.body;
 
-  //          }
-  //          return res.status;
-  //        }
-  //      }),
-  //      catchError((error: any) => {
-  //        if (error.status > 400 || error.status === 500) {
-  //          return [{ status: error.status }];
-  //        }
-  //        return error.status;
-  //      })
-  //    );
-  //}
-//}
 
-function AppID<T>(API_Transaction: string, arg1: any, AppID: any, periodID: any, arg4: { observe: string; }) {
-    throw new Error('Function not implemented.');
-}
