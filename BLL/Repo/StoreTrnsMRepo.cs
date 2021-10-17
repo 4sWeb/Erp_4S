@@ -14,6 +14,7 @@ namespace BLL.Repo
         private StoreAllcodesRepo storeAllcodesRepo;
         private MainTypesRepo mainTypesRepo;
         private ModelContext _dbContext4S;
+        private GroupfRepo GroupfRepo;
         //private readonly IRepoWrapper repo;
         private TestQuery test = new TestQuery();
 
@@ -61,6 +62,7 @@ namespace BLL.Repo
             storeAllsubcodesRepo = new StoreAllsubcodesRepo(_dbContext4S);
             storeAllcodesRepo = new StoreAllcodesRepo(_dbContext4S);
             mainTypesRepo = new MainTypesRepo(_dbContext4S);
+            GroupfRepo = new GroupfRepo(_dbContext4S);
             List<Transaction_VM> Items = new List<Transaction_VM>();
             if (DepID != default)
             {
@@ -73,24 +75,24 @@ namespace BLL.Repo
                     Dictionary<string, object> Current = (Dictionary<string, object>)item;
                     var NewItem = GetByCondition(c => c.StoreTrnsMId == decimal.Parse(Current.GetValueOrDefault("MID").ToString())).Result.Select(s => new { s.TrnsCode, s.TrnsDate, s.TrnsNo, s.StoreTrnsMId, s.FromStoreAllcodesId, s.ToStoreAllcodesId, s.BranchId, s.Storedocnum, s.Period }).FirstOrDefault();
                     var Exist = Items.Where(c => c.StoreTrnsMId == NewItem.StoreTrnsMId);
-                    if(Exist.Count()==0)
-                    Items.Add(new Transaction_VM
-                    {
-                        StoreTrnsMId = NewItem.StoreTrnsMId,
-                        TrnsCode = NewItem.TrnsCode,
-                        TrnsDate = NewItem.TrnsDate,
-                        From_TypeName = mainTypesRepo.GetNameFromMAinType(NewItem.FromStoreAllcodesId),
-                        From_StoreAllcodesId = NewItem.FromStoreAllcodesId,
-                        From_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.FromStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.FromStoreAllcodesId).Aname : null,
-                        TO_TypeName = mainTypesRepo.GetNameFromMAinType(NewItem.ToStoreAllcodesId),
-                        To_StoreAllcodesId = NewItem.ToStoreAllcodesId,
-                        To_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.ToStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.ToStoreAllcodesId).Aname : null,
-                        BranchId = NewItem.BranchId,
-                        branch = storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.BranchId) != null ? storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.BranchId).Aname : null,
-                        Storedocnum = NewItem.Storedocnum,
-                        Period = NewItem.Period,
-                        TrnsNo = NewItem.TrnsNo
-                    });
+                    if (Exist.Count() == 0)
+                        Items.Add(new Transaction_VM
+                        {
+                            StoreTrnsMId = NewItem.StoreTrnsMId,
+                            TrnsCode = NewItem.TrnsCode,
+                            TrnsDate = NewItem.TrnsDate,
+                            From_StoreAllcodesId = NewItem.FromStoreAllcodesId,
+                            From_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.FromStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.FromStoreAllcodesId).Aname : null,
+                            To_StoreAllcodesId = NewItem.ToStoreAllcodesId,
+                            To_StoreAllcodesName = storeAllcodesRepo.GetStoreAllCodeById(NewItem.ToStoreAllcodesId) != null ? storeAllcodesRepo.GetStoreAllCodeById(NewItem.ToStoreAllcodesId).Aname : null,
+                            BranchId = NewItem.BranchId,
+                            branch = storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.BranchId) != null ? storeAllsubcodesRepo.GetStoreAllSubCodeByID(NewItem.BranchId).Aname : null,
+                            Storedocnum = NewItem.Storedocnum,
+                            Period = NewItem.Period,
+                            TrnsNo = NewItem.TrnsNo,
+                            From_Type = GroupfRepo.GetAllTypes(DepID, "F"),
+                            To_Type = GroupfRepo.GetAllTypes(DepID, "T"),
+                        }) ;
                     
                 }
             }

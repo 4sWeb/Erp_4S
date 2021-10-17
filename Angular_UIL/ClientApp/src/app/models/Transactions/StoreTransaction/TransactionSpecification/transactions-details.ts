@@ -1,7 +1,12 @@
+import { FromType } from "./from-type";
+import { ToType } from "./to-type";
+
 export class TransactionsDetails {
-  constructor(
+  constructor
+    (
+    public From_Type: FromType[],
+    public To_Type: ToType[],
     public StoreTrnsMId?: number,
-    //public ptransrowid?:number,
     public TrnsCode?: number,
     public TrnsNo?: number,
     public Storedocnum?: number,
@@ -10,12 +15,11 @@ export class TransactionsDetails {
     public Period?: number,
     public TrnsDate?: Date,
     public From_StoreAllcodesId?: number,
-    public From_TypeName?: string,
     public From_StoreAllcodesName?: string,
     public To_StoreAllcodesId?: number,
-    public TO_TypeName?: string,
     public To_StoreAllcodesName?: string,
-    public transactionSelected?: boolean) { }
+    public transactionSelected?: boolean
+  ) { }
 
 
 

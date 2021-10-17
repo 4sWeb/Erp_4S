@@ -26,6 +26,9 @@ namespace BLL.ModelsView
         public decimal? To_StoreAllcodesId { get; set; } // Altaraf TO (ID)
         public string TO_TypeName { get; set; }
         public string To_StoreAllcodesName { get; set; } // Altaraf TO (Name)
+     
+        public object From_Type { get; set; }  // ( Altaraf From )
+        public object To_Type { get; set; }    // ( Altaraf TO )
         public StoreTransDep_VM StoreTransDep_VM { get; set; }
     }
 

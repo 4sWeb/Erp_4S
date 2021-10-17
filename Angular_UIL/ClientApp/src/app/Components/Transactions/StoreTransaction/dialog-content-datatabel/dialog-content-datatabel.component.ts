@@ -1,12 +1,13 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Subject } from 'rxjs';
+import { from, Subject } from 'rxjs';
 import { storeTransDetails_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/storeTransDetails_VM';
 import { DependancyProduct } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/dependancy-product';
 import { TransactionsDetails } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/transactions-details';
 import { TransactionsService } from '../../../../services/StoreTransaction/transactions.service';
 import { DialogData } from '../transaction-specific/transaction-specific.component';
-
+import { FromType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type'
+import { ToType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type'
 @Component({
   selector: 'app-dialog-content-datatabel',
   templateUrl: './dialog-content-datatabel.component.html',
@@ -25,6 +26,12 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
   checkedTransactions?: number[];
   checkedTransactionsIds?: number[];
   DependancyProduct?: storeTransDetails_VM[];
+
+  TO_TypeName: string ;
+  From_TypeName: string;
+
+  From_Type: FromType[];
+  
 
   constructor(public TransactionsService: TransactionsService,
     private dialogRef: MatDialogRef<DialogContentDatatabelComponent>,
@@ -56,7 +63,23 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
       (response) => {
         console.log("selected id transaction", this.selectedTransaction);
         this.TransactionsDetails = response;
-        console.log("selected id transaction", response)
+        console.log("selected id transaction", this.TransactionsDetails)
+       
+        for (var i = 0; i < this.TransactionsDetails.length; i++)
+        {
+          try {
+            this.From_TypeName = this.TransactionsDetails[i].From_Type[0].TYPE_NAME;
+
+          } catch (e) { this.From_TypeName = ""; }
+        }
+       
+
+       
+        for (var i = 0; i < this.TransactionsDetails.length; i++) {
+          try {
+            this.TO_TypeName = this.TransactionsDetails[i].To_Type[0].TYPE_NAME;
+          } catch (e) { this.TO_TypeName = ""; }
+        } 
         this.dtTrigger.next();
       });
     this.dtTrigger.next();

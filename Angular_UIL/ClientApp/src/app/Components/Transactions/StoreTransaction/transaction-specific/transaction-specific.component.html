@@ -207,7 +207,7 @@
 
 
         <!-- Start of salesRep optional -->
-        <div class="form-group row col-6" *ngIf="TransactionSpecific.SalesRep==1">
+        <div class="form-group row col-6" *ngIf="SalesRepView==true">
           <label class="col-sm-3 col-form-label" style="text-align:right"> مندوب</label>
           <div class="col-sm-8  pr-2 pl-4">
             <ng-select bindLabel="SALES_NAME"
@@ -880,13 +880,13 @@
                 <td style="color:#130a80;text-decoration:underline">{{trans.TrnsDate}}</td>
                 <td>
                   <div class="row">
-                    <div class="col-6">{{trans.TO_TypeName}}</div>
+                    <div class="col-6">{{TO_TypeName}}</div>
                     <div class="col-6">{{trans.To_StoreAllcodesName}}</div>
                   </div>
                 </td>
                 <td>
                   <div class="row">
-                    <div class="col-6">{{trans.From_TypeName}}</div>
+                    <div class="col-6">{{From_TypeName}}</div>
                     <div class="col-6">{{trans.From_StoreAllcodesName}}</div>
                   </div>
                 </td>

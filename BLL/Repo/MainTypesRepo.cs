@@ -42,6 +42,24 @@ namespace BLL.Repo
             }
             return null;
         }
-       
+
+        public decimal GetFromIdMAinType(decimal? id)
+        {
+            if (id != null && id != default)
+            {
+                storeAllcodesRepo = new StoreAllcodesRepo(_dbContext4S);
+                groupfRepo = new GroupfRepo(_dbContext4S);
+
+                var GroupfId = storeAllcodesRepo.GetStoreAllCodeById(id) != null ? storeAllcodesRepo.GetStoreAllCodeById(id).GroupfId : null;
+                if (GroupfId != null)
+                {
+                    decimal? MainTypeId = groupfRepo.GetGroupFById(GroupfId) != null ? groupfRepo.GetGroupFById(GroupfId).Codetype : null;
+                    if (MainTypeId != null)
+                        return GetMainTypeById(MainTypeId).Id;
+                }
+            }
+            return -1;
+        }
+
     }
 }

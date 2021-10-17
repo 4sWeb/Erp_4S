@@ -10,5 +10,6 @@ namespace BLL.IRepo
         MainType GetMainTypeById(decimal? id);
 
         string GetNameFromMAinType(decimal? id);
+        decimal GetFromIdMAinType(decimal? id);
     }
 }
