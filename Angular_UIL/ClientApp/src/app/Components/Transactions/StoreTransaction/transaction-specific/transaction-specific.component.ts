@@ -809,8 +809,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           console.log("LOLOLOLOLOLOL");
           this.productdetails = response;
           console.log("productDetails", this.productdetails);
-          var productFilter = this.productdetails.filter(s => s.totalo > 0);
-          this.productdetails = productFilter;
+          try
+          {
+            if (this.ShowPrice == true) {
+              var productFilter = this.productdetails.filter(s => s.totalo > 0);
+              this.productdetails = productFilter;
+            }
+
+          } catch (e) { }
+          
           console.log("productDetails", this.productdetails);
           for (var i = 0; i < this.productdetails.length; i++) {
             this.StoreTransDepDetailsOnly.push({

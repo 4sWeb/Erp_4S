@@ -794,9 +794,9 @@
               <tr style="text-align:right">
                 <!--<th>تعديل</th>-->
                 <th>ملاحظات</th>
-                <th style="text-align:center">القيمة</th>
+                <th *ngIf="ShowPrice==true" style="text-align:center">القيمة</th>
 
-                <th style="text-align:center">السعر</th>
+                <th *ngIf="ShowPrice==true" style="text-align:center">السعر</th>
                 <th style="text-align:center">الكمية</th>
                 <th style="text-align:center">الوحدة</th>
                 <th class="text-center">
@@ -818,9 +818,9 @@
             </button>
           </td>-->
                 <td><span>{{trans.notes}}</span></td>
-                <td><span>{{trans.totalo}}</span></td>
+                <td *ngIf="ShowPrice==true"><span>{{trans.totalo}}</span></td>
 
-                <td><span>{{trans.unitPrice}}</span></td>
+                <td *ngIf="ShowPrice==true"><span>{{trans.unitPrice}}</span></td>
                 <td><span>{{trans.qty}}</span></td>
                 <td>
                   <span> {{trans.unit_Name}} </span>
@@ -917,9 +917,9 @@
                 <th>تعديل</th>
                 <th>ملاحظات</th>
 
-                <th>القيمة</th>
+                <th *ngIf="ShowPrice==true">القيمة</th>
 
-                <th>السعر</th>
+                <th *ngIf="ShowPrice==true">السعر</th>
                 <th>الكمية</th>
                 <th>الوحدة</th>
 
@@ -954,9 +954,9 @@
                 </td>
                 <td><p>{{trans.notes}}</p></td>
 
-                <td><p>{{trans.totalo}}</p></td>
+                <td *ngIf="ShowPrice==true"><p>{{trans.totalo}}</p></td>
 
-                <td><p>{{trans.unitPrice}}</p></td>
+                <td *ngIf="ShowPrice==true"><p>{{trans.unitPrice}}</p></td>
                 <td><p>{{trans.qty}}</p></td>
                 <td><p>{{trans.unit_Name}}</p></td>
                 <td><p>{{trans.item_Name}}</p></td>

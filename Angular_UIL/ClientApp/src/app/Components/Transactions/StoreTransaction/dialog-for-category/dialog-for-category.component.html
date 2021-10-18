@@ -25,10 +25,10 @@
             <tr class="d-flex">
               <th [ngClass]="BringBalance==false? 'col-sm-3 col-md-3 col-lg-3' : 'col-sm-2 col-md-2 col-lg-2'">المجموعات</th>
               <th [ngClass]="ShowPrice==true? 'col-sm-3 col-md-3 col-lg-3' : 'col-sm-4 col-md-4 col-lg-4'">الأصناف</th>
-              <th class="col-sm-2 col-md-2 col-lg-2">الوحدات</th>
+              <th [ngClass]="ShowPrice==false? 'col-sm-4 col-md-4 col-lg-4' : 'col-sm-2 col-md-2 col-lg-2'">الوحدات</th>
               <th class="col-sm-1 col-md-1 col-lg-1">الكمية</th>
               <th *ngIf="ShowPrice==true" class="col-sm-1 col-md-1 col-lg-1">سعر الوحدة</th>
-              <th [ngClass]="BringBalance==false?  'col-sm-2 col-md-2 col-lg-2' : 'col-sm-1 col-md-1 col-lg-1'">القيمة</th>
+              <th *ngIf="ShowPrice==true" [ngClass]="BringBalance==false?  'col-sm-2 col-md-2 col-lg-2' : 'col-sm-1 col-md-1 col-lg-1'">القيمة</th>
               <th *ngIf="BringBalance==true" class="col-sm-1 col-md-1 col-lg-1">الرصيد الحالي</th>
               <th *ngIf="BringBalance==true" class="col-sm-1 col-md-1 col-lg-1">الرصيد المتبقي</th>
             </tr>
@@ -66,7 +66,7 @@
                 </ng-select>
               </div>
             </td>
-            <td class="col-sm-2 col-md-2 col-lg-2 pr-2 pl-2">
+            <td [ngClass]="ShowPrice==false? 'col-sm-4 col-md-4 col-lg-4' : 'col-sm-2 col-md-2 col-lg-2'">
               <div>
                 <ng-select bindLabel="UNIT_NAME"
                            name="unite"
@@ -97,7 +97,7 @@
               </div>
             </td>
 
-            <td [ngClass]="BringBalance==false?  'col-sm-2 col-md-2 col-lg-2' : 'col-sm-1 col-md-1 col-lg-1'">
+            <td *ngIf="ShowPrice==true" [ngClass]="BringBalance==false?  'col-sm-2 col-md-2 col-lg-2' : 'col-sm-1 col-md-1 col-lg-1'">
 
               <input type="number" class="form-control" id="value" style="padding-right:1px;padding-left:1px; font-size:12px"
                      name="value" value="totalo" [(ngModel)]="totalo" readonly />
@@ -148,8 +148,8 @@
             <th>حذف</th>
             <th>تعديل</th>
             <th>ملاحظات</th>
-            <th>القيمة</th>
-            <th> سعر الوحدة</th>
+            <th *ngIf="ShowPrice==true">القيمة</th>
+            <th *ngIf="ShowPrice==true" > سعر الوحدة</th>
             <th>الكمية</th>
 
             <th>الوحدة</th>
@@ -183,9 +183,9 @@
               </button>
             </td>
             <td><p>{{trans.notes}}</p></td>
-            <td><p>{{trans.totalo}}</p></td>
+            <td *ngIf="ShowPrice==true" ><p>{{trans.totalo}}</p></td>
 
-            <td><p>{{trans.unitPrice}}</p></td>
+            <td *ngIf="ShowPrice==true" ><p>{{trans.unitPrice}}</p></td>
             <td><p>{{trans.qty}}</p></td>
             <td><p>{{trans.unit_Name}}</p></td>
             <td><p>{{trans.item_Name}}</p></td> <!--(ItemName+ITEMCODE)-->
