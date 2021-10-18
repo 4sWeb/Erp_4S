@@ -87,6 +87,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   TO_TypeName: string;
   From_TypeName: string;
 
+  FromTypeLength: number;
+  ToTypeLength: number;
+  FromTypeDetailsLength: number;
+  ToTypeDetailsLength: number;
+  FromTypeTemp: FromType[]=[];
+  ToTypeTemp: ToType[]=[];
+  ToTypeDeailsTemp: ToTypeDetails[]=[];
+  FromTypeDetailsTemp: FromTypeDetails[]=[];
+
   ToAllDetails?: ToTypeDetails[];
   dtOptions: DataTables.Settings[] = [];
   Sales_Rep: Sales_Rep_VM[];
@@ -264,20 +273,48 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           }
         }
         catch (e) { }
-        try {
+        try
+        {
           this.FromType = this.TransactionSpecific.TransactionMasterSpec_VM.From_Type;
-        } catch (e) {}
-        this.FromTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails;
-        this.ToTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails;
+          var x: number = this.FromType.length;
+          this.FromTypeLength = x;
+              
+        }
+        catch (e) { this.FromTypeLength = 0; }
+        try
+        {
+          this.ToType = this.TransactionSpecific.TransactionMasterSpec_VM.To_Type;
+          var y: number = this.ToType.length;
+          this.ToTypeLength=y;
+        }
+        catch (e) { this.ToTypeLength = 0;}
+
+        try
+        {
+          this.FromTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.FromTypeDetails;
+          var z: number = this.FromTypeDetails.length;
+          this.FromTypeDetailsLength=z;
+        }
+        catch (e) { this.FromTypeDetailsLength = 0;}
+
+        try
+        {
+          this.ToTypeDetails = this.TransactionSpecific.TransactionMasterSpec_VM.ToTypeDetails;
+          var b: number = this.ToTypeDetails.length;
+          this.ToTypeDetailsLength = b;
+        }
+        catch (e) { this.ToTypeDetailsLength = 0;}
         this.Branches = this.TransactionSpecific.TransactionMasterSpec_VM.Branches;
-        try {
+        try
+        {
           this.DepTransactionNames = this.TransactionSpecific.TransactionDepSpec_VM.TransactionsNames;
           if (this.DepTransactionNames.length>0) {
             this.IsDependant = true;
             console.log("IsDependant", this.IsDependant);
           }
-        } catch (e) { console.log(e) };
-        this.ToType = this.TransactionSpecific.TransactionMasterSpec_VM.To_Type;
+        }
+        catch (e) { console.log(e) };
+       
         this.storeTransMax = this.TransactionSpecific.StoreTransMax;
         //need to correct
         this.storedocnum = this.TransactionSpecific.StoreTransMax;
@@ -406,6 +443,95 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   //event handler for the select element's change event
   selectChangeHandler() {
     //Delete Previous Data
+    console.log(this.FromType.length);
+    console.log(this.FromTypeLength);
+    console.log(this.ToType.length);
+    console.log(this.ToTypeLength);
+    console.log(this.FromTypeDetails.length);
+    console.log(this.FromTypeDetailsLength);
+    console.log(this.ToTypeDetails.length);
+    console.log(this.ToTypeDetailsLength);
+    this.FromTypeId =undefined;
+    this.ToTypeId = undefined;
+    this.fromStoreAllcodesId = undefined;
+    this.ToTypeDetailsId = undefined;
+    
+    if (this.FromType.length > this.FromTypeLength)
+    {
+      console.log(this.FromType.length , this.FromTypeLength)
+      try
+      {
+        this.FromTypeTemp = this.FromType.filter(s => s.TYPE_ID != this.From_TypeDep.TYPE_ID);
+        console.log(this.FromTypeTemp);
+        this.FromType = [];
+        this.FromType = this.FromTypeTemp;
+      } catch (e) { }
+
+      try
+      {
+        this.FromTypeTemp = this.FromType.filter(s => s.TYPE_ID != this.To_TypeDep.TYPE_ID);
+        console.log(this.FromTypeTemp);
+        this.FromType = [];
+        this.FromType = this.FromTypeTemp;
+      } catch (e) { }
+    
+    }
+
+    if (this.ToType.length > this.ToTypeLength)
+    {
+      console.log(this.ToType.length, this.ToTypeLength)
+      try
+      {
+        this.ToTypeTemp = this.ToType.filter(s => s.TYPE_ID != this.To_TypeDep.TYPE_ID);
+        console.log(this.ToTypeTemp);
+        this.ToType = [];
+        this.ToType = this.ToTypeTemp;
+      } catch (e) { }
+
+      try
+      {
+        this.ToTypeTemp = this.ToType.filter(s => s.TYPE_ID != this.From_TypeDep.TYPE_ID);
+        console.log(this.ToTypeTemp);
+        this.ToType = [];
+        this.ToType = this.ToTypeTemp;
+      } catch (e) { }
+
+    }
+
+    if (this.ToTypeDetails.length > this.ToTypeDetailsLength) {
+      try
+      {
+        this.ToTypeDeailsTemp = this.ToTypeDetails.filter(s => s.StoreAllcodesId != this.To_TypeDetailsDep.StoreAllcodesId);
+        this.ToTypeDetails = [];
+        this.ToTypeDetails = this.ToTypeDeailsTemp;
+      } catch (e) { }
+
+      try
+      {
+        this.ToTypeDeailsTemp = this.ToTypeDetails.filter(s => s.StoreAllcodesId != this.From_TypeDetailsDep.StoreAllcodesId);
+        this.ToTypeDetails = [];
+        this.ToTypeDetails = this.ToTypeDeailsTemp;
+      } catch (e) { }
+
+    }
+
+    if (this.FromTypeDetails.length > this.FromTypeDetailsLength)
+    {
+      try
+      {
+        this.FromTypeDetailsTemp = this.FromTypeDetails.filter(s => s.StoreAllcodesId != this.From_TypeDetailsDep.StoreAllcodesId);
+        this.FromTypeDetails = [];
+        this.FromTypeDetails = this.FromTypeDetailsTemp;
+      } catch (e) { }
+
+      try
+      {
+        this.FromTypeDetailsTemp = this.FromTypeDetails.filter(s => s.StoreAllcodesId != this.To_TypeDetailsDep.StoreAllcodesId);
+        this.FromTypeDetails = [];
+        this.FromTypeDetails = this.FromTypeDetailsTemp;
+      } catch (e) { }
+     
+    }
     //update the ui
     $("#second-table").DataTable().clear().draw();
 
@@ -465,6 +591,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       //to make sure that ckecked transaction array is empty
       this.checkedTransactionsIds = [];
       this.productdetails = [];
+      this.StoreTransDepDetailsOnly = [];
 
       if (result == null) {
         result=this.checkedTransactionsMain ;
@@ -513,14 +640,15 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       //Handle GetFrom Cases
       try
       {
+
         if (this.GetFrom == 1)
         {
 
-          if (this.FromType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID) != undefined)
+          if (this.FromType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID).length<=0)
           {
             this.FromType.push(this.From_TypeDep);
           }
-          if (this.FromTypeDetails.filter(s => s.StoreAllcodesId != this.From_TypeDetailsDep.StoreAllcodesId) != undefined)
+          if (this.FromTypeDetails.filter(s => s.StoreAllcodesId == this.From_TypeDetailsDep.StoreAllcodesId).length<=0)
           {
             this.FromTypeDetails.push(this.From_TypeDetailsDep);
           }
@@ -531,11 +659,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         } else if (this.GetFrom == 2)
         {
 
-          if (this.FromType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID) == undefined)
+          if (this.FromType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID).length<=0)
           {
             this.FromType.push(this.To_TypeDep);
           }
-          if (this.FromTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId) == undefined)
+          if (this.FromTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId).length<=0)
           {
             this.FromTypeDetails.push(this.To_TypeDetailsDep);
           }
@@ -557,11 +685,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       try {
         if (this.GetTo == 1)
         {
-          if (this.ToType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID) != undefined)
+          if (this.ToType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID).length<=0)
           {
             this.ToType.push(this.From_TypeDep);
           }
-          if (this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.From_TypeDetailsDep.StoreAllcodesId) != undefined)
+          if (this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.From_TypeDetailsDep.StoreAllcodesId).length<=0)
           {
             this.ToTypeDetails.push(this.From_TypeDetailsDep);
           }
@@ -573,11 +701,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         else if (this.GetTo == 2)
         {
 
-          if (this.ToType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID) != undefined) {
+          if (this.ToType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID).length<=0) {
             console.log(this.ToType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID));
             this.ToType.push(this.To_TypeDep);
-          } 
-          if (this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId) != undefined)
+          }
+          if (this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId).length<=0)
           {
             this.ToTypeDetails.push(this.To_TypeDetailsDep);
             
@@ -600,12 +728,13 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       //Handel FromFilter
 
       try {
+
         if (this.FromFilter == 1) {
 
-          if ((this.ToType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID) == undefined)) {
+          if (this.FromType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID).length <= 0) {
             this.FromType.push(this.From_TypeDep);
           }
-          if ((this.FromTypeDetails.filter(s => s.StoreAllcodesId == this.From_TypeDetailsDep.StoreAllcodesId)) == undefined) {
+          if (this.FromTypeDetails.filter(s => s.StoreAllcodesId == this.From_TypeDetailsDep.StoreAllcodesId).length <= 0) {
             this.FromTypeDetails.push(this.From_TypeDetailsDep);
           }
           this.FromTypeId = this.From_TypeDep.TYPE_ID;
@@ -614,10 +743,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           console.log("this.FromTypeDetails Try ==1", this.FromTypeDetails);
         } else if (this.FromFilter == 2) {
 
-          if ((this.ToType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID)) == undefined) {
+          if (this.FromType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID).length <= 0) {
             this.FromType.push(this.To_TypeDep);
           }
-          if ((this.FromTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId)) == undefined) {
+          if (this.FromTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId).length <= 0) {
             this.FromTypeDetails.push(this.To_TypeDetailsDep);
           }
           this.FromTypeId = this.To_TypeDep.TYPE_ID;
@@ -636,10 +765,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       //Handle ToFilter Cases
       try {
         if (this.ToFilter == 1) {
-          if ((this.FromType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID)) == undefined) {
+          if (this.ToType.filter(s => s.TYPE_ID == this.From_TypeDep.TYPE_ID).length <= 0) {
             this.ToType.push(this.From_TypeDep);
           }
-          if ((this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.From_TypeDetailsDep.StoreAllcodesId)) == undefined) {
+          if (this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.From_TypeDetailsDep.StoreAllcodesId).length <= 0) {
             this.ToTypeDetails.push(this.From_TypeDetailsDep);
           }
 
@@ -649,22 +778,27 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         }
         else if (this.ToFilter == 2) {
 
-          if ((this.ToType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID)) == undefined) {
+          if (this.ToType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID).length <= 0) {
+            console.log(this.ToType.filter(s => s.TYPE_ID == this.To_TypeDep.TYPE_ID));
             this.ToType.push(this.To_TypeDep);
           }
-          if ((this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId)) == undefined) {
+          if (this.ToTypeDetails.filter(s => s.StoreAllcodesId == this.To_TypeDetailsDep.StoreAllcodesId).length <= 0) {
             this.ToTypeDetails.push(this.To_TypeDetailsDep);
 
           }
           this.ToTypeId = this.To_TypeDep.TYPE_ID;
           this.ToTypeDetailsId = this.To_TypeDetailsDep.StoreAllcodesId;
-          console.log("this.FromType Try FromGet=2", this.FromType);
+          console.log("this.FromType Try ToTYPE=2", this.ToType);
+          console.log("this.FromType Try  ToTYPE", this.ToTypeDetails);
         }
 
       } catch (e) {
         console.log("this.ToType Catch", this.ToType);
-        console.log("this.FromType Catch", this.FromType);
+        console.log("this.FromType Catch", this.ToTypeDetails);
       }
+
+
+
 
       for (let i = 0; i < this.checkedTransactionsMain.length; i++) {
         this.checkedTransactionsIds.push(this.checkedTransactionsMain[i].StoreTrnsMId); //use i instead of 0
@@ -674,6 +808,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         (response) => {
           console.log("LOLOLOLOLOLOL");
           this.productdetails = response;
+          console.log("productDetails", this.productdetails);
           var productFilter = this.productdetails.filter(s => s.totalo > 0);
           this.productdetails = productFilter;
           console.log("productDetails", this.productdetails);
