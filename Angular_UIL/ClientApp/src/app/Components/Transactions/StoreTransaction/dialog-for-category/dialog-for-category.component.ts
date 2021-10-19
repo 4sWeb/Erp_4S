@@ -40,7 +40,7 @@ export class DialogForCategoryComponent implements OnInit {
   QuantityNeeded: number;
   BalanceBeforeConvert: number;
   BalanceAfter: number;
-
+  ItemPriceSpec: number;
   AddedRowObjecDone: boolean = false;
   disabelItems = true;
   disabelUnites = true;
@@ -68,6 +68,7 @@ export class DialogForCategoryComponent implements OnInit {
     this.BringBalance = data.BringBalance;
     this.StoreId = data.StoreId;
     this.ShowPrice = data.ShowPrice;
+    this.ItemPriceSpec = data.ItemPriceSpec;
     console.log("this.hambozo", this.StoreId);
     console.log("this.PriceEffect", this.ShowPrice);
  
@@ -89,7 +90,20 @@ export class DialogForCategoryComponent implements OnInit {
     for (var i = 0; i < this.GroupFs.length; i++) {
       if (itemFlags[this.GroupFs[i].ITEM_ID]) continue;
       itemFlags[this.GroupFs[i].ITEM_ID] = true;
-      this.items_VM.push({ ITEM_ID: this.GroupFs[i].ITEM_ID, GROUP_ID: this.GroupFs[i].GROUP_ID, ITEM_NAME: this.GroupFs[i].ITEM_NAME, ITEM_CODE: this.GroupFs[i].ITEM_CODE, BASIC_UNIT: this.GroupFs[i].BASIC_UNIT, UNIT_RATE: this.GroupFs[i].UNIT_RATE });
+      this.items_VM.push
+        ({
+        ITEM_ID: this.GroupFs[i].ITEM_ID,
+        GROUP_ID: this.GroupFs[i].GROUP_ID,
+        ITEM_NAME: this.GroupFs[i].ITEM_NAME,
+        ITEM_CODE: this.GroupFs[i].ITEM_CODE,
+        BASIC_UNIT: this.GroupFs[i].BASIC_UNIT,
+        UNIT_RATE: this.GroupFs[i].UNIT_RATE,
+        BRANCH_PRICE: this.GroupFs[i].BRANCH_PRICE,
+        DEAL_PRICE: this.GroupFs[i].DEAL_PRICE,
+        PURCH_PRICE: this.GroupFs[i].PURCH_PRICE,
+        RETAIL_PRICE: this.GroupFs[i].RETAIL_PRICE,
+        SALES_PRICE: this.GroupFs[i].SALES_PRICE
+      });
       //console.log("items_VM",this.items_VM);
     };
 
@@ -184,22 +198,33 @@ export class DialogForCategoryComponent implements OnInit {
     console.log(" this.UniteRate from item change", this.UniteRate);
 
     //Get Balance for selected item
-    try
-    {
-      console.log("this.StoreId", this.StoreId);
-      console.log("this.ItemId", this.ItemId);
-      console.log(this.ItemsWithBalance.filter(s => s.ITEM_ID == ItemId && s.STORE_ID == this.StoreId));
-      this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == ItemId && s.STORE_ID == this.StoreId)[0].QTY;
-      
-      console.log("There is need to calculate balance", this.CurrentBalance);
-      this.BalanceBefore = this.CurrentBalance;
-      console.log("BalanceBefore", this.BalanceBefore);
+    if (this.BringBalance == true) {
+
+      try {
+        console.log("this.StoreId", this.StoreId);
+        console.log("this.ItemId", this.ItemId);
+        console.log(this.ItemsWithBalance.filter(s => s.ITEM_ID == ItemId && s.STORE_ID == this.StoreId));
+        this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == ItemId && s.STORE_ID == this.StoreId)[0].QTY;
+
+        console.log("There is need to calculate balance", this.CurrentBalance);
+        this.BalanceBefore = this.CurrentBalance;
+        console.log("BalanceBefore", this.BalanceBefore);
+      }
+      catch (e) {
+        this.SetInputValuesToDefalut();
+        alert("هذا الصنف غير موجود في ذلك المخزن");
+
+      }
     }
-    catch (e)
+    //specify which price will viewd
+    
+    if (this.ShowPrice == true)
     {
-      this.SetInputValuesToDefalut();
-      alert("هذا الصنف غير موجود في ذلك المخزن");
-      
+      this.ViewSpecficPrice();
+    }
+    if (this.ItemPriceSpec == 6 || this.ItemPriceSpec == 7)
+    {
+      this.ShowPrice == false;
     }
   };
 
@@ -449,5 +474,23 @@ export class DialogForCategoryComponent implements OnInit {
     this.BalanceBeforeConvert = undefined;
     this.BalanceAfter = undefined;
   };
+  //Determine which price will viewed
+  ViewSpecficPrice()
+  {
+    if (this.ItemPriceSpec == 1) {
+      this.unitPrice = this.Item.PURCH_PRICE;
+    } else if (this.ItemPriceSpec == 2) {
+      this.unitPrice = this.Item.DEAL_PRICE;
+    }
+    else if (this.ItemPriceSpec == 3) {
+      this.unitPrice = this.Item.SALES_PRICE;
+    }
+    else if (this.ItemPriceSpec == 4) {
+      this.unitPrice = this.Item.BRANCH_PRICE;
+    }
+    else if (this.ItemPriceSpec == 5) {
+      console.log("avarege price not calculated yet", this.unitPrice);
+    } 
+  }
 
 }

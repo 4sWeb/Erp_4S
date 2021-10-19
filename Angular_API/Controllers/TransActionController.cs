@@ -498,7 +498,7 @@ namespace Angular_API.Controllers
 
         [HttpGet]
         [Route("GetAllGroupsWithItemsDetails")]
-        public JsonResult GetAllGroupsWithItemsDetails()
+        public JsonResult GetAllGroupsWithItemsDetails(decimal PeriodId=1)
         {
             //List<GroupItemsUnits_VM> GroupItemsUnits_VM = new List<GroupItemsUnits_VM>();
 
@@ -513,6 +513,11 @@ namespace Angular_API.Controllers
                                             --NVL(SIFU.UNITID,0.00) + 0 AS BASIC_UNIT
                                             NVL(SIU.UNIT_RATE,1) AS UNIT_RATE,
                                             NVL( (SELECT SIFU2.UNITID FROM STORE_ITEM_UNITS SIFU2 WHERE  SIFU2.STORE_ITEMS_ID= SI.STORE_ITEMS_ID  AND SIFU2.BASIC_UNIT=1),0.00) + 0 AS BASIC_UNIT
+                                            ,NVL(SIP.IPURCHPRICE,0) AS PURCH_PRICE , 
+                                            NVL(SI.SALE_PRICE,0) AS SALES_PRICE , 
+                                            NVL(SI.DEAL_PRICE,0) AS DEAL_PRICE, 
+                                            NVL(SI.BRANCH_PRICE,0) AS BRANCH_PRICE , 
+                                            NVL(SI.RETAIL_PRICE,0) AS RETAIL_PRICE
                                        FROM STORE_ITEMS SI
                                             LEFT JOIN STORE_ITEM_UNITS SIU
                                                ON SIU.STORE_ITEMS_ID = SI.STORE_ITEMS_ID
@@ -528,7 +533,9 @@ namespace Angular_API.Controllers
                                                ON GF.GROUPF_ID = SIFS.GROUPF_ID
                                             LEFT JOIN MAIN_TYPES MT
                                                ON MT.ID = GF.CODETYPE
-                                   ORDER BY GF.GROUPF_ID, SI.ITEM_CODE, SU.UNITID";
+                                            LEFT JOIN STORE_ITEM_PRICE SIP 
+                                               ON SIP.ITEMID=SI.STORE_ITEMS_ID  AND SIP.PERIOD= " + PeriodId +
+                                               " ORDER BY GF.GROUPF_ID, SI.ITEM_CODE, SU.UNITID";
 
             var GroupItemsUnits_VM = repo.CallQuery<GroupItemsUnits_VM>(GroupItemsUnitsQuery).Result.ToList();
 

@@ -17,6 +17,13 @@ namespace BLL.ModelsView
         public string ITEM_NAME { get; set; }
         public string UNIT_NAME { get; set; }
         public decimal? UNIT_RATE { get; set; }
+        public decimal? PURCH_PRICE { get; set; }
+        public decimal? SALES_PRICE { get; set; }
+        public decimal? DEAL_PRICE { get; set; }
+        public decimal? BRANCH_PRICE { get; set; }
+        public decimal? RETAIL_PRICE { get; set; }
+
+
 
     }
 }

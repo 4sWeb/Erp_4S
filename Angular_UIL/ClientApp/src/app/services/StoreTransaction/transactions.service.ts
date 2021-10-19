@@ -30,7 +30,7 @@ export class TransactionsService {
 
   constructor(private http: HttpClient) {
     console.log("**********from services*************");
-    this.GetAllGroupsWithItemsDetails().subscribe(
+    this.GetAllGroupsWithItemsDetails(1).subscribe(
       res => {
         console.log("*************GetAllGroupsWithItemsDetails From SHaring service Constructor*******", res);
         this.ShraingListOfGroupsandItems = res;
@@ -123,9 +123,9 @@ export class TransactionsService {
     return this.http.get<Unites_VM[]>(`${environment.Api_Url}/GetUnitesDetails?storeItemId=${itemId}`);
   }
 
-  GetAllGroupsWithItemsDetails(): Observable<GroupItemsUnits_VM[]> {
+  GetAllGroupsWithItemsDetails(PeriodId: number): Observable<GroupItemsUnits_VM[]> {
     console.log("hiii servexies");
-    return this.http.get<GroupItemsUnits_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails`)
+    return this.http.get<GroupItemsUnits_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails?PeriodId=${PeriodId}`)
   };
 
   //Get All Items With Balance

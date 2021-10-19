@@ -8,6 +8,11 @@ export class GroupItemsUnits_VM {
     public ITEM_NAME?: string,
     public UNIT_NAME?: string,
     public BASIC_UNIT?: number,
-    public UNIT_RATE?: number
+    public UNIT_RATE?: number,
+    public PURCH_PRICE?: number,
+    public SALES_PRICE?: number,
+    public DEAL_PRICE?: number,
+    public BRANCH_PRICE?: number,
+    public RETAIL_PRICE?: number,
   ) { }
 }

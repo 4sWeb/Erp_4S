@@ -64,6 +64,7 @@ export interface DialogForCategory {
   BringBalance: boolean;
   StoreId: number;
   ShowPrice: boolean;
+  ItemPriceSpec: number;
 }
 
 
@@ -86,6 +87,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   TransactionsDetails?: TransactionsDetails[];
   TO_TypeName: string;
   From_TypeName: string;
+  ItemPriceSpec: number;
 
   FromTypeLength: number;
   ToTypeLength: number;
@@ -314,7 +316,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           }
         }
         catch (e) { console.log(e) };
-       
+        try { this.ItemPriceSpec = this.TransactionSpecific.ItemPrice } catch (e) { this.ItemPriceSpec = 0;};
         this.storeTransMax = this.TransactionSpecific.StoreTransMax;
         //need to correct
         this.storedocnum = this.TransactionSpecific.StoreTransMax;
@@ -1085,7 +1087,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     console.log("temp", temp);
     console.log("FromDistanceIsStore from spesc componenet", this.FromDistanceIsStore);
     const dialogReff = this.dialogEdit.open(DialogForCategoryComponent, {
-      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs, BringBalance: this.FromDistanceIsStore, ItemsWithBalance: this.ItemsWithBalance, StoreId: this.StoreId, ShowPrice: this.ShowPrice }
+      data: { dialogCategoryDetails: this.dialogCategoryDetails, productdetails: this.productdetails, GroupFs: this.GroupFs, BringBalance: this.FromDistanceIsStore, ItemsWithBalance: this.ItemsWithBalance, StoreId: this.StoreId, ShowPrice: this.ShowPrice, ItemPriceSpec: this.ItemPriceSpec }
       
     });
     dialogReff.afterClosed().subscribe(result => {
