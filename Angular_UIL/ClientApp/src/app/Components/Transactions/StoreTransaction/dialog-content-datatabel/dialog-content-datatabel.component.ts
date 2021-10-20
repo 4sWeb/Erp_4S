@@ -8,6 +8,7 @@ import { TransactionsService } from '../../../../services/StoreTransaction/trans
 import { DialogData } from '../transaction-specific/transaction-specific.component';
 import { FromType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/from-type'
 import { ToType } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/to-type'
+import { SharingDataService } from '../../../../services/SharingData/sharing-data.service';
 @Component({
   selector: 'app-dialog-content-datatabel',
   templateUrl: './dialog-content-datatabel.component.html',
@@ -29,11 +30,14 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
 
   TO_TypeName: string ;
   From_TypeName: string;
+  FromFilter: number;
+  ToFilter: number;
+
 
   From_Type: FromType[];
   
 
-  constructor(public TransactionsService: TransactionsService,
+  constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService,
     private dialogRef: MatDialogRef<DialogContentDatatabelComponent>,
     @Inject(MAT_DIALOG_DATA)public data:DialogData) {
 
@@ -41,6 +45,8 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
     this.selectedTransaction = data.selectedTransaction;
     this.checkedTransactionsIds = data.checkedTransactionsIds;
     this.checkedTransactionsMain = data.checkedTransactionsMain;
+    this.FromFilter = data.FromFilter;
+    this.ToFilter = data.ToFilter;
     console.log("from Dialoogggg component", this.selectedTransaction);
     console.log("from Dialoogggg component2", this.checkedTransactionsIds);
     console.log("from Dialoogggg component2", this.checkedTransactionsMain);
@@ -63,7 +69,48 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
       (response) => {
         console.log("selected id transaction", this.selectedTransaction);
         this.TransactionsDetails = response;
-        console.log("selected id transaction", this.TransactionsDetails)
+        console.log("this.TransactionsDetails", this.TransactionsDetails);
+
+        //Fiter From 
+        if (this.FromFilter == 1) {
+          console.log("gettoStoreAllCodesId",this.SharingDataService.getfromStoreAllCodesId());
+          if (this.SharingDataService.getfromStoreAllCodesId() != undefined)
+          {
+            var temp = this.TransactionsDetails.filter(s => s.From_StoreAllcodesId == this.SharingDataService.getfromStoreAllCodesId());
+            this.TransactionsDetails = temp;
+            console.log("After Filteration", this.TransactionsDetails);
+          }
+      
+        }
+
+        else if (this.FromFilter == 2) {
+          if (this.SharingDataService.getfromStoreAllCodesId() != undefined) {
+            var temp = this.TransactionsDetails.filter(s => s.To_StoreAllcodesId == this.SharingDataService.getfromStoreAllCodesId());
+            this.TransactionsDetails = temp;
+            console.log("After Filteration", this.TransactionsDetails);
+          }
+        }
+
+        //Filter To
+        if (this.ToFilter == 1) {
+          if (this.SharingDataService.gettoStoreAllCodesId() != undefined) {
+            var temp = this.TransactionsDetails.filter(s => s.From_StoreAllcodesId == this.SharingDataService.gettoStoreAllCodesId());
+            this.TransactionsDetails = temp;
+            console.log("After Filteration", this.TransactionsDetails);
+          }
+
+        }
+
+        else if (this.ToFilter == 2) {
+          if (this.SharingDataService.gettoStoreAllCodesId() != undefined) {
+            var temp = this.TransactionsDetails.filter(s => s.To_StoreAllcodesId == this.SharingDataService.gettoStoreAllCodesId());
+            this.TransactionsDetails = temp;
+            console.log("After Filteration", this.TransactionsDetails);
+          }
+        }
+
+
+
        
         for (var i = 0; i < this.TransactionsDetails.length; i++)
         {

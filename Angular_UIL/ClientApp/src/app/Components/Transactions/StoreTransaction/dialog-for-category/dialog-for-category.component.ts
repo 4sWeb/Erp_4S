@@ -216,8 +216,9 @@ export class DialogForCategoryComponent implements OnInit {
 
       }
     }
+
+
     //specify which price will viewd
-    
     if (this.ShowPrice == true)
     {
       this.ViewSpecficPrice();

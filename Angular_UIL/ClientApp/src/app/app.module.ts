@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -31,6 +31,17 @@ import { DialogContentDatatabelComponent } from './Components/Transactions/Store
 import { DialogEditProductComponent } from './Components/Transactions/StoreTransaction/dialog-edit-product/dialog-edit-product.component';
 import { DialogEditStoreTransDeatailsComponent } from './Components/Transactions/StoreTransaction/dialog-edit-store-trans-deatails/dialog-edit-store-trans-deatails.component';
 import { DialogForCategoryComponent } from './Components/Transactions/StoreTransaction/dialog-for-category/dialog-for-category.component';
+
+/////////////////////////*********************Localization************/////////////////////////////////
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+
+
+
+export function createTranslateLoader(http: HttpClient)
+{
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 
 @NgModule({
@@ -71,6 +82,14 @@ import { DialogForCategoryComponent } from './Components/Transactions/StoreTrans
       { path: 'transaction-list', component: TransactionsListComponent },
       { path: 'transaction-specific/:id/:userId', component: TransactionSpecificComponent },
     ]),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+      defaultLanguage:'ar',
+    } ),
     BrowserAnimationsModule
   ],
   providers: [TransactionsService, SharingDataService],

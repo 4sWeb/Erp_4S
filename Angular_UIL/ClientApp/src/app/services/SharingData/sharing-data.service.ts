@@ -11,6 +11,10 @@ export class SharingDataService {
 
   private storeTransMId: any = undefined;
 
+  private fromStoreAllCodesId: any = undefined;
+
+  private toStoreAllCodesId: any = undefined;
+
   private storeId: any = undefined;
   CurrentTrnsName: string;
 
@@ -36,7 +40,23 @@ export class SharingDataService {
     return this.storeId;
   }
 
+  setfromStoreAllCodesId(data: any) {
+    console.log("from services",data);
+    this.fromStoreAllCodesId = data;
+  }
+  getfromStoreAllCodesId(): any {
+    console.log("from services", this.fromStoreAllCodesId)
+    return this.fromStoreAllCodesId;
+  }
 
+
+  settoStoreAllCodesId(data: any) {
+    this.toStoreAllCodesId = data;
+  }
+  gettoStoreAllCodesId(): any {
+    console.log("from services",this.toStoreAllCodesId)
+    return this.toStoreAllCodesId;
+  }
 }
 
 

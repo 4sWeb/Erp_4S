@@ -46,6 +46,8 @@ export interface DialogData {
   selectedTransaction?: number;
   checkedTransactionsIds?: number[];
   checkedTransactionsMain?: TransactionsDetails[];
+  FromFilter: number;
+  ToFilter: number;
 }
 
 //Dialog Edit interface
@@ -149,6 +151,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   To_TypeDep: ToType | FromType;
   To_TypeDetailsDep: ToTypeDetails | any;
   From_TypeDetailsDep: FromTypeDetails | any;
+  disabelDepTransButton: boolean = false;
          //datePicker
  
   public Datevalue: Date = new Date();
@@ -441,10 +444,14 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
 
 
-
+  RestDistnationValues() {
+    this.FromTypeId = undefined;
+    this.ToTypeId = undefined;
+    this.fromStoreAllcodesId = undefined;
+    this.ToTypeDetailsId = undefined;
+  };
   //event handler for the select element's change event
   selectChangeHandler() {
-    //Delete Previous Data
     console.log(this.FromType.length);
     console.log(this.FromTypeLength);
     console.log(this.ToType.length);
@@ -453,10 +460,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     console.log(this.FromTypeDetailsLength);
     console.log(this.ToTypeDetails.length);
     console.log(this.ToTypeDetailsLength);
-    this.FromTypeId =undefined;
-    this.ToTypeId = undefined;
-    this.fromStoreAllcodesId = undefined;
-    this.ToTypeDetailsId = undefined;
+    //Delete Previous Data
+ 
+    //this.RestDistnationValues();
     
     if (this.FromType.length > this.FromTypeLength)
     {
@@ -560,6 +566,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         } else {
           this.SalesRepView = false;
         }
+        if (((this.FromFilter == 1 || this.FromFilter == 2) && this.fromStoreAllcodesId == undefined)
+          || ((this.ToFilter == 1 || this.ToFilter == 2) && this.ToTypeDetailsId == undefined)) {
+          this.disabelDepTransButton = true;
+        } else { this.disabelDepTransButton = false; }
       }
     );
   }
@@ -585,7 +595,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
   openDialog(): Observable<any> {
     const dialogRef = this.dialog.open(DialogContentDatatabelComponent, {
-      data: { selectedTransaction: this.selectedTransaction, checkedTransactions: this.checkedTransactionsIds }
+      data: {
+        selectedTransaction: this.selectedTransaction, checkedTransactions: this.checkedTransactionsIds, FromFilter: this.FromFilter,
+        ToFilter: this.ToFilter
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1024,10 +1037,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     this._router.navigate([`/all-transactions/${this.Transcode}`]);
   }
 
-  selectFromDetailsChange(FromDetailsValue: number) {
-    this.fromStoreAllcodesId = FromDetailsValue;
 
-  }
 
   //open EditDialog
   EditProduct(EditPro): void {
@@ -1168,8 +1178,14 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     console.log("FromDistDetailsChange");
     console.log("FromDistDetailsChange", event);
     console.log("FromDistDetailsChange", this.QtyEffect);
+
+    //setFromStoreAllCodesId
+    this.SharingDataService.setfromStoreAllCodesId(event);
+
     try { console.log(this.FromTypeId); } catch (e) { };
-    try {
+    //Bring Balance if FromStoreAllCodes is Store
+    try
+    {
       if (this.FromTypeId == 221 && this.QtyEffect == true && event != undefined) {
         console.log(this.FromTypeId, this.QtyEffect, event);
         this.disabelCategories = false;
@@ -1177,7 +1193,32 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       } else {
         this.FromDistanceIsStore = false;
       }
-    } catch (e) {}
+    } catch (e) { }
+
+    //Disable View DepTransaction
+    try
+    {
+      if (((this.FromFilter == 1 || this.FromFilter == 2) && this.fromStoreAllcodesId == undefined))
+        {
+        this.disabelDepTransButton = true;
+      } else { this.disabelDepTransButton = false; }
+    } catch (e) { }
+
+  }
+
+
+
+  ToDistDetailsChange(event: any) {
+    //setFromStoreAllCodesId
+    this.SharingDataService.settoStoreAllCodesId(event);
+
+    //Disable View DepTransaction
+    try {
+      if (((this.ToFilter == 1 || this.ToFilter == 2) && this.ToTypeDetailsId == undefined))
+        {
+        this.disabelDepTransButton = true;
+      } else { this.disabelDepTransButton = false; }
+    } catch (e) { }
 
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AllTransactions } from '../../../../models/Transactions/StoreTransaction/AllStoreTransacion/all-transactions';
 import { SharingDataService } from '../../../../services/SharingData/sharing-data.service';
@@ -21,9 +22,10 @@ export class AllTransactionsComponent implements  OnDestroy, OnInit {
   StoreTransMId: number;
   TransCode: number;
 
-  constructor(private TransactionsService: TransactionsService, private SharingDataService: SharingDataService, public ar: ActivatedRoute) {
-    
-  }
+  constructor(private TransactionsService: TransactionsService,
+    private SharingDataService: SharingDataService,
+    public ar: ActivatedRoute, private translate: TranslateService) {}
+
 
   ngOnInit() {
     this.dtOptions = {
