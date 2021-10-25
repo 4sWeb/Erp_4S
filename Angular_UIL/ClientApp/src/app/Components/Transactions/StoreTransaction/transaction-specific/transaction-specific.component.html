@@ -130,7 +130,8 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
-                          (change)="FromDistChange($event)"
+                         [disabled]="disabelFrom"
+                         (change)="FromDistChange($event)"
                          [(ngModel)]="FromTypeId" #From="ngModel" required>
                 <ng-option [value]="item.TYPE_ID" [disabled]="item.disabled" *ngFor="let item of FromType">
 
@@ -151,6 +152,7 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
+                         [disabled]="disabelFromDetails"
                          (change)="FromDistDetailsChange($event)"
                          [(ngModel)]="fromStoreAllcodesId" #FromDetails="ngModel" required>
                 <ng-option [value]="item.StoreAllcodesId" [disabled]="item.disabled" *ngFor="let item of FromTypeDetails">
@@ -177,6 +179,7 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
+                         [disabled]="disabelTo"
                          [(ngModel)]="ToTypeId" #to="ngModel" required>
                 <ng-option [value]="item.TYPE_ID" [disabled]="item.disabled" *ngFor="let item of ToType">
                   {{item.TYPE_NAME}}
@@ -194,6 +197,7 @@
                          appendTo="body"
                          [searchable]="true"
                          [clearable]="true"
+                         [disabled]="disabelToDetails"
                          (change)="ToDistDetailsChange($event)"
                          [(ngModel)]="ToTypeDetailsId" #toDetails="ngModel" required>
                 <ng-option [value]="item.StoreAllcodesId" [disabled]="item.disabled" *ngFor="let item of ToTypeDetails">
@@ -228,7 +232,7 @@
          <!--End of salesRep optional-->
 
          <!--Start of salesRep Mandatory--> 
-        <div class="form-group row col-6" *ngIf="TransactionSpecific.SalesRep==2">
+        <div class="form-group row col-6" *ngIf="SalesRepViewMust==true">
           <label class="col-sm-3 col-form-label" style="text-align:right"> مندوب</label>
           <div class="col-sm-8  pr-2 pl-4">
             <ng-select bindLabel="SALES_NAME"
