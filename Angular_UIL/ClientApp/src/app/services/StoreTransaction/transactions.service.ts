@@ -2,7 +2,7 @@ import { HttpClient,HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators'
 
-import { Observable, pipe} from 'rxjs';
+import { from, Observable, pipe} from 'rxjs';
 import { Transactions } from '../../models/Transactions/transactions';
 import { AllTransactions } from '../../models/Transactions/StoreTransaction/AllStoreTransacion/all-transactions';
 import { environment } from '../../../environments/environment';
@@ -17,7 +17,7 @@ import { storeTransDetails_VM } from '../../models/Transactions/StoreTransaction
 import { GroupItemsUnits_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/GroupItemsUnits_VM';
 import { ItemsWithBalance_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
 import { StoreDepSpecDetails_VM } from '../../models/Transactions/StoreTransaction/TransactionDepSpecification/StoreDepSpecDetails_VM';
-
+import { ProductSpecification_VM } from '../../models/Transactions/StoreTransaction/TransactionDepSpecification/ProductSpecification_VM'
 
 
 
@@ -87,16 +87,16 @@ export class TransactionsService {
     return this.http.get<TransactionSpecific | any>(`${environment.Api_Url}/TransactionSpec?transCode=${id}&userId=${userId}`);
   }
 
-  //get all feildes neaded to create specific transaction
+  //GetTransactionsByDepID
   getTransactionsByDepID(id: number): Observable<TransactionsDetails[]> {
-    console.log(id);
+    console.log("GetTransactionsByDepID",id);
     return this.http.get<TransactionsDetails[]>(`${environment.Api_Url}/GetTransactionsByDepID?DepTransID=${id}`)
   }
 
   //get all product dependancies
-  getAllProductDetails(ids: number[], GetItem: number): Observable<storeTransDetails_VM[]> {
-    console.log("idsFrom Services", ids);
-    return this.http.post<storeTransDetails_VM[]>(`${environment.Api_Url}/DisplayItems?GetItems=${GetItem}`,ids);
+  getAllProductDetails(ProductSpecification_VM: ProductSpecification_VM|any): Observable<storeTransDetails_VM[]> {
+    console.log("idsFrom Services", ProductSpecification_VM);
+    return this.http.post<storeTransDetails_VM[]>(`${environment.Api_Url}/DisplayItems`, ProductSpecification_VM);
   }
 
   //Retrive all details about StoreTransaction by storeTransMId

@@ -11,5 +11,6 @@ namespace BLL.IRepo
         public List<StoreTransDetails_VM> GetTransactionsDetailsList(List<decimal> TransactionsList,decimal Getitems);
         public void convert_VMtoModel(List<StoreTransDetails_VM> StoreTransMain_VM);
          List<StoreTransDetails_VM> RetriveDetailsTransactionById(decimal storeTransMId);
+        public List<StoreTransDetails_VM> CalculatePriceForDepDetailsProduct(List<StoreTransDetails_VM> storeTransDetails_VMs, decimal DepPricetype);
     }
 }

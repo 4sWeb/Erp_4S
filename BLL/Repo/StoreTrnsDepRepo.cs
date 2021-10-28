@@ -56,12 +56,12 @@ namespace BLL.Repo
         }
 
         //Retrive list of StoreTransDepId by previouslist ids
-        public List<decimal> RetriveListTransDepIds(decimal previousId)
+        public List<decimal> RetriveListTransDepIds(decimal previousId,decimal cTransrowId)
         {
             List<decimal> ids = new List<decimal>();
             if (previousId!=default)
             {
-                  var result = GetByCondition(c => c.Ptransrowid == previousId).Result
+                  var result = GetByCondition(c => c.Ptransrowid == previousId && c.Ctrnsrowid==cTransrowId).Result
                     .Select(c => c.StoreTrnsDepId);
                     foreach (var item in result)
                     {

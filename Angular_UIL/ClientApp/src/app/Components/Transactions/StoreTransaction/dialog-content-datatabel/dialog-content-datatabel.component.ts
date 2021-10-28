@@ -147,16 +147,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
     console.log("checkedTransactions",this.checkedTransactions);
   }
 
-  ShowProduct() {
-    this.TransactionsService.getAllProductDetails(this.checkedTransactions, this.GetItem).subscribe(
-      (response) => {
-       
-        this.DependancyProduct = response;
-        console.log("DependancyProduct", this.DependancyProduct);
-        
-      });
-  
-  }
+
 
   getAllCheckedTransaction(e: any, trns: TransactionsDetails,id:number) {
     if (e.target.checked) {

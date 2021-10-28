@@ -41,6 +41,7 @@ import { GroupItemsUnits_VM } from '../../../../models/Transactions/StoreTransac
 import { Sales_Rep_VM } from '../../../../models/Transactions/StoreTransaction/TransactionSpecification/Sales_Rep_VM';
 import { ItemsWithBalance_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
 import { StoreDepSpecDetails_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/StoreDepSpecDetails_VM';
+import { ProductSpecification_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/ProductSpecification_VM';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -212,7 +213,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   popupstoreTransDetails_VM: storeTransDetails_VM[]=[];
   //ForDepProductSpecification
   GetItem: number;
+  ProductSpecification_VM?: ProductSpecification_VM;
+  DepPricType: number;
   DisplayCategoryBtndeo: boolean = false;
+
+
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
 
@@ -347,42 +352,52 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
     if (this.operationType == "View") {
         this.TransactionsService.getTransactionByStoreTrnsMId(this.StoreTransMId).subscribe(
-          (data) => {
+          (data) =>
+          {
             console.log("response2View", data);
             this.StoreTransMain = data;
             console.log("this.StoreTransMain", this.StoreTransMain);
-            try {
+            try
+            {
               this.salesRepId = this.StoreTransMain.StoreTransMaster_VM.Salesrep;
-            } catch (e) { console.log(e);}
-            try {
+            }
+            catch (e) { console.log(e); }
+            try
+            {
               this.TrnsNo = this.StoreTransMain.StoreTransMaster_VM.TrnsNo;
               console.log("storeTransMax", this.storeTransMax);
-            } catch (e) { console.log(e); }
-            try {
+            }
+            catch (e) { console.log(e); }
+            try
+            {
               this.FromTypeId = this.StoreTransMain.StoreTransMaster_VM.From_Type[0].TYPE_ID;
               console.log("FromTypeId", this.FromTypeId);
             }
             catch (e) { console.log(e); };
 
-            try {
+            try
+            {
               this.ToTypeId = this.StoreTransMain.StoreTransMaster_VM.To_Type[0].TYPE_ID;
             }
             catch (e) { console.log(e); };
-            try {
-
+            try
+            {
                 this.fromStoreAllcodesId = this.StoreTransMain.StoreTransMaster_VM.FromStoreAllcodesId;
             }
             catch (e) { console.log(e); }
-            try {
+            try
+            {
               
                 this.ToTypeDetailsId = this.StoreTransMain.StoreTransMaster_VM.ToStoreAllcodesId;
             }
             catch (e) { console.log(e); };
 
-            try {
+            try
+            {
               this.branchId = this.StoreTransMain.StoreTransMaster_VM.BranchId;
               console.log("this.branchId", this.branchId);
-            } catch (e) { };
+            }
+            catch (e) { };
             try { this.Datevalue = this.StoreTransMain.StoreTransMaster_VM.TrnsDate; } catch (e) { };
             try {this.storeTransDetails_VM = this.StoreTransMain.StoreTransDetails_VM;} catch (e) { };
             //اخر اليوم
@@ -390,34 +405,45 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             ///
             console.log("storeTransDetails_VM", this.storeTransDetails_VM);
           
-            try {
+            try
+            {
               this.storedocnumv = this.StoreTransMain.StoreTransMaster_VM.Storedocnum;
             }
             catch (e) { console.log(e); };
-            try {
+            try
+            {
               this.Rem = this.StoreTransMain.StoreTransMaster_VM.Rem;
             }
             catch (e) { console.log(e); };
             //console.log("storeDocNum", this.storedocnum);
 
             //need to enhance as storetransDep array so transcode maybe array
-            try {
-              this.transDepCode = this.StoreTransMain.StoreTransDep_VM[0].trnsCode;
-              this.transDepId = this.StoreTransMain.StoreTransDep_VM[0].storeTrnsDepId;
+            try
+            {
+              this.transDepCode = this.StoreTransMain.StoreTransDep_VM[0].TrnsCode;
+              console.log("this.transDepCode", this.transDepCode);
+              this.transDepId = this.StoreTransMain.StoreTransDep_VM[0].StoreTrnsDepId;
             }
             catch (e) { console.log(e); }
           
-            try { this.storeTransDep_VM = this.StoreTransMain.StoreTransDep_VM;
+            try
+            {
+              this.storeTransDep_VM = this.StoreTransMain.StoreTransDep_VM;
             console.log(this.storeTransDep_VM);
               console.log("selectedTransaction", this.selectedTransaction);
-            } catch (e) { console.log(e); };
-            try {
+            }
+            catch (e) { console.log(e); };
+            try
+            {
               console.log("inTry");
-              if (this.FromTypeId == 221 && this.QtyEffect == true && this.fromStoreAllcodesId != undefined) {
+              if (this.FromTypeId == 221 && this.QtyEffect == true && this.fromStoreAllcodesId != undefined)
+              {
                 this.FromDistanceIsStore = true;
                 this.disabelCategories = false;
                 console.log("LKLKLKLKLLLKL", this.FromTypeId, this.QtyEffect, this.fromStoreAllcodesId);
-              } else {
+              }
+              else
+              {
                 this.FromDistanceIsStore = false;
               }
             } catch (e) { }
@@ -466,14 +492,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   };
   //event handler for the select element's change event
   selectChangeHandler() {
-    //console.log(this.FromType.length);
-    //console.log(this.FromTypeLength);
-    //console.log(this.ToType.length);
-    //console.log(this.ToTypeLength);
-    //console.log(this.FromTypeDetails.length);
-    //console.log(this.FromTypeDetailsLength);
-    //console.log(this.ToTypeDetails.length);
-    //console.log(this.ToTypeDetailsLength);
+
     //Delete Previous Data
  
     //this.RestDistnationValues();
@@ -588,6 +607,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         this.FromFilter = this.StoreDepSpecDetails_VM.FromFilter;
         this.ToFilter = this.StoreDepSpecDetails_VM.ToFilter;
         this.GetItem = this.StoreDepSpecDetails_VM.Getitems;
+        this.DepPricType = this.StoreDepSpecDetails_VM.DepPricType;
         if (this.StoreDepSpecDetails_VM.Salesrep == 2) {
           this.SalesRepViewMust = true;
         } else if (this.StoreDepSpecDetails_VM.Salesrep == 1) {
@@ -1148,8 +1168,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     for (var i = 0; i < this.checkedTransactionsMain.length; i++) {
       console.log(i);
       this.storeTransDep_VM.push({
-        ptransrowid: this.checkedTransactionsMain[i].StoreTrnsMId,
-        branchId: this.checkedTransactionsMain[i].BranchId,
+        Ptransrowid: this.checkedTransactionsMain[i].StoreTrnsMId,
+        BranchId: this.checkedTransactionsMain[i].BranchId,
       });
     };
     return this.storeTransDep_VM;
@@ -1161,7 +1181,9 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       this.checkedTransactionsIds.push(this.checkedTransactionsMain[i].StoreTrnsMId); //use i instead of 0
     }
     console.log("From main component checkedTransactions", this.checkedTransactionsIds);
-    this.TransactionsService.getAllProductDetails(this.checkedTransactionsIds, this.GetItem).subscribe(
+    var ProductSpecification = null;
+    ProductSpecification = new ProductSpecification_VM(this.checkedTransactionsIds, this.GetItem, this.DepPricType);
+    this.TransactionsService.getAllProductDetails(ProductSpecification).subscribe(
       (response) => {
         console.log("LOLOLOLOLOLOL");
         this.productdetails = response;
@@ -1181,7 +1203,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             unitid: this.productdetails[i].unitId, quantity: this.productdetails[i].qty,
             unitPrice: this.productdetails[i].unitPrice, totalo: this.productdetails[i].totalo,
             storeTrnsOId: this.productdetails[i].storeTrnsOId,
-            groupF_Name: this.productdetails[i].groupF_Name
+            groupF_Name: this.productdetails[i].groupF_Name,
+            price:this.productdetails[i].price,
           });
         }
         console.log("StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);

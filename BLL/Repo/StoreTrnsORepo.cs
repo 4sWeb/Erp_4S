@@ -56,12 +56,14 @@ namespace BLL.Repo
                         item_Name = SItems.GetByCondition(c => c.StoreItemsId == s.ItemId).Result.FirstOrDefault().Aname,
                         qty = s.Qty,
                         unitPrice = string.IsNullOrEmpty(s.UnitPrice.ToString()) ? 0 : (decimal)s.UnitPrice,
-                        price = string.IsNullOrEmpty(s.UnitPrice.ToString()) ? 0 : (decimal)s.UnitPrice,
+                        //price = string.IsNullOrEmpty(s.UnitPrice.ToString()) ? 0 : (decimal)s.UnitPrice,
                         totalo = string.IsNullOrEmpty(s.Totalo.ToString()) ? 0 : (decimal)s.Totalo,
                         disc_Rate = string.IsNullOrEmpty(s.DiscRate.ToString()) ? 0 : s.DiscRate,
                         disc_Value = string.IsNullOrEmpty(s.DiscVal.ToString()) ? 0 : s.DiscVal,
-                        tax_Rate = 0,
-                        tax_Value = string.IsNullOrEmpty(s.StaxVal.ToString()) ? 0 : s.StaxVal,
+                        item2nddiscVal= string.IsNullOrEmpty(s.Item2nddiscVal.ToString()) ? 0 : s.Item2nddiscVal,
+                        stax_Rate = 0,
+                        stax_Value = string.IsNullOrEmpty(s.StaxVal.ToString()) ? 0 : s.StaxVal,
+                        unit2ndprice = string.IsNullOrEmpty(s.Unit2ndprice.ToString()) ? 0 : s.Unit2ndprice,
                         profit_Tax_Rate = 0,
                         profit_Tax_Value = 0,
                         net_Value = string.IsNullOrEmpty(s.Totalo.ToString()) ? 0 : (decimal)s.Totalo,
@@ -78,6 +80,37 @@ namespace BLL.Repo
         }
 
   
+
+        public List<StoreTransDetails_VM> CalculatePriceForDepDetailsProduct(List<StoreTransDetails_VM> storeTransDetails_VMs, decimal DepPricetype)
+        {
+            if (DepPricetype==1)
+            {
+                foreach (var item in storeTransDetails_VMs)
+                {
+                    item.price = item.unitPrice - item.disc_Value;
+                }
+
+            }
+            else if(DepPricetype == 2)
+            {
+                foreach (var item in storeTransDetails_VMs)
+                {
+                    item.price = item.unitPrice -(item.staxVal+ item.disc_Value);
+                }
+
+            }
+            else if (DepPricetype==3)
+            {
+                foreach (var item in storeTransDetails_VMs)
+                {
+                    item.price = item.unitPrice + item.unit2ndprice;
+                }
+                
+            }
+            return storeTransDetails_VMs;
+        }
+
+
 
         //convert viewmodel to model and add it 
         public void convert_VMtoModel(List<StoreTransDetails_VM> STD_VM)

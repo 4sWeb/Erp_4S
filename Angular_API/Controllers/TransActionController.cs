@@ -140,10 +140,10 @@ namespace Angular_API.Controllers
         }
         [HttpPost]
         [Route("DisplayItems")]
-        public JsonResult DisplayItems([FromBody] List<decimal> Items,decimal GetItems)
+        public JsonResult DisplayItems([FromBody] ProductSpecification_VM productSpecification_VM)
         {
             //List<decimal> Items = new List<decimal>() { 2872, 2878 };
-            List<StoreTransDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items, GetItems);
+            List<StoreTransDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(productSpecification_VM.SelectedStoreTransMIds, productSpecification_VM.Getitems);
             if (Results != null)
             {
                 foreach (var item in Results)
@@ -158,8 +158,8 @@ namespace Angular_API.Controllers
                     item.groupF_Name = GroupF_Name;
 
                 }
+                Results = repo._StoreTrnsO.CalculatePriceForDepDetailsProduct(Results, productSpecification_VM.DepPricType);
             }
-        
             return Json(Results, new System.Text.Json.JsonSerializerOptions());
         }
 
@@ -415,7 +415,7 @@ namespace Angular_API.Controllers
 
                     foreach (var id in listOfPrevIds)
                     {
-                        var listOfStoreTransDepIds = repo._StoreTrnsDep.RetriveListTransDepIds(id);
+                        var listOfStoreTransDepIds = repo._StoreTrnsDep.RetriveListTransDepIds(id, storeTransMId);
                         var listOfStoreTransDepDetails = repo._StoreTrnsDepDetails.RetiveDepTransDetails(listOfStoreTransDepIds);
                         foreach (var item in listOfStoreTransDepDetails)
                         {

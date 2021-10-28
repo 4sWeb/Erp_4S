@@ -17,7 +17,8 @@ export class storeTransDepDetails_VM {
     public groupF_Id?: number,
     public groupF_Name?: string,
     public totalo?: number,
-    public store_Trns_M_ID?: number
+    public store_Trns_M_ID?: number,
+    public price?: number,
 
   ) {
 

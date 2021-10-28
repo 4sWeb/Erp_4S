@@ -37,19 +37,18 @@ namespace BLL.ModelsView
         public decimal? price { get; set; }
         public decimal? disc_Rate { get; set; }
         public decimal? disc_Value { get; set; }
-        public decimal? tax_Rate { get; set; }
-        public decimal? tax_Value { get; set; }
+        public decimal? stax_Rate { get; set; }
+        public decimal? stax_Value { get; set; }
         public decimal? profit_Tax_Rate { get; set; }
         public decimal? profit_Tax_Value { get; set; }
         public decimal net_Value { get; set; }
         public decimal store_Trns_M_ID { get; set; }
+        public decimal? unit2ndprice { get; set; }
 
 
 
 
 
-
-   
 
 
         //public decimal? TrnsPriceForcost { get; set; }
