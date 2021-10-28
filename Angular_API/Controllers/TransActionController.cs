@@ -140,22 +140,26 @@ namespace Angular_API.Controllers
         }
         [HttpPost]
         [Route("DisplayItems")]
-        public JsonResult DisplayItems([FromBody] List<decimal> Items)
+        public JsonResult DisplayItems([FromBody] List<decimal> Items,decimal GetItems)
         {
             //List<decimal> Items = new List<decimal>() { 2872, 2878 };
-            List<StoreTransDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items);
-            foreach (var item in Results)
+            List<StoreTransDetails_VM> Results = repo._StoreTrnsO.GetTransactionsDetailsList(Items, GetItems);
+            if (Results != null)
             {
-                var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.itemId);
-                Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
-                item.groupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
-                string GroupF_Name;
-                var ListOfGroupsFName = repo._StoreItems.GetGroupFNameForItem(item.groupF_Id);
-                Dictionary<string, object> currentName = (Dictionary<string, object>)ListOfGroupsFName.Result.FirstOrDefault();
-                GroupF_Name = currentName.FirstOrDefault().Value.ToString();
-                item.groupF_Name = GroupF_Name;
+                foreach (var item in Results)
+                {
+                    var ListOfGroupsF = repo._StoreItems.GetGroupFIDForItem((decimal)item.itemId);
+                    Dictionary<string, object> current = (Dictionary<string, object>)ListOfGroupsF.Result.FirstOrDefault();
+                    item.groupF_Id = int.Parse(current.FirstOrDefault().Value.ToString());
+                    string GroupF_Name;
+                    var ListOfGroupsFName = repo._StoreItems.GetGroupFNameForItem(item.groupF_Id);
+                    Dictionary<string, object> currentName = (Dictionary<string, object>)ListOfGroupsFName.Result.FirstOrDefault();
+                    GroupF_Name = currentName.FirstOrDefault().Value.ToString();
+                    item.groupF_Name = GroupF_Name;
 
+                }
             }
+        
             return Json(Results, new System.Text.Json.JsonSerializerOptions());
         }
 

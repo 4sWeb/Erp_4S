@@ -32,7 +32,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
   From_TypeName: string;
   FromFilter: number;
   ToFilter: number;
-
+  GetItem: number;
 
   From_Type: FromType[];
   
@@ -47,6 +47,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
     this.checkedTransactionsMain = data.checkedTransactionsMain;
     this.FromFilter = data.FromFilter;
     this.ToFilter = data.ToFilter;
+    this.GetItem = data.GetItem;
     console.log("from Dialoogggg component", this.selectedTransaction);
     console.log("from Dialoogggg component2", this.checkedTransactionsIds);
     console.log("from Dialoogggg component2", this.checkedTransactionsMain);
@@ -83,7 +84,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
       
         }
 
-        else if (this.FromFilter == 2) {
+         if (this.FromFilter == 2) {
           if (this.SharingDataService.getfromStoreAllCodesId() != undefined) {
             var temp = this.TransactionsDetails.filter(s => s.To_StoreAllcodesId == this.SharingDataService.getfromStoreAllCodesId());
             this.TransactionsDetails = temp;
@@ -101,7 +102,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
 
         }
 
-        else if (this.ToFilter == 2) {
+         if (this.ToFilter == 2) {
           if (this.SharingDataService.gettoStoreAllCodesId() != undefined) {
             var temp = this.TransactionsDetails.filter(s => s.To_StoreAllcodesId == this.SharingDataService.gettoStoreAllCodesId());
             this.TransactionsDetails = temp;
@@ -147,7 +148,7 @@ export class DialogContentDatatabelComponent implements OnInit, OnDestroy {
   }
 
   ShowProduct() {
-    this.TransactionsService.getAllProductDetails(this.checkedTransactions).subscribe(
+    this.TransactionsService.getAllProductDetails(this.checkedTransactions, this.GetItem).subscribe(
       (response) => {
        
         this.DependancyProduct = response;

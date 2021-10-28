@@ -94,10 +94,9 @@ export class TransactionsService {
   }
 
   //get all product dependancies
-  getAllProductDetails(ids: number[]): Observable<storeTransDetails_VM[]> {
-    console.log("idsFrom Services", ids)
-    
-    return this.http.post<storeTransDetails_VM[]>(`${environment.Api_Url}/DisplayItems`,ids);
+  getAllProductDetails(ids: number[], GetItem: number): Observable<storeTransDetails_VM[]> {
+    console.log("idsFrom Services", ids);
+    return this.http.post<storeTransDetails_VM[]>(`${environment.Api_Url}/DisplayItems?GetItems=${GetItem}`,ids);
   }
 
   //Retrive all details about StoreTransaction by storeTransMId

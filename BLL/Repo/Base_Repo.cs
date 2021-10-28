@@ -52,6 +52,7 @@ namespace BLL.Repo
             
             return result;
         }
+
         public virtual IEnumerable<T> Get( Expression<Func<T, bool>> filter = null,Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
             IQueryable<T> query = DbSet;

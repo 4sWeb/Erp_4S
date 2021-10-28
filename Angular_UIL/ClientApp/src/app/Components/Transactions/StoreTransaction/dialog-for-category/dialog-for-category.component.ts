@@ -282,9 +282,21 @@ export class DialogForCategoryComponent implements OnInit {
     this.AddedRowObjecDone = true;
     //need to validate
     //Editing mode
-    if (this.Index >= 0) {
-      if (confirm(`تأكيد عملية التعديل...؟`)) {
-        console.log(this.Index)
+    //case Edit and balance be in considered
+    if (this.Index >= 0)
+    {
+      if (this.BringBalance == true)
+      {
+        if (confirm(`تأكيد عملية التعديل...؟`))
+        {
+          if (this.QuantityNeeded > this.CurrentBalance)
+          {
+            alert("االكمية المطلوبة غير متاحة");
+            return;
+          }
+        }
+      }
+     
         this.storeTransDetailsDialog[this.Index].groupF_Id = this.GroupId;
         this.storeTransDetailsDialog[this.Index].groupF_Name = this.GroupF.filter(s => s.GROUP_ID == this.GroupId)[0].GROUP_NAME;
         this.storeTransDetailsDialog[this.Index].unitId = this.UniteId;
@@ -295,39 +307,43 @@ export class DialogForCategoryComponent implements OnInit {
         this.storeTransDetailsDialog[this.Index].totalo = this.totalo;
         this.storeTransDetailsDialog[this.Index].unitPrice = this.unitPrice;
         this.Index = -1;
-      }
-    } else if (this.QuantityNeeded <= this.CurrentBalance) {
-
-      this.storeTransDetailsDialog.push({
-        groupF_Id: this.Group.GROUP_ID,
-        groupF_Name: this.Group.GROUP_NAME,
-        itemId: this.Item.ITEM_ID,
-        item_Name: this.Item.ITEM_NAME,
-        unitId: this.Unite.UNIT_ID,
-        unit_Name: this.Unite.UNIT_NAME,
-        qty: this.quantity,
-        unitPrice: this.unitPrice,
-        totalo: this.totalo,
-        //storeTrnsOId: null
-      });
-
+      
     }
-    else {
-      alert("االكمية المطلوبة غير متاحة");
-      console.log("االكمية المطلوبة غير متاحة");
+    //Add 
+    else
+    {
+      if (this.BringBalance == true)
+      {
+        if (this.QuantityNeeded > this.CurrentBalance)
+        {
+          alert("االكمية المطلوبة غير متاحة");
+          return;
+        }
+        
+      }
+     
+        this.storeTransDetailsDialog.push({
+          groupF_Id: this.Group.GROUP_ID,
+          groupF_Name: this.Group.GROUP_NAME,
+          itemId: this.Item.ITEM_ID,
+          item_Name: this.Item.ITEM_NAME,
+          unitId: this.Unite.UNIT_ID,
+          unit_Name: this.Unite.UNIT_NAME,
+          qty: this.quantity,
+          unitPrice: this.unitPrice,
+          totalo: 0,
+        });
+      
+
     }
     
    
     console.log("storeTransDetails_VM from dialog save", this.storeTransDetailsDialog);
     console.log("productdetails from dialog save", this.productdetailsDialog);
-    //this.EditingClick = true;
-    //this.GroupFChanged = false;
-    //this.ItemChanged = false;
 
     //set to default values
     this.SetInputValuesToDefalut();
-    
-  }
+  };
 
 
   EditProduct(i: number) {
@@ -362,7 +378,7 @@ export class DialogForCategoryComponent implements OnInit {
       {
 
         this.SetInputValuesToDefalut();
-        alert("االكمية المطلوبة غير متاحة");
+        alert("لا يوجد رصيد لهذا الصنف");
       }
      
     }
