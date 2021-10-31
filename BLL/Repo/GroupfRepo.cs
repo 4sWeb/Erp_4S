@@ -30,7 +30,7 @@ namespace BLL.Repo
         public object GetAllTypes(decimal Id , string type)
         {
 
-            string query = @"select GF.GROUPF_ID as Type_ID , GF.ANAME as Type_Name
+            string query = @"select GF.GROUPF_ID as Type_ID , GF.ANAME as Type_Name,GF.CODETYPE as MAINTYPE_ID
                             from STOREDSTTYPEs dst
                             inner
                             join Main_TYPES MType on DST.DSTTYPE = MTYPE.ID

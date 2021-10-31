@@ -42,6 +42,7 @@ import { Sales_Rep_VM } from '../../../../models/Transactions/StoreTransaction/T
 import { ItemsWithBalance_VM } from '../../../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
 import { StoreDepSpecDetails_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/StoreDepSpecDetails_VM';
 import { ProductSpecification_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/ProductSpecification_VM';
+import { numbers } from '@material/dialog';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -216,7 +217,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   ProductSpecification_VM?: ProductSpecification_VM;
   DepPricType: number;
   DisplayCategoryBtndeo: boolean = false;
-
+  AdditemOutDep: boolean = false;
+  GetNoteInDep: number;
+  Hasextras: number;
+  
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -496,7 +500,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     //Delete Previous Data
  
     //this.RestDistnationValues();
-    this.DisplayCategoryBtndeo = false;
+    //this.DisplayCategoryBtndeo = false;
   
     try
     {
@@ -599,7 +603,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     var StoreDepSpec_Id: number = this.DepTransactionNames.filter(s => s.Transaction_Id == this.transDepCode)[0].StoreDepSpec_Id;
     console.log("StoreDepSpec_Id", StoreDepSpec_Id);
     this.TransactionsService.GetSpecificationForDependancy(StoreDepSpec_Id).subscribe(
-      res => {
+      res =>
+      {
         this.StoreDepSpecDetails_VM = res;
         console.log("StoreDepSpecDetails_VM", this.StoreDepSpecDetails_VM);
         this.GetFrom = this.StoreDepSpecDetails_VM.GetFrom;
@@ -608,6 +613,27 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         this.ToFilter = this.StoreDepSpecDetails_VM.ToFilter;
         this.GetItem = this.StoreDepSpecDetails_VM.Getitems;
         this.DepPricType = this.StoreDepSpecDetails_VM.DepPricType;
+        this.GetNoteInDep = this.StoreDepSpecDetails_VM.Getdesc;
+        this.Hasextras = this.StoreDepSpecDetails_VM.Hasextras;
+        if (this.Hasextras == 0) {
+          console.log("Hasextras", this.Hasextras)
+          this.GetExtraField();
+        }
+        //Display Category button (up)
+        if (this.GetItem == 1 && this.StoreDepSpecDetails_VM.AdditemOutDep == 1)
+        {
+          this.DisplayCategoryBtndeo = true
+        }
+        else
+        { this.DisplayCategoryBtndeo = false; }
+
+        //Display Category button (down)
+        if (this.StoreDepSpecDetails_VM.AdditemOutDep == 1)
+        {
+          this.AdditemOutDep = true;
+        }
+        else { this.AdditemOutDep = false; }
+
         if (this.StoreDepSpecDetails_VM.Salesrep == 2) {
           this.SalesRepViewMust = true;
         } else if (this.StoreDepSpecDetails_VM.Salesrep == 1) {
@@ -618,7 +644,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
           this.disabelDepTransButton = true;
         } else { this.disabelDepTransButton = false; }
       }
+
     );
+
+    
 
     //Clear From and To only when Get_From or Get_To =1||2 and not frist time to make change and From_Filter and To_Filter ==0
     if ((this.GetFrom == 1 || this.GetFrom == 2 || this.GetTo == 1 || this.GetTo == 2)
@@ -1002,14 +1031,16 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         result = [];
       }
       this.dialogCategoryDetails = result;
+      if (this.dialogCategoryDetails.length > 0)
+      {
+        this.DisplayCategoryBtndeo == false;
+      }
       console.log(this.dialogCategoryDetails);
       this.popupstoreTransDetails_VM = this.dialogCategoryDetails;
       console.log('From spec compenent The Category Dialog was closed', this.popupstoreTransDetails_VM);
       this.productdetails = this.popupstoreTransDetails_VM;
       this.storeTransDetails_VM = this.productdetails;
       console.log("storeTransDetails_VM", this.storeTransDetails_VM);
-
-
 
       ////depdetails
 
@@ -1209,9 +1240,6 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         }
         console.log("StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
 
-        if (this.StoreTransDepDetailsOnly.length == 0) {
-          this.DisplayCategoryBtndeo = true;
-        }
         //to make sure that ckecked transaction array is empty
         this.checkedTransactionsIds = [];
       });
@@ -1326,6 +1354,20 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         this.DisableToDistination();
       }
     }
+  }
+
+  GetExtraField() {
+    var fromTypeTemp = [];
+    for (var i = 0; i < this.FromType.length; i++) {
+      fromTypeTemp.push(this.FromType[i].MAINTYPE_ID);
+    }
+    for (var i = 0; i < this.ToType.length; i++) {
+      fromTypeTemp.push(this.ToType[i].MAINTYPE_ID);
+    }
+    console.log("fromTypeTemp", fromTypeTemp);
+    this.TransactionsService.getExteraFieldDependancy(fromTypeTemp).subscribe(response => {
+      console.log(response, "getExteraFieldDependancy");
+    });
   }
 
   ngOnDestroy(): void {

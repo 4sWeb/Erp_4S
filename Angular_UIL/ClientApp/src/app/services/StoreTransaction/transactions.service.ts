@@ -18,6 +18,7 @@ import { GroupItemsUnits_VM } from '../../models/Transactions/StoreTransaction/S
 import { ItemsWithBalance_VM } from '../../models/Transactions/StoreTransaction/SaveStoreTransaction/StoreTransDetails/ItemsWithBalance_VM';
 import { StoreDepSpecDetails_VM } from '../../models/Transactions/StoreTransaction/TransactionDepSpecification/StoreDepSpecDetails_VM';
 import { ProductSpecification_VM } from '../../models/Transactions/StoreTransaction/TransactionDepSpecification/ProductSpecification_VM'
+import { ExtraFields_VM } from '../../models/Transactions/StoreTransaction/TransactionDepSpecification/ExtraFields_VM';
 
 
 
@@ -167,6 +168,12 @@ export class TransactionsService {
   //StoreDepSpecDetails_VM
   GetSpecificationForDependancy(DepTransID: number): Observable<StoreDepSpecDetails_VM> {
     return this.http.get<StoreDepSpecDetails_VM>(`${environment.Api_Url}/TransactionDepSpec?StoreDepSpecID=${DepTransID}`);
+  }
+
+  //get Extera Field Dependancy
+  getExteraFieldDependancy(MainTypeIds: [number]|any): Observable<ExtraFields_VM[]> {
+    console.log("idsFrom Services", MainTypeIds);
+    return this.http.post<ExtraFields_VM[]>(`${environment.Api_Url}/GetExtraFields`, MainTypeIds);
   }
   }
 

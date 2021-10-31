@@ -19,6 +19,8 @@ namespace Angular_API.Controllers
     public class TransActionController : Controller
     {
         private readonly IRepoWrapper repo;
+       
+
         public TransActionController(IRepoWrapper _repo)
         {
             repo = _repo;
@@ -86,7 +88,7 @@ namespace Angular_API.Controllers
             {
                 Dictionary<string, object> current = (Dictionary<string, object>)item;
                 var result = current.FirstOrDefault().Value;
-                TransactionSpec.TransactionMasterSpec_VM.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Aname, n.StoreAllcodesId });
+                TransactionSpec.TransactionMasterSpec_VM.ToTypeDetails = repo._StoreAllcodes.GetByCondition(c => c.GroupfId == decimal.Parse(result.ToString())).Result.Select(n => new { n.Code, n.Aname, n.StoreAllcodesId });
 
             }
 
@@ -651,6 +653,32 @@ namespace Angular_API.Controllers
             return Json(ItemsWithBalance_VM, new System.Text.Json.JsonSerializerOptions());
         }
 
+
+
+        [HttpPost]
+        [Route("GetExtraFields")]
+        public JsonResult GetExtraFields([FromBody]List<int>MainTypeIds)
+        {
+            List<ExtraFields_VM> GetExtraFields_VMs = new List<ExtraFields_VM>();
+            foreach (var item in MainTypeIds)
+            {
+                   string GetExtraFields = @"select MT.ID as type_id ,MT.ANAME as type_name ,SAC.ANAME as name  , SAC.CODE as code, SSCS.ATTRIBUTE as extra_field_name ,SSCS.ATTRIBUTEEN as extra_field_e_name, nvl(to_char(SSCS.VALUE),' ') as extra_field_value 
+                                        from store_sub_code_spec sscs
+                                        inner join store_allcodes sac on  SSCS.STORE_ALLCODES_ID = SAC.STORE_ALLCODES_ID 
+                                        inner join groupf gf on GF.GROUPF_ID = SAC.GROUPF_ID 
+                                        inner join groupf_details gfd on GFD.GROUPF_ID = GF.GROUPF_ID 
+                                        inner join group_basic_data gbd on GBD.GROUPF_ID=GF.GROUPF_ID  and GBD.GROUP_BASIC_ID=SSCS.GROUP_BASIC_ID 
+                                        inner join DETAILSDATANAMES ddn on DDN.DETAILSID = GBD.DETAILS_ID   
+                                        inner join main_types mt on MT.ID=GF.CODETYPE and MT.ID = GFD.REF_TYPE
+                                        where mt.id=" + item +
+                                        "order by  MT.ID,MT.ANAME ,SAC.ANAME , SAC.CODE , SSCS.ATTRIBUTE ";
+                    var  GetExtraFields_VM = repo.CallQuery<ExtraFields_VM>(GetExtraFields).Result.ToList();
+                    GetExtraFields_VMs.AddRange(GetExtraFields_VM);
+              
+            }
+
+            return Json(GetExtraFields_VMs, new System.Text.Json.JsonSerializerOptions());
+        }
 
     }
 }
