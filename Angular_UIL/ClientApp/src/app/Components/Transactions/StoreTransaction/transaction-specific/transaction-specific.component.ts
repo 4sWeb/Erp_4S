@@ -43,6 +43,7 @@ import { ItemsWithBalance_VM } from '../../../../models/Transactions/StoreTransa
 import { StoreDepSpecDetails_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/StoreDepSpecDetails_VM';
 import { ProductSpecification_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/ProductSpecification_VM';
 import { numbers } from '@material/dialog';
+import { ExtraFields_VM } from '../../../../models/Transactions/StoreTransaction/TransactionDepSpecification/ExtraFields_VM';
 
 export interface DialogData {
   selectedTransaction?: number;
@@ -220,7 +221,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   AdditemOutDep: boolean = false;
   GetNoteInDep: number;
   Hasextras: number;
-  
+  ExtraFields_VM: ExtraFields_VM[] = [];
+  ExtraFieldsFrom: ExtraFields_VM[] = [];
+  ExtraFieldsTo: ExtraFields_VM[] = [];
+
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -615,9 +619,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         this.DepPricType = this.StoreDepSpecDetails_VM.DepPricType;
         this.GetNoteInDep = this.StoreDepSpecDetails_VM.Getdesc;
         this.Hasextras = this.StoreDepSpecDetails_VM.Hasextras;
-        if (this.Hasextras == 0) {
+        if (this.Hasextras == 0)
+        {
           console.log("Hasextras", this.Hasextras)
           this.GetExtraField();
+          
         }
         //Display Category button (up)
         if (this.GetItem == 1 && this.StoreDepSpecDetails_VM.AdditemOutDep == 1)
@@ -1088,9 +1094,14 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   }
 
   FromDistDetailsChange(event: any) {
-    console.log("FromDistDetailsChange");
     console.log("FromDistDetailsChange", event);
-    console.log("FromDistDetailsChange", this.QtyEffect);
+
+    //To Get Extra Field to From If HasExtra Specific Dependancy
+    if (this.Hasextras == 0)
+    {
+      this.GetExtraFieldForFrom();
+    }
+    
 
     //setFromStoreAllCodesId
     this.SharingDataService.setfromStoreAllCodesId(event);
@@ -1122,6 +1133,11 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
 
   ToDistDetailsChange(event: any) {
+
+    //To Get Extra Field to To If HasExtra Specific Dependancy
+    if (this.Hasextras == 0) {
+      this.GetExtraFieldForTo();
+    }
     //setFromStoreAllCodesId
     console.log("to store all codes id", event);
     this.SharingDataService.settoStoreAllCodesId(event);
@@ -1364,10 +1380,39 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     for (var i = 0; i < this.ToType.length; i++) {
       fromTypeTemp.push(this.ToType[i].MAINTYPE_ID);
     }
-    console.log("fromTypeTemp", fromTypeTemp);
-    this.TransactionsService.getExteraFieldDependancy(fromTypeTemp).subscribe(response => {
-      console.log(response, "getExteraFieldDependancy");
-    });
+    if (fromTypeTemp.length > 0)
+    {
+      this.TransactionsService.getExteraFieldDependancy(fromTypeTemp).subscribe(response => {
+        this.ExtraFields_VM = response;
+        console.log(this.ExtraFields_VM, "this.ExtraFields_VM");
+        this.GetExtraFieldForFrom();
+        this.GetExtraFieldForTo();
+      });
+    }
+   
+  }
+
+  GetExtraFieldForFrom()
+  {
+    //To Get Extra Field to From If HasExtra Specific Dependancy
+    console.log("this.fromStoreAllcodesId",this.fromStoreAllcodesId)
+      var code: string;
+      code = this.FromTypeDetails.filter(a => a.StoreAllcodesId == this.fromStoreAllcodesId)[0].Code;
+      this.ExtraFieldsFrom = this.ExtraFields_VM.filter(a => a.CODE == code);
+      console.log("this.ExtraFieldsFrom", this.ExtraFieldsFrom);
+    
+   
+  }
+
+  GetExtraFieldForTo()
+  {
+    //To Get Extra Field to To If HasExtra Specific Dependancy
+    console.log(this.ToTypeDetailsId);
+      var code: string;
+      code = this.ToTypeDetails.filter(a => a.StoreAllcodesId == this.ToTypeDetailsId)[0].Code;
+      this.ExtraFieldsTo = this.ExtraFields_VM.filter(a => a.CODE == code);
+      console.log("this.ExtraFieldsTo", this.ExtraFieldsTo);
+    
   }
 
   ngOnDestroy(): void {
