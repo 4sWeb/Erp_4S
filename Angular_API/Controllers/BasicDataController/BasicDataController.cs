@@ -109,5 +109,23 @@ namespace Angular_API.Controllers.BasicDataController
         }
 
 
+        [HttpGet]
+        [Route("DisplayAllCurrency")]
+        public JsonResult CurrencyList()
+        {
+            List<CurrencyMain_VM> currencyMains = new List<CurrencyMain_VM>();
+
+           var currencuMaster= repo._Currencym.GetAllCurrencyMaster();
+            foreach (var item in currencuMaster)
+            {
+              var currencyRate=  repo._Currencyo.GetAllCurrencyRates(item.Id);
+                currencyMains.Add(new CurrencyMain_VM {CurrencyMaster_VM= item,CurrencyRates_VM= currencyRate } );
+               
+            }
+            
+
+            return Json(currencyMains, new System.Text.Json.JsonSerializerOptions());
+        }
+
         }
 }
