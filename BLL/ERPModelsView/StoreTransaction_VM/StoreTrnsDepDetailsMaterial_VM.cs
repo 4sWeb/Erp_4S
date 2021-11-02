@@ -32,7 +32,6 @@ namespace BLL.ERPModelsView
         public decimal? agriqty { get; set; }
         public decimal? item2nddiscVal { get; set; }
         public decimal? storetrnsProformlaId { get; set; }
-        public ItemDetails_VM itemDetails_VM { get; set; }
 
         //last added to replace TransactionDetails_VM
         public decimal? price { get; set; }

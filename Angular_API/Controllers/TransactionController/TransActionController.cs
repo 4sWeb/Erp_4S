@@ -488,18 +488,18 @@ namespace Angular_API.Controllers
         //    return Json(null);
         //}
 
-        [HttpGet]
-        [Route("GetGroupFDetails")]
-        public JsonResult GetGroupsDetails()
-        {
-            List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
-            var GroupsList = repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
-            foreach (var item in GroupsList)
-            {
-                groupF_VMs.Add(new GroupF_VM { Aname = item.Aname, GroupF_Id = (int)item.GroupfId });
-            }
-            return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
-        }
+        //[HttpGet]
+        //[Route("GetGroupFDetails")]
+        //public JsonResult GetGroupsDetails()
+        //{
+        //    List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
+        //    var GroupsList = repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
+        //    foreach (var item in GroupsList)
+        //    {
+        //        groupF_VMs.Add(new GroupF_VM { Aname = item.Aname, GroupF_Id = (int)item.GroupfId });
+        //    }
+        //    return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
+        //}
 
 
         [HttpGet]
@@ -572,45 +572,45 @@ namespace Angular_API.Controllers
             return Json(GroupItemsUnits_VM, new System.Text.Json.JsonSerializerOptions());
         }
 
-        [HttpGet]
-        [Route("GetItemsDetails")]
-        public JsonResult GetItemsDetails(decimal GroupF_Id)
-        {
-            var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
-            ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
-            foreach (var item in ItemList.Result.ToList())
-            {
-                Dictionary<string, object> current = (Dictionary<string, object>)item;
-                ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()) });
-            }
+        //[HttpGet]
+        //[Route("GetItemsDetails")]
+        //public JsonResult GetItemsDetails(decimal GroupF_Id)
+        //{
+        //    var ItemList = repo._StoreItems.GetItemsDetails(GroupF_Id);
+        //    ItemDetails_VM ItemDetails_VM = new ItemDetails_VM();
+        //    foreach (var item in ItemList.Result.ToList())
+        //    {
+        //        Dictionary<string, object> current = (Dictionary<string, object>)item;
+        //        ItemDetails_VM.items_VM.Add(new Items_VM { name = (string)current.Values.Last(), itemId = int.Parse(current.Values.First().ToString()) });
+        //    }
 
 
-            var UniteList = repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.items_VM.FirstOrDefault().itemId);
-            foreach (var item in UniteList.Result.ToList())
-            {
-                Dictionary<string, object> current = (Dictionary<string, object>)item;
-                ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
-            }
-            //int price;
+        //    var UniteList = repo._StoreUnits.GetUnitesDetails(ItemDetails_VM.items_VM.FirstOrDefault().itemId);
+        //    foreach (var item in UniteList.Result.ToList())
+        //    {
+        //        Dictionary<string, object> current = (Dictionary<string, object>)item;
+        //        ItemDetails_VM.unites_VM.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
+        //    }
+        //    //int price;
 
-            //int.TryParse(repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice }).FirstOrDefault().BranchPrice.ToString(), out price);
+        //    //int.TryParse(repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice }).FirstOrDefault().BranchPrice.ToString(), out price);
 
-            //var Price=repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice}).FirstOrDefault().BranchPrice.ToString();
-            return Json(ItemDetails_VM, new System.Text.Json.JsonSerializerOptions());
-        }
-        [HttpGet]
-        [Route("GetUnitesDetails")]
-        public JsonResult GetUnitesDetails(decimal storeItemId)
-        {
-            List<Unites_VM> Unites_VMs = new List<Unites_VM>();
-            var UniteList = repo._StoreUnits.GetUnitesDetails(storeItemId);
-            foreach (var item in UniteList.Result.ToList())
-            {
-                Dictionary<string, object> current = (Dictionary<string, object>)item;
-                Unites_VMs.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
-            }
-            return Json(Unites_VMs, new System.Text.Json.JsonSerializerOptions());
-        }
+        //    //var Price=repo._StoreItems.GetByCondition(c => c.StoreItemsId == ItemDetails_VM.Items_VMs.FirstOrDefault().ItemId).Result.Select(s => new { s.BranchPrice}).FirstOrDefault().BranchPrice.ToString();
+        //    return Json(ItemDetails_VM, new System.Text.Json.JsonSerializerOptions());
+        //}
+        //[HttpGet]
+        //[Route("GetUnitesDetails")]
+        //public JsonResult GetUnitesDetails(decimal storeItemId)
+        //{
+        //    List<Unites_VM> Unites_VMs = new List<Unites_VM>();
+        //    var UniteList = repo._StoreUnits.GetUnitesDetails(storeItemId);
+        //    foreach (var item in UniteList.Result.ToList())
+        //    {
+        //        Dictionary<string, object> current = (Dictionary<string, object>)item;
+        //        Unites_VMs.Add(new Unites_VM { name = (string)current.Values.Last(), uniteId = int.Parse(current.Values.First().ToString()) });
+        //    }
+        //    return Json(Unites_VMs, new System.Text.Json.JsonSerializerOptions());
+        //}
 
 
         [HttpGet]

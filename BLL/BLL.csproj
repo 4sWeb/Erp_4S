@@ -12,8 +12,4 @@
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ERPModelsView\BasicData_VM\" />
-  </ItemGroup>
-
 </Project>
