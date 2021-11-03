@@ -50,7 +50,7 @@ export class TransactionsService {
 //get list of transaction
   getAllTransactions(UserID: number, AppID: number, periodID: number): Observable<any> {
     console.log(UserID, AppID);
-    return this.http.get<Transactions[]>(`${environment.Api_Url}?UserID=${UserID}&AppID=${AppID}&PeriodID=${periodID}`, { observe: 'response' })
+    return this.http.get<Transactions[]>(`${environment.Api_Url}/transaction?UserID=${UserID}&AppID=${AppID}&PeriodID=${periodID}`, { observe: 'response' })
       .pipe(
         map((res) => {
           if (res) {
@@ -78,72 +78,72 @@ export class TransactionsService {
   displayAllTransactions(id: number, PeriodID: number): Observable<AllTransactions[]> {
     console.log(id);
     console.log(PeriodID);
-    return this.http.get<AllTransactions[]>(`${environment.Api_Url}/DisplayAllTransaction?id=${id}&PeriodID=${PeriodID}`)
+    return this.http.get<AllTransactions[]>(`${environment.Api_Url}/transaction/DisplayAllTransaction?id=${id}&PeriodID=${PeriodID}`)
   }
 
 
   //get all feildes neaded to create specific transaction
   displayAllFieldesSpecificTransaction(id: number, userId: number): Observable<TransactionSpecific|any> {
     console.log(id);
-    return this.http.get<TransactionSpecific | any>(`${environment.Api_Url}/TransactionSpec?transCode=${id}&userId=${userId}`);
+    return this.http.get<TransactionSpecific | any>(`${environment.Api_Url}/transaction/TransactionSpec?transCode=${id}&userId=${userId}`);
   }
 
   //GetTransactionsByDepID
   getTransactionsByDepID(id: number): Observable<TransactionsDetails[]> {
     console.log("GetTransactionsByDepID",id);
-    return this.http.get<TransactionsDetails[]>(`${environment.Api_Url}/GetTransactionsByDepID?DepTransID=${id}`)
+    return this.http.get<TransactionsDetails[]>(`${environment.Api_Url}/transaction/GetTransactionsByDepID?DepTransID=${id}`)
   }
 
   //get all product dependancies
   getAllProductDetails(ProductSpecification_VM: ProductSpecification_VM|any): Observable<storeTransDetails_VM[]> {
     console.log("idsFrom Services", ProductSpecification_VM);
-    return this.http.post<storeTransDetails_VM[]>(`${environment.Api_Url}/DisplayItems`, ProductSpecification_VM);
+    return this.http.post<storeTransDetails_VM[]>(`${environment.Api_Url}/transaction/DisplayItems`, ProductSpecification_VM);
   }
 
   //Retrive all details about StoreTransaction by storeTransMId
   getTransactionByStoreTrnsMId(storeTrnsMId: number): Observable<StoreTransMain> {
     console.log("storetrnsMId From services",storeTrnsMId);
-    return this.http.get<StoreTransMain>(`${environment.Api_Url}/Retrieve?storeTransMId=${storeTrnsMId}`);
+    return this.http.get<StoreTransMain>(`${environment.Api_Url}/transaction/Retrieve?storeTransMId=${storeTrnsMId}`);
 
   }
   /////////////////////*********************Services Details************************//////////////////
 
   //Retrieve all Groups of Details
   getAllGroups(): Observable<GroupF_VM[]> {
-    return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/GetGroupFDetails`);
+    return this.http.get<GroupF_VM[]>(`${environment.Api_Url}/transaction/GetGroupFDetails`);
   }
 
   //Get Items and unite and price when group dropdown changed
   getItemsDetails(groupFId: number): Observable<ItemDetails_VM> {
-    return this.http.get<ItemDetails_VM>(`${environment.Api_Url}/GetItemsDetails?GroupF_Id=${groupFId}`);
+    return this.http.get<ItemDetails_VM>(`${environment.Api_Url}/transaction/GetItemsDetails?GroupF_Id=${groupFId}`);
   }
 
   //Get Unites when Item dropdown changed
   getUnitesDetails(itemId: number): Observable<Unites_VM[]> {
-    return this.http.get<Unites_VM[]>(`${environment.Api_Url}/GetUnitesDetails?storeItemId=${itemId}`);
+    return this.http.get<Unites_VM[]>(`${environment.Api_Url}/transaction/GetUnitesDetails?storeItemId=${itemId}`);
   }
 
   GetAllGroupsWithItemsDetails(PeriodId: number): Observable<GroupItemsUnits_VM[]> {
     console.log("hiii servexies");
-    return this.http.get<GroupItemsUnits_VM[]>(`${environment.Api_Url}/GetAllGroupsWithItemsDetails?PeriodId=${PeriodId}`)
+    return this.http.get<GroupItemsUnits_VM[]>(`${environment.Api_Url}/transaction/GetAllGroupsWithItemsDetails?PeriodId=${PeriodId}`)
   };
 
   //Get All Items With Balance
   GetAllItemsBalance(): Observable<ItemsWithBalance_VM[]> {
     console.log("hiii servexies Get All Items With Balance");
-    return this.http.get<ItemsWithBalance_VM[]>(`${environment.Api_Url}/GetItemsWithAndBalance`)
+    return this.http.get<ItemsWithBalance_VM[]>(`${environment.Api_Url}/transaction/GetItemsWithAndBalance`)
   };
 
   //Create Transaction
   CreateTransaction(stroreTransMain: StoreTransMain): Observable<any>{
-    return this.http.post<StoreTransMain>(`${environment.Api_Url}/SaveOrder`, stroreTransMain);
+    return this.http.post<StoreTransMain>(`${environment.Api_Url}/transaction/SaveOrder`, stroreTransMain);
   };
 
 
   //Delete Transaction
   DeleteTransaction(storeTransMId: number): Observable<any> {
     console.log("services", storeTransMId);
-    return this.http.get(`${environment.Api_Url}/deleteOrder?trnsID=${storeTransMId}`, { observe: 'response' })
+    return this.http.get(`${environment.Api_Url}/transaction/deleteOrder?trnsID=${storeTransMId}`, { observe: 'response' })
       .pipe(
         map((res) => {
           if (res) {
@@ -167,13 +167,13 @@ export class TransactionsService {
   //Get Specification For StoreTransDependancy
   //StoreDepSpecDetails_VM
   GetSpecificationForDependancy(DepTransID: number): Observable<StoreDepSpecDetails_VM> {
-    return this.http.get<StoreDepSpecDetails_VM>(`${environment.Api_Url}/TransactionDepSpec?StoreDepSpecID=${DepTransID}`);
+    return this.http.get<StoreDepSpecDetails_VM>(`${environment.Api_Url}/transaction/TransactionDepSpec?StoreDepSpecID=${DepTransID}`);
   }
 
   //get Extera Field Dependancy
   getExteraFieldDependancy(MainTypeIds: [number]|any): Observable<ExtraFields_VM[]> {
     console.log("idsFrom Services", MainTypeIds);
-    return this.http.post<ExtraFields_VM[]>(`${environment.Api_Url}/GetExtraFields`, MainTypeIds);
+    return this.http.post<ExtraFields_VM[]>(`${environment.Api_Url}/transaction/GetExtraFields`, MainTypeIds);
   }
   }
 

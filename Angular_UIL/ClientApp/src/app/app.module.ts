@@ -34,7 +34,9 @@ import { DialogForCategoryComponent } from './Components/Transactions/StoreTrans
 
 /////////////////////////*********************Localization************/////////////////////////////////
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { UniteOperationComponent } from './Components/BasicData/unite-operation/unite-operation.component';
+import { CurrencyOperationComponent } from './Components/BasicData/currency-operation/currency-operation.component'
 
 
 
@@ -56,6 +58,8 @@ export function createTranslateLoader(http: HttpClient)
     DialogEditProductComponent,
     DialogEditStoreTransDeatailsComponent,
     DialogForCategoryComponent,
+    UniteOperationComponent,
+    CurrencyOperationComponent,
   ],
   entryComponents: [DialogContentDatatabelComponent, DialogEditProductComponent, DialogEditStoreTransDeatailsComponent, DialogForCategoryComponent],
   imports: [
@@ -81,6 +85,21 @@ export function createTranslateLoader(http: HttpClient)
       { path: 'create-transaction', component: CreateTransactionComponent },
       { path: 'transaction-list', component: TransactionsListComponent },
       { path: 'transaction-specific/:id/:userId', component: TransactionSpecificComponent },
+
+      {
+        path: 'basicdata',
+        children: [
+          {
+            path: 'currency',
+            component: CurrencyOperationComponent,
+          },
+          {
+            path: 'unite',
+            component: UniteOperationComponent,
+          },
+        ]
+      },
+
     ]),
     TranslateModule.forRoot({
       loader: {

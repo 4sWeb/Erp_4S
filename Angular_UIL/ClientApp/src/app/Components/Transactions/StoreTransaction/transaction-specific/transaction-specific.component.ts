@@ -83,7 +83,8 @@ export interface DialogForCategory {
 export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   constructor(public TransactionsService: TransactionsService, public SharingDataService: SharingDataService , private _router: Router,
     public ar: ActivatedRoute, public dialog: MatDialog, public dialogEdit: MatDialog
-    , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog) {
+    , public dialogEditDetails: MatDialog, public dialogCaterogry: MatDialog)
+  {
     this.storeTransMaster = { TrnsCode: 0, TrnsDate: null, TrnsNo: 0 };
   }
 
