@@ -29,27 +29,6 @@ namespace BLL.Repo
         }
 
 
-        public object GetCurrencyOId()
-        {
-            var GetNext = (Dictionary<string, object>)repo.CallQuery("select CURRENCYO_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
-            object CurrencyOId = GetNext.GetValueOrDefault("NEXTVAL");
-            return CurrencyOId;
-        }
-
-        public void CreateCurrencyReates(CurrencyRates_VM currencyRates) 
-        {
-            Currencyo currencyo = new Currencyo
-            {
-                Indate=currencyRates.Indate,
-                Rate=currencyRates.Rate
-
-            };
-            Create(currencyo);
-            try
-            {
-                repo.Save();
-            }catch(Exception e) { }
-            
-        }
+      
     }
 }

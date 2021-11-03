@@ -8,16 +8,16 @@ using System.Text;
 
 namespace BLL.Repo
 {
-    public class CurrencymRepo:Base_Repo<Currencym>,ICurrencym
+    public class CurrencymRepo : Base_Repo<Currencym>, ICurrencym
     {
         private readonly IRepoWrapper repo;
-        public CurrencymRepo(ModelContext dbContext4S) :base(dbContext4S)
+        public CurrencymRepo(ModelContext dbContext4S) : base(dbContext4S)
         {
-           
+
         }
         public List<CurrencyMaster_VM> GetAllCurrencyMaster()
         {
-           var CurrencyMaster_VM=  GetAll().Result.Select(s => new CurrencyMaster_VM
+            var CurrencyMaster_VM = GetAll().Result.Select(s => new CurrencyMaster_VM
             {
                 Id = s.Id,
                 Aname = s.Aname,
@@ -43,29 +43,7 @@ namespace BLL.Repo
             }).ToList();
             return CurrencyMaster_VM;
         }
-        
-       
-       public object GetCurrencyMId()
-        {
-            var GetNext = (Dictionary<string, object>)repo.CallQuery("select CURRENCYM_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
-            object CurrencyMId = GetNext.GetValueOrDefault("NEXTVAL");
-            return CurrencyMId;
-        }
-        public void CreateCurrencyM(CurrencyMaster_VM currencyMaster)
-        {
-            Currencym currencym = new Currencym
-            {
-                Aname = currencyMaster.Aname,
-                Ename=currencyMaster.Ename,
-                Shortname=currencyMaster.Shortname
-            };
 
-            Create(currencym);
-            try
-            {
-                repo.Save();
-            }
-            catch (Exception e) { }
-        }
+
     }
 }
