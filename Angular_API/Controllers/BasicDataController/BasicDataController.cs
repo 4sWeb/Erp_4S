@@ -21,6 +21,8 @@ namespace Angular_API.Controllers.BasicDataController
         {
             repo = _repo;
         }
+
+        //********************************UNITES CRUD OPERTION*****************************//
         [HttpGet]
         [Route("DisplayAllUnites")]
         public JsonResult UnitesList()
@@ -109,6 +111,8 @@ namespace Angular_API.Controllers.BasicDataController
         }
 
 
+
+        //********************************CURRENCY CRUD OPERTION*****************************//
         [HttpGet]
         [Route("DisplayAllCurrency")]
         public JsonResult CurrencyList()
@@ -116,6 +120,7 @@ namespace Angular_API.Controllers.BasicDataController
             List<CurrencyMain_VM> currencyMains = new List<CurrencyMain_VM>();
 
            var currencuMaster= repo._Currencym.GetAllCurrencyMaster();
+
             foreach (var item in currencuMaster)
             {
               var currencyRate=  repo._Currencyo.GetAllCurrencyRates(item.Id);
@@ -127,5 +132,172 @@ namespace Angular_API.Controllers.BasicDataController
             return Json(currencyMains, new System.Text.Json.JsonSerializerOptions());
         }
 
+
+        [HttpPost]
+        [Route("CreateCurrency")]
+        public JsonResult CreateCurrency([FromBody] CurrencyMain_VM currencyMain)
+        {
+            var GetNext = (Dictionary<string, object>)repo.CallQuery("select CURRENCYM_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
+            object CurrencyMId = GetNext.GetValueOrDefault("NEXTVAL");
+
+            if (currencyMain.CurrencyMaster_VM.Id != default)
+            {
+                foreach (var item in currencyMain.CurrencyRates_VM)
+                {
+                    Currencyo currencyo = new Currencyo
+                    {
+                        Currmid = currencyMain.CurrencyMaster_VM.Id,
+                        Indate = item.Indate,
+                        Rate = item.Rate
+
+                    };
+                    repo._Currencyo.Create(currencyo);
+                }
+
+               
+            }
+
+            else
+            {
+                Currencym currencym = new Currencym
+                {
+                    Aname = currencyMain.CurrencyMaster_VM.Aname,
+                    Ename = currencyMain.CurrencyMaster_VM.Ename,
+                    Shortname = currencyMain.CurrencyMaster_VM.Shortname,
+                    AcurrUnit1= currencyMain.CurrencyMaster_VM.AcurrUnit1,
+                    AcurrUnit2= currencyMain.CurrencyMaster_VM.AcurrUnit2,
+                    AcurrUnit3= currencyMain.CurrencyMaster_VM.AcurrUnit3,
+                    AcurrUnit4= currencyMain.CurrencyMaster_VM.AcurrUnit4,
+                    AfracUnit1= currencyMain.CurrencyMaster_VM.AfracUnit1,
+                    AfracUnit2= currencyMain.CurrencyMaster_VM.AfracUnit2,
+                    AfracUnit3= currencyMain.CurrencyMaster_VM.AfracUnit3,
+                    AfracUnit4= currencyMain.CurrencyMaster_VM.AfracUnit4,
+                    EcurrUnit1= currencyMain.CurrencyMaster_VM.EcurrUnit1,
+                    EcurrUnit2=currencyMain.CurrencyMaster_VM.EcurrUnit2,
+                    EcurrUnit3=currencyMain.CurrencyMaster_VM.EcurrUnit3,
+                    EcurrUnit4= currencyMain.CurrencyMaster_VM.EcurrUnit4,
+                    EfracUnit1 =currencyMain.CurrencyMaster_VM.EfracUnit1,
+                    EfracUnit2 =currencyMain.CurrencyMaster_VM.EfracUnit2,
+                    EfracUnit3 =currencyMain.CurrencyMaster_VM.EfracUnit3,
+                    EfracUnit4 = currencyMain.CurrencyMaster_VM.EfracUnit4,
+                    Isdefault= currencyMain.CurrencyMaster_VM.Isdefault,
+                };
+
+                repo._Currencym.Create(currencym);
+               
+
+
+                foreach (var item in currencyMain.CurrencyRates_VM)
+                {
+                    Currencyo currencyo = new Currencyo
+                    {
+                        Currmid = decimal.Parse(CurrencyMId.ToString()) + 1,
+                        Indate = item.Indate,
+                        Rate = item.Rate
+
+                    };
+                    repo._Currencyo.Create(currencyo);
+                }
+
+            }
+
+            try
+            {
+                repo.Save();
+            }
+            catch (Exception e) { }
+
+            return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
+
+        [HttpPut]
+        [Route("EditCurrency")]
+        public JsonResult EditCurrency([FromBody] CurrencyMain_VM currencyMain)
+        {
+            if (currencyMain.CurrencyMaster_VM.Id != default)
+            {
+                var item = repo._StoreTrnsM.GetByCondition(c => c.Currencyid == currencyMain.CurrencyMaster_VM.Id);
+                if (item.Result.Count != 0)
+                {
+                    return Json(new { ID = "200", Result = "you can not edit this unite as it uesd by item" });
+                }
+            }
+                Currencym currencym = new Currencym
+            {
+                    Id= currencyMain.CurrencyMaster_VM.Id,
+                    Aname = currencyMain.CurrencyMaster_VM.Aname,
+                    Ename = currencyMain.CurrencyMaster_VM.Ename,
+                    Shortname = currencyMain.CurrencyMaster_VM.Shortname,
+                    AcurrUnit1 = currencyMain.CurrencyMaster_VM.AcurrUnit1,
+                    AcurrUnit2 = currencyMain.CurrencyMaster_VM.AcurrUnit2,
+                    AcurrUnit3 = currencyMain.CurrencyMaster_VM.AcurrUnit3,
+                    AcurrUnit4 = currencyMain.CurrencyMaster_VM.AcurrUnit4,
+                    AfracUnit1 = currencyMain.CurrencyMaster_VM.AfracUnit1,
+                    AfracUnit2 = currencyMain.CurrencyMaster_VM.AfracUnit2,
+                    AfracUnit3 = currencyMain.CurrencyMaster_VM.AfracUnit3,
+                    AfracUnit4 = currencyMain.CurrencyMaster_VM.AfracUnit4,
+                    EcurrUnit1 = currencyMain.CurrencyMaster_VM.EcurrUnit1,
+                    EcurrUnit2 = currencyMain.CurrencyMaster_VM.EcurrUnit2,
+                    EcurrUnit3 = currencyMain.CurrencyMaster_VM.EcurrUnit3,
+                    EcurrUnit4 = currencyMain.CurrencyMaster_VM.EcurrUnit4,
+                    EfracUnit1 = currencyMain.CurrencyMaster_VM.EfracUnit1,
+                    EfracUnit2 = currencyMain.CurrencyMaster_VM.EfracUnit2,
+                    EfracUnit3 = currencyMain.CurrencyMaster_VM.EfracUnit3,
+                    EfracUnit4 = currencyMain.CurrencyMaster_VM.EfracUnit4,
+                    Isdefault = currencyMain.CurrencyMaster_VM.Isdefault,
+                };
+
+            repo._Currencym.Update(currencym);
+           
+
+
+            foreach (var item in currencyMain.CurrencyRates_VM)
+            {
+                Currencyo currencyo = new Currencyo
+                {
+                    Id=item.Id,
+                    Currmid = item.Currmid,
+                    Indate = item.Indate,
+                    Rate = item.Rate
+
+                };
+                repo._Currencyo.Update(currencyo);
+            }
+
+            try
+            {
+                repo.Save();
+            }
+            catch (Exception e) { }
+
+            return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
+        }
+
+        [HttpGet]
+        [Route("DeleteCurrency")]
+        public JsonResult DeleteCurrency(decimal currencyId)
+        {
+            if (currencyId != default)
+            {
+                var item = repo._StoreTrnsM.GetByCondition(c => c.Currencyid == currencyId);
+                if (item.Result.Count != 0)
+                {
+                    return Json(new { ID = "200", Result = "you can not delete this unite as it uesd by item" });
+                }
+                else
+                {
+                    try
+                    {
+                        repo.CallQuery("delete CURRENCYM where ID= " + currencyId + " ", null, 2);
+                    }
+                    catch (Exception ex) { }
+                }
+
+            }
+            return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
+        }
+
+
+    }
+
 }

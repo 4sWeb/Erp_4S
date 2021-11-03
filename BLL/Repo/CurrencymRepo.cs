@@ -10,7 +10,8 @@ namespace BLL.Repo
 {
     public class CurrencymRepo:Base_Repo<Currencym>,ICurrencym
     {
-        public CurrencymRepo(ModelContext dbContext4S):base(dbContext4S)
+        private readonly IRepoWrapper repo;
+        public CurrencymRepo(ModelContext dbContext4S) :base(dbContext4S)
         {
            
         }
@@ -41,6 +42,30 @@ namespace BLL.Repo
                 Isdefault = s.Isdefault
             }).ToList();
             return CurrencyMaster_VM;
+        }
+        
+       
+       public object GetCurrencyMId()
+        {
+            var GetNext = (Dictionary<string, object>)repo.CallQuery("select CURRENCYM_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
+            object CurrencyMId = GetNext.GetValueOrDefault("NEXTVAL");
+            return CurrencyMId;
+        }
+        public void CreateCurrencyM(CurrencyMaster_VM currencyMaster)
+        {
+            Currencym currencym = new Currencym
+            {
+                Aname = currencyMaster.Aname,
+                Ename=currencyMaster.Ename,
+                Shortname=currencyMaster.Shortname
+            };
+
+            Create(currencym);
+            try
+            {
+                repo.Save();
+            }
+            catch (Exception e) { }
         }
     }
 }

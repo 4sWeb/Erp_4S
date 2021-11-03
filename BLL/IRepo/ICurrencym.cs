@@ -9,5 +9,7 @@ namespace BLL.IRepo
    public  interface ICurrencym:IBaseRepo<Currencym>
     {
         public List<CurrencyMaster_VM> GetAllCurrencyMaster();
+        public object GetCurrencyMId();
+        public void CreateCurrencyM(CurrencyMaster_VM currencyMaster);
     }
 }

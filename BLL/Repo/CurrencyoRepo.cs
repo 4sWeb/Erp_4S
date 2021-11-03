@@ -10,6 +10,7 @@ namespace BLL.Repo
 {
     public class CurrencyoRepo:Base_Repo<Currencyo>,ICurrencyo
     {
+        private readonly IRepoWrapper repo;
         public CurrencyoRepo(ModelContext dbContext4S):base(dbContext4S)
         {
           
@@ -25,6 +26,30 @@ namespace BLL.Repo
                 
             }).ToList();
             return CurrencyRates_VM;
+        }
+
+
+        public object GetCurrencyOId()
+        {
+            var GetNext = (Dictionary<string, object>)repo.CallQuery("select CURRENCYO_SEQ.NEXTVAL from dual").Result.FirstOrDefault();
+            object CurrencyOId = GetNext.GetValueOrDefault("NEXTVAL");
+            return CurrencyOId;
+        }
+
+        public void CreateCurrencyReates(CurrencyRates_VM currencyRates) 
+        {
+            Currencyo currencyo = new Currencyo
+            {
+                Indate=currencyRates.Indate,
+                Rate=currencyRates.Rate
+
+            };
+            Create(currencyo);
+            try
+            {
+                repo.Save();
+            }catch(Exception e) { }
+            
         }
     }
 }
