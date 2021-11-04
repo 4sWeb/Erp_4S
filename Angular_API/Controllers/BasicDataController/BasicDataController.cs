@@ -62,7 +62,7 @@ namespace Angular_API.Controllers.BasicDataController
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("EditUnite")]
         public JsonResult EditUnite([FromBody] UnitesBasic_VM NewUnites_VM)
         {

@@ -1,0 +1,46 @@
+<p>unite-operation works!</p>
+<p>dialog-edit-product works!</p>
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<body>
+  <h1 mat-dialog-title></h1>
+  <div *ngIf="operationType=='Edit'">
+    <div class="form-group row col-12">
+      <label for="Aname" class="col-sm-4 col-form-label" style="text-align:right">الاسم عربى</label>
+      <div class="col-sm-8">
+        <input id="Aname" class="form-control" name="Aname" [(ngModel)]="Aname">
+      </div>
+    </div>
+
+    <div class="form-group row col-12">
+      <label for="Ename" class="col-sm-4 col-form-label" style="text-align:right">الاسم انجليزى</label>
+      <div class="col-sm-8">
+        <input id="Ename" class="form-control" name="Ename" [(ngModel)]="Ename">
+      </div>
+    </div>
+
+    <div class="form-group row col-12">
+      <label for="SAName" class="col-sm-4 col-form-label" style="text-align:right">الرمز عربى </label>
+      <div class="col-sm-8">
+        <input id="SAName" class="form-control" name="SAName" [(ngModel)]="SAName">
+      </div>
+    </div>
+
+    <div class="form-group row col-12">
+      <label for="SEName" class="col-sm-4 col-form-label" style="text-align:right">الرمز انجليزى</label>
+      <div class="col-sm-8">
+        <input id="SEName" class="form-control" name="SEName" [(ngModel)]="SEName">
+      </div>
+    </div>
+
+
+    <mat-dialog-actions align="end">
+      <button mat-button class="btn btn-danger" (click)="onNoClick()">اغلاق</button>
+      <button mat-button [mat-dialog-close]="editeUnite" cdkFocusInitial class="btn btn-success mr-3" style="text-align:right" (click)="updateUnite()">موافق</button>
+    </mat-dialog-actions>
+  </div>
+</body>
+</html>
+
+

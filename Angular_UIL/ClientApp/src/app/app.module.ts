@@ -11,8 +11,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+/////////////////////***********************Angular Material *****************////////////////////////
 import { MatSelectModule } from '@angular/material'
 import { MatAutocompleteModule } from '@angular/material'
+
+
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { DropdownModule } from 'primeng/dropdown';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -35,8 +38,10 @@ import { DialogForCategoryComponent } from './Components/Transactions/StoreTrans
 /////////////////////////*********************Localization************/////////////////////////////////
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { UniteOperationComponent } from './Components/BasicData/unite-operation/unite-operation.component';
-import { CurrencyOperationComponent } from './Components/BasicData/currency-operation/currency-operation.component'
+
+import { CurrencyOperationComponent } from './Components/BasicData/currency-operation/currency-operation.component';
+import { UniteListComponent } from './Components/BasicData/Unites/unite-list/unite-list.component';
+import { UniteOperationComponent } from './Components/BasicData/Unites/unite-operation/unite-operation.component'
 
 
 
@@ -58,8 +63,9 @@ export function createTranslateLoader(http: HttpClient)
     DialogEditProductComponent,
     DialogEditStoreTransDeatailsComponent,
     DialogForCategoryComponent,
-    UniteOperationComponent,
     CurrencyOperationComponent,
+    UniteListComponent,
+    UniteOperationComponent,
   ],
   entryComponents: [DialogContentDatatabelComponent, DialogEditProductComponent, DialogEditStoreTransDeatailsComponent, DialogForCategoryComponent],
   imports: [
@@ -79,6 +85,7 @@ export function createTranslateLoader(http: HttpClient)
     DropdownModule,
     NgSelectModule,
    
+   
     RouterModule.forRoot([
       { path: '', component: TransactionsListComponent, pathMatch: 'full' },
       { path: 'all-transactions/:id', component: AllTransactionsComponent },
@@ -88,17 +95,29 @@ export function createTranslateLoader(http: HttpClient)
 
       {
         path: 'basicdata',
-        children: [
-          {
-            path: 'currency',
-            component: CurrencyOperationComponent,
-          },
-          {
-            path: 'unite',
-            component: UniteOperationComponent,
-          },
-        ]
+        children:
+          [
+            {
+              path: 'currency',
+              component: CurrencyOperationComponent
+            },
+            {
+              path: 'unite',
+              children:
+                [
+                  {
+                    path: '',
+                    component: UniteListComponent
+                  },
+                  {
+                    path: 'UniteOperation',
+                    component: UniteOperationComponent
+                  },
+                ],
+            },
+          ],
       },
+
 
     ]),
     TranslateModule.forRoot({

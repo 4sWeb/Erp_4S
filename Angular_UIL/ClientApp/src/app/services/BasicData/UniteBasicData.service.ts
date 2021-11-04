@@ -67,8 +67,8 @@ export class UniteBasicDataService {
   }
 
     //Update UnitesBasic
-    UpdateUnitesBasic(uniteBasic: UnitesBasic_VM): Observable<any> {
-    return this.http.put<UnitesBasic_VM>(`${environment.Api_Url}/BasicData/EditUnite`, uniteBasic);
+  UpdateUnitesBasic(uniteBasic: UnitesBasic_VM): Observable<any> {
+    return this.http.post<UnitesBasic_VM>(`${environment.Api_Url}/BasicData/EditUnite`, uniteBasic);
   };
 
 }

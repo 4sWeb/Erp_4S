@@ -18,8 +18,12 @@ export class DialogEditProductComponent implements OnInit {
   Value: number;
   Price: number;
 
-  constructor(private dialogRef: MatDialogRef<DialogEditProductComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogEdit) {
+  constructor
+    (
+    private dialogRef: MatDialogRef<DialogEditProductComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogEdit
+  )
+  {
     dialogRef.disableClose = true;
 
     this.editProduct = data.editProduct;
