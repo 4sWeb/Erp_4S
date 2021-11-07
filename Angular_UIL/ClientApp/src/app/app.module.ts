@@ -39,9 +39,11 @@ import { DialogForCategoryComponent } from './Components/Transactions/StoreTrans
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { CurrencyOperationComponent } from './Components/BasicData/currency-operation/currency-operation.component';
+
 import { UniteListComponent } from './Components/BasicData/Unites/unite-list/unite-list.component';
-import { UniteOperationComponent } from './Components/BasicData/Unites/unite-operation/unite-operation.component'
+import { UniteOperationComponent } from './Components/BasicData/Unites/unite-operation/unite-operation.component';
+import { CurrencyListComponent } from './Components/BasicData/Currency/currency-list/currency-list.component'
+import { CurrencyOperationComponent } from './Components/BasicData/Currency/currency-operation/currency-operation.component';
 
 
 
@@ -63,9 +65,10 @@ export function createTranslateLoader(http: HttpClient)
     DialogEditProductComponent,
     DialogEditStoreTransDeatailsComponent,
     DialogForCategoryComponent,
-    CurrencyOperationComponent,
     UniteListComponent,
     UniteOperationComponent,
+    CurrencyListComponent,
+    CurrencyOperationComponent
   ],
   entryComponents: [DialogContentDatatabelComponent, DialogEditProductComponent, DialogEditStoreTransDeatailsComponent, DialogForCategoryComponent],
   imports: [
@@ -99,7 +102,19 @@ export function createTranslateLoader(http: HttpClient)
           [
             {
               path: 'currency',
-              component: CurrencyOperationComponent
+              children:
+                [
+                  {
+                    path: '',
+                    component: CurrencyListComponent
+                    
+                  },
+                  {
+                    path: 'CurrencyOperation',
+                    component: CurrencyOperationComponent
+
+                  },
+                ],
             },
             {
               path: 'unite',
