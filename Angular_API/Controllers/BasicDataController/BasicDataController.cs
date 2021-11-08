@@ -210,18 +210,11 @@ namespace Angular_API.Controllers.BasicDataController
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("EditCurrency")]
         public JsonResult EditCurrency([FromBody] CurrencyMain_VM currencyMain)
         {
-            if (currencyMain.CurrencyMaster_VM.Id != default)
-            {
-                var item = repo._StoreTrnsM.GetByCondition(c => c.Currencyid == currencyMain.CurrencyMaster_VM.Id);
-                if (item.Result.Count != 0)
-                {
-                    return Json(new { ID = "200", Result = "you can not edit this unite as it uesd by item" });
-                }
-            }
+          
                 Currencym currencym = new Currencym
             {
                     Id= currencyMain.CurrencyMaster_VM.Id,
@@ -248,11 +241,16 @@ namespace Angular_API.Controllers.BasicDataController
                 };
 
             repo._Currencym.Update(currencym);
-           
-
-
             foreach (var item in currencyMain.CurrencyRates_VM)
             {
+                var check = repo._StoreTrnsM.GetByCondition(s => s.CurrencyOId == item.Id);
+                if (check.Result.Count != 0)
+                {
+                    return Json(new { ID = "200", Result = "you can not edit this rate as it uesd by transaction" });
+                }
+                {
+
+                }
                 Currencyo currencyo = new Currencyo
                 {
                     Id=item.Id,

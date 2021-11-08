@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CurrencyMain_VM } from '../../../../models/BasicData/CurrencyMain_VM';
@@ -11,18 +11,22 @@ import { CurrencyService } from '../../../../services/BasicData/Currency.service
   templateUrl: './currency-list.component.html',
   styleUrls: ['./currency-list.component.css']
 })
-export class CurrencyListComponent implements OnInit {
+export class CurrencyListComponent implements OnInit,OnDestroy {
+
   dtOptions: DataTables.Settings = {};
 
   CurrencyMain: CurrencyMain_VM[] = [];
   CurrencyMaster: CurrencyMaster_VM[] = [];
   CurrencyRates: CurrencyRates_VM[] = [];
 
+  editCurrencyRate: boolean = false;
+
   dtTrigger: Subject<any> = new Subject<any>();
 
   isTableExpanded = false;
 
-  constructor(public ar: ActivatedRoute, public currencyService: CurrencyService) {
+  constructor(public ar: ActivatedRoute, public currencyService: CurrencyService)
+  {
 
     this.currencyService.GetAllCurrency().subscribe
       (
@@ -44,20 +48,23 @@ export class CurrencyListComponent implements OnInit {
           this.dtTrigger.next();
 
         },
-      )
-  }
+    )
 
-  ngOnInit() {
+  };
+ 
+
+  ngOnInit()
+  {
     this.dtOptions =
     {
       pagingType: 'full_numbers',
       pageLength: 3
     };
-  }
+  };
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
+  ngOnDestroy()
+  {
     this.dtTrigger.unsubscribe();
-  }
-}
+  };
 
+}

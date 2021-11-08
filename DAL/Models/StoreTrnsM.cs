@@ -32,6 +32,7 @@ namespace DAL.Models
             Storetrnsmpayspecs = new HashSet<Storetrnsmpayspec>();
         }
 
+        public decimal? CurrencyOId { get; set; }
         public decimal TrnsCode { get; set; }
         public decimal TrnsNo { get; set; }
         public DateTime TrnsDate { get; set; }

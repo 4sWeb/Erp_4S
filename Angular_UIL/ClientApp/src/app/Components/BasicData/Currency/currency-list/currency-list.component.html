@@ -17,7 +17,7 @@
           <th scope="col">عرض تفاصيل العملة</th>
         </tr>
       </thead>
-      
+
         <tr *ngFor="let item of CurrencyMaster;let RowIndex = index" >
           <td colspan="4"  style="width:100%">
             <table  class="col">
@@ -75,10 +75,28 @@
       <div class="card m-2">
         <div class="card-header" style="background-color:white !important;text-align:center">
           <div style="text-align:center">
-            <img src="'../../../../../../../assets/Images/dolars.jfif">
+            <img style="width:70%" src="'../../../../../../../assets/Images/dolar{{RowIndex}}.jfif">
           </div>
+          <div class="card m-1" style="background-color:lightcyan">
+          <div class="row m-3">
+            <div class="col-6">
+              <div>
+                <span>الاسم بالعربي:</span>&nbsp;&nbsp;&nbsp;<span>{{item.CurrencyMaster_VM.Aname}}&nbsp;&nbsp;</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div>
+                <span>الاسم بالأجنبية:</span>&nbsp;&nbsp;<span>{{item.CurrencyMaster_VM.Ename}}&nbsp;&nbsp;</span>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center">
+            <span>الاختصار:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{item.CurrencyMaster_VM.Shortname}}&nbsp;&nbsp;</span>
+          </div>
+            </div>
+
           <div class="m-1">
-            <button class="btn btn-warning" data-toggle="collapse"
+            <button class="btn btn-outline-info" data-toggle="collapse"
                     [attr.data-target]="'#demo'+ RowIndex">
               &nbsp;&nbsp;عرض تفاصيل<span>&nbsp;&nbsp;{{item.CurrencyMaster_VM.Aname}}&nbsp;&nbsp;</span>
             </button>
@@ -95,28 +113,28 @@
                   <div class="col-sm-8">
 
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit1}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit1}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدتين</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit2}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit2}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدات</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit3}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit3}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدة</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit4}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AcurrUnit4}}" />
                   </div>
                 </div>
 
@@ -132,28 +150,28 @@
                   <div class="col-sm-8">
 
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit1}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit1}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدتين</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit2}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit2}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدات</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit3}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit3}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدة</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit4}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EcurrUnit4}}" />
                   </div>
                 </div>
 
@@ -172,28 +190,28 @@
                   <div class="col-sm-8">
 
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit1}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit1}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدتين</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit2}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit2}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدات</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit3}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit3}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدة</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit4}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.AfracUnit4}}" />
                   </div>
                 </div>
               </div>
@@ -207,53 +225,74 @@
                   <div class="col-sm-8">
 
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit1}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit1}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدتين</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit2}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit2}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدات</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit3}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit3}}" />
                   </div>
                 </div>
                 <div class="row mt-1">
                   <label for="storedocnum" class="col-sm-4 col-form-label">وحدة</label>
                   <div class="col-sm-8">
                     <input class="form-control" id="storedocnum" name="storedocnum"
-                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit4}}" readonly />
+                           type="text" placeholder="{{item.CurrencyMaster_VM.EfracUnit4}}" />
                   </div>
                 </div>
               </div>
 
             </div>
           </div>
-          <div class="mt-1">
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">التاريخ	</th>
-                <th scope="col">معدل التحويل</th>
-                <th scope="col">تعديل</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let itemm of item.CurrencyRates_VM">
-                <td>{{itemm.Indate}}</td>
-                <td>{{itemm.Rate}}</td>
-                <td><button class="btn btn-info">تعديل</button></td>
-              </tr>
 
-            </tbody>
-          </table>
-            </div>
+          <div style="text-align:center" class="m-1">
+            <button class="btn btn-outline-info" (click)="EditProduct(i)" title="تعديل">
+              <svg width="18" height="18" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+              </svg>
+              تعديل
+            </button>
+          </div>
+
+          <div class="mt-1">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">التاريخ	</th>
+                  <th scope="col">معدل التحويل</th>
+                  <th scope="col">تعديل</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let itemm of item.CurrencyRates_VM">
+                  <td>{{itemm.Indate}}</td>
+                  <td>{{itemm.Rate}}</td>
+                  <td>
+                    <div>
+                      <button class="btn btn-outline-info" (click)="EditProduct(i)" title="تعديل">
+                        <svg width="18" height="18" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg>
+                        تعديل
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
         </div>
         <div>
 

@@ -42,8 +42,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { UniteListComponent } from './Components/BasicData/Unites/unite-list/unite-list.component';
 import { UniteOperationComponent } from './Components/BasicData/Unites/unite-operation/unite-operation.component';
-import { CurrencyListComponent } from './Components/BasicData/Currency/currency-list/currency-list.component'
 import { CurrencyOperationComponent } from './Components/BasicData/Currency/currency-operation/currency-operation.component';
+import { CurrencyListComponent } from './Components/BasicData/Currency/currency-list/currency-list.component';
 
 
 
@@ -67,8 +67,8 @@ export function createTranslateLoader(http: HttpClient)
     DialogForCategoryComponent,
     UniteListComponent,
     UniteOperationComponent,
-    CurrencyListComponent,
-    CurrencyOperationComponent
+    CurrencyOperationComponent,
+    CurrencyListComponent
   ],
   entryComponents: [DialogContentDatatabelComponent, DialogEditProductComponent, DialogEditStoreTransDeatailsComponent, DialogForCategoryComponent],
   imports: [
