@@ -30,9 +30,10 @@ namespace DAL.Models
             StoretrnsmextexpTrnsmcodeNavigations = new HashSet<Storetrnsmextexp>();
             StoretrnsmextexpTrnsscodeNavigations = new HashSet<Storetrnsmextexp>();
             Storetrnsmpayspecs = new HashSet<Storetrnsmpayspec>();
+            Currencyo = new HashSet<Currencyo>();
         }
 
-        public decimal? CurrencyOId { get; set; }
+        public int? CURRENCY_O_ID { get; set; }
         public decimal TrnsCode { get; set; }
         public decimal TrnsNo { get; set; }
         public DateTime TrnsDate { get; set; }
@@ -156,6 +157,7 @@ namespace DAL.Models
         public virtual StoreTrn TrnsCodeNavigation { get; set; }
         public virtual StoreAllcode Type { get; set; }
         public virtual ICollection<AcceptInTrn> AcceptInTrns { get; set; }
+        public virtual ICollection<Currencyo> Currencyo { get; set; }
         public virtual ICollection<EvaluaPricePromationDetail> EvaluaPricePromationDetails { get; set; }
         public virtual ICollection<EvaluationPricePromation> EvaluationPricePromations { get; set; }
         public virtual ICollection<Financeinvdist> Financeinvdists { get; set; }

@@ -13,5 +13,7 @@ namespace DAL.Models
         public decimal? Currmid { get; set; }
 
         public virtual Currencym Currm { get; set; }
+        public virtual StoreTrnsM StoreTrnsM { get; set; }
+
     }
 }

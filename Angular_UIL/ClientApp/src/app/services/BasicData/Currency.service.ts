@@ -66,6 +66,6 @@ export class CurrencyService {
 
   //Update Currency
   UpdateCurrency(currencyMain: CurrencyMain_VM): Observable<any> {
-    return this.http.put<CurrencyMain_VM>(`${environment.Api_Url}/BasicData/EditCurrency`, currencyMain);
+    return this.http.post<CurrencyMain_VM>(`${environment.Api_Url}/BasicData/EditCurrency`, currencyMain);
   };
 }

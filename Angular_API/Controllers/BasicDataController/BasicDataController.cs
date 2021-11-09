@@ -216,7 +216,7 @@ namespace Angular_API.Controllers.BasicDataController
         {
           
                 Currencym currencym = new Currencym
-            {
+                {
                     Id= currencyMain.CurrencyMaster_VM.Id,
                     Aname = currencyMain.CurrencyMaster_VM.Aname,
                     Ename = currencyMain.CurrencyMaster_VM.Ename,
@@ -241,25 +241,31 @@ namespace Angular_API.Controllers.BasicDataController
                 };
 
             repo._Currencym.Update(currencym);
-            foreach (var item in currencyMain.CurrencyRates_VM)
+            if (currencyMain.CurrencyRates_VM.Count>0)
             {
-                var check = repo._StoreTrnsM.GetByCondition(s => s.CurrencyOId == item.Id);
-                if (check.Result.Count != 0)
-                {
-                    return Json(new { ID = "200", Result = "you can not edit this rate as it uesd by transaction" });
-                }
-                {
 
-                }
-                Currencyo currencyo = new Currencyo
-                {
-                    Id=item.Id,
-                    Currmid = item.Currmid,
-                    Indate = item.Indate,
-                    Rate = item.Rate
 
-                };
-                repo._Currencyo.Update(currencyo);
+                foreach (var item in currencyMain.CurrencyRates_VM)
+                {
+                    var check = repo.CallQuery("select CURRENCY_O_ID from STORE_TRNS_M where STORE_TRNS_M.CURRENCY_O_ID= " + item.Id );
+                    //var check= repo._StoreTrnsM.GetByCondition(s => s.CURRENCY_O_ID == item.Id);
+                    if (check.Result.Count != 0)
+                    {
+                        return Json(new { ID = "200", Result = "you can not edit this rate as it uesd by transaction" });
+                    }
+                    {
+
+                    }
+                    Currencyo currencyo = new Currencyo
+                    {
+                        Id = item.Id,
+                        Currmid = item.Currmid,
+                        Indate = item.Indate,
+                        Rate = item.Rate
+
+                    };
+                    repo._Currencyo.Update(currencyo);
+                }
             }
 
             try
