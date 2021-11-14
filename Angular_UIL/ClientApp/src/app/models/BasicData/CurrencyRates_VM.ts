@@ -5,6 +5,6 @@ export class CurrencyRates_VM {
       public Indate:Date,
       public Rate:number,
       public Id:number,
-      public Currmid:number,
+      public Currmid: number,
     ) { }
 }

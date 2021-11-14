@@ -10,5 +10,6 @@ namespace BLL.ERPModelsView.BasicData_VM
     {
         public CurrencyMaster_VM CurrencyMaster_VM { get; set; }
         public List<CurrencyRates_VM> CurrencyRates_VM { get; set; }
+        public string UpdateType { get; set; }
     }
 }

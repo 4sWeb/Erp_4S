@@ -22,7 +22,7 @@ namespace BLL.Repo
                 Id = s.Id,
                 Rate=s.Rate,
                 Indate=s.Indate,
-                Currmid=s.Currmid
+                Currmid=s.Currm.Id
                 
             }).ToList();
             return CurrencyRates_VM;

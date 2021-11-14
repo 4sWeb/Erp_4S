@@ -214,7 +214,9 @@ namespace Angular_API.Controllers.BasicDataController
         [Route("EditCurrency")]
         public JsonResult EditCurrency([FromBody] CurrencyMain_VM currencyMain)
         {
-          
+
+            if (currencyMain.UpdateType == "UpdateMaster") 
+            { 
                 Currencym currencym = new Currencym
                 {
                     Id= currencyMain.CurrencyMaster_VM.Id,
@@ -241,7 +243,8 @@ namespace Angular_API.Controllers.BasicDataController
                 };
 
             repo._Currencym.Update(currencym);
-            if (currencyMain.CurrencyRates_VM.Count>0)
+            }
+            if (currencyMain.UpdateType == "UpdateRates")
             {
 
 
@@ -283,8 +286,8 @@ namespace Angular_API.Controllers.BasicDataController
         {
             if (currencyId != default)
             {
-                var item = repo._StoreTrnsM.GetByCondition(c => c.Currencyid == currencyId);
-                if (item.Result.Count != 0)
+                var item = repo._StoreTrnsM.GetByCondition(c => c.Currencyid == currencyId).Result.Count;
+                if (item> 0)
                 {
                     return Json(new { ID = "200", Result = "you can not delete this unite as it uesd by item" });
                 }

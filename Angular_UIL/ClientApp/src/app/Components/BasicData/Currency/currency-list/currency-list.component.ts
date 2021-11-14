@@ -79,6 +79,7 @@ export class CurrencyListComponent implements OnInit,OnDestroy {
 
   EditCurrencyMaster(i: number)
   {
+    this.CurrencyMain[i].UpdateType = "UpdateMaster";
     this.editCurrencyMain = this.CurrencyMain[i];
     this.editCurrencyMain.CurrencyRates_VM=null;
     this.editCurrencyMaster = this.CurrencyMain[i].CurrencyMaster_VM;
@@ -111,25 +112,48 @@ export class CurrencyListComponent implements OnInit,OnDestroy {
   //  this.EfracUnit4 = this.CurrencyMain[i].CurrencyMaster_VM.EfracUnit4;
   //};
 
+  CheckVaildDelete(i: number)
+  {
+    this.EditeMood = false;
+    for (var i = 0; i < this.CurrencyMain.length; i++) {
+
+      if (this.CurrencyMain[i].CurrencyMaster_VM.AlreadyUsed == true)
+      {
+        alert("لا يمكنك حذف هذه العملة حيث انها مستخدمة من قبل داخل البرنامج");
+        break;
+      }
+      {
+
+      }
+    }
+  
+  }
+
   EditCurrencuRate(i: number, j: number)
   {
-    console.log(i, j);
+    //this.CurrencyMain[i].CurrencyRates_VM[j].EditeRate = true;
+    this.editCurrencyRate = this.CurrencyMain[i].CurrencyRates_VM[j];
+    this.CurrencyMain[i].CurrencyRates_VM.splice(j, 1);
     this.EditeMood = true;
+    console.log(i, j);
 
   }
 
-  SaveEditCurrncRate(i: number, j: number)
+  SaveEditCurrncRate(i: number)
   {
+    this.CurrencyMain[i].UpdateType = "UpdateRates";
     this.editCurrencyMain = this.CurrencyMain[i];
-    this.editCurrencyMain.CurrencyRates_VM[0] = this.CurrencyMain[i].CurrencyRates_VM[j];
+    this.editCurrencyMain.CurrencyRates_VM[0] = this.editCurrencyRate;
     console.log("this.editCurrencyMain", this.editCurrencyMain);
+    
     this.currencyService.UpdateCurrency(this.editCurrencyMain).subscribe
       (
-        (res) =>
-        {
+        (res) => {
           console.log("res", res);
         }
-      )
+    );
+    this.CurrencyMain[i].CurrencyRates_VM.push(this.editCurrencyRate);
+    this.EditeMood = false;
   }
 
   ngOnDestroy()

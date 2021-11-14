@@ -23,7 +23,8 @@ export class CurrencyMaster_VM {
       public EfracUnit2:string,
       public EfracUnit3:string,
       public EfracUnit4: string,
-      public Id: number
+      public Id: number,
+      public AlreadyUsed?: boolean,
 
     ) { }
 }

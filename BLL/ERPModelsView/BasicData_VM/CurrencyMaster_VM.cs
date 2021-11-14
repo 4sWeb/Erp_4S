@@ -29,5 +29,6 @@ namespace BLL.ERPModelsView.BasicData_VM
         public string EfracUnit3 { get; set; }
         public string EfracUnit4 { get; set; }
         public decimal Id { get; set; }
+        public bool AlreadyUsed { get; set; }
     }
 }

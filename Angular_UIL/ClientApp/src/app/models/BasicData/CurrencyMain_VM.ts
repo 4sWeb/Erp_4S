@@ -6,7 +6,8 @@ export class CurrencyMain_VM {
   constructor
     (
     public CurrencyMaster_VM: CurrencyMaster_VM,
-      public  CurrencyRates_VM :CurrencyRates_VM[],
+    public CurrencyRates_VM: CurrencyRates_VM[],
+    public UpdateType?: string
 
     ) { }
 }
