@@ -44,6 +44,7 @@ import { UniteListComponent } from './Components/BasicData/Unites/unite-list/uni
 import { UniteOperationComponent } from './Components/BasicData/Unites/unite-operation/unite-operation.component';
 import { CurrencyOperationComponent } from './Components/BasicData/Currency/currency-operation/currency-operation.component';
 import { CurrencyListComponent } from './Components/BasicData/Currency/currency-list/currency-list.component';
+import { LoginComponent } from './Components/Login/login/login.component';
 
 
 
@@ -68,7 +69,8 @@ export function createTranslateLoader(http: HttpClient)
     UniteListComponent,
     UniteOperationComponent,
     CurrencyOperationComponent,
-    CurrencyListComponent
+    CurrencyListComponent,
+    LoginComponent
   ],
   entryComponents: [DialogContentDatatabelComponent, DialogEditProductComponent, DialogEditStoreTransDeatailsComponent, DialogForCategoryComponent],
   imports: [

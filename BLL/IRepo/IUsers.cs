@@ -7,5 +7,6 @@ namespace BLL.IRepo
 {
     public interface IUsers:IBaseRepo<User>
     {
+        public String HashPassword(String password, string salt);
     }
 }
