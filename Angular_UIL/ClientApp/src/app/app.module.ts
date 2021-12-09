@@ -11,21 +11,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
+
 /////////////////////***********************Angular Material *****************////////////////////////
 import { MatSelectModule } from '@angular/material'
 import { MatAutocompleteModule } from '@angular/material'
-
-
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { DropdownModule } from 'primeng/dropdown';
 import { NgSelectModule } from '@ng-select/ng-select';
+
 
 /////////////////////////*********************Services**************//////////////////////////////////////
 import { TransactionsService } from './services/StoreTransaction/transactions.service';
 import { SharingDataService } from './services/SharingData/sharing-data.service';
 
-//////////////////////////******************Components**************/////////////////////////////////////
-import { NavMenuComponent } from './Components/nav-menu/nav-menu.component';
+
+
+//////////////////////////******************Transactions Components**************/////////////////////////////////////
+import { NavMenuComponent } from './Components/Shared/nav-menu/nav-menu.component';
 import { AllTransactionsComponent } from './Components/Transactions/StoreTransaction/all-transactions/all-transactions.component';
 import { CreateTransactionComponent } from './Components/Transactions/StoreTransaction/create-transaction/create-transaction.component';
 import { TransactionsListComponent } from './Components/Transactions/transactions-list/transactions-list.component';
@@ -35,16 +38,23 @@ import { DialogEditProductComponent } from './Components/Transactions/StoreTrans
 import { DialogEditStoreTransDeatailsComponent } from './Components/Transactions/StoreTransaction/dialog-edit-store-trans-deatails/dialog-edit-store-trans-deatails.component';
 import { DialogForCategoryComponent } from './Components/Transactions/StoreTransaction/dialog-for-category/dialog-for-category.component';
 
-/////////////////////////*********************Localization************/////////////////////////////////
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-
+/////////////////////////*********************BasicData Components************/////////////////////////////////
 import { UniteListComponent } from './Components/BasicData/Unites/unite-list/unite-list.component';
 import { UniteOperationComponent } from './Components/BasicData/Unites/unite-operation/unite-operation.component';
 import { CurrencyOperationComponent } from './Components/BasicData/Currency/currency-operation/currency-operation.component';
 import { CurrencyListComponent } from './Components/BasicData/Currency/currency-list/currency-list.component';
+
+
+/////////////////////////*********************User Data Components************/////////////////////////////////
 import { LoginComponent } from './Components/Login/login/login.component';
+
+/////////////////////////*********************Localization************/////////////////////////////////
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { MainComponent } from './Components/Main/main/main.component';
+
+
 
 
 
@@ -70,7 +80,8 @@ export function createTranslateLoader(http: HttpClient)
     UniteOperationComponent,
     CurrencyOperationComponent,
     CurrencyListComponent,
-    LoginComponent
+    LoginComponent,
+    MainComponent
   ],
   entryComponents: [DialogContentDatatabelComponent, DialogEditProductComponent, DialogEditStoreTransDeatailsComponent, DialogForCategoryComponent],
   imports: [
@@ -92,10 +103,11 @@ export function createTranslateLoader(http: HttpClient)
    
    
     RouterModule.forRoot([
-      { path: '', component: TransactionsListComponent, pathMatch: 'full' },
+      { path: '', component: LoginComponent, pathMatch: 'full' },
+      { path: 'main', component: MainComponent },
+      { path: 'transaction-list', component: TransactionsListComponent, pathMatch: 'full' },
       { path: 'all-transactions/:id', component: AllTransactionsComponent },
       { path: 'create-transaction', component: CreateTransactionComponent },
-      { path: 'transaction-list', component: TransactionsListComponent },
       { path: 'transaction-specific/:id/:userId', component: TransactionSpecificComponent },
 
       {
@@ -131,6 +143,16 @@ export function createTranslateLoader(http: HttpClient)
                     component: UniteOperationComponent
                   },
                 ],
+            },
+          ],
+      },
+      {
+        path: 'Users',
+        children:
+          [
+            {
+              path: 'Login',
+              component: LoginComponent
             },
           ],
       },

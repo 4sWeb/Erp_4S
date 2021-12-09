@@ -31,6 +31,13 @@ namespace Angular_API.Controllers
         public JsonResult TransActionsList(int UserID = 1, int AppID = 2, int PeriodID = 2)
         {
             List<StoreTrans> storetrnslst = new List<StoreTrans>();
+            Dictionary<string, object> d = new Dictionary<string, object>();
+            d.Add("PTrnsID",19);
+            d.Add("PTrnsOID", 21);
+            d.Add("as_itemID", 4216);
+            d.Add("DepDetID", 83);
+            d.Add("PtransDate", null);
+           var res= repo.CallQuery("PROCDEPREMANINGQTYFORLINKEDDEP", d,1);
             var cc = TestQuery.Get<StoreTransDep_VM>("select * from STORE_TRNS_DEP");
             var ListUserApp = repo._Userstrans.GetByUserID(UserID).Result;
             var ListStoreSpecsApp = repo._Storepecsapp.GetAllByAppID(AppID).Result;

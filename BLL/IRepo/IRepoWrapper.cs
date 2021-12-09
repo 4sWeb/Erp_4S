@@ -9,6 +9,7 @@ namespace BLL.IRepo
     {
         IAcceptInTrns _AcceptInTrns { get; }
         IAccountstree _AccountsTree { get; }
+        IApplication _Application { get; }
         IAgriage _Agriage { get; }
         IAgridata _Agridata { get; }
         IAgrifarm _Agrifarm { get; }

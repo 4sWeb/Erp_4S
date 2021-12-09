@@ -1,1 +1,56 @@
 <p>login works!</p>
+<div id="loginPage">
+  <div>
+    <h2 style="color: #184052">Login To Your Account</h2>
+  </div>
+  <div id="formImg">
+    <div class="d-none d-md-none d-lg-block">
+      <img id="image" src="../../../../assets/Images/undraw_Login_re_4vu2.svg" />
+    </div>
+    <div>
+      <form [formGroup]="loginForm">
+        <div class="form-group">
+          <label for="userName" style="color: #184052"> userName</label>
+          <input id="userName" formControlName="userName" [class.is-invalid]="
+                          userName?.invalid && (userName?.dirty || userName?.touched)
+                          " [class.is-valid]="userName?.touched && !userName?.invalid" class="form-control" />
+          <small *ngIf="userName?.errors?.required && userName?.touched" class="text-danger">
+            "userName is required"
+          </small>
+          <small *ngIf="userName?.errors?.userName && userName?.touched" class="text-danger">
+            "wrong userName format"
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="password" style="color: #184052">Password</label>
+          <input id="password" formControlName="password" [class.is-invalid]="
+                         password?.invalid && (password?.dirty || password?.touched) "
+                 [class.is-valid]="password?.touched && !password?.invalid" type="password" class="form-control" />
+          <small *ngIf="password?.errors?.required && password?.touched" class="text-danger">
+            "password is required"
+          </small>
+
+          <small *ngIf="password?.errors?.minlength && password?.touched" class="text-danger">
+            "password must be at least 8 characters"
+          </small>
+        </div>
+
+
+        <div class="form-group" id="btnDiv">
+          <button [disabled]="
+          loginForm.invalid || buttonSubmit
+        " class="btn btn-success" type="submit" (click)="onSubmit(loginForm.value)">
+            Login
+          </button>
+        </div>
+        <div>
+          <small *ngIf="invalidLogin==true" class="text-danger">{{errorMsg}}</small>
+        </div>
+      </form>
+      <hr>
+    
+    </div>
+  </div>
+</div>
+

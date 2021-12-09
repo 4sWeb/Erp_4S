@@ -9,6 +9,7 @@ namespace BLL.Repo
     public class RepoWrapper : IRepoWrapper
     {
         private ModelContext _contex;
+        private IApplication application;
         private IAcceptInTrns acceptInTrns;
         private IAccountstree accountstree;
         private IAgriage agriage;
@@ -87,6 +88,8 @@ namespace BLL.Repo
             if(acceptInTrns==null) acceptInTrns =new AcceptInTrnsRepo(_contex); return acceptInTrns;
            }
         }
+        public IApplication _Application { get { if (application == null) application = new ApplicationRepo(_contex); return application; } }
+
         public IAccountstree _AccountsTree { get { if (accountstree == null) accountstree = new AccountstreeRepo(_contex);return accountstree; } }
         public IAgriage _Agriage { get { if (agriage == null) agriage = new AgriageRepo(_contex); return agriage; } }
         public IAgridata _Agridata { get { if (agridata == null) agridata = new AgridataRepo(_contex); return agridata; } }

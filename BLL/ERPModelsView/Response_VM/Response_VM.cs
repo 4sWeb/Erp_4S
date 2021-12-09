@@ -8,10 +8,10 @@ using System.Linq.Expressions;
 
 namespace BLL.ERPModelsView.Response_VM
 {
-    public class Response_VM<T>
+    public class Response_VM
     {
        
-        public T Data { get; set; }
+        public object  Data { get; set; }
         public int StatusCode { get; set; }
         public string Message { get; set; }
     
