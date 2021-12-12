@@ -51,6 +51,8 @@ export class LoginComponent implements OnInit {
         console.log("result", this.Response);
         this.userResponse = this.Response.data;
         console.log("this.userResponse", this.userResponse);
+        localStorage.setItem('UserId', this.userResponse.userid.toString());
+        console.log("this.userResponse", this.userResponse);
         if (this.Response.statusCode == 200)
         {
           this.router.navigate([`/main/`]);
@@ -61,7 +63,7 @@ export class LoginComponent implements OnInit {
           this.errorMsg = this.Response.message;
           this.buttonSubmit = false;
         }
-        console.log("Result", result)
+        console.log("Result", result);
         //localStorage.setItem('access_token', result.token);
         //this.userService.getToken()?.toString();
         //this.Carteservice.uploadProductsToServer();

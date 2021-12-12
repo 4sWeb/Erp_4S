@@ -28,7 +28,7 @@ namespace Angular_API.Controllers
         }
 
         [HttpGet]
-        public JsonResult TransActionsList(int UserID = 1, int AppID = 2, int PeriodID = 2)
+        public JsonResult TransActionsList(int UserID, int AppID, int PeriodID = 2)
         {
             List<StoreTrans> storetrnslst = new List<StoreTrans>();
             Dictionary<string, object> d = new Dictionary<string, object>();

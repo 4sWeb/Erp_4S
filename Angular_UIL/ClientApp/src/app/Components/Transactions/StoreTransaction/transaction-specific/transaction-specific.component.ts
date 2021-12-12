@@ -237,7 +237,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
 
     this.ar.params.subscribe(
       a => {
-        this.Transcode = parseInt( a['id']);
+        this.Transcode = parseInt(a['id']);
+        console.log(this.Transcode);
       }
     );
 

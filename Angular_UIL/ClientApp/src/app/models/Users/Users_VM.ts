@@ -2,19 +2,19 @@ export class Users_VM {
 
   constructor
     (
-        public   Userid      ?:number,
-        public   Usercode    ? :string,
-        public   Username    ? :string,
-        public   Userename   ? :string,
-        public   Userpassword? :string,
-        public   Positionapps? :string,
-        public   Active      ?:number,
-        public   Createdate  ? :Date,
-        public   UsergroupId ? :number,
-        public   Projectno  ?:number,
-        public   Privilegeid?:number,
-        public Salt?: string,
-        public Uname?: string   
+        public   userid      ?:number,
+        public   usercode    ? :string,
+        public   username    ? :string,
+        public   userename   ? :string,
+        public   userpassword? :string,
+        public   positionapps? :string,
+        public   active      ?:number,
+        public   createdate  ? :Date,
+        public   usergroupId ? :number,
+        public   projectno  ?:number,
+        public   privilegeid?:number,
+        public salt?: string,
+        public uname?: string   
      )
   {
 

@@ -105,7 +105,7 @@ export function createTranslateLoader(http: HttpClient)
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'main', component: MainComponent },
-      { path: 'transaction-list', component: TransactionsListComponent, pathMatch: 'full' },
+      { path: 'transaction-list', component: TransactionsListComponent },
       { path: 'all-transactions/:id', component: AllTransactionsComponent },
       { path: 'create-transaction', component: CreateTransactionComponent },
       { path: 'transaction-specific/:id/:userId', component: TransactionSpecificComponent },

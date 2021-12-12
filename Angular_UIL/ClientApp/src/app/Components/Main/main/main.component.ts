@@ -17,15 +17,18 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.userService.GetAllModule().subscribe
       (
-        result =>
-        {
-          console.log("result",result);
+        result => {
+          console.log("result", result);
           this.Response_VM = result;
           this.application_VM = this.Response_VM.data;
           console.log("application_VM", this.application_VM);
         }
-      )
+      );
 
   }
+  GetAPPId(AppId: number) {
+    localStorage.setItem('AppId', AppId.toString());
+    this.router.navigate([`/transaction-list/`]);
 
+  }
 }

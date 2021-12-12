@@ -1,58 +1,15 @@
 <p>main works!</p>
-<div class="row" style="margin-top: 10%">
-
-  <div class="col">
-    <div class="card bg-green">
+<div class="row col mr-2">
+  <div *ngFor="let item of application_VM; let RowIndex = index" class="col-4 mt-2">
+    <div class="card" (click)="GetAPPId(item.appId)">
       <div class="card-body text-center">
         <p>
-          <img class=" img-fluid" src="3.jpg" alt="card image">
+          <img class=" img-fluid" src="'../../../../../../../assets/Images/bank{{RowIndex+1}}.jpg" style="width:100%;height:200px" alt="card image">
         </p>
-        <h4 class="card-title" style="color: white;">PREPARTORY LEVEL</h4>
+        </div>
+      <div style="text-align:center; background-color:honeydew">
+        <h4 class="card-title" style="color: black">{{item.appName}}</h4>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          Grade One
-          <div class="btn-group col-4" style="float:right;">
-            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-              Classes
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#teacher-set-student-degree">Class 1A</a>
-              <a class="dropdown-item" href="#teacher-set-student-degree">Class 1B</a>
-              <a class="dropdown-item" href="#teacher-set-student-degree">Class 3C</a>
-            </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-          Grade Two
-          <div class="btn-group col-4" style="float:right;">
-            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-              Classes
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Class 1A</a>
-              <a class="dropdown-item" href="#">Class 1B</a>
-              <a class="dropdown-item" href="#">Class 3C</a>
-            </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-          Grade Three
-          <div class="btn-group col-4" style="float:right;">
-            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-              Classes
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Class 1A</a>
-              <a class="dropdown-item" href="#">Class 1B</a>
-              <a class="dropdown-item" href="#">Class 3C</a>
-            </div>
-            </div>
-        </li>
-      </ul>
     </div>
   </div>
 </div>

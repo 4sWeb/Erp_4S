@@ -16,7 +16,8 @@ export class TransactionsListComponent implements OnDestroy,OnInit {
 
   alltransactions: Transactions[];
   TransCode: number;
-
+  UserId: number;
+  AppId: number;
   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private TransactionsService: TransactionsService, private SharingDataService: SharingDataService) {
@@ -30,8 +31,9 @@ export class TransactionsListComponent implements OnDestroy,OnInit {
       pageLength: 10
     };
     console.log("on int");
-
-    this.TransactionsService.getAllTransactions(1, 2, 2).subscribe(
+    this.UserId = parseInt(localStorage.getItem('UserId'));
+    this.AppId = parseInt(localStorage.getItem('AppId'));
+    this.TransactionsService.getAllTransactions(this.UserId, this.AppId, 2).subscribe(
       (Response) => {
         console.log(Response);
         this.alltransactions = Response;
