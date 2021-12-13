@@ -906,7 +906,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
         Salesrep: this.salesRepId,
       };
       this.storeTransDep_VM = this.fillStoreTranDep();
-      alert(` تم اضافة حركة ${this.TransactionSpecific.Aname} برقم ${this.storeTransMax} `);
+      //alert(` تم اضافة حركة ${this.TransactionSpecific.Aname} برقم ${this.storeTransMax} `);
 
     }
    
@@ -922,29 +922,29 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     this.StoreTransMain.StoreTransDep_VM = this.storeTransDep_VM;
     console.log("storeTransDep_VM", this.storeTransDep_VM);
 
-
-    this.filterStoreTransDepDetails = this.productdetails.filter(s => s.storeTrnsOId > 0);
-    if (this.filterStoreTransDepDetails.length == 0)
-    {
-      this.filterStoreTransDepDetails=this.productdetails;
-    }
-    this.StoreTransDepDetailsOnly = [];
-    for (var i = 0; i < this.filterStoreTransDepDetails.length; i++) {
-      //NEED TO CHECK IF QUANTITY NOT EQUAL ZERO
-     // if (this.filterStoreTransDepDetails[i].totalo > 0) {
-        console.log("enter");
-        this.StoreTransDepDetailsOnly.push({
-          itemid: this.filterStoreTransDepDetails[i].itemId,
-          unitid: this.filterStoreTransDepDetails[i].unitId,
-          groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
-          quantity: this.filterStoreTransDepDetails[i].qty,
-          unitPrice: 0,
-          totalo: 0,
-          //prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
-          commited: 0
-        });
-      //}
-    }
+    
+    //this.filterStoreTransDepDetails = this.productdetails.filter(s => s.storeTrnsOId > 0);
+    //if (this.filterStoreTransDepDetails.length == 0)
+    //{
+    //  this.filterStoreTransDepDetails=this.productdetails;
+    //}
+    //this.StoreTransDepDetailsOnly = [];
+    //for (var i = 0; i < this.filterStoreTransDepDetails.length; i++) {
+    //  //NEED TO CHECK IF QUANTITY NOT EQUAL ZERO
+    // // if (this.filterStoreTransDepDetails[i].totalo > 0) {
+    //    console.log("enter");
+    //    this.StoreTransDepDetailsOnly.push({
+    //      itemid: this.filterStoreTransDepDetails[i].itemId,
+    //      unitid: this.filterStoreTransDepDetails[i].unitId,
+    //      groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
+    //      quantity: this.filterStoreTransDepDetails[i].qty,
+    //      unitPrice: 0,
+    //      totalo: 0,
+    //      //prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
+    //      commited: 0
+    //    });
+    //  //}
+    //}
 
     this.StoreTransMain.StoreTransDepDetails_VM = this.StoreTransDepDetailsOnly;
     console.log("storeTransDepDetails_VM", this.StoreTransMain.StoreTransDepDetails_VM);
@@ -1050,25 +1050,26 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       this.storeTransDetails_VM = this.productdetails;
       console.log("storeTransDetails_VM", this.storeTransDetails_VM);
 
-      ////depdetails
 
-      this.filterStoreTransDepDetails = this.productdetails.filter(s => s.storeTrnsOId > 0);
-      this.StoreTransDepDetailsOnly = [];
-      for (var i = 0; i < this.filterStoreTransDepDetails.length; i++) {
+      ////depdetails only take in consederation if is dependent == true
+      if (this.IsDependant == true)
+      {
+        this.filterStoreTransDepDetails = this.productdetails.filter(s => s.storeTrnsOId > 0);
+        this.StoreTransDepDetailsOnly = [];
+        for (var i = 0; i < this.filterStoreTransDepDetails.length; i++) {
 
-        this.StoreTransDepDetailsOnly.push({
-          item_ID: this.filterStoreTransDepDetails[i].itemId,
-          unitid: this.filterStoreTransDepDetails[i].unitId,
-          groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
-          quantity: this.filterStoreTransDepDetails[i].qty,
-          unitPrice: this.filterStoreTransDepDetails[i].unitPrice,
-          totalo: this.filterStoreTransDepDetails[i].totalo,
-         // prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
-          commited:0
-        });
+          this.StoreTransDepDetailsOnly.push({
+            item_ID: this.filterStoreTransDepDetails[i].itemId,
+            unitid: this.filterStoreTransDepDetails[i].unitId,
+            groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
+            quantity: this.filterStoreTransDepDetails[i].qty,
+            unitPrice: this.filterStoreTransDepDetails[i].unitPrice,
+            totalo: this.filterStoreTransDepDetails[i].totalo,
+            // prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
+            commited: 0
+          });
+        }
       }
-
-
     console.log("this.StoreTransDepDetailsOnly", this.StoreTransDepDetailsOnly);
 
       if (result == null) {

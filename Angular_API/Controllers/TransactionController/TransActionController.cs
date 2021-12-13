@@ -210,6 +210,7 @@ namespace Angular_API.Controllers
             //StoreTrnsMID
             StoreTrnsM StoreTrnsM = new StoreTrnsM()
             {
+                StoreTrnsMId = decimal.Parse(NextValue.ToString()) + 1,
                 TrnsCode = StoreTransMain_VM.StoreTransMaster_VM.TrnsCode,
                 Rem = StoreTransMain_VM.StoreTransMaster_VM.Rem,
                 TrnsNo = StoreTransMain_VM.StoreTransMaster_VM.TrnsNo,
@@ -257,14 +258,14 @@ namespace Angular_API.Controllers
                 //Check Incoming Obj(item)
                 StoreTrnsO StoreTrnsO = new StoreTrnsO
                 {
-                    
+                    StoreTrnsOId = decimal.Parse(NextValueO.ToString()) + 1,
                     Qty = item.qty,
                     UnitId = item.unitId,
                     UnitPrice = item.unitPrice,
                     Notes = item.notes,
                     ItemId = item.itemId,
                     Itemapproved = item.itemapproved,
-                    StoretrnsProformlaId = item.storetrnsProformlaId,
+                    StoretrnsProformlaId = string.IsNullOrEmpty(item.storetrnsProformlaId.ToString()) ? null : item.storetrnsProformlaId,
                     Totalo = item.totalo,
                     Weekno = item.weekno,
                     StoreTrnsMId = decimal.Parse(NextValue.ToString()) + 1,
@@ -280,8 +281,8 @@ namespace Angular_API.Controllers
                 if (StoreTrnsO != null)
                 {
                     repo._StoreTrnsO.Create(StoreTrnsO);
-                    
 
+                    repo.Save();
                 }
 
             }
@@ -373,7 +374,7 @@ namespace Angular_API.Controllers
             
             try 
             {
-                //repo.Save();
+                repo.Save();
             }
 
             catch (Exception ex){ return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions()); }
@@ -468,46 +469,7 @@ namespace Angular_API.Controllers
             return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
         }
 
-        //public JsonResult SaveOrders([FromBody] StoreTransMain_VM StoreTransMain_VM)
-        //{
-
-        //    foreach (var row in TrnsO)
-        //    {
-        //        repo._StoreTrnsO.Create(row);
-        //    }
-        //    try
-        //    {
-        //        repo.Save();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { ID = "-1", Result = "Bad Request" }, new System.Text.Json.JsonSerializerOptions());
-        //    }
-
-        //return Json(new { ID = "200", Result = "Ok" }, new System.Text.Json.JsonSerializerOptions());
-        //}
-
-        //[HttpGet]
-        //[Route("DisplayItems")]
-        //public JsonResult DisplayItemsFromSelectedTransactions()
-        //{
-        //    // To Get All Items From Selected Transactions
-        //    return Json(null);
-        //}
-
-        //[HttpGet]
-        //[Route("GetGroupFDetails")]
-        //public JsonResult GetGroupsDetails()
-        //{
-        //    List<GroupF_VM> groupF_VMs = new List<GroupF_VM>();
-        //    var GroupsList = repo._Groupf.GetByCondition(c => c.Codetype == 99).Result.Select(n => new { n.GroupfId, n.Aname }).ToList();
-        //    foreach (var item in GroupsList)
-        //    {
-        //        groupF_VMs.Add(new GroupF_VM { Aname = item.Aname, GroupF_Id = (int)item.GroupfId });
-        //    }
-        //    return Json(groupF_VMs, new System.Text.Json.JsonSerializerOptions());
-        //}
-
+   
 
         [HttpGet]
         [Route("GetAllGroupsWithItemsDetails")]
@@ -519,10 +481,10 @@ namespace Angular_API.Controllers
             string GroupItemsUnitsQuery = @"SELECT GF.GROUPF_ID AS GROUP_ID,
                                             GF.ANAME GROUP_NAME,
                                             SI.STORE_ITEMS_ID AS ITEM_ID,
-                                            SI.ITEM_CODE AS ITEM_CODE,
-                                            SI.ANAME AS ITEM_NAME,
+                                            NVL(SI.ITEM_CODE,' ')AS ITEM_CODE,
+                                            NVL(SI.ANAME,' ') AS ITEM_NAME,
                                             SU.UNITID AS UNIT_ID,
-                                            SU.ANAME AS UNIT_NAME, 
+                                            NVL(SU.ANAME,' ') AS UNIT_NAME, 
                                             --NVL(SIFU.UNITID,0.00) + 0 AS BASIC_UNIT
                                             NVL(SIU.UNIT_RATE,1) AS UNIT_RATE,
                                             NVL( (SELECT SIFU2.UNITID FROM STORE_ITEM_UNITS SIFU2 WHERE  SIFU2.STORE_ITEMS_ID= SI.STORE_ITEMS_ID  AND SIFU2.BASIC_UNIT=1),0.00) + 0 AS BASIC_UNIT
