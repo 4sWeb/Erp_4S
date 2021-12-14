@@ -361,33 +361,34 @@ export class DialogForCategoryComponent implements OnInit {
     this.totalo = this.storeTransDetailsDialog[i].totalo;
     this.unitPrice = this.storeTransDetailsDialog[i].unitPrice;
     //to set new values
-    try {
-      this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId)[0].QTY;
-      this.UniteRate = this.unitesFilter.filter(s => s.UNIT_ID == this.UniteId)[0].UNIT_RATE;
+    if (this.BringBalance == true)
+    {
       try {
-        if (this.storeTransDetailsDialog[this.Index].storeTrnsOId != undefined) {
-          this.ConvertCurrentBalanceInEditMode();
-        } else {
-          this.BalanceBefore= this.CurrentBalance / this.UniteRate;
-        } 
-      } catch (e) {  }
+        this.CurrentBalance = this.ItemsWithBalance.filter(s => s.ITEM_ID == this.ItemId && s.STORE_ID == this.StoreId)[0].QTY;
+        this.UniteRate = this.unitesFilter.filter(s => s.UNIT_ID == this.UniteId)[0].UNIT_RATE;
+        try {
+          if (this.storeTransDetailsDialog[this.Index].storeTrnsOId != undefined) {
+            this.ConvertCurrentBalanceInEditMode();
+          } else {
+            this.BalanceBefore = this.CurrentBalance / this.UniteRate;
+          }
+        } catch (e) { }
 
-      this.CalculateRestFullBalance();
+        this.CalculateRestFullBalance();
 
-      if (this.CurrentBalance <= 0)
-      {
+        if (this.CurrentBalance <= 0) {
 
-        this.SetInputValuesToDefalut();
-        alert("لا يوجد رصيد لهذا الصنف");
+          this.SetInputValuesToDefalut();
+          alert("لا يوجد رصيد لهذا الصنف");
+        }
+
       }
-     
-    }
-    catch (e) {
-      alert("هذا الصنف غير موجود في ذلك المخزن");
-         this.SetInputValuesToDefalut();
+      catch (e) {
+        alert("هذا الصنف غير موجود في ذلك المخزن");
+        this.SetInputValuesToDefalut();
+      }
     }
   }
-
 
 
   saveChanges() {

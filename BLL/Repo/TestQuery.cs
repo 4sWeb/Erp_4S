@@ -91,7 +91,7 @@ namespace BLL.Repo
 
         public static async Task<List<T>> Get<T>(string squery, Dictionary<string, object> para = null, int type = 0)
         {
-            string connectionString = @"Data Source=10.8.2.154/DOTNET.lehaa.local;User ID=GREENHOPE0411;Password=GREENHOPE0411;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
+            string connectionString = @"Data Source=10.8.2.154/DOTNET.lehaa.local;User ID=AGROTEST;Password=AGROTEST;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
             string command = squery;
 
             await using (OracleConnection conn = new OracleConnection(connectionString))

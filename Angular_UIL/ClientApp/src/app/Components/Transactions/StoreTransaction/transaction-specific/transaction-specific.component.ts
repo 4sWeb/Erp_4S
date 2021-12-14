@@ -432,7 +432,12 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
             {
               this.transDepCode = this.StoreTransMain.StoreTransDep_VM[0].TrnsCode;
               console.log("this.transDepCode", this.transDepCode);
+             
+              //call services to get dependancy specification
+
               this.transDepId = this.StoreTransMain.StoreTransDep_VM[0].StoreTrnsDepId;
+              this.IsDependant = true;
+              this.GetDependanySpecification(this.StoreTransMain.StoreTransDep_VM[0].DepTrnsCode);
             }
             catch (e) { console.log(e); }
           
@@ -500,14 +505,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     this.fromStoreAllcodesId = undefined;
     this.ToTypeDetailsId = undefined;
   };
-  //event handler for the select element's change event
-  selectChangeHandler() {
+  //handle specification for dependancy
 
-    //Delete Previous Data
- 
-    //this.RestDistnationValues();
-    //this.DisplayCategoryBtndeo = false;
-  
+
+  selectChangeHandler() {
     try
     {
       if (this.FromType.length > this.FromTypeLength) {
@@ -608,53 +609,8 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
     //Call Specification for Store Trans Dep
     var StoreDepSpec_Id: number = this.DepTransactionNames.filter(s => s.Transaction_Id == this.transDepCode)[0].StoreDepSpec_Id;
     console.log("StoreDepSpec_Id", StoreDepSpec_Id);
-    this.TransactionsService.GetSpecificationForDependancy(StoreDepSpec_Id).subscribe(
-      res =>
-      {
-        this.StoreDepSpecDetails_VM = res;
-        console.log("StoreDepSpecDetails_VM", this.StoreDepSpecDetails_VM);
-        this.GetFrom = this.StoreDepSpecDetails_VM.GetFrom;
-        this.GetTo = this.StoreDepSpecDetails_VM.GetTo;
-        this.FromFilter = this.StoreDepSpecDetails_VM.FromFilter;
-        this.ToFilter = this.StoreDepSpecDetails_VM.ToFilter;
-        this.GetItem = this.StoreDepSpecDetails_VM.Getitems;
-        this.DepPricType = this.StoreDepSpecDetails_VM.DepPricType;
-        this.GetNoteInDep = this.StoreDepSpecDetails_VM.Getdesc;
-        this.Hasextras = this.StoreDepSpecDetails_VM.Hasextras;
-        if (this.Hasextras == 0)
-        {
-          console.log("Hasextras", this.Hasextras)
-          this.GetExtraField();
-          
-        }
-        //Display Category button (up)
-        if (this.GetItem == 1 && this.StoreDepSpecDetails_VM.AdditemOutDep == 1)
-        {
-          this.DisplayCategoryBtndeo = true
-        }
-        else
-        { this.DisplayCategoryBtndeo = false; }
 
-        //Display Category button (down)
-        if (this.StoreDepSpecDetails_VM.AdditemOutDep == 1)
-        {
-          this.AdditemOutDep = true;
-        }
-        else { this.AdditemOutDep = false; }
-
-        if (this.StoreDepSpecDetails_VM.Salesrep == 2) {
-          this.SalesRepViewMust = true;
-        } else if (this.StoreDepSpecDetails_VM.Salesrep == 1) {
-          this.SalesRepViewOption = true;
-        }
-        if (((this.FromFilter == 1 || this.FromFilter == 2) && this.fromStoreAllcodesId == undefined)
-          || ((this.ToFilter == 1 || this.ToFilter == 2) && this.ToTypeDetailsId == undefined)) {
-          this.disabelDepTransButton = true;
-        } else { this.disabelDepTransButton = false; }
-      }
-
-    );
-
+    this.GetDependanySpecification(StoreDepSpec_Id);
     
 
     //Clear From and To only when Get_From or Get_To =1||2 and not frist time to make change and From_Filter and To_Filter ==0
@@ -754,8 +710,10 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
      
       };
       //Handel From And To cases in Dep Spec
-
-      this.HandleGetFromCasesInSpecDep();
+      try
+      {
+        this.HandleGetFromCasesInSpecDep();
+      } catch (e) { }
 
       //Disable from or to in filter case
       if (this.FromFilter == 1 || this.FromFilter == 2)
@@ -921,30 +879,6 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
    
     this.StoreTransMain.StoreTransDep_VM = this.storeTransDep_VM;
     console.log("storeTransDep_VM", this.storeTransDep_VM);
-
-    
-    //this.filterStoreTransDepDetails = this.productdetails.filter(s => s.storeTrnsOId > 0);
-    //if (this.filterStoreTransDepDetails.length == 0)
-    //{
-    //  this.filterStoreTransDepDetails=this.productdetails;
-    //}
-    //this.StoreTransDepDetailsOnly = [];
-    //for (var i = 0; i < this.filterStoreTransDepDetails.length; i++) {
-    //  //NEED TO CHECK IF QUANTITY NOT EQUAL ZERO
-    // // if (this.filterStoreTransDepDetails[i].totalo > 0) {
-    //    console.log("enter");
-    //    this.StoreTransDepDetailsOnly.push({
-    //      itemid: this.filterStoreTransDepDetails[i].itemId,
-    //      unitid: this.filterStoreTransDepDetails[i].unitId,
-    //      groupF_Id: this.filterStoreTransDepDetails[i].groupF_Id,
-    //      quantity: this.filterStoreTransDepDetails[i].qty,
-    //      unitPrice: 0,
-    //      totalo: 0,
-    //      //prowId: this.filterStoreTransDepDetails[i].store_Trns_M_ID,
-    //      commited: 0
-    //    });
-    //  //}
-    //}
 
     this.StoreTransMain.StoreTransDepDetails_VM = this.StoreTransDepDetailsOnly;
     console.log("storeTransDepDetails_VM", this.StoreTransMain.StoreTransDepDetails_VM);
@@ -1226,7 +1160,7 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
   };
 
   GetDependacyProduct() {
-
+    console.log("hii GetDependacyProduct");
     for (let i = 0; i < this.checkedTransactionsMain.length; i++) {
       this.checkedTransactionsIds.push(this.checkedTransactionsMain[i].StoreTrnsMId); //use i instead of 0
     }
@@ -1417,6 +1351,56 @@ export class TransactionSpecificComponent implements OnInit, OnDestroy, DoCheck{
       console.log("this.ExtraFieldsTo", this.ExtraFieldsTo);
     
   }
+
+
+  GetDependanySpecification(StoreDepSpec_Id: number)
+  {
+    this.TransactionsService.GetSpecificationForDependancy(StoreDepSpec_Id).subscribe(
+      res => {
+        this.StoreDepSpecDetails_VM = res;
+        console.log("res", res);
+        console.log("StoreDepSpecDetails_VM", this.StoreDepSpecDetails_VM);
+        
+        this.GetFrom = this.StoreDepSpecDetails_VM.GetFrom;
+        this.GetTo = this.StoreDepSpecDetails_VM.GetTo;
+        this.FromFilter = this.StoreDepSpecDetails_VM.FromFilter;
+        this.ToFilter = this.StoreDepSpecDetails_VM.ToFilter;
+        this.GetItem = this.StoreDepSpecDetails_VM.Getitems;
+        this.DepPricType = this.StoreDepSpecDetails_VM.DepPricType;
+        this.GetNoteInDep = this.StoreDepSpecDetails_VM.Getdesc;
+        this.Hasextras = this.StoreDepSpecDetails_VM.Hasextras;
+        if (this.Hasextras == 0) {
+          console.log("Hasextras", this.Hasextras)
+          this.GetExtraField();
+
+        }
+        //Display Category button (up)
+        if (this.GetItem == 1 && this.StoreDepSpecDetails_VM.AdditemOutDep == 1) {
+          this.DisplayCategoryBtndeo = true
+        }
+        else { this.DisplayCategoryBtndeo = false; }
+
+        //Display Category button (down)
+        if (this.StoreDepSpecDetails_VM.AdditemOutDep == 1) {
+          this.AdditemOutDep = true;
+        }
+        else { this.AdditemOutDep = false; }
+
+        if (this.StoreDepSpecDetails_VM.Salesrep == 2) {
+          this.SalesRepViewMust = true;
+        } else if (this.StoreDepSpecDetails_VM.Salesrep == 1) {
+          this.SalesRepViewOption = true;
+        }
+        if (((this.FromFilter == 1 || this.FromFilter == 2) && this.fromStoreAllcodesId == undefined)
+          || ((this.ToFilter == 1 || this.ToFilter == 2) && this.ToTypeDetailsId == undefined)) {
+          this.disabelDepTransButton = true;
+        } else { this.disabelDepTransButton = false; }
+      }
+
+    );
+  }
+
+
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

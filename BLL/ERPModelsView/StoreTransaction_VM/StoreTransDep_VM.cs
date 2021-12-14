@@ -21,6 +21,7 @@ namespace BLL.ERPModelsView
         public string Rem { get; set; }
         public DateTime TrnsDate { get; set; }
         public decimal TrnsCode { get; set; }
+        public decimal DepTrnsCode { get; set; }
         public decimal TrnsNo { get; set; }
         public string BranchName { get; set; }
         public string From_TypeName { get; set; }

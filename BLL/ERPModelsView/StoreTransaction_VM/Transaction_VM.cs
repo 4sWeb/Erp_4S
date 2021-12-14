@@ -10,7 +10,7 @@ namespace BLL.ERPModelsView
     {
         public Transaction_VM()
         {
-           
+
         }
         public decimal StoreTrnsMId { get; set; }
         public decimal TrnsCode { get; set; }
@@ -26,50 +26,10 @@ namespace BLL.ERPModelsView
         public decimal? To_StoreAllcodesId { get; set; } // Altaraf TO (ID)
         public string TO_TypeName { get; set; }
         public string To_StoreAllcodesName { get; set; } // Altaraf TO (Name)
-     
+
         public object From_Type { get; set; }  // ( Altaraf From )
         public object To_Type { get; set; }    // ( Altaraf TO )
         public StoreTransDep_VM StoreTransDep_VM { get; set; }
     }
 
-    //return data of transdep 
-    //public StoreTransDep_VM RetrieveTransactions(decimal storeTrnsMId)
-    //{
-    //    if (storeTrnsMId != default)
-    //    {
-    //        var oneItem = GetByCondition(c => c.Ctrnsrowid == storeTrnsMId).Result.Select(s => new StoreTransDep_VM
-    //        {
-    //            Ptransrowid = s.Ptransrowid,
-    //            Groupid = s.Groupid,
-    //        }
-    //            ).FirstOrDefault();
-    //        return oneItem;
-    //    }
-    //    return null;
-    //}
-
-
-    //return data of transdep 
-    //public List<StoreTransDep_VM> RetrieveTransactions(List<decimal> storeTrnsMIds)
-    //{
-    //    List<StoreTransDep_VM> ListItem = new List<StoreTransDep_VM>();
-    //    if (storeTrnsMIds != null)
-    //    {
-    //        foreach (var item in storeTrnsMIds)
-    //        {
-    //            var oneItem = GetByCondition(c => c.Ctrnsrowid == item).Result.Select(s => new StoreTransDep_VM
-    //            {
-    //                Ptransrowid = s.Ptransrowid,
-    //                Groupid = s.Groupid,
-
-    //            }
-    //            ).FirstOrDefault();
-    //            ListItem.Add(oneItem);
-    //        }
-
-    //        return ListItem;
-    //    }
-
-    //    return null;
-    //}
 }

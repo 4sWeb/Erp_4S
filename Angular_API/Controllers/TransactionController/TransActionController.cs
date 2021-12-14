@@ -81,9 +81,6 @@ namespace Angular_API.Controllers
             }
             TransactionSpec.TransactionMasterSpec_VM.Branches = branches_VMs;
 
-            //var branches = listOfBranches.Result.FirstOrDefault();
-            //Dictionary<string, object> currently = (Dictionary<string, object>)branches;
-            //var brancheId = int.Parse(currently.FirstOrDefault().Value.ToString());
             TransactionSpec.StoreTransMax = repo._StoreTrnsM.GetMaxID(transCode, Period);//(branchId)
 
             TransactionSpec.TransactionMasterSpec_VM.From_Type = repo._Groupf.GetAllTypes(transCode, "F"); // Altaraf From
@@ -421,7 +418,10 @@ namespace Angular_API.Controllers
                 if (listOfPrevIds.Count >0)
                 {
                     STM_VM.IsDependant = true;
+                    
                     STM_VM.StoreTransDep_VM = repo._StoreTrnsM.RetriveTransaDepById(listOfPrevIds);
+                    decimal transcode = STM_VM.StoreTransDep_VM.FirstOrDefault().TrnsCode;
+                    STM_VM.StoreTransDep_VM.FirstOrDefault().DepTrnsCode = repo._StoreDepSpecs.GetByCondition(s=>s.Groupno==transcode).Result.FirstOrDefault().StoreDepSpecsId;
 
                     foreach (var id in listOfPrevIds)
                     {
