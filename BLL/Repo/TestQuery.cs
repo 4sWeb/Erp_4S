@@ -8,12 +8,13 @@ using System.Text;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 namespace BLL.Repo
 {
     public class TestQuery
     {
-
+        private static readonly IConfiguration _configuration;
         //public void Get ()
         //{
         //    string connectionString = @"Data Source=10.8.2.154/DOTNET.lehaa.local;User ID=AGROTEST;Password=AGROTEST;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
@@ -31,11 +32,13 @@ namespace BLL.Repo
 
         //}
 
-       
+
 
         public async Task<List<object>> Get(string squery, Dictionary<string, object> para = null, int type = 0)
         {
-            string connectionString = @"Data Source=10.8.2.154/DOTNET.lehaa.local;User ID=AGROTEST;Password=AGROTEST;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
+
+            string connectionString = _configuration.GetConnectionString("TestConn");
+                //@"DataSource=10.8.2.154/DOTNET.lehaa.local;User ID=AGROTEST;Password=AGROTEST;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
             string command = squery;
 
             await using (OracleConnection conn = new OracleConnection(connectionString))
@@ -91,7 +94,8 @@ namespace BLL.Repo
 
         public static async Task<List<T>> Get<T>(string squery, Dictionary<string, object> para = null, int type = 0)
         {
-            string connectionString = @"Data Source=10.8.2.154/DOTNET.lehaa.local;User ID=AGROTEST;Password=AGROTEST;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
+            string connectionString = _configuration.GetConnectionString("TestConn");
+            //@"Data Source=10.8.2.154/DOTNET.lehaa.local;User ID=AGROTEST;Password=AGROTEST;Connection Timeout=0;Pooling=False";// @"User Id=BIOTECH;Password=BIOTECH;Data Source=10.8.2.154/DOTNET.lehaa.local;Connection Timeout=600;min pool size=0;connection lifetime=18000;PERSIST SECURITY INFO=True;";
             string command = squery;
 
             await using (OracleConnection conn = new OracleConnection(connectionString))
